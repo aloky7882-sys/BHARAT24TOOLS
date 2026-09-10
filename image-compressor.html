@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced AI Image Compressor - HARI TOOLS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fb 0%, #e8ecf1 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2f6fed, #1a4fd6);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(31, 111, 237, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-radius: 0 0 12px 12px;
+        }
+
+        header a.back {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        header .brand {
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            color: #2f6fed;
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: #666;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        /* Upload Zone */
+        .upload-zone {
+            background: linear-gradient(135deg, #f8f9fa, #eef5ff);
+            border: 3px dashed #2f6fed;
+            border-radius: 16px;
+            padding: 60px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .upload-zone:hover,
+        .upload-zone.dragover {
+            background: linear-gradient(135deg, #eef5ff, #e7f0ff);
+            border-color: #1a4fd6;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(31, 111, 237, 0.2);
+        }
+
+        .upload-zone input {
+            display: none;
+        }
+
+        .upload-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #2f6fed;
+        }
+
+        .upload-zone h2 {
+            font-size: 24px;
+            color: #2f6fed;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .upload-zone p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .upload-formats {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 20px;
+            color: #666;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Settings */
+        .settings-section {
+            background: linear-gradient(135deg, #f8f9fa, #eef5ff);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(47, 111, 237, 0.1);
+        }
+
+        .settings-section h3 {
+            color: #2f6fed;
+            font-size: 18px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .setting-group {
+            margin-bottom: 25px;
+        }
+
+        .setting-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .setting-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .quality-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #2f6fed, #4d9cff);
+            outline: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2f6fed, #4d9cff);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(47, 111, 237, 0.3);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2f6fed, #4d9cff);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 12px rgba(47, 111, 237, 0.3);
+        }
+
+        .quality-value {
+            background: #2f6fed;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            min-width: 60px;
+            font-size: 14px;
+        }
+
+        .size-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .size-inputs input {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .size-inputs select {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .compress-btn {
+            background: linear-gradient(135deg, #2f6fed, #1a4fd6);
+            color: #fff;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .compress-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(47, 111, 237, 0.3);
+        }
+
+        .compress-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Preview Grid */
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .preview-card {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid #f0f0f0;
+        }
+
+        .preview-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(47, 111, 237, 0.15);
+            border-color: #2f6fed;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .image-section {
+            position: relative;
+            background: #f8f9fa;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-section label {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(47, 111, 237, 0.9);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .image-section img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-weight: 700;
+            color: #222;
+            font-size: 15px;
+            margin-bottom: 15px;
+            word-break: break-all;
+        }
+
+        .size-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .size-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid #2f6fed;
+        }
+
+        .size-item label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .size-item value {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            color: #2f6fed;
+        }
+
+        .savings {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn-download {
+            background: #2f6fed;
+            color: #fff;
+        }
+
+        .btn-download:hover {
+            background: #1a4fd6;
+        }
+
+        .btn-delete {
+            background: #f0f0f0;
+            color: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background: #e0e0e0;
+        }
+
+        #status {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        #status.loading {
+            background: #d1ecf1;
+            color: #0c5460;
+            display: block;
+        }
+
+        #status.success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        #status.error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            color: #ccc;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .size-inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="back"><i class="fas fa-arrow-left"></i> Back</a>
+    <span class="brand"><i class="fas fa-compress"></i> HARI TOOLS</span>
+</header>
+
+<div class="container">
+    <div class="header">
+        <h1>Advanced AI Image Compressor</h1>
+        <p>Compress images with precise quality control and AI optimization</p>
+    </div>
+
+    <div class="upload-zone" id="upload-zone">
+        <div class="upload-icon"><i class="fas fa-cloud-arrow-up"></i></div>
+        <h2>Drag & Drop Images Here</h2>
+        <p>or click to select multiple images</p>
+        <div class="upload-formats">JPG / PNG / WebP</div>
+        <input type="file" id="fileInput" multiple accept="image/*">
+    </div>
+
+    <div class="settings-section">
+        <h3><i class="fas fa-sliders-h"></i> Compression Settings</h3>
+        
+        <div class="setting-group">
+            <label>Quality Level</label>
+            <div class="quality-controls">
+                <input type="range" id="qualitySlider" min="10" max="100" value="70" step="5">
+                <span class="quality-value" id="qualityValue">70%</span>
+            </div>
+            <p style="font-size: 12px; color: #666; margin-top: 8px;">10% = Maximum compression | 100% = Best quality</p>
+        </div>
+
+        <div class="setting-group">
+            <label>Target File Size (Optional)</label>
+            <div class="size-inputs">
+                <div>
+                    <input type="number" id="targetSize" placeholder="Enter size" min="10" step="10">
+                </div>
+                <div>
+                    <select id="sizeUnit">
+                        <option value="kb">KB</option>
+                        <option value="mb">MB</option>
+                    </select>
+                </div>
+            </div>
+            <p style="font-size: 12px; color: #666; margin-top: 8px;">Leave empty to use quality slider only</p>
+        </div>
+
+        <button class="btn compress-btn" id="compressBtn" disabled>
+            <i class="fas fa-magic"></i> Compress Images
+        </button>
+    </div>
+
+    <div id="status"></div>
+    <div class="preview-grid" id="previewGrid"></div>
+</div>
+
+<script>
+class AdvancedImageCompressor {
+    constructor() {
+        this.uploadZone = document.getElementById('upload-zone');
+        this.fileInput = document.getElementById('fileInput');
+        this.qualitySlider = document.getElementById('qualitySlider');
+        this.qualityValue = document.getElementById('qualityValue');
+        this.targetSizeInput = document.getElementById('targetSize');
+        this.sizeUnitSelect = document.getElementById('sizeUnit');
+        this.compressBtn = document.getElementById('compressBtn');
+        this.statusEl = document.getElementById('status');
+        this.previewGrid = document.getElementById('previewGrid');
+        
+        this.files = [];
+        this.init();
+    }
+
+    init() {
+        // Upload zone
+        this.uploadZone.addEventListener('click', () => this.fileInput.click());
+        
+        this.uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            this.uploadZone.classList.add('dragover');
+        });
+        
+        this.uploadZone.addEventListener('dragleave', () => {
+            this.uploadZone.classList.remove('dragover');
+        });
+        
+        this.uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            this.uploadZone.classList.remove('dragover');
+            this.handleFiles(e.dataTransfer.files);
+        });
+
+        this.fileInput.addEventListener('change', (e) => {
+            this.handleFiles(e.target.files);
+        });
+
+        // Quality slider
+        this.qualitySlider.addEventListener('input', (e) => {
+            this.qualityValue.textContent = e.target.value + '%';
+        });
+
+        // Compress button
+        this.compressBtn.addEventListener('click', () => this.compressAll());
+    }
+
+    handleFiles(fileList) {
+        this.files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+        
+        if (this.files.length === 0) {
+            this.showStatus('❌ Please select at least one image', 'error');
+            return;
+        }
+
+        this.compressBtn.disabled = false;
+        this.showStatus(`✅ ${this.files.length} image(s) ready to compress`, 'success');
+    }
+
+    async compressAll() {
+        if (this.files.length === 0) return;
+
+        this.compressBtn.disabled = true;
+        this.showStatus('⏳ Compressing images...', 'loading');
+        this.previewGrid.innerHTML = '';
+
+        for (const file of this.files) {
+            await this.compressImage(file);
+        }
+
+        this.showStatus('🎉 All images compressed successfully!', 'success');
+        this.compressBtn.disabled = false;
+    }
+
+    async compressImage(originalFile) {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                const img = new Image();
+                
+                img.onload = () => {
+                    const quality = parseInt(this.qualitySlider.value) / 100;
+                    const targetSize = this.getTargetSize();
+                    
+                    // Create canvas
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    
+                    const ctx = canvas.getContext('2d', { alpha: false });
+                    ctx.drawImage(img, 0, 0);
+                    
+                    // Compress with quality adjustment
+                    let compressedBlob = null;
+                    let finalQuality = quality;
+                    
+                    canvas.toBlob(
+                        (blob) => {
+                            // If target size is set, adjust quality to match
+                            if (targetSize > 0 && blob.size > targetSize) {
+                                finalQuality = this.calculateQuality(blob.size, targetSize, quality);
+                                
+                                canvas.toBlob(
+                                    (refinedBlob) => {
+                                        compressedBlob = refinedBlob;
+                                        this.displayPreview(originalFile, compressedBlob, img);
+                                        resolve();
+                                    },
+                                    'image/jpeg',
+                                    finalQuality
+                                );
+                            } else {
+                                compressedBlob = blob;
+                                this.displayPreview(originalFile, compressedBlob, img);
+                                resolve();
+                            }
+                        },
+                        'image/jpeg',
+                        finalQuality
+                    );
+                };
+                
+                img.src = e.target.result;
+            };
+            
+            reader.readAsDataURL(originalFile);
+        });
+    }
+
+    calculateQuality(currentSize, targetSize, baseQuality) {
+        const ratio = targetSize / currentSize;
+        const adjustment = Math.sqrt(ratio);
+        return Math.max(0.1, Math.min(baseQuality * adjustment, 1));
+    }
+
+    getTargetSize() {
+        const size = parseFloat(this.targetSizeInput.value) || 0;
+        const unit = this.sizeUnitSelect.value;
+        
+        if (size === 0) return 0;
+        return unit === 'mb' ? size * 1024 * 1024 : size * 1024;
+    }
+
+    displayPreview(originalFile, compressedBlob, imgElement) {
+        const card = document.createElement('div');
+        card.className = 'preview-card';
+        
+        const originalSize = originalFile.size;
+        const compressedSize = compressedBlob.size;
+        const savings = Math.round((1 - compressedSize / originalSize) * 100);
+        
+        const originalUrl = URL.createObjectURL(originalFile);
+        const compressedUrl = URL.createObjectURL(compressedBlob);
+        
+        const fileName = originalFile.name.length > 25 ? 
+            originalFile.name.substring(0, 22) + '...' : originalFile.name;
+        
+        card.innerHTML = `
+            <div class="comparison">
+                <div class="image-section">
+                    <label>Original</label>
+                    <img src="${originalUrl}" alt="Original">
+                </div>
+                <div class="image-section">
+                    <label>Compressed</label>
+                    <img src="${compressedUrl}" alt="Compressed">
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="card-title">📄 ${fileName}</div>
+                
+                <div class="size-info">
+                    <div class="size-item">
+                        <label>Original</label>
+                        <value>${this.formatSize(originalSize)}</value>
+                    </div>
+                    <div class="size-item">
+                        <label>Compressed</label>
+                        <value>${this.formatSize(compressedSize)}</value>
+                    </div>
+                </div>
+                
+                <div class="savings">💾 Saved ${savings}%</div>
+                
+                <div class="card-actions">
+                    <button class="btn btn-download"><i class="fas fa-download"></i> Download</button>
+                    <button class="btn btn-delete"><i class="fas fa-trash"></i> Remove</button>
+                </div>
+            </div>
+        `;
+        
+        card.querySelector('.btn-download').addEventListener('click', () => {
+            const a = document.createElement('a');
+            a.href = compressedUrl;
+            a.download = 'compressed-' + originalFile.name;
+            a.click();
+        });
+        
+        card.querySelector('.btn-delete').addEventListener('click', () => {
+            card.remove();
+            URL.revokeObjectURL(originalUrl);
+            URL.revokeObjectURL(compressedUrl);
+        });
+        
+        this.previewGrid.appendChild(card);
+    }
+
+    formatSize(bytes) {
+        if (bytes === 0) return '0 B';
+        const k = 1024;
+        const sizes = ['B', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+
+    showStatus(msg, type) {
+        this.statusEl.textContent = msg;
+        this.statusEl.className = type;
+    }
+}
+
+window.addEventListener('load', () => {
+    new AdvancedImageCompressor();
+});
+</script>
+
+</body>
+</html>

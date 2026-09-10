@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Images to PDF - HARI TOOLS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f4f7fb 0%, #e8f1f9 100%);
+            min-height: 100vh;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2f6fed, #1a4fd6);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(31, 111, 237, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        header a { color: #fff; text-decoration: none; }
+        header .brand { color: #fff; font-weight: 700; font-size: 1.05rem; }
+        
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px 16px 60px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 8px;
+            color: #1a2b45;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #5c6b82;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+        
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 6px 24px rgba(26, 43, 69, 0.07);
+            margin-bottom: 20px;
+        }
+        
+        .upload-zone {
+            border: 2px dashed #c3cfe4;
+            border-radius: 14px;
+            padding: 40px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: #2f6fed;
+            background: #eef4ff;
+            transform: scale(1.02);
+        }
+        
+        .upload-zone .icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            color: #2f6fed;
+        }
+        
+        .upload-zone p {
+            font-size: 0.9rem;
+            color: #5c6b82;
+        }
+        
+        .upload-zone p strong {
+            color: #2f6fed;
+        }
+        
+        input[type="file"] { display: none; }
+        
+        .images-list {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .image-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border-left: 4px solid #2f6fed;
+        }
+        
+        .image-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+        
+        .image-item .info {
+            flex: 1;
+        }
+        
+        .image-item .name {
+            font-weight: 600;
+            color: #1a2b45;
+            font-size: 0.9rem;
+        }
+        
+        .image-item .size {
+            font-size: 0.8rem;
+            color: #5c6b82;
+        }
+        
+        .image-item button {
+            background: #f0f0f0;
+            border: none;
+            color: #dc3545;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .controls-section {
+            display: none;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a2b45;
+            font-size: 0.9rem;
+        }
+        
+        .control-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #c3cfe4;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 480px) {
+            .button-group { grid-template-columns: 1fr; }
+        }
+        
+        button {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .convert-btn {
+            background: linear-gradient(135deg, #2f6fed, #1a4fd6);
+            color: #fff;
+            grid-column: 1 / -1;
+        }
+        
+        .convert-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(47, 111, 237, 0.3);
+        }
+        
+        .convert-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .reset-btn {
+            background: #eef4ff;
+            color: #1a4fd6;
+            border: 1px solid #c3cfe4;
+        }
+        
+        .reset-btn:hover {
+            background: #e1ecff;
+        }
+        
+        #status {
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            display: none;
+            text-align: center;
+        }
+        
+        #status.loading {
+            background: #eef4ff;
+            color: #1a4fd6;
+            display: block;
+        }
+        
+        #status.success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        
+        #status.error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="index.html"><i class="fas fa-arrow-left"></i> Back</a>
+        <span class="brand"><i class="fas fa-file-pdf"></i> HARI TOOLS</span>
+    </header>
+
+    <main>
+        <h1>📸 Images to PDF</h1>
+        <p class="subtitle">एक PDF में multiple images को जोड़ो - बस drag & drop करो!</p>
+
+        <div class="card">
+            <div class="upload-zone" id="upload-zone">
+                <span class="icon">📁</span>
+                <p><strong>Click या drag-drop करो</strong><br>Multiple images यहाँ</p>
+            </div>
+            <input type="file" id="file-input" accept="image/*" multiple>
+            <p id="status"></p>
+            
+            <div class="images-list" id="images-list">
+                <h3 style="margin-bottom: 12px; color: #1a2b45;">📸 Selected Images:</h3>
+                <div id="images-container"></div>
+            </div>
+        </div>
+
+        <div class="controls-section" id="controls">
+            <div class="control-group">
+                <label><i class="fas fa-file"></i> Page Size</label>
+                <select id="pageSize">
+                    <option value="a4">A4 (Standard)</option>
+                    <option value="letter">Letter (US)</option>
+                    <option value="a3">A3 (Large)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label><i class="fas fa-expand"></i> Image Fit</label>
+                <select id="imageFit">
+                    <option value="contain">Fit Image (with margins)</option>
+                    <option value="cover">Fill Page</option>
+                    <option value="custom">Actual Size</option>
+                </select>
+            </div>
+
+            <div class="button-group">
+                <button class="convert-btn" id="convert-btn"><i class="fas fa-wand-magic-sparkles"></i> Create PDF</button>
+                <button class="reset-btn" id="reset-btn"><i class="fas fa-redo"></i> Reset</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <script>
+        class ImagesToPDF {
+            constructor() {
+                this.uploadZone = document.getElementById('upload-zone');
+                this.fileInput = document.getElementById('file-input');
+                this.imagesList = document.getElementById('images-list');
+                this.imagesContainer = document.getElementById('images-container');
+                this.controlsDiv = document.getElementById('controls');
+                this.convertBtn = document.getElementById('convert-btn');
+                this.resetBtn = document.getElementById('reset-btn');
+                this.statusEl = document.getElementById('status');
+                
+                this.images = [];
+                this.init();
+            }
+
+            init() {
+                this.uploadZone.addEventListener('click', () => this.fileInput.click());
+                
+                this.uploadZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    this.uploadZone.classList.add('dragover');
+                });
+                
+                this.uploadZone.addEventListener('dragleave', () => {
+                    this.uploadZone.classList.remove('dragover');
+                });
+                
+                this.uploadZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    this.uploadZone.classList.remove('dragover');
+                    this.handleFiles(e.dataTransfer.files);
+                });
+
+                this.fileInput.addEventListener('change', (e) => {
+                    this.handleFiles(e.target.files);
+                });
+
+                this.convertBtn.addEventListener('click', () => this.createPDF());
+                this.resetBtn.addEventListener('click', () => this.reset());
+            }
+
+            handleFiles(fileList) {
+                const files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+                
+                if (files.length === 0) {
+                    this.showStatus('❌ कोई image नहीं मिला', 'error');
+                    return;
+                }
+
+                this.images = [];
+                this.imagesContainer.innerHTML = '';
+
+                files.forEach((file, index) => {
+                    const reader = new FileReader();
+                    
+                    reader.onload = (e) => {
+                        this.images.push({
+                            name: file.name,
+                            src: e.target.result,
+                            size: file.size
+                        });
+
+                        const item = document.createElement('div');
+                        item.className = 'image-item';
+                        item.innerHTML = `
+                            <img src="${e.target.result}" alt="${file.name}">
+                            <div class="info">
+                                <div class="name">${file.name}</div>
+                                <div class="size">${(file.size / 1024).toFixed(1)} KB</div>
+                            </div>
+                            <button onclick="this.parentElement.remove()">Remove</button>
+                        `;
+                        this.imagesContainer.appendChild(item);
+
+                        if (this.images.length === files.length) {
+                            this.imagesList.style.display = 'block';
+                            this.controlsDiv.style.display = 'block';
+                            this.showStatus(`✅ ${files.length} images ready`, 'success');
+                        }
+                    };
+                    
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            async createPDF() {
+                if (this.images.length === 0) return;
+
+                this.convertBtn.disabled = true;
+                this.showStatus('⏳ PDF बन रहा है...', 'loading');
+
+                try {
+                    const pageSize = document.getElementById('pageSize').value;
+                    const imageFit = document.getElementById('imageFit').value;
+
+                    const element = document.createElement('div');
+                    element.style.padding = '10px';
+                    element.style.backgroundColor = '#fff';
+
+                    this.images.forEach((img, index) => {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = img.src;
+                        imgElement.style.width = '100%';
+                        imgElement.style.marginBottom = '10px';
+                        imgElement.style.pageBreakAfter = 'always';
+                        element.appendChild(imgElement);
+                    });
+
+                    const opt = {
+                        margin: 5,
+                        filename: 'images-to-pdf.pdf',
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: { scale: 2 },
+                        jsPDF: { orientation: 'p', unit: 'mm', format: pageSize },
+                        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+                    };
+
+                    await html2pdf().set(opt).from(element).save();
+
+                    this.showStatus('🎉 PDF successfully created!', 'success');
+                } catch (e) {
+                    console.error(e);
+                    this.showStatus('❌ Error creating PDF', 'error');
+                } finally {
+                    this.convertBtn.disabled = false;
+                }
+            }
+
+            reset() {
+                this.images = [];
+                this.imagesContainer.innerHTML = '';
+                this.imagesList.style.display = 'none';
+                this.controlsDiv.style.display = 'none';
+                this.fileInput.value = '';
+                this.statusEl.textContent = '';
+            }
+
+            showStatus(msg, type) {
+                this.statusEl.textContent = msg;
+                this.statusEl.className = type;
+            }
+        }
+
+        window.addEventListener('load', () => {
+            new ImagesToPDF();
+        });
+    </script>
+
+</body>
+</html>
