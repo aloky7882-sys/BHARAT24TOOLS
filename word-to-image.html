@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word to Image - HARI TOOLS</title>
+    <title>Word to Image - BHARAT TOOLS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -64,24 +64,16 @@
         .preview {
             display: none;
             margin-top: 20px;
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #c3cfe4;
-            max-height: 500px;
+            max-height: 400px;
             overflow-y: auto;
-        }
-        
-        .preview-content {
-            background: #fff;
-            padding: 20px;
-            border-radius: 6px;
+            border: 1px solid #c3cfe4;
+            border-radius: 8px;
+            padding: 16px;
+            background: #f8f9fa;
+            font-size: 14px;
             line-height: 1.6;
+            color: #333;
         }
-        
-        .preview-content h1 { color: #2f6fed; margin: 15px 0; }
-        .preview-content h2 { color: #1a4fd6; margin: 12px 0; }
-        .preview-content p { margin: 10px 0; }
         
         .controls {
             display: none;
@@ -149,23 +141,21 @@
 
     <header>
         <a href="index.html"><i class="fas fa-arrow-left"></i> Back</a>
-        <span class="brand"><i class="fas fa-image"></i> HARI TOOLS</span>
+        <span class="brand"><i class="fas fa-image"></i> BHARAT TOOLS</span>
     </header>
 
     <main>
         <h1>📄 Word to Image</h1>
-        <p class="subtitle">Word document (.docx) को PNG/JPG image में convert करो!</p>
+        <p class="subtitle">Word document को screenshot में convert करो - PNG/JPG format में!</p>
 
         <div class="card">
             <div class="upload-zone" id="upload-zone">
                 <span class="icon">📁</span>
-                <p><strong>Click या drag करो</strong> Word file यहाँ</p>
+                <p><strong>Click या drag करो</strong> Word file यहाँ (.docx)</p>
             </div>
-            <input type="file" id="file-input" accept=".docx,.doc">
+            <input type="file" id="file-input" accept=".docx">
             
-            <div class="preview" id="preview">
-                <div class="preview-content" id="preview-content"></div>
-            </div>
+            <div class="preview" id="preview"></div>
             
             <div class="controls" id="controls">
                 <div class="control-group">
@@ -173,7 +163,6 @@
                     <select id="format">
                         <option value="png">PNG (Best Quality)</option>
                         <option value="jpg">JPG (Smaller Size)</option>
-                        <option value="webp">WebP (Modern)</option>
                     </select>
                 </div>
                 <button class="convert-btn" id="convert-btn"><i class="fas fa-magic"></i> Convert to Image</button>
@@ -183,8 +172,7 @@
         </div>
     </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.5.1/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <script>
@@ -193,7 +181,6 @@
                 this.uploadZone = document.getElementById('upload-zone');
                 this.fileInput = document.getElementById('file-input');
                 this.preview = document.getElementById('preview');
-                this.previewContent = document.getElementById('preview-content');
                 this.controls = document.getElementById('controls');
                 this.convertBtn = document.getElementById('convert-btn');
                 this.formatSelect = document.getElementById('format');
@@ -231,38 +218,53 @@
                 this.convertBtn.addEventListener('click', () => this.convertToImage());
             }
 
-            async loadWord(file) {
-                this.showStatus('⏳ Reading Word document...', 'loading');
-
-                try {
-                    const arrayBuffer = await file.arrayBuffer();
-                    
-                    const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
-                    
-                    this.previewContent.innerHTML = result.value;
-                    this.preview.style.display = 'block';
-                    this.controls.style.display = 'block';
-                    this.showStatus(`✅ Word document loaded: ${file.name}`, 'success');
-                } catch (e) {
-                    console.error(e);
-                    this.showStatus('❌ Error reading Word file', 'error');
-                }
+            loadWord(file) {
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    try {
+                        const arrayBuffer = e.target.result;
+                        
+                        mammoth.convertToHtml({ arrayBuffer: arrayBuffer })
+                            .then((result) => {
+                                this.preview.innerHTML = result.value;
+                                this.preview.style.display = 'block';
+                                this.controls.style.display = 'block';
+                                this.showStatus(`✅ Document loaded: ${file.name}`, 'success');
+                            })
+                            .catch((e) => {
+                                console.error(e);
+                                this.showStatus('❌ Error reading Word file', 'error');
+                            });
+                    } catch (e) {
+                        console.error(e);
+                        this.showStatus('❌ Error reading file', 'error');
+                    }
+                };
+                
+                reader.readAsArrayBuffer(file);
             }
 
             async convertToImage() {
+                if (!this.preview.textContent.trim()) {
+                    this.showStatus('❌ Preview नहीं मिला', 'error');
+                    return;
+                }
+
                 this.convertBtn.disabled = true;
-                this.showStatus('⏳ Converting to image...', 'loading');
+                this.showStatus('⏳ Image बन रहा है...', 'loading');
 
                 try {
-                    const canvas = await html2canvas(this.previewContent, {
+                    const canvas = await html2canvas(this.preview, {
                         scale: 2,
                         backgroundColor: '#fff',
-                        logging: false
+                        logging: false,
+                        useCORS: true,
+                        allowTaint: true
                     });
 
                     const format = this.formatSelect.value;
-                    const mimeType = format === 'png' ? 'image/png' : 
-                                     format === 'jpg' ? 'image/jpeg' : 'image/webp';
+                    const mimeType = format === 'png' ? 'image/png' : 'image/jpeg';
                     
                     canvas.toBlob((blob) => {
                         const link = document.createElement('a');
@@ -270,13 +272,13 @@
                         link.href = URL.createObjectURL(blob);
                         link.click();
                         
-                        this.showStatus('🎉 Image saved successfully!', 'success');
+                        this.showStatus('🎉 Image download हो गया!', 'success');
                         this.convertBtn.disabled = false;
                     }, mimeType);
 
                 } catch (e) {
                     console.error(e);
-                    this.showStatus('❌ Error converting to image', 'error');
+                    this.showStatus('❌ Error converting image', 'error');
                     this.convertBtn.disabled = false;
                 }
             }

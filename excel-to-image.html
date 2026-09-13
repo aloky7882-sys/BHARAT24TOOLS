@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel to Image - HARI TOOLS</title>
+    <title>Excel to Image - BHARAT TOOLS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -69,6 +69,7 @@
             border: 1px solid #c3cfe4;
             border-radius: 8px;
             padding: 10px;
+            background: #f8f9fa;
         }
         
         table {
@@ -155,17 +156,17 @@
 
     <header>
         <a href="index.html"><i class="fas fa-arrow-left"></i> Back</a>
-        <span class="brand"><i class="fas fa-image"></i> HARI TOOLS</span>
+        <span class="brand"><i class="fas fa-image"></i> BHARAT TOOLS</span>
     </header>
 
     <main>
         <h1>📊 Excel to Image</h1>
-        <p class="subtitle">Excel spreadsheet को PNG/JPG image में convert करो!</p>
+        <p class="subtitle">Excel file ko screenshot mein convert karo - PNG/JPG format!</p>
 
         <div class="card">
             <div class="upload-zone" id="upload-zone">
                 <span class="icon">📁</span>
-                <p><strong>Click या drag करो</strong> Excel file यहाँ</p>
+                <p><strong>Click ya drag करो</strong> Excel file यहाँ</p>
             </div>
             <input type="file" id="file-input" accept=".xlsx,.xls,.csv">
             
@@ -179,7 +180,6 @@
                     <select id="format">
                         <option value="png">PNG (Best Quality)</option>
                         <option value="jpg">JPG (Smaller Size)</option>
-                        <option value="webp">WebP (Modern)</option>
                     </select>
                 </div>
                 <button class="convert-btn" id="convert-btn"><i class="fas fa-magic"></i> Convert to Image</button>
@@ -204,7 +204,6 @@
                 this.formatSelect = document.getElementById('format');
                 this.statusEl = document.getElementById('status');
                 
-                this.workbook = null;
                 this.init();
             }
 
@@ -243,9 +242,8 @@
                 reader.onload = (e) => {
                     try {
                         const data = new Uint8Array(e.target.result);
-                        this.workbook = XLSX.read(data, { type: 'array' });
-                        
-                        const worksheet = this.workbook.Sheets[this.workbook.SheetNames[0]];
+                        const workbook = XLSX.read(data, { type: 'array' });
+                        const worksheet = workbook.Sheets[workbook.SheetNames[0]];
                         const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
                         
                         this.displayPreview(jsonData);
@@ -264,7 +262,7 @@
                 
                 if (data.length === 0) return;
                 
-                // Add headers
+                // Headers
                 const headerRow = document.createElement('tr');
                 for (let i = 0; i < Math.min(data[0].length, 10); i++) {
                     const th = document.createElement('th');
@@ -273,8 +271,8 @@
                 }
                 this.previewTable.appendChild(headerRow);
                 
-                // Add data rows
-                for (let i = 1; i < Math.min(data.length, 20); i++) {
+                // Data rows (max 15)
+                for (let i = 1; i < Math.min(data.length, 15); i++) {
                     const row = document.createElement('tr');
                     for (let j = 0; j < Math.min(data[i].length, 10); j++) {
                         const td = document.createElement('td');
@@ -288,20 +286,20 @@
             }
 
             async convertToImage() {
-                if (!this.workbook) return;
+                if (!this.previewTable.children.length) return;
 
                 this.convertBtn.disabled = true;
-                this.showStatus('⏳ Converting to image...', 'loading');
+                this.showStatus('⏳ Image बन रहा है...', 'loading');
 
                 try {
                     const canvas = await html2canvas(this.previewTable, {
                         scale: 2,
-                        backgroundColor: '#fff'
+                        backgroundColor: '#fff',
+                        logging: false
                     });
 
                     const format = this.formatSelect.value;
-                    const mimeType = format === 'png' ? 'image/png' : 
-                                     format === 'jpg' ? 'image/jpeg' : 'image/webp';
+                    const mimeType = format === 'png' ? 'image/png' : 'image/jpeg';
                     
                     canvas.toBlob((blob) => {
                         const link = document.createElement('a');
@@ -309,13 +307,13 @@
                         link.href = URL.createObjectURL(blob);
                         link.click();
                         
-                        this.showStatus('🎉 Image saved successfully!', 'success');
+                        this.showStatus('🎉 Image download हो गया!', 'success');
                         this.convertBtn.disabled = false;
                     }, mimeType);
 
                 } catch (e) {
                     console.error(e);
-                    this.showStatus('❌ Error converting to image', 'error');
+                    this.showStatus('❌ Error converting', 'error');
                     this.convertBtn.disabled = false;
                 }
             }
