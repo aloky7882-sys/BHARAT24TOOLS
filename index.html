@@ -1,547 +1,565 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <!-- Google Search Console Verification Tag -->
+    <meta name="google-site-verification" content="UZJzI8M90_1G50pZunC6tTebA2r_X2-6jY_eE2O_fK4" />
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="UZJzI8M90_1G50pZunC6tTebA2r_X2-6jY_eE2O_fK4" />
-    
-    <title>BharatOS-Tools - Free Online Tools</title>
-    <meta name="description" content="BharatOS-Tools - Free Image, PDF, Excel, Word Conversion Tools. No signup, no watermark, 100% free. Compress images, convert files, and more!">
-    <meta name="keywords" content="bharat tools, image compressor, pdf tools, excel to image, word to image, free online tools">
-    <meta name="author" content="Alok Yadav">
-    <meta name="theme-color" content="#a855f7">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-        }
-        
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow-x: hidden;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            position: relative;
-        }
 
-        /* ========== ANIMATED BACKGROUND ========== */
-        .bg-container {
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <title>BharatOS-Tools - Free Image, PDF & Calculator Tools</title>
+
+    <meta name="description" content="BharatOS-Tools offers free online Image Tools, PDF Tools, Calculators, QR Generator, Password Generator and many more useful utilities. No signup, no watermark, 100% free.">
+    <meta name="keywords" content="bharat tools,image compressor,pdf tools,calculator,image resizer,free online tools,qr code,password generator">
+    <meta name="author" content="Alok">
+    <meta name="theme-color" content="#0d6efd">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT-TOOLS/">
+
+    <!-- Open Graph / Social sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="BharatOS-Tools - Free Image, PDF & Calculator Tools">
+    <meta property="og:description" content="Free online Image Tools, PDF Tools, Calculators, QR Generator and Password Generator. No signup, no watermark, 100% free.">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT-TOOLS/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="BharatOS-Tools - Free Image, PDF & Calculator Tools">
+    <meta name="twitter:description" content="Free online Image Tools, PDF Tools, Calculators, QR Generator and Password Generator. No signup, no watermark, 100% free.">
+
+    <!-- Structured data for Google -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "BharatOS-Tools",
+        "url": "https://aloky7882-sys.github.io/BHARAT-TOOLS/",
+        "description": "Free online Image, PDF and Calculator tools. No signup, no watermark, 100% free."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is BharatOS-Tools free to use?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, every tool on BharatOS-Tools is completely free to use. There is no signup, no hidden charges and no watermark added to your files."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Are my files uploaded to a server?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. All conversions and calculations run directly inside your browser using JavaScript. Your images, PDFs and Excel files are never uploaded or stored on any server."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do I need to install any software to use BharatOS-Tools?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No installation is required. BharatOS-Tools works entirely in your web browser on desktop, laptop and mobile devices."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        /* Shooting Stars Background */
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
-        }
-
-        .bg-animated {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                135deg, 
-                #0f0f1e 0%,
-                #1a0a2e 15%,
-                #16213e 30%,
-                #0f3460 50%,
-                #533483 70%,
-                #2a1a4e 85%,
-                #0f0f1e 100%
-            );
-            background-size: 400% 400%;
-            animation: gradient-shift 20s ease infinite;
-        }
-
-        @keyframes gradient-shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Particles */
-        .particles-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+            background: radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+                        linear-gradient(to bottom, #0a0e27 0%, #1a1a3e 50%, #0f1f3f 100%);
+            background-attachment: fixed;
+            pointer-events: none;
             z-index: -1;
         }
 
-        .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: rgba(168, 85, 247, 0.6);
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+        /* Shooting Stars */
+        @keyframes shoot {
+            0% { transform: translateX(-100vw) translateY(-100vh) rotate(45deg); opacity: 1; }
+            100% { transform: translateX(100vw) translateY(100vh) rotate(45deg); opacity: 0; }
         }
 
-        /* ========== HEADER ========== */
-        header {
-            background: rgba(15, 15, 30, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid rgba(168, 85, 247, 0.3);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .brand {
-            color: #fff;
-            font-weight: 800;
-            font-size: 1.4rem;
-            background: linear-gradient(135deg, #a855f7, #ec4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            letter-spacing: 1px;
-        }
-
-        .brand i {
-            font-size: 1.5rem;
-            color: #a855f7;
-        }
-
-        nav {
-            display: flex;
-            gap: 12px;
-        }
-
-        nav button {
-            background: rgba(168, 85, 247, 0.1);
-            border: 1px solid rgba(168, 85, 247, 0.4);
-            color: #d8bfd8;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        nav button:hover {
-            background: rgba(168, 85, 247, 0.2);
-            border-color: #a855f7;
-            color: #fff;
-        }
-
-        nav button.active {
-            background: linear-gradient(135deg, #a855f7, #ec4899);
-            border: none;
-            color: #fff;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* ========== MAIN CONTENT ========== */
-        main {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 50px 24px 80px;
-            position: relative;
-            z-index: 10;
-        }
-
-        h1 {
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 12px;
-            color: #fff;
-            background: linear-gradient(135deg, #a855f7, #ec4899, #f97316);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 800;
-            text-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
-            letter-spacing: 2px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #cbd5e1;
-            margin-bottom: 50px;
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
-        }
-
-        .tool-category {
-            margin-bottom: 60px;
-            display: none;
-        }
-
-        .tool-category.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section-title {
-            font-size: 1.8rem;
-            color: #e0e7ff;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            padding-bottom: 12px;
-            border-bottom: 2px solid rgba(168, 85, 247, 0.3);
-        }
-
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 28px;
-        }
-
-        .card {
-            background: rgba(30, 27, 75, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 28px 24px;
-            text-align: center;
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg, 
-                transparent 30%, 
-                rgba(168, 85, 247, 0.1) 50%, 
-                transparent 70%
-            );
-            animation: shimmer 3s infinite;
-            pointer-events: none;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translate(-100%, -100%) rotate(45deg); }
-            100% { transform: translate(100%, 100%) rotate(45deg); }
-        }
-
-        .card:hover {
-            transform: translateY(-15px);
-            border-color: rgba(168, 85, 247, 0.8);
-            background: rgba(50, 40, 100, 0.9);
-            box-shadow: 
-                0 25px 50px rgba(168, 85, 247, 0.25),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .tool-icon {
-            font-size: 3.5rem;
-            margin-bottom: 16px;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.3));
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-
-        .card h2 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: #e0e7ff;
-            font-weight: 700;
-        }
-
-        .card p {
-            color: #a5b4fc;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .tool-btn {
-            background: linear-gradient(135deg, #a855f7, #ec4899);
-            color: #fff;
-            padding: 12px 28px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            font-weight: 700;
-            position: relative;
-            overflow: hidden;
-            font-size: 0.95rem;
-        }
-
-        .tool-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.6s;
-        }
-
-        .tool-btn:hover::before {
-            left: 100%;
-        }
-
-        .tool-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.4);
-        }
-
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 768px) {
-            nav { display: none; }
-            .menu-toggle { display: block; }
-            .container { grid-template-columns: 1fr; }
-            h1 { font-size: 2rem; }
-            header { padding: 12px 16px; }
-            .brand { font-size: 1.1rem; }
-        }
-
-        /* ========== SCROLLBAR ========== */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(168, 85, 247, 0.05);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #a855f7, #ec4899);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, #ec4899, #f97316);
+        .shooting-star {
+            position: fixed;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(to bottom, #fff, transparent);
+            box-shadow: 0 0 10px 2px #fff;
+            animation: shoot linear infinite;
+            z-index: -1;
         }
     </style>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 
 <body>
-    <!-- Background Container -->
-    <div class="bg-container">
-        <div class="bg-animated"></div>
-        <div class="particles-container" id="particles"></div>
+
+    <!--================ NAVBAR ================-->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-bolt"></i>
+            <span>BharatOS-Tools</span>
+        </div>
+        <div class="menu-btn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#image-tools">Image Tools</a></li>
+            <li><a href="#pdf-tools">PDF Tools</a></li>
+            <li><a href="#design-tools">Design Tools</a></li>
+            <li><a href="#calculator-tools">Calculators</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!--================ HERO SECTION ================-->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge">🚀 India's Fast Growing Tool Website</span>
+            <h1>Free Online Image, PDF & Calculator Tools</h1>
+            <p>
+                Compress Images, Merge PDF, Convert Files, Generate QR Codes,
+                Calculate EMI, Password Generator and much more...
+                <br>No Signup • No Watermark • 100% Free
+            </p>
+            <div class="hero-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="search" placeholder="Search any tool...">
+            </div>
+            <div class="hero-buttons">
+                <a href="#image-tools" class="primary-btn">Explore Tools</a>
+                <a href="#pdf-tools" class="secondary-btn">PDF Tools</a>
+            </div>
+            <div class="stats">
+                <div>
+                    <h2>100+</h2>
+                    <p>Tools</p>
+                </div>
+                <div>
+                    <h2>100K+</h2>
+                    <p>Users</p>
+                </div>
+                <div>
+                    <h2>24×7</h2>
+                    <p>Available</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--================ CATEGORY SECTION ================-->
+    <section class="categories">
+        <div class="category-box">
+            <i class="fa-solid fa-image"></i>
+            <span>Image Tools</span>
+        </div>
+        <div class="category-box">
+            <i class="fa-solid fa-file-pdf"></i>
+            <span>PDF Tools</span>
+        </div>
+        <div class="category-box">
+            <i class="fa-solid fa-calculator"></i>
+            <span>Calculators</span>
+        </div>
+        <div class="category-box">
+            <i class="fa-solid fa-qrcode"></i>
+            <span>QR Tools</span>
+        </div>
+        <div class="category-box">
+            <i class="fa-solid fa-font"></i>
+            <span>Text Tools</span>
+        </div>
+        <div class="category-box">
+            <i class="fa-solid fa-palette"></i>
+            <span>Design Tools</span>
+        </div>
+    </section>
+
+    <!--================ FILTER TABS ================-->
+    <section class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All Tools</button>
+        <button class="filter-tab" data-filter="image">Image Tools</button>
+        <button class="filter-tab" data-filter="pdf">PDF Tools</button>
+        <button class="filter-tab" data-filter="convert">Conversions</button>
+        <button class="filter-tab" data-filter="calc">Calculators</button>
+        <button class="filter-tab" data-filter="design">Design Tools</button>
+    </section>
+
+    <!--================ TOOLS SECTION ================-->
+    <section class="tools-section">
+
+        <!-- ================= IMAGE TOOLS ================= -->
+        <div class="tool-category" data-category="image">
+        <h2 id="image-tools" class="section-title">🖼 Image Tools</h2>
+        <div class="container">
+            <div class="card">
+                <div class="tool-icon">✨</div>
+                <h2>Image Enhancer</h2>
+                <p>Increase image quality with Sharpening, Upscaling & Denoising features.</p>
+                <a href="image-enhancer.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🗜</div>
+                <h2>Image Compressor</h2>
+                <p>Reduce image file size while maintaining excellent quality.</p>
+                <a href="image-compressor.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🎭</div>
+                <h2>Background Remover</h2>
+                <p>Remove background from images instantly using AI technology.</p>
+                <a href="background-remover.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">📐</div>
+                <h2>Image Resizer</h2>
+                <p>Resize images to custom dimensions with high quality output.</p>
+                <a href="image-resizer.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🎨</div>
+                <h2>Image Converter</h2>
+                <p>Convert images between PNG, JPG, WebP, TIFF and more formats.</p>
+                <a href="image-converter-full.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🔄</div>
+                <h2>Image Rotator</h2>
+                <p>Rotate, flip and mirror your images easily.</p>
+                <a href="image-rotator.html" class="tool-btn">Open Tool</a>
+            </div>
+        </div>
+        </div>
+
+        <!-- ================= PDF TOOLS ================= -->
+        <div class="tool-category" data-category="pdf">
+        <h2 id="pdf-tools" class="section-title">📄 PDF Tools</h2>
+        <div class="container">
+            <div class="card">
+                <div class="tool-icon">📄</div>
+                <h2>JPG to PDF</h2>
+                <p>Convert JPG images into PDF documents.</p>
+                <a href="jpg-to-pdf-dragdrop.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🖼</div>
+                <h2>PDF to JPG</h2>
+                <p>Convert PDF pages into high-quality JPG images.</p>
+                <a href="pdf-to-jpg-dragdrop.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">📊</div>
+                <h2>Excel to PDF</h2>
+                <p>Convert Excel spreadsheets into PDF documents instantly.</p>
+                <a href="excel-to-pdf-dragdrop.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">📑</div>
+                <h2>Merge PDF</h2>
+                <p>Combine multiple PDF files into one.</p>
+                <a href="merge-pdf-dragdrop.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">✂️</div>
+                <h2>Split PDF</h2>
+                <p>Extract or split pages from any PDF file.</p>
+                <a href="split-pdf-dragdrop.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">📃</div>
+                <h2>Word to PDF</h2>
+                <p>Convert Word (.docx) documents into PDF instantly.</p>
+                <a href="word-to-pdf.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">📸</div>
+                <h2>Images to PDF</h2>
+                <p>Combine multiple images into a single PDF document.</p>
+                <a href="images-to-pdf.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">📊</div>
+                <h2>Excel to Image</h2>
+                <p>Convert Excel spreadsheets to PNG, JPG, or WebP images.</p>
+                <a href="excel-to-image.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">📄</div>
+                <h2>Word to Image</h2>
+                <p>Convert Word documents to high-quality images.</p>
+                <a href="word-to-image.html" class="tool-btn">Open Tool</a>
+            </div>
+        </div>
+        </div>
+
+        <!-- ================= DESIGN & DEVELOPER TOOLS ================= -->
+        <div class="tool-category" data-category="design">
+        <h2 id="design-tools" class="section-title">🎨 Design & Developer Tools</h2>
+        <div class="container">
+            <div class="card">
+                <div class="tool-icon">🎨</div>
+                <h2>CSS Gradient Generator</h2>
+                <p>Build multi-color gradients visually and copy ready-to-use CSS.</p>
+                <a href="css-gradient-generator.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">📱</div>
+                <h2>QR Code with Logo</h2>
+                <p>Create a custom QR code with your logo embedded in the center.</p>
+                <a href="qr-code-logo.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🔐</div>
+                <h2>Password Generator</h2>
+                <p>Generate strong, random passwords for maximum security.</p>
+                <a href="password-generator.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🎯</div>
+                <h2>Color Picker</h2>
+                <p>Pick colors and get RGB, HEX, and HSL codes instantly.</p>
+                <a href="color-picker.html" class="tool-btn">Open Tool</a>
+            </div>
+        </div>
+        </div>
+
+        <!-- ================= CALCULATOR TOOLS ================= -->
+        <div class="tool-category" data-category="calc">
+        <h2 id="calculator-tools" class="section-title">🧮 Calculators</h2>
+        <div class="container">
+            <div class="card">
+                <div class="tool-icon">🏦</div>
+                <h2>EMI Calculator</h2>
+                <p>Calculate your loan EMI, total interest and monthly payment easily.</p>
+                <a href="emi-calculator.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">📊</div>
+                <h2>GST Calculator</h2>
+                <p>Calculate GST on any amount with automatic price breakdown.</p>
+                <a href="gst-calculator.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">💰</div>
+                <h2>Currency Converter</h2>
+                <p>Convert between 150+ currencies with real-time exchange rates.</p>
+                <a href="currency-converter.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">📐</div>
+                <h2>Unit Converter</h2>
+                <p>Convert between Length, Weight, Volume and Temperature units.</p>
+                <a href="unit-converter.html" class="tool-btn">Open Tool</a>
+            </div>
+        </div>
+        </div>
+
+    </section>
+
+    <!--================ ABOUT SECTION ================-->
+    <section class="about-section">
+        <h2>About Bharat Tools</h2>
+        <p>
+            BharatOS-Tools is built to make online conversions and calculations simple and fast. We offer a free and secure
+            place to access tools for everyday needs — compressing images, converting files, calculating EMI, generating
+            QR codes, and other utilities. Every tool is developed with the goal of saving you time and money while
+            giving you fast, watermark-free results.
+        </p>
+
+        <h2>How to Use Bharat Tools</h2>
+        <p>
+            Using any tool on BharatOS-Tools is simple: open the tool you need from the Image
+            Tools, PDF Tools or Calculators section above, upload or drag-and-drop your file into
+            the box, and click the action button. Your converted file or result downloads
+            automatically — there is no waiting, no email verification and no account required.
+        </p>
+
+        <h2>Why Choose Bharat Tools</h2>
+        <p>
+            Unlike many online converters that limit free usage, add watermarks, or require a
+            paid plan for basic features, BharatOS-Tools keeps every tool completely free with no
+            daily limits. The interface is designed to be lightweight and mobile-friendly, so the
+            tools load quickly even on slower internet connections common across India.
+        </p>
+
+        <h2>Frequently Asked Questions</h2>
+        <details style="margin-bottom:12px;">
+            <summary style="cursor:pointer;font-weight:600;">Is Bharat Tools free to use?</summary>
+            <p>Yes, every tool on BharatOS-Tools is completely free to use. There is no signup, no hidden charges and no watermark added to your files.</p>
+        </details>
+        <details style="margin-bottom:12px;">
+            <summary style="cursor:pointer;font-weight:600;">Are my files uploaded to a server?</summary>
+            <p>No. All conversions and calculations run directly inside your browser using JavaScript. Your images, PDFs and Excel files are never uploaded or stored on any server.</p>
+        </details>
+        <details style="margin-bottom:12px;">
+            <summary style="cursor:pointer;font-weight:600;">Do I need to install any software to use Bharat Tools?</summary>
+            <p>No installation is required. BharatOS-Tools works entirely in your web browser on desktop, laptop and mobile devices.</p>
+        </details>
+    </section>
+
+    <!--================ MOUNTAIN ILLUSTRATION ================-->
+    <div style="width:100%; overflow:hidden; line-height:0; background:#eaf3ff;">
+        <svg viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; display:block;">
+            <!-- sky -->
+            <rect x="0" y="0" width="1200" height="260" fill="#eaf3ff"/>
+            <!-- sun -->
+            <circle cx="1030" cy="70" r="42" fill="#ffd166"/>
+            <!-- far mountains -->
+            <polygon points="0,220 180,90 340,220" fill="#a9c8f0"/>
+            <polygon points="220,220 420,60 620,220" fill="#8fb8ea"/>
+            <polygon points="560,220 760,100 940,220" fill="#a9c8f0"/>
+            <!-- clouds -->
+            <g fill="#ffffff" opacity="0.85">
+                <ellipse cx="150" cy="60" rx="40" ry="16"/>
+                <ellipse cx="185" cy="52" rx="30" ry="14"/>
+                <ellipse cx="820" cy="45" rx="34" ry="14"/>
+                <ellipse cx="855" cy="55" rx="26" ry="12"/>
+            </g>
+            <!-- near mountains with snow caps, tricolor accent -->
+            <polygon points="-20,240 160,70 340,240" fill="#0d6efd"/>
+            <polygon points="120,105 160,70 200,105 175,100 160,85 145,100" fill="#ffffff"/>
+
+            <polygon points="260,240 470,40 680,240" fill="#0b5ed7"/>
+            <polygon points="415,90 470,40 525,90 495,84 470,60 445,84" fill="#ffffff"/>
+
+            <polygon points="600,240 800,95 1000,240" fill="#0d6efd"/>
+            <polygon points="755,130 800,95 845,130 818,125 800,108 782,125" fill="#ffffff"/>
+
+            <polygon points="880,240 1080,110 1220,240" fill="#0b5ed7"/>
+
+            <!-- ground / grass strip -->
+            <rect x="0" y="235" width="1200" height="25" fill="#138808"/>
+        </svg>
     </div>
 
-    <!-- Header -->
-    <header>
-        <div class="brand">
-            <i class="fas fa-microchip"></i>
-            BharatOS-Tools
-        </div>
-        <button class="menu-toggle"><i class="fas fa-bars"></i></button>
-        <nav>
-            <button class="filter-btn active" data-filter="all">All Tools</button>
-            <button class="filter-btn" data-filter="image">Image</button>
-            <button class="filter-btn" data-filter="pdf">PDF</button>
-            <button class="filter-btn" data-filter="design">Design</button>
-        </nav>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-        <h1>🚀 BharatOS-Tools</h1>
-        <p class="subtitle">Free • Fast • Secure - सभी Tools बिल्कुल Free हैं! | Made for India 🇮🇳</p>
-
-        <!-- IMAGE TOOLS -->
-        <div class="tool-category active" data-category="all">
-            <div class="section-title">🖼️ Image Tools</div>
-            <div class="container">
-                <div class="card">
-                    <div class="tool-icon">✨</div>
-                    <h2>Image Enhancer</h2>
-                    <p>Image quality बढ़ाओ - Sharpen, Upscale, Denoise</p>
-                    <a href="image-enhancer.html" class="tool-btn"><i class="fas fa-magic"></i> Open</a>
+    <!--================ FOOTER ================-->
+    <footer id="contact" style="background: #0b1a2e; color: #f0f4fa; padding: 50px 20px 20px;">
+        <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:30px;">
+            <!-- Brand -->
+            <div style="flex:1 1 220px;">
+                <h2 style="color:#fff;font-size:1.8rem;display:flex;align-items:center;gap:8px;">
+                    <i class="fa-solid fa-bolt" style="color:#0d6efd;"></i> BharatOS-Tools
+                </h2>
+                <p style="color:#a0b8d0;margin-top:8px;">Free online Image, PDF &amp; Utility tools. No signup, no watermark, 100% free.</p>
+                <div style="margin-top:16px;display:flex;gap:16px;font-size:1.4rem;">
+                    <a href="https://www.facebook.com/alokyadav.roy" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style="color:#a0b8d0;transition:0.3s;"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/alok_y26?igsi=eDJnYzNiOTYzdWk5" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="color:#a0b8d0;transition:0.3s;"><i class="fa-brands fa-instagram"></i></a>
                 </div>
+            </div>
 
-                <div class="card">
-                    <div class="tool-icon">🗜️</div>
-                    <h2>Image Compressor</h2>
-                    <p>Image size कम करो - Quality maintain करते हुए</p>
-                    <a href="image-compressor.html" class="tool-btn"><i class="fas fa-compress"></i> Open</a>
-                </div>
+            <!-- Quick Links -->
+            <div style="flex:1 1 160px;">
+                <h4 style="color:#fff;font-size:1.2rem;margin-bottom:16px;">Quick Links</h4>
+                <ul style="list-style:none;padding:0;line-height:2.2;">
+                    <li><a href="index.html#image-tools" style="color:#a0b8d0;text-decoration:none;">Image Tools</a></li>
+                    <li><a href="index.html#pdf-tools" style="color:#a0b8d0;text-decoration:none;">PDF Tools</a></li>
+                    <li><a href="index.html#calculator-tools" style="color:#a0b8d0;text-decoration:none;">Calculators</a></li>
+                    <li><a href="about.html" style="color:#a0b8d0;text-decoration:none;">About Us</a></li>
+                </ul>
+            </div>
 
-                <div class="card">
-                    <div class="tool-icon">🎭</div>
-                    <h2>Background Remover</h2>
-                    <p>Background remove करो - AI powered technology</p>
-                    <a href="background-remover.html" class="tool-btn"><i class="fas fa-wand-magic-sparkles"></i> Open</a>
-                </div>
+            <!-- Legal -->
+            <div style="flex:1 1 160px;">
+                <h4 style="color:#fff;font-size:1.2rem;margin-bottom:16px;">Legal</h4>
+                <ul style="list-style:none;padding:0;line-height:2.2;">
+                    <li><a href="privacy-policy.html" style="color:#a0b8d0;text-decoration:none;">Privacy Policy</a></li>
+                    <li><a href="terms.html" style="color:#a0b8d0;text-decoration:none;">Terms of Service</a></li>
+                    <li><a href="cookies.html" style="color:#a0b8d0;text-decoration:none;">Cookie Policy</a></li>
+                    <li><a href="contact.html" style="color:#a0b8d0;text-decoration:none;">Contact</a></li>
+                </ul>
+            </div>
 
-                <div class="card">
-                    <div class="tool-icon">📊</div>
-                    <h2>Image to Excel</h2>
-                    <p>Image को Excel spreadsheet में embed करो</p>
-                    <a href="image-to-excel.html" class="tool-btn"><i class="fas fa-table"></i> Open</a>
-                </div>
-
-                <div class="card">
-                    <div class="tool-icon">📝</div>
-                    <h2>Image to Word</h2>
-                    <p>Image को Word document में add करो</p>
-                    <a href="image-to-word.html" class="tool-btn"><i class="fas fa-file-word"></i> Open</a>
+            <!-- Contact -->
+            <div style="flex:1 1 220px;">
+                <h4 style="color:#fff;font-size:1.2rem;margin-bottom:16px;">Contact</h4>
+                <p style="color:#a0b8d0;"><i class="fa-regular fa-envelope" style="margin-right:10px;"></i> aloky7882@gmail.com</p>
+                <p style="color:#a0b8d0;margin-top:8px;"><i class="fa-regular fa-clock" style="margin-right:10px;"></i> 24×7 available</p>
+                <div style="margin-top:20px;background:#1a2d44;padding:12px 16px;border-radius:30px;display:inline-block;">
+                    <span style="color:#a0b8d0;font-size:0.9rem;"><i class="fa-solid fa-cookie-bite" style="margin-right:8px;"></i> We use cookies</span>
                 </div>
             </div>
         </div>
 
-        <!-- PDF & CONVERSION TOOLS -->
-        <div class="tool-category active" data-category="all">
-            <div class="section-title">📄 PDF & Conversion Tools</div>
-            <div class="container">
-                <div class="card">
-                    <div class="tool-icon">📸</div>
-                    <h2>Images to PDF</h2>
-                    <p>Multiple images को एक PDF में combine करो</p>
-                    <a href="images-to-pdf.html" class="tool-btn"><i class="fas fa-file-pdf"></i> Open</a>
-                </div>
-
-                <div class="card">
-                    <div class="tool-icon">📊</div>
-                    <h2>Excel to Image</h2>
-                    <p>Excel spreadsheet को PNG/JPG में convert करो</p>
-                    <a href="excel-to-image.html" class="tool-btn"><i class="fas fa-image"></i> Open</a>
-                </div>
-
-                <div class="card">
-                    <div class="tool-icon">📄</div>
-                    <h2>Word to Image</h2>
-                    <p>Word document को high-quality images में बदलो</p>
-                    <a href="word-to-image.html" class="tool-btn"><i class="fas fa-image"></i> Open</a>
-                </div>
-            </div>
+        <!-- Bottom bar -->
+        <div style="border-top:1px solid #1f3450;margin-top:40px;padding-top:20px;text-align:center;color:#6f8aa8;font-size:0.95rem;">
+            &copy; 2026 BharatOS-Tools. All rights reserved. | Made with ❤️ in India
         </div>
+    </footer>
 
-        <!-- DESIGN & DEVELOPER TOOLS -->
-        <div class="tool-category active" data-category="all">
-            <div class="section-title">🎨 Design & Developer Tools</div>
-            <div class="container">
-                <div class="card">
-                    <div class="tool-icon">🌈</div>
-                    <h2>Color Picker</h2>
-                    <p>Perfect colors find करो - RGB, HEX formats में</p>
-                    <a href="color-picker.html" class="tool-btn"><i class="fas fa-eyedropper"></i> Open</a>
-                </div>
-
-                <div class="card">
-                    <div class="tool-icon">📏</div>
-                    <h2>Unit Converter</h2>
-                    <p>Length, Weight, Volume units convert करो</p>
-                    <a href="unit-converter.html" class="tool-btn"><i class="fas fa-arrows-alt"></i> Open</a>
-                </div>
-
-                <div class="card">
-                    <div class="tool-icon">🔐</div>
-                    <h2>Password Generator</h2>
-                    <p>Strong, secure passwords तुरंत generate करो</p>
-                    <a href="password-generator.html" class="tool-btn"><i class="fas fa-key"></i> Open</a>
-                </div>
-            </div>
-        </div>
-    </main>
-
+    <!--================ SHOOTING STARS SCRIPT ================-->
     <script>
-        // ========== GENERATE ANIMATED PARTICLES ==========
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 60; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                
-                // Random animation
-                const duration = Math.random() * 10 + 15;
-                const delay = Math.random() * 5;
-                
-                particle.style.animation = `float-particle ${duration}s linear ${delay}s infinite`;
-                particle.style.opacity = Math.random() * 0.5 + 0.3;
-                
-                container.appendChild(particle);
-            }
+        function createShootingStar() {
+            const star = document.createElement('div');
+            star.className = 'shooting-star';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            const duration = Math.random() * 2 + 2;
+            star.style.animationDuration = duration + 's';
+            const delay = Math.random() * 5;
+            star.style.animationDelay = delay + 's';
+            document.body.appendChild(star);
+            
+            setTimeout(() => star.remove(), (duration + delay) * 1000);
         }
 
-        // Add floating animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes float-particle {
-                0% { transform: translateY(0) translateX(0); opacity: 0; }
-                10% { opacity: 1; }
-                90% { opacity: 1; }
-                100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
+        setInterval(createShootingStar, 800);
+    </script>
 
-        // ========== FILTER FUNCTIONALITY ==========
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                const filter = this.dataset.filter;
-                document.querySelectorAll('.tool-category').forEach(cat => {
-                    if (filter === 'all') {
-                        cat.classList.add('active');
-                    } else {
-                        const title = cat.querySelector('.section-title');
-                        if (title) {
-                            const match = 
-                                (filter === 'image' && title.textContent.includes('Image')) ||
-                                (filter === 'pdf' && (title.textContent.includes('PDF') || title.textContent.includes('Conversion'))) ||
-                                (filter === 'design' && title.textContent.includes('Design'));
-                            
-                            match ? cat.classList.add('active') : cat.classList.remove('active');
+    <!--================ CATEGORY FILTER TABS SCRIPT ================-->
+    <script>
+        (function () {
+            var tabs = document.querySelectorAll('.filter-tab');
+            var categories = document.querySelectorAll('.tool-category');
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    var filter = tab.getAttribute('data-filter');
+                    tabs.forEach(function (t) {
+                        t.classList.remove('active');
+                        t.style.background = '#fff';
+                        t.style.color = '#4b5563';
+                        t.style.border = '1px solid #d5d9e0';
+                        t.style.fontWeight = '500';
+                    });
+                    tab.classList.add('active');
+                    tab.style.background = '#1a73e8';
+                    tab.style.color = '#fff';
+                    tab.style.border = 'none';
+                    tab.style.fontWeight = '600';
+                    categories.forEach(function (cat) {
+                        if (filter === 'all' || cat.getAttribute('data-category') === filter) {
+                            cat.style.display = '';
+                        } else {
+                            cat.style.display = 'none';
                         }
-                    }
+                    });
                 });
             });
-        });
-
-        // Initialize particles on load
-        window.addEventListener('load', createParticles);
+        })();
     </script>
+
+    <!--================ MAIN SCRIPT (menu, search, animations) ================-->
+    <script src="script.js"></script>
 
 </body>
 </html>
