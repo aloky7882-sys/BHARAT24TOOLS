@@ -2,21 +2,74 @@
 <html lang="en">
 
 <head>
+    <!-- Google Search Console Verification Tag -->
+    <meta name="google-site-verification" content="UZJzI8M90_1G50pZunC6tTebA2r_X2-6jY_eE2O_fK4" />
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
     <title>BharatOS-Tools - Free Image, PDF & Calculator Tools</title>
+
     <meta name="description" content="BharatOS-Tools offers free online Image Tools, PDF Tools, Calculators, QR Generator, Password Generator and many more useful utilities. No signup, no watermark, 100% free.">
     <meta name="keywords" content="bharat tools,image compressor,pdf tools,calculator,image resizer,free online tools,qr code,password generator">
     <meta name="author" content="Alok">
     <meta name="theme-color" content="#0d6efd">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT-TOOLS/">
+
+    <!-- Open Graph / Social sharing -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="BharatOS-Tools - Free Image, PDF & Calculator Tools">
     <meta property="og:description" content="Free online Image Tools, PDF Tools, Calculators, QR Generator and Password Generator. No signup, no watermark, 100% free.">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT-TOOLS/">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="BharatOS-Tools - Free Image, PDF & Calculator Tools">
+    <meta name="twitter:description" content="Free online Image Tools, PDF Tools, Calculators, QR Generator and Password Generator. No signup, no watermark, 100% free.">
+
+    <!-- Structured data for Google -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "BharatOS-Tools",
+        "url": "https://aloky7882-sys.github.io/BHARAT-TOOLS/",
+        "description": "Free online Image, PDF and Calculator tools. No signup, no watermark, 100% free."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is BharatOS-Tools free to use?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, every tool on BharatOS-Tools is completely free to use. There is no signup, no hidden charges and no watermark added to your files."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Are my files uploaded to a server?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. All conversions and calculations run directly inside your browser using JavaScript. Your images, PDFs and Excel files are never uploaded or stored on any server."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do I need to install any software to use BharatOS-Tools?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No installation is required. BharatOS-Tools works entirely in your web browser on desktop, laptop and mobile devices."
+                }
+            }
+        ]
+    }
+    </script>
 
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -109,57 +162,64 @@
         </div>
     </section>
 
-    <!--================ FILTER TABS ================-->
-    <section class="filter-tabs">
-        <button class="filter-tab active" data-filter="all">All Tools</button>
-        <button class="filter-tab" data-filter="image">Image Tools</button>
-        <button class="filter-tab" data-filter="pdf">PDF Tools</button>
-        <button class="filter-tab" data-filter="calc">Calculators</button>
-        <button class="filter-tab" data-filter="design">Design Tools</button>
-    </section>
+    <!--================ TOOL SECTION START ================-->
+    <main class="tool-wrapper">
 
-    <!--================ TOOLS SECTION ================-->
-    <section class="tools-section">
+        <!-- ================= CATEGORY FILTER TABS ================= -->
+        <div id="category-filter-tabs" style="display:flex;gap:8px;overflow-x:auto;padding:4px 0 18px;margin-bottom:10px;">
+            <button type="button" class="filter-tab active" data-filter="all" style="flex-shrink:0;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;background:#1a73e8;color:#fff;">All</button>
+            <button type="button" class="filter-tab" data-filter="image" style="flex-shrink:0;border:1px solid #d5d9e0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;padding:8px 18px;border-radius:20px;background:#fff;color:#4b5563;">🖼 Image</button>
+            <button type="button" class="filter-tab" data-filter="pdf" style="flex-shrink:0;border:1px solid #d5d9e0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;padding:8px 18px;border-radius:20px;background:#fff;color:#4b5563;">📄 PDF</button>
+            <button type="button" class="filter-tab" data-filter="design" style="flex-shrink:0;border:1px solid #d5d9e0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;padding:8px 18px;border-radius:20px;background:#fff;color:#4b5563;">🎨 Design</button>
+            <button type="button" class="filter-tab" data-filter="convert" style="flex-shrink:0;border:1px solid #d5d9e0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;padding:8px 18px;border-radius:20px;background:#fff;color:#4b5563;">🔄 Convert</button>
+            <button type="button" class="filter-tab" data-filter="calculator" style="flex-shrink:0;border:1px solid #d5d9e0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;padding:8px 18px;border-radius:20px;background:#fff;color:#4b5563;">🧰 Utility</button>
+        </div>
 
         <!-- ================= IMAGE TOOLS ================= -->
         <div class="tool-category" data-category="image">
-        <h2 id="image-tools" class="section-title">🖼 Image Tools</h2>
+        <h2 id="image-tools">🖼 Image Tools</h2>
         <div class="container">
             <div class="card">
-                <div class="tool-icon">✨</div>
-                <h2>Image Enhancer</h2>
-                <p>Increase image quality with Sharpening, Upscaling & Denoising features.</p>
-                <a href="image-enhancer.html" class="tool-btn">Open Tool</a>
-            </div>
-            <div class="card">
-                <div class="tool-icon">🗜</div>
+                <div class="tool-icon">🖼</div>
                 <h2>Image Compressor</h2>
-                <p>Reduce image file size while maintaining excellent quality.</p>
+                <p>Compress JPG, PNG & WEBP Images without losing quality.</p>
                 <a href="image-compressor.html" class="tool-btn">Open Tool</a>
-            </div>
-            <div class="card">
-                <div class="tool-icon">🎭</div>
-                <h2>Background Remover</h2>
-                <p>Remove background from images instantly using AI technology.</p>
-                <a href="background-remover.html" class="tool-btn">Open Tool</a>
             </div>
             <div class="card">
                 <div class="tool-icon">📐</div>
                 <h2>Image Resizer</h2>
-                <p>Resize images to custom dimensions with high quality output.</p>
+                <p>Resize images in custom dimensions instantly.</p>
                 <a href="image-resizer.html" class="tool-btn">Open Tool</a>
             </div>
             <div class="card">
-                <div class="tool-icon">🎨</div>
-                <h2>Image Converter</h2>
-                <p>Convert images between PNG, JPG, WebP, TIFF and more formats.</p>
-                <a href="image-converter-full.html" class="tool-btn">Open Tool</a>
+                <div class="tool-icon">✂️</div>
+                <h2>Image Cropper</h2>
+                <p>Crop your images with live preview.</p>
+                <a href="image-cropper.html" class="tool-btn">Open Tool</a>
             </div>
             <div class="card">
-                <div class="tool-icon">🔄</div>
-                <h2>Image Rotator</h2>
-                <p>Rotate, flip and mirror your images easily.</p>
-                <a href="image-rotator.html" class="tool-btn">Open Tool</a>
+                <div class="tool-icon">🖼</div>
+                <h2>JPG to PNG</h2>
+                <p>Convert JPG images into PNG format.</p>
+                <a href="jpg-to-png.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🖼</div>
+                <h2>PNG to JPG</h2>
+                <p>Convert PNG images into JPG format.</p>
+                <a href="png-to-jpg.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">📊</div>
+                <h2>Image to Excel</h2>
+                <p>Embed images in Excel spreadsheets professionally.</p>
+                <a href="image-to-excel.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">📄</div>
+                <h2>Image to Word</h2>
+                <p>Create Word documents with images embedded.</p>
+                <a href="image-to-word.html" class="tool-btn">Open Tool</a>
             </div>
         </div>
         </div>
@@ -213,13 +273,13 @@
             <div class="card">
                 <div class="tool-icon">📊</div>
                 <h2>Excel to Image</h2>
-                <p>Convert Excel spreadsheets to high-quality images instantly.</p>
+                <p>Convert Excel spreadsheets to PNG, JPG, or WebP images.</p>
                 <a href="excel-to-image.html" class="tool-btn">Open Tool</a>
             </div>
             <div class="card">
                 <div class="tool-icon">📄</div>
                 <h2>Word to Image</h2>
-                <p>Convert Word documents to high-quality images instantly.</p>
+                <p>Convert Word documents to high-quality images.</p>
                 <a href="word-to-image.html" class="tool-btn">Open Tool</a>
             </div>
         </div>
@@ -242,60 +302,164 @@
                 <a href="qr-code-logo.html" class="tool-btn">Open Tool</a>
             </div>
             <div class="card">
+                <div class="tool-icon">🔍</div>
+                <h2>Text Diff Checker</h2>
+                <p>Compare two texts and instantly see what changed.</p>
+                <a href="text-diff-checker.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🔁</div>
+                <h2>Unit Converter</h2>
+                <p>Convert length, weight, temperature, speed and data storage.</p>
+                <a href="unit-converter.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">{ }</div>
+                <h2>JSON Formatter</h2>
+                <p>Format, validate and minify JSON with syntax highlighting.</p>
+                <a href="json-formatter.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🎨</div>
+                <h2>Color Palette Generator</h2>
+                <p>Generate complementary, analogous and triadic color palettes.</p>
+                <a href="color-palette-generator.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">⭐</div>
+                <h2>Favicon Generator</h2>
+                <p>Turn one image into every favicon size you need, as a ZIP.</p>
+                <a href="favicon-generator.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🔤</div>
+                <h2>Base64 Encoder/Decoder</h2>
+                <p>Convert text or files to Base64, or decode Base64 back.</p>
+                <a href="base64-tool.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">😂</div>
+                <h2>Meme Generator</h2>
+                <p>Add top and bottom text to any image and download your meme.</p>
+                <a href="meme-generator.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🔎</div>
+                <h2>Image to Text (OCR)</h2>
+                <p>Extract text from any image using AI, right in your browser.</p>
+                <a href="image-to-text.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🎙️</div>
+                <h2>Voice to Text</h2>
+                <p>Speak and get instant text, supports Hindi and English.</p>
+                <a href="voice-to-text.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🔊</div>
+                <h2>Text to Voice</h2>
+                <p>Convert any text into natural sounding speech instantly.</p>
+                <a href="text-to-voice.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🪄</div>
+                <h2>Background Remover</h2>
+                <p>Remove photo background instantly using AI, free.</p>
+                <a href="background-remover.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">💬</div>
+                <h2>Text Tone Checker</h2>
+                <p>Check if your message sounds rude before you post it.</p>
+                <a href="text-tone-checker.html" class="tool-btn">Open Tool</a>
+            </div>
+        </div>
+        </div>
+
+        <!-- ================= UTILITY TOOLS ================= -->
+        <div class="tool-category" data-category="calculator">
+        <h2 id="calculator-tools" class="section-title">🧰 Utility Tools</h2>
+        <div class="container">
+            <div class="card">
+                <div class="tool-icon">📱</div>
+                <h2>QR Code Generator</h2>
+                <p>Create QR codes instantly for links, text and more.</p>
+                <a href="qr-generator.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
                 <div class="tool-icon">🔐</div>
                 <h2>Password Generator</h2>
-                <p>Generate strong, random passwords for maximum security.</p>
+                <p>Create strong and secure passwords instantly.</p>
                 <a href="password-generator.html" class="tool-btn">Open Tool</a>
             </div>
             <div class="card">
-                <div class="tool-icon">🎯</div>
-                <h2>Color Picker</h2>
-                <p>Pick colors and get RGB, HEX, and HSL codes instantly.</p>
-                <a href="color-picker.html" class="tool-btn">Open Tool</a>
-            </div>
-        </div>
-        </div>
-
-        <!-- ================= CALCULATOR TOOLS ================= -->
-        <div class="tool-category" data-category="calc">
-        <h2 id="calculator-tools" class="section-title">🧮 Calculators</h2>
-        <div class="container">
-            <div class="card">
-                <div class="tool-icon">🏦</div>
-                <h2>EMI Calculator</h2>
-                <p>Calculate your loan EMI, total interest and monthly payment easily.</p>
-                <a href="emi-calculator.html" class="tool-btn">Open Tool</a>
+                <div class="tool-icon">📝</div>
+                <h2>Word Counter</h2>
+                <p>Count words, characters and paragraphs easily.</p>
+                <a href="word-counter.html" class="tool-btn">Open Tool</a>
             </div>
             <div class="card">
-                <div class="tool-icon">📊</div>
-                <h2>GST Calculator</h2>
-                <p>Calculate GST on any amount with automatic price breakdown.</p>
-                <a href="gst-calculator.html" class="tool-btn">Open Tool</a>
+                <div class="tool-icon">🎂</div>
+                <h2>Age Calculator</h2>
+                <p>Calculate your exact age in seconds.</p>
+                <a href="age-calculator.html" class="tool-btn">Open Tool</a>
             </div>
             <div class="card">
                 <div class="tool-icon">💰</div>
-                <h2>Currency Converter</h2>
-                <p>Convert between 150+ currencies with real-time exchange rates.</p>
-                <a href="currency-converter.html" class="tool-btn">Open Tool</a>
+                <h2>EMI Calculator</h2>
+                <p>Calculate your monthly loan EMI instantly.</p>
+                <a href="emi-calculator.html" class="tool-btn">Open Tool</a>
             </div>
             <div class="card">
-                <div class="tool-icon">📐</div>
-                <h2>Unit Converter</h2>
-                <p>Convert between Length, Weight, Volume and Temperature units.</p>
-                <a href="unit-converter.html" class="tool-btn">Open Tool</a>
+                <div class="tool-icon">🧮</div>
+                <h2>Scientific Calculator</h2>
+                <p>Perform advanced mathematical calculations.</p>
+                <a href="scientific-calculator.html" class="tool-btn">Open Tool</a>
+            </div>
+            <div class="card">
+                <div class="tool-icon">🧾</div>
+                <h2>GST Calculator</h2>
+                <p>Add or remove GST from any amount instantly.</p>
+                <a href="gst-calculator.html" class="tool-btn">Open Tool</a>
             </div>
         </div>
         </div>
+    </main>
 
+    <!--================ FEATURES SECTION ================-->
+    <section class="features">
+        <div class="feature-box">
+            <h3>⚡ Fast Processing</h3>
+            <p>All tools work instantly in your browser.</p>
+        </div>
+        <div class="feature-box">
+            <h3>🔒 Secure</h3>
+            <p>Your files are never stored on our servers.</p>
+        </div>
+        <div class="feature-box">
+            <h3>📱 Mobile Friendly</h3>
+            <p>Use BharatOS-Tools on any device.</p>
+        </div>
+        <div class="feature-box">
+            <h3>💯 Free Forever</h3>
+            <p>No signup, no watermark and no hidden charges.</p>
+        </div>
     </section>
 
-    <!--================ ABOUT SECTION ================-->
-    <section class="about-section">
+    <!--================ ABOUT / SEO CONTENT SECTION ================-->
+    <section id="about" style="max-width:900px;margin:0 auto;padding:40px 20px;">
         <h2>About BharatOS-Tools</h2>
         <p>
-            BharatOS-Tools is built to make online conversions and calculations simple and fast. We offer a free and secure
-            place to access tools for everyday needs — compressing images, converting files, calculating EMI, generating
-            QR codes, and other utilities. Every tool is developed with the goal of saving you time and money while
+            BharatOS-Tools is a free collection of everyday online utilities built for students,
+            professionals and small business owners across India. Instead of downloading heavy
+            software or signing up for paid subscriptions, you can compress an image, convert a
+            file to PDF, generate a QR code or calculate your loan EMI directly inside your web
+            browser — on a laptop, desktop or mobile phone.
+        </p>
+        <p>
+            Every tool on this website runs entirely on the client side, meaning your files are
+            processed on your own device using JavaScript and are never uploaded to a server.
+            This keeps your personal photos, documents and spreadsheets private while still
             giving you fast, watermark-free results.
         </p>
 
@@ -333,24 +497,34 @@
     <!--================ MOUNTAIN ILLUSTRATION ================-->
     <div style="width:100%; overflow:hidden; line-height:0; background:#eaf3ff;">
         <svg viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; display:block;">
+            <!-- sky -->
             <rect x="0" y="0" width="1200" height="260" fill="#eaf3ff"/>
+            <!-- sun -->
             <circle cx="1030" cy="70" r="42" fill="#ffd166"/>
+            <!-- far mountains -->
             <polygon points="0,220 180,90 340,220" fill="#a9c8f0"/>
             <polygon points="220,220 420,60 620,220" fill="#8fb8ea"/>
             <polygon points="560,220 760,100 940,220" fill="#a9c8f0"/>
+            <!-- clouds -->
             <g fill="#ffffff" opacity="0.85">
                 <ellipse cx="150" cy="60" rx="40" ry="16"/>
                 <ellipse cx="185" cy="52" rx="30" ry="14"/>
                 <ellipse cx="820" cy="45" rx="34" ry="14"/>
                 <ellipse cx="855" cy="55" rx="26" ry="12"/>
             </g>
+            <!-- near mountains with snow caps, tricolor accent -->
             <polygon points="-20,240 160,70 340,240" fill="#0d6efd"/>
             <polygon points="120,105 160,70 200,105 175,100 160,85 145,100" fill="#ffffff"/>
+
             <polygon points="260,240 470,40 680,240" fill="#0b5ed7"/>
             <polygon points="415,90 470,40 525,90 495,84 470,60 445,84" fill="#ffffff"/>
+
             <polygon points="600,240 800,95 1000,240" fill="#0d6efd"/>
             <polygon points="755,130 800,95 845,130 818,125 800,108 782,125" fill="#ffffff"/>
+
             <polygon points="880,240 1080,110 1220,240" fill="#0b5ed7"/>
+
+            <!-- ground / grass strip -->
             <rect x="0" y="235" width="1200" height="25" fill="#138808"/>
         </svg>
     </div>
@@ -358,6 +532,7 @@
     <!--================ FOOTER ================-->
     <footer id="contact" style="background: #0b1a2e; color: #f0f4fa; padding: 50px 20px 20px;">
         <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:30px;">
+            <!-- Brand -->
             <div style="flex:1 1 220px;">
                 <h2 style="color:#fff;font-size:1.8rem;display:flex;align-items:center;gap:8px;">
                     <i class="fa-solid fa-bolt" style="color:#0d6efd;"></i> BharatOS-Tools
@@ -368,6 +543,8 @@
                     <a href="https://www.instagram.com/alok_y26?igsi=eDJnYzNiOTYzdWk5" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="color:#a0b8d0;transition:0.3s;"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
+
+            <!-- Quick Links -->
             <div style="flex:1 1 160px;">
                 <h4 style="color:#fff;font-size:1.2rem;margin-bottom:16px;">Quick Links</h4>
                 <ul style="list-style:none;padding:0;line-height:2.2;">
@@ -377,6 +554,8 @@
                     <li><a href="about.html" style="color:#a0b8d0;text-decoration:none;">About Us</a></li>
                 </ul>
             </div>
+
+            <!-- Legal -->
             <div style="flex:1 1 160px;">
                 <h4 style="color:#fff;font-size:1.2rem;margin-bottom:16px;">Legal</h4>
                 <ul style="list-style:none;padding:0;line-height:2.2;">
@@ -386,6 +565,8 @@
                     <li><a href="contact.html" style="color:#a0b8d0;text-decoration:none;">Contact</a></li>
                 </ul>
             </div>
+
+            <!-- Contact -->
             <div style="flex:1 1 220px;">
                 <h4 style="color:#fff;font-size:1.2rem;margin-bottom:16px;">Contact</h4>
                 <p style="color:#a0b8d0;"><i class="fa-regular fa-envelope" style="margin-right:10px;"></i> aloky7882@gmail.com</p>
@@ -395,11 +576,47 @@
                 </div>
             </div>
         </div>
+
+        <!-- Bottom bar -->
         <div style="border-top:1px solid #1f3450;margin-top:40px;padding-top:20px;text-align:center;color:#6f8aa8;font-size:0.95rem;">
             &copy; 2026 BharatOS-Tools. All rights reserved. | Made with ❤️ in India
         </div>
     </footer>
 
+    <!--================ CATEGORY FILTER TABS SCRIPT ================-->
+    <script>
+        (function () {
+            var tabs = document.querySelectorAll('.filter-tab');
+            var categories = document.querySelectorAll('.tool-category');
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    var filter = tab.getAttribute('data-filter');
+                    tabs.forEach(function (t) {
+                        t.classList.remove('active');
+                        t.style.background = '#fff';
+                        t.style.color = '#4b5563';
+                        t.style.border = '1px solid #d5d9e0';
+                        t.style.fontWeight = '500';
+                    });
+                    tab.classList.add('active');
+                    tab.style.background = '#1a73e8';
+                    tab.style.color = '#fff';
+                    tab.style.border = 'none';
+                    tab.style.fontWeight = '600';
+                    categories.forEach(function (cat) {
+                        if (filter === 'all' || cat.getAttribute('data-category') === filter) {
+                            cat.style.display = '';
+                        } else {
+                            cat.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        })();
+    </script>
+
+    <!--================ MAIN SCRIPT (menu, search, animations) ================-->
     <script src="script.js"></script>
+
 </body>
 </html>
