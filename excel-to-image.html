@@ -124,34 +124,41 @@
             display: none;
             margin-top: 30px;
             padding: 20px;
-            background: rgba(20, 20, 40, 0.8);
+            background: #ffffff;
             border-radius: 12px;
             border: 1px solid rgba(168, 85, 247, 0.2);
-            max-height: 400px;
-            overflow-y: auto;
+            max-height: 500px;
+            overflow: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 13px;
-            color: #e0e7ff;
+            font-size: 14px;
+            font-family: 'Arial', sans-serif;
+            color: #1a1a1a;
         }
 
         th, td {
-            border: 1px solid rgba(168, 85, 247, 0.3);
+            border: 1px solid #bbb;
             padding: 10px;
             text-align: left;
+            word-break: break-word;
+            max-width: 100px;
         }
 
         th {
-            background: rgba(168, 85, 247, 0.2);
+            background: #4a7ba7;
+            color: white;
             font-weight: 700;
-            color: #a5b4fc;
+        }
+
+        tr:nth-child(even) {
+            background: #f5f5f5;
         }
 
         tr:hover {
-            background: rgba(168, 85, 247, 0.1);
+            background: #e8e8e8;
         }
 
         .controls {
@@ -238,6 +245,8 @@
             .card { padding: 24px; }
             h1 { font-size: 1.5rem; }
             .upload-zone { padding: 40px 20px; }
+            table { font-size: 12px; }
+            th, td { padding: 6px; max-width: 80px; }
         }
     </style>
 </head>
@@ -250,7 +259,7 @@
 
     <main>
         <h1>📊 Excel to Image</h1>
-        <p class="subtitle">Excel file को screenshot में convert करो!</p>
+        <p class="subtitle">Excel file को high-quality image में convert करो!</p>
 
         <div class="card">
             <div class="upload-zone" id="uploadZone">
@@ -270,6 +279,7 @@
                     <select id="formatSelect">
                         <option value="png">📸 PNG (Best Quality)</option>
                         <option value="jpg">📷 JPG (Smaller Size)</option>
+                        <option value="webp">🖼️ WebP (Modern)</option>
                     </select>
                 </div>
                 <button id="convertBtn"><i class="fas fa-wand-magic-sparkles"></i> Image बनाओ</button>
@@ -308,32 +318,51 @@
         uploadZone.addEventListener('drop', (e) => {
             e.preventDefault();
             uploadZone.classList.remove('active');
-            handleFile(e.dataTransfer.files[0]);
+            if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
         });
 
         fileInput.addEventListener('change', (e) => {
-            handleFile(e.target.files[0]);
+            if (e.target.files.length > 0) handleFile(e.target.files[0]);
         });
 
         function handleFile(file) {
             if (!file) return;
+
+            showStatus('⏳ Reading Excel file...', 'loading');
             
             const reader = new FileReader();
             reader.onload = (e) => {
                 try {
                     const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data, { type: 'array' });
-                    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-                    excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                    const workbook = XLSX.read(data, { type: 'array', cellFormula: false, cellStyles: false });
                     
+                    if (workbook.SheetNames.length === 0) {
+                        showStatus('❌ No sheets found in Excel file', 'error');
+                        return;
+                    }
+
+                    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                    excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false });
+                    
+                    if (!excelData || excelData.length === 0) {
+                        showStatus('❌ No data found in Excel file', 'error');
+                        return;
+                    }
+
                     displayPreview(excelData);
+                    previewSection.style.display = 'block';
                     controls.style.display = 'block';
                     showStatus(`✅ Excel loaded: ${file.name}`, 'success');
                 } catch (error) {
-                    showStatus('❌ Error reading file', 'error');
+                    showStatus('❌ Cannot read this Excel file', 'error');
                     console.error(error);
                 }
             };
+
+            reader.onerror = () => {
+                showStatus('❌ File read error', 'error');
+            };
+
             reader.readAsArrayBuffer(file);
         }
 
@@ -341,59 +370,91 @@
             previewTable.innerHTML = '';
             if (!data || data.length === 0) return;
 
-            // Headers
+            const maxRows = Math.min(data.length, 20);
+            const maxCols = Math.min(data[0] ? data[0].length : 0, 12);
+
+            // Header row
             const headerRow = document.createElement('tr');
-            const headerCount = Math.min(data[0].length, 12);
-            for (let i = 0; i < headerCount; i++) {
+            for (let i = 0; i < maxCols; i++) {
                 const th = document.createElement('th');
-                th.textContent = data[0][i] || `Col ${i + 1}`;
+                th.textContent = (data[0] && data[0][i] !== undefined && data[0][i] !== null && data[0][i] !== '') 
+                    ? String(data[0][i]).substring(0, 20)
+                    : `Col ${i + 1}`;
                 headerRow.appendChild(th);
             }
             previewTable.appendChild(headerRow);
 
             // Data rows
-            const dataCount = Math.min(data.length - 1, 20);
-            for (let i = 1; i <= dataCount; i++) {
+            for (let i = 1; i < maxRows; i++) {
                 const row = document.createElement('tr');
-                for (let j = 0; j < headerCount; j++) {
+                for (let j = 0; j < maxCols; j++) {
                     const td = document.createElement('td');
-                    td.textContent = data[i][j] || '';
+                    const cellValue = data[i] && data[i][j] !== undefined && data[i][j] !== null ? String(data[i][j]) : '';
+                    td.textContent = cellValue.substring(0, 50);
                     row.appendChild(td);
                 }
                 previewTable.appendChild(row);
             }
-
-            previewSection.style.display = 'block';
         }
 
         convertBtn.addEventListener('click', async () => {
-            if (!excelData || !previewTable.children.length) return;
+            if (!excelData || previewTable.rows.length === 0) {
+                showStatus('❌ No data to convert', 'error');
+                return;
+            }
 
             convertBtn.disabled = true;
-            showStatus('⏳ Image बन रहा है...', 'loading');
+            showStatus('⏳ Converting to image... Please wait', 'loading');
 
             try {
-                const canvas = await html2canvas(previewTable, {
+                const clonedContainer = document.createElement('div');
+                clonedContainer.style.cssText = 'position: absolute; left: -9999px; background: white; padding: 15px;';
+                
+                const clonedTable = previewTable.cloneNode(true);
+                clonedContainer.appendChild(clonedTable);
+                document.body.appendChild(clonedContainer);
+
+                const canvas = await html2canvas(clonedContainer, {
                     scale: 2,
                     backgroundColor: '#ffffff',
-                    logging: false
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true
                 });
 
+                document.body.removeChild(clonedContainer);
+
                 const format = formatSelect.value;
-                const mimeType = format === 'png' ? 'image/png' : 'image/jpeg';
-                
+                let mimeType = 'image/png';
+                let quality = 0.95;
+
+                if (format === 'jpg') {
+                    mimeType = 'image/jpeg';
+                    quality = 0.92;
+                } else if (format === 'webp') {
+                    mimeType = 'image/webp';
+                }
+
                 canvas.toBlob((blob) => {
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = `excel-table.${format}`;
-                    link.click();
-                    
-                    showStatus('🎉 Image download हो गया!', 'success');
+                    if (blob && blob.size > 0) {
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = `excel-table-${Date.now()}.${format}`;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+
+                        showStatus('🎉 Download successful!', 'success');
+                    } else {
+                        showStatus('❌ Failed to create image', 'error');
+                    }
                     convertBtn.disabled = false;
-                }, mimeType, format === 'jpg' ? 0.95 : 1);
+                }, mimeType, quality);
 
             } catch (error) {
-                showStatus('❌ Error converting', 'error');
+                showStatus('❌ Conversion error: ' + error.message, 'error');
                 convertBtn.disabled = false;
                 console.error(error);
             }
