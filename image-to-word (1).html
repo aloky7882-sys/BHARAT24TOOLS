@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Word - HARI TOOLS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f4f7fb 0%, #e8f1f9 100%);
+            min-height: 100vh;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2f6fed, #1a4fd6);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        header a { color: #fff; text-decoration: none; }
+        header .brand { color: #fff; font-weight: 700; }
+        
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px 16px 60px;
+        }
+        
+        h1 { font-size: 1.8rem; text-align: center; margin-bottom: 8px; color: #1a2b45; }
+        .subtitle { text-align: center; color: #5c6b82; margin-bottom: 24px; }
+        
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 6px 24px rgba(26, 43, 69, 0.07);
+            margin-bottom: 20px;
+        }
+        
+        .upload-zone {
+            border: 2px dashed #c3cfe4;
+            border-radius: 14px;
+            padding: 50px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: #2f6fed;
+            background: #eef4ff;
+        }
+        
+        .upload-zone .icon { font-size: 2.5rem; margin-bottom: 12px; color: #2f6fed; }
+        input[type="file"] { display: none; }
+        
+        .preview {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .controls {
+            display: none;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a2b45;
+        }
+        
+        .control-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #c3cfe4;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+        
+        button {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .convert-btn {
+            background: linear-gradient(135deg, #2f6fed, #1a4fd6);
+            color: #fff;
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        .convert-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(47, 111, 237, 0.3);
+        }
+        
+        #status {
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+            text-align: center;
+        }
+        
+        #status.loading { background: #eef4ff; color: #1a4fd6; display: block; }
+        #status.success { background: #d4edda; color: #155724; display: block; }
+        #status.error { background: #f8d7da; color: #721c24; display: block; }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="index.html"><i class="fas fa-arrow-left"></i> Back</a>
+        <span class="brand"><i class="fas fa-file-word"></i> HARI TOOLS</span>
+    </header>
+
+    <main>
+        <h1>🖼️ Image to Word</h1>
+        <p class="subtitle">Image को Word document (.docx) में embed करो!</p>
+
+        <div class="card">
+            <div class="upload-zone" id="upload-zone">
+                <span class="icon">📄</span>
+                <p><strong>Click या drag करो</strong> image यहाँ</p>
+            </div>
+            <input type="file" id="file-input" accept="image/*">
+            
+            <div class="preview" id="preview">
+                <img id="preview-img" src="" alt="Preview">
+            </div>
+            
+            <div class="controls" id="controls">
+                <div class="control-group">
+                    <label>Document Title</label>
+                    <input type="text" id="title" value="Document" placeholder="Enter document title">
+                </div>
+                
+                <div class="control-group">
+                    <label>File Name</label>
+                    <input type="text" id="filename" value="image-to-word" placeholder="Enter file name">
+                </div>
+                
+                <button class="convert-btn" id="convert-btn"><i class="fas fa-magic"></i> Create Word Document</button>
+            </div>
+            
+            <p id="status"></p>
+        </div>
+    </main>
+
+    <!-- Docx Library for creating real .docx files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <script>
+        class ImageToWord {
+            constructor() {
+                this.uploadZone = document.getElementById('upload-zone');
+                this.fileInput = document.getElementById('file-input');
+                this.preview = document.getElementById('preview');
+                this.previewImg = document.getElementById('preview-img');
+                this.controls = document.getElementById('controls');
+                this.convertBtn = document.getElementById('convert-btn');
+                this.titleInput = document.getElementById('title');
+                this.filenameInput = document.getElementById('filename');
+                this.statusEl = document.getElementById('status');
+                
+                this.imageData = null;
+                this.imageFile = null;
+                this.init();
+            }
+
+            init() {
+                this.uploadZone.addEventListener('click', () => this.fileInput.click());
+                
+                this.uploadZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    this.uploadZone.classList.add('dragover');
+                });
+                
+                this.uploadZone.addEventListener('dragleave', () => {
+                    this.uploadZone.classList.remove('dragover');
+                });
+                
+                this.uploadZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    this.uploadZone.classList.remove('dragover');
+                    if (e.dataTransfer.files[0]) {
+                        this.loadImage(e.dataTransfer.files[0]);
+                    }
+                });
+
+                this.fileInput.addEventListener('change', (e) => {
+                    if (e.target.files[0]) {
+                        this.loadImage(e.target.files[0]);
+                    }
+                });
+
+                this.convertBtn.addEventListener('click', () => this.convertToWord());
+            }
+
+            loadImage(file) {
+                this.imageFile = file;
+                const reader = new FileReader();
+                
+                reader.onload = (e) => {
+                    this.imageData = e.target.result;
+                    this.previewImg.src = this.imageData;
+                    this.preview.style.display = 'block';
+                    this.controls.style.display = 'block';
+                    this.showStatus(`✅ Image loaded: ${file.name}`, 'success');
+                };
+                
+                reader.readAsDataURL(file);
+            }
+
+            async convertToWord() {
+                if (!this.imageData) return;
+
+                this.convertBtn.disabled = true;
+                this.showStatus('⏳ Creating Word document...', 'loading');
+
+                try {
+                    const { Document, Packer, Paragraph, TextRun, ImageRun, AlignmentType } = window.docx;
+                    
+                    // Convert base64 to Uint8Array for docx
+                    const base64Data = this.imageData.split(',')[1];
+                    const binaryString = window.atob(base64Data);
+                    const bytes = new Uint8Array(binaryString.length);
+                    for (let i = 0; i < binaryString.length; i++) {
+                        bytes[i] = binaryString.charCodeAt(i);
+                    }
+
+                    // Create document
+                    const doc = new Document({
+                        sections: [{
+                            properties: {},
+                            children: [
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                        new TextRun({
+                                            text: this.titleInput.value,
+                                            bold: true,
+                                            size: 36, // half-points (18pt)
+                                            color: "2f6fed"
+                                        })
+                                    ],
+                                    spacing: { after: 200 }
+                                }),
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                        new TextRun({
+                                            text: new Date().toLocaleDateString(),
+                                            italics: true,
+                                            size: 24,
+                                            color: "666666"
+                                        })
+                                    ],
+                                    spacing: { after: 400 }
+                                }),
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                        new ImageRun({
+                                            data: bytes,
+                                            transformation: {
+                                                width: 500,
+                                                height: 400, // Adjust based on your image aspect ratio
+                                            },
+                                        })
+                                    ],
+                                    spacing: { after: 400 }
+                                }),
+                                new Paragraph({
+                                    alignment: AlignmentType.CENTER,
+                                    children: [
+                                        new TextRun({
+                                            text: "Created with HARI TOOLS",
+                                            italics: true,
+                                            size: 20,
+                                            color: "999999"
+                                        })
+                                    ]
+                                })
+                            ]
+                        }]
+                    });
+
+                    // Generate and download
+                    const blob = await Packer.toBlob(doc);
+                    saveAs(blob, this.filenameInput.value + '.docx');
+                    
+                    this.showStatus('🎉 Word document created successfully!', 'success');
+                } catch (e) {
+                    console.error(e);
+                    this.showStatus('❌ Error creating Word document: ' + e.message, 'error');
+                } finally {
+                    this.convertBtn.disabled = false;
+                }
+            }
+
+            showStatus(msg, type) {
+                this.statusEl.textContent = msg;
+                this.statusEl.className = type;
+            }
+        }
+
+        window.addEventListener('load', () => {
+            new ImageToWord();
+        });
+    </script>
+
+</body>
+</html>
