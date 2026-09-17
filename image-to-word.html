@@ -213,8 +213,8 @@
         </div>
     </main>
 
-    <!-- Correct Docx CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.min.js"></script>
+    <!-- ✅ Yahan CDN link badla gaya hai (unpkg use kiya hai jo zyada reliable hai) -->
+    <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <script>
@@ -267,12 +267,12 @@
             showStatus('⏳ Word document बन रहा है...', 'loading');
 
             try {
-                // Access docx correctly
-                const docx = window.docx;
-                if (!docx || !docx.Document) {
-                    throw new Error("Docx library not loaded correctly.");
+                // ✅ Yahan check kiya ja raha hai ki docx library load hui ya nahi
+                if (typeof window.docx === 'undefined' || !window.docx.Document) {
+                    throw new Error("Docx library load nahi hui. Kripya internet check karein ya page refresh karein.");
                 }
-                const { Document, Packer, Paragraph, TextRun, ImageRun, AlignmentType } = docx;
+
+                const { Document, Packer, Paragraph, TextRun, ImageRun, AlignmentType } = window.docx;
 
                 // Convert base64 to Uint8Array
                 const base64 = imageData.split(',')[1];
@@ -338,6 +338,8 @@
                     saveAs(blob, fileNameInput.value + '.docx');
                     showStatus('🎉 Document download successful!', 'success');
                     convertBtn.disabled = false;
+                }).catch(err => {
+                    throw err;
                 });
             } catch (error) {
                 showStatus('❌ Error: ' + error.message, 'error');
