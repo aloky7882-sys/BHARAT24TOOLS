@@ -92,12 +92,7 @@
             background: rgba(99, 102, 241, 0.05);
         }
 
-        .upload-zone:hover {
-            border-color: #a855f7;
-            background: rgba(168, 85, 247, 0.1);
-        }
-
-        .upload-zone.active {
+        .upload-zone:hover, .upload-zone.active {
             border-color: #a855f7;
             background: rgba(168, 85, 247, 0.15);
         }
@@ -271,8 +266,7 @@
         </div>
     </main>
 
-    <!-- Mammoth.js Correct CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <script>
@@ -306,8 +300,8 @@
         });
 
         function handleFile(file) {
-            if (!file || !file.name.endsWith('.docx')) {
-                showStatus('❌ Please upload a valid .docx file', 'error');
+            if (!file || file.type !== 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                showStatus('❌ कृपया एक valid .docx file चुनें', 'error');
                 return;
             }
 
@@ -398,7 +392,7 @@
                 }, mimeType, quality);
 
             } catch (error) {
-                showStatus('❌ Conversion error: ' + error.message, 'error');
+                showStatus('❌ Error: ' + error.message, 'error');
                 convertBtn.disabled = false;
             }
         });
