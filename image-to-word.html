@@ -267,7 +267,12 @@
             showStatus('⏳ Word document बन रहा है...', 'loading');
 
             try {
-                const { Document, Packer, Paragraph, TextRun, ImageRun, AlignmentType } = window.docx;
+                // Access docx correctly
+                const docx = window.docx;
+                if (!docx || !docx.Document) {
+                    throw new Error("Docx library not loaded correctly.");
+                }
+                const { Document, Packer, Paragraph, TextRun, ImageRun, AlignmentType } = docx;
 
                 // Convert base64 to Uint8Array
                 const base64 = imageData.split(',')[1];
