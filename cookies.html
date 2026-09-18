@@ -3,42 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cookies Policy - ⚡ BHARAT-TOOLS 🚀</title>
+    <title>Cookies Policy - BharatOS-Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8f9fa; color: #333; margin: 0; padding: 0; line-height: 1.6; }
-        .navbar { background: #fff; padding: 15px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.05); font-weight: bold; font-size: 20px; }
-        .navbar a { text-decoration: none; color: #333; }
-        .container { max-width: 800px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        h1 { border-bottom: 2px solid #ff9933; padding-bottom: 10px; color: #222; font-size: 28px; }
-        h3 { color: #0d6efd; margin-top: 25px; }
-        footer { text-align: center; padding: 25px; background: #111; color: white; margin-top: 40px; font-size: 14px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f4f7fb 0%, #e8f1f9 100%);
+            min-height: 100vh;
+            color: #1a2b45;
+        }
+        .navbar {
+            background: #fff;
+            padding: 18px 5%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0d6efd, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        .navbar a:hover { background: #eef4ff; color: #0d6efd; }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(13, 110, 253, 0.08);
+            border: 1px solid rgba(13, 110, 253, 0.05);
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #1a2b45;
+            margin-bottom: 20px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 i { color: #0d6efd; }
+        h3 {
+            color: #0d6efd;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h3 i { color: #a855f7; }
+        p {
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        ul li {
+            padding: 12px 0;
+            padding-left: 35px;
+            position: relative;
+            color: #4b5563;
+            line-height: 1.7;
+        }
+        ul li:before {
+            content: "✔";
+            position: absolute;
+            left: 0;
+            color: #138808;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .highlight {
+            color: #0d6efd;
+            font-weight: 700;
+        }
+        .info-box {
+            background: #f8fafc;
+            border-left: 4px solid #0d6efd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #0b1a2e;
+            color: #a0b8d0;
+            margin-top: 50px;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 25px; margin: 20px; }
+            h1 { font-size: 1.6rem; }
+        }
     </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <a href="index.html">🇮🇳 ⚡ BHARAT-TOOLS 🚀</a>
+    <div class="logo"><i class="fa-solid fa-bolt"></i> BharatOS-Tools</div>
+    <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Home</a>
 </nav>
 
 <div class="container">
-    <h1>Cookies Policy</h1>
-    <p>This is the Cookies Policy for <strong>⚡ BHARAT-TOOLS 🚀</strong>. We use cookies to enhance and smooth out your experience while interacting with our free web utilities.</p>
+    <h1><i class="fa-solid fa-cookie-bite"></i> Cookies Policy</h1>
+    <p>This is the Cookies Policy for <strong>BharatOS-Tools</strong>. We use cookies to enhance and smooth out your experience while interacting with our free web utilities.</p>
     
-    <h3>What Are Cookies?</h3>
+    <div class="info-box">
+        <strong>💡 Quick Summary:</strong> We use minimal, essential cookies only to improve your experience. We do not sell your data.
+    </div>
+    
+    <h3><i class="fa-solid fa-question-circle"></i> What Are Cookies?</h3>
     <p>Cookies are small text files downloaded to your laptop, desktop, or mobile device browser to improve website mechanics. This page describes what information they gather and why we sometimes need to store these preferences.</p>
     
-    <h3>How We Use Cookies</h3>
-    <p>We use essential cookies to remember adjustments you make inside our web applications (like saving recent math calculation strings in the Scientific Calculator History tracker). This data stays local to your terminal environment.</p>
+    <h3><i class="fa-solid fa-cogs"></i> How We Use Cookies</h3>
+    <p>We use essential cookies to remember adjustments you make inside our web applications (like saving recent calculation strings in the Scientific Calculator History tracker). This data stays local to your device and is never shared.</p>
+    <ul>
+        <li><strong>Essential Cookies:</strong> Required for core functionality like saving your preferences.</li>
+        <li><strong>Performance Cookies:</strong> Help us understand how visitors interact with our tools.</li>
+        <li><strong>Functional Cookies:</strong> Remember your settings for a personalized experience.</li>
+    </ul>
     
-    <h3>Third-Party Cookies (AdSense & Analytics)</h3>
-    <p>In the near future, we may deploy third-party advertising modules like Google AdSense. These networks automatically deploy DART tracking cookies to read standard metadata variables and serve targeted, relevant ads based on browsing tendencies across the web.</p>
+    <h3><i class="fa-solid fa-ad"></i> Third-Party Cookies (AdSense & Analytics)</h3>
+    <p>In the future, we may deploy third-party advertising modules like Google AdSense. These networks automatically deploy DART tracking cookies to read standard metadata variables and serve targeted, relevant ads based on browsing tendencies across the web.</p>
     
-    <h3>Disabling Cookies</h3>
+    <h3><i class="fa-solid fa-toggle-off"></i> Disabling Cookies</h3>
     <p>You can prevent the deployment of cookies by adjusting the operational configurations inside your device browser (check your browser's Help menu to learn how). Note that disabling cookie management might degrade the performance trackers of your saved configuration histories.</p>
+    
+    <h3><i class="fa-solid fa-shield-alt"></i> Your Privacy Matters</h3>
+    <p>At BharatOS-Tools, we are committed to protecting your privacy. All file processing happens locally in your browser. Your images, PDFs, and documents never leave your device.</p>
 </div>
 
 <footer>
-    © 2026 ⚡ BHARAT-TOOLS 🚀 | Made with ❤️ by Alok
+    &copy; 2026 BharatOS-Tools | Made with ❤️ in India by Alok
 </footer>
 
 </body>

@@ -3,42 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms & Conditions - ⚡ BHARAT-TOOLS 🚀</title>
+    <title>Terms & Conditions - BharatOS-Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8f9fa; color: #333; margin: 0; padding: 0; line-height: 1.6; }
-        .navbar { background: #fff; padding: 15px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.05); font-weight: bold; font-size: 20px; }
-        .navbar a { text-decoration: none; color: #333; }
-        .container { max-width: 800px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        h1 { border-bottom: 2px solid #ff9933; padding-bottom: 10px; color: #222; font-size: 28px; }
-        h3 { color: #0d6efd; margin-top: 25px; }
-        footer { text-align: center; padding: 25px; background: #111; color: white; margin-top: 40px; font-size: 14px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f4f7fb 0%, #e8f1f9 100%);
+            min-height: 100vh;
+            color: #1a2b45;
+        }
+        .navbar {
+            background: #fff;
+            padding: 18px 5%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0d6efd, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        .navbar a:hover { background: #eef4ff; color: #0d6efd; }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(13, 110, 253, 0.08);
+            border: 1px solid rgba(13, 110, 253, 0.05);
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #1a2b45;
+            margin-bottom: 20px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 i { color: #0d6efd; }
+        h3 {
+            color: #0d6efd;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h3 i { color: #a855f7; }
+        p {
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        ul li {
+            padding: 12px 0;
+            padding-left: 35px;
+            position: relative;
+            color: #4b5563;
+            line-height: 1.7;
+        }
+        ul li:before {
+            content: "✔";
+            position: absolute;
+            left: 0;
+            color: #138808;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .highlight {
+            color: #0d6efd;
+            font-weight: 700;
+        }
+        .info-box {
+            background: #f8fafc;
+            border-left: 4px solid #0d6efd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #0b1a2e;
+            color: #a0b8d0;
+            margin-top: 50px;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 25px; margin: 20px; }
+            h1 { font-size: 1.6rem; }
+        }
     </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <a href="index.html">🇮🇳 ⚡ BHARAT-TOOLS 🚀</a>
+    <div class="logo"><i class="fa-solid fa-bolt"></i> BharatOS-Tools</div>
+    <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Home</a>
 </nav>
 
 <div class="container">
-    <h1>Terms & Conditions</h1>
-    <p>Welcome to <strong>⚡ BHARAT-TOOLS 🚀</strong>. By accessing or using this website, you agree to comply with and be bound by the following terms and conditions.</p>
+    <h1><i class="fa-solid fa-file-contract"></i> Terms & Conditions</h1>
+    <p>Welcome to <strong>BharatOS-Tools</strong>. By accessing or using this website, you agree to comply with and be bound by the following terms and conditions.</p>
     
-    <h3>1. Use of the Website</h3>
+    <div class="info-box">
+        <strong>📌 Note:</strong> By using our tools, you accept these terms. If you disagree, please discontinue use of the website.
+    </div>
+    
+    <h3><i class="fa-solid fa-check-circle"></i> 1. Use of the Website</h3>
     <p>The tools and services provided on this website are 100% free for everyone. You may use them for personal or professional purposes. You agree not to misuse the website or attempt to disrupt its infrastructure.</p>
+    <ul>
+        <li>Free for personal and commercial use.</li>
+        <li>No registration required.</li>
+        <li>Do not attempt to hack, scrape, or disrupt the service.</li>
+    </ul>
     
-    <h3>2. Privacy & Local Processing</h3>
+    <h3><i class="fa-solid fa-lock"></i> 2. Privacy & Local Processing</h3>
     <p>We respect your privacy. Most of our utility tools (such as Image Compressor and Scientific Calculator) process data entirely locally within your web browser. No user files are permanently stored or uploaded to our host servers without explicit intent.</p>
     
-    <h3>3. Intellectual Property</h3>
-    <p>The brand name, animated UI structures, and distinct visual presentations of <strong>⚡ BHARAT-TOOLS 🚀</strong> are managed by Alok. Unauthorized cloning of this entire web portal structure for malicious use is discouraged.</p>
+    <h3><i class="fa-solid fa-copyright"></i> 3. Intellectual Property</h3>
+    <p>The brand name, animated UI structures, and distinct visual presentations of <strong>BharatOS-Tools</strong> are managed by Alok. Unauthorized cloning of this entire web portal structure for malicious use is discouraged.</p>
     
-    <h3>4. Limitation of Liability</h3>
-    <p>While we thrive to provide accurate calculators and image compression scripts, we do not guarantee uninterrupted execution or error-free states. We are not liable for any immediate data changes resulting from third-party tools browser execution.</p>
+    <h3><i class="fa-solid fa-exclamation-triangle"></i> 4. Limitation of Liability</h3>
+    <p>While we strive to provide accurate calculators and image compression scripts, we do not guarantee uninterrupted execution or error-free states. We are not liable for any data changes resulting from third-party tools browser execution.</p>
+    
+    <h3><i class="fa-solid fa-sync-alt"></i> 5. Changes to Terms</h3>
+    <p>We reserve the right to update these terms at any time. Continued use of the website after changes constitutes acceptance of the new terms.</p>
+    
+    <h3><i class="fa-solid fa-envelope"></i> 6. Contact</h3>
+    <p>If you have any questions about these Terms & Conditions, please <a href="contact.html" style="color: #0d6efd; font-weight: 600;">contact us</a>.</p>
 </div>
 
 <footer>
-    © 2026 ⚡ BHARAT-TOOLS 🚀 | Made with ❤️ by Alok
+    &copy; 2026 BharatOS-Tools | Made with ❤️ in India by Alok
 </footer>
 
 </body>

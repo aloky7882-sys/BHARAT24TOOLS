@@ -3,44 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - ⚡ BHARAT-TOOLS 🚀</title>
+    <title>About Us - BharatOS-Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f8f9fa; color: #333; margin: 0; padding: 0; line-height: 1.6; }
-        .navbar { background: #fff; padding: 15px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.05); font-weight: bold; font-size: 20px; }
-        .navbar a { text-decoration: none; color: #333; }
-        .container { max-width: 800px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        h1 { border-bottom: 2px solid #ff9933; padding-bottom: 10px; color: #222; font-size: 28px; }
-        h3 { color: #0d6efd; margin-top: 25px; }
-        .highlight { color: #138808; font-weight: bold; }
-        footer { text-align: center; padding: 25px; background: #111; color: white; margin-top: 40px; font-size: 14px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f4f7fb 0%, #e8f1f9 100%);
+            min-height: 100vh;
+            color: #1a2b45;
+        }
+        .navbar {
+            background: #fff;
+            padding: 18px 5%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0d6efd, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        .navbar a:hover {
+            background: #eef4ff;
+            color: #0d6efd;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(13, 110, 253, 0.08);
+            border: 1px solid rgba(13, 110, 253, 0.05);
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #1a2b45;
+            margin-bottom: 20px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        h1 i {
+            color: #0d6efd;
+        }
+        h3 {
+            color: #0d6efd;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h3 i {
+            color: #a855f7;
+        }
+        p {
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        ul li {
+            padding: 12px 0;
+            padding-left: 35px;
+            position: relative;
+            color: #4b5563;
+            line-height: 1.7;
+        }
+        ul li:before {
+            content: "✔";
+            position: absolute;
+            left: 0;
+            color: #138808;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .highlight {
+            color: #0d6efd;
+            font-weight: 700;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, #0d6efd, #a855f7);
+            color: #fff;
+            padding: 30px;
+            border-radius: 16px;
+            margin-top: 40px;
+            text-align: center;
+        }
+        .cta-box h3 {
+            color: #fff;
+            justify-content: center;
+            margin-top: 0;
+        }
+        .cta-box p {
+            color: rgba(255,255,255,0.9);
+        }
+        .cta-btn {
+            display: inline-block;
+            background: #fff;
+            color: #0d6efd;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #0b1a2e;
+            color: #a0b8d0;
+            margin-top: 50px;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 768px) {
+            .container { padding: 25px; margin: 20px; }
+            h1 { font-size: 1.6rem; }
+        }
     </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <a href="index.html">🇮🇳 ⚡ BHARAT-TOOLS 🚀</a>
+    <div class="logo"><i class="fa-solid fa-bolt"></i> BharatOS-Tools</div>
+    <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Home</a>
 </nav>
 
 <div class="container">
-    <h1>About Us</h1>
-    <p>Welcome to <strong>⚡ BHARAT-TOOLS 🚀</strong>, your number one destination for 100% free web utility tools. We are dedicated to providing you with the very best of online web software applications, with a strict focus on data privacy, extreme conversion speed, and universal multi-device accessibility.</p>
+    <h1><i class="fa-solid fa-circle-info"></i> About BharatOS-Tools</h1>
+    <p>Welcome to <strong>BharatOS-Tools</strong>, India's fastest-growing platform for 100% free online utility tools. We are dedicated to providing you with the best web-based applications with a strict focus on <span class="highlight">data privacy, extreme conversion speed, and multi-device accessibility</span>.</p>
     
-    <h3>Our Vision & Mission</h3>
-    <p>Founded by <span class="highlight">Alok</span>, Bharat-Tools has come a long way from its initial concept. Our primary mission is to simplify standard complex tasks. Whether you need to compress massive photo sizes under tight application guidelines, convert PDF structures on the fly, or process algorithmic strings in real-time, our portal gets it done cleanly without pushing annoying software popups or demanding premium registrations.</p>
+    <h3><i class="fa-solid fa-bullseye"></i> Our Vision & Mission</h3>
+    <p>Founded by <span class="highlight">Alok</span>, BharatOS-Tools was created with a simple mission: to simplify complex everyday tasks. Whether you need to compress large images, convert PDFs on the fly, or perform advanced calculations in real-time, our portal gets it done cleanly — without annoying popups or premium registration demands.</p>
     
-    <h3>Why Choose ⚡ BHARAT-TOOLS 🚀?</h3>
+    <h3><i class="fa-solid fa-star"></i> Why Choose BharatOS-Tools?</h3>
     <ul>
-        <li><strong>Browser-Level Privacy:</strong> Most of our operational extensions (including the Advanced Multi-Image Compressor and Scientific Calculator core script loops) compress and calculate parameters directly inside your browser cache. Your personal data is never uploaded to any remote web hosting databases.</li>
-        <li><strong>Clean Responsive Layouts:</strong> Our responsive web application structure scales mathematically to deliver optimal display formats on Desktop terminals, Laptops, Tablets, and Android/iOS smartphones.</li>
-        <li><strong>No Paywalls or Hidden Limits:</strong> Every tool listed on our container dashboard is completely unrestricted and free for students, remote professionals, and government job aspirants alike.</li>
+        <li><strong>Browser-Level Privacy:</strong> All our tools (including the Advanced Image Compressor and Scientific Calculator) process data directly inside your browser. Your personal files are never uploaded to any server.</li>
+        <li><strong>Clean Responsive Layouts:</strong> Our web application scales perfectly on Desktop, Laptop, Tablet, and Android/iOS smartphones.</li>
+        <li><strong>No Paywalls or Hidden Limits:</strong> Every tool on our dashboard is completely unrestricted and free for students, professionals, and job aspirants.</li>
+        <li><strong>AI-Powered Efficiency:</strong> We leverage modern browser APIs and optimized algorithms to deliver lightning-fast results.</li>
+        <li><strong>24×7 Availability:</strong> Our tools are always online, ready whenever you need them.</li>
     </ul>
     
-    <h3>Connect With Us</h3>
-    <p>We continuously optimize our utility parameters to add value to your technical daily workflow. If you have any feature recommendations, tool performance insights, or optimization feedback, please visit our active <a href="contact.html" style="color: #ff9933; font-weight: bold; text-decoration: none;">Contact Page</a> to reach out to us directly over Mail, Dialer, or WhatsApp.</p>
+    <h3><i class="fa-solid fa-handshake"></i> Connect With Us</h3>
+    <p>We continuously optimize our tools to add value to your daily workflow. If you have feature recommendations, performance insights, or feedback, please visit our <a href="contact.html" style="color: #0d6efd; font-weight: bold;">Contact Page</a> to reach out directly via Email, Phone, or WhatsApp.</p>
+    
+    <div class="cta-box">
+        <h3><i class="fa-solid fa-rocket"></i> Ready to Explore?</h3>
+        <p>Discover over 100+ free tools crafted for India.</p>
+        <a href="index.html" class="cta-btn">Explore Tools <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
 </div>
 
 <footer>
-    © 2026 ⚡ BHARAT-TOOLS 🚀 | Made with ❤️ by Alok
+    &copy; 2026 BharatOS-Tools | Made with ❤️ in India by Alok
 </footer>
 
 </body>
