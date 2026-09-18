@@ -3,369 +3,240 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Color Palette Generator - Bharat Tools</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<title>Color Palette Generator - BharatOS-Tools</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+body { background: linear-gradient(135deg, #f4f6fb 0%, #e8f1f9 100%); color:#222; padding:30px 16px 60px; min-height:100vh; }
+.wrapper { max-width:1000px; margin:0 auto; }
+.page-header { text-align:center; margin-bottom:26px; }
+.page-header h1 { font-size:32px; font-weight:800; color:#1a2b45; margin-bottom:8px; }
+.page-header h1 i { color:#0d6efd; }
+.page-header p { color:#6c757d; font-size:15px; }
+.controls {
+    background:#fff; border-radius:20px; padding:24px;
+    box-shadow:0 10px 40px rgba(13, 110, 253, 0.06);
+    margin-bottom:24px; display:flex; align-items:center; gap:20px; flex-wrap:wrap;
 }
-
-body{
-background:#f4f6fb;
-color:#222;
-padding:30px 16px 60px;
+.controls label { font-size:13px; font-weight:600; color:#495057; }
+.controls input[type="color"] {
+    width:60px; height:50px; border:none; border-radius:12px;
+    cursor:pointer; padding:3px; border:2px solid #e9ecef;
 }
-
-.wrapper{
-max-width:1000px;
-margin:0 auto;
+.controls input[type="text"] {
+    padding:12px 14px; border:2px solid #e9ecef; border-radius:12px;
+    font-family:'Courier New',monospace; font-size:14px;
+    width:130px; text-transform:uppercase; background:#f8fafc;
 }
-
-.page-header{
-text-align:center;
-margin-bottom:26px;
+.controls input[type="text"]:focus {
+    outline:none; border-color:#0d6efd; background:#fff;
+    box-shadow:0 0 0 4px rgba(13, 110, 253, 0.1);
 }
-
-.page-header h1{
-font-size:32px;
-font-weight:700;
-color:#212529;
-margin-bottom:8px;
+.btn {
+    padding:12px 24px; border-radius:50px; border:none;
+    background:linear-gradient(135deg, #0d6efd, #0b5ed7); color:#fff;
+    font-weight:700; cursor:pointer; font-family:inherit; font-size:14px;
+    transition:.2s; display:flex; align-items:center; gap:8px;
 }
-
-.page-header h1 i{
-color:#0d6efd;
+.btn:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(13, 110, 253, 0.3); }
+.section { margin-bottom:28px; }
+.section h3 { font-size:16px; margin-bottom:12px; color:#1a2b45; font-weight:700; display:flex; align-items:center; gap:8px; }
+.section h3 i { color:#0d6efd; }
+.palette-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:12px; }
+.swatch {
+    border-radius:14px; overflow:hidden;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+    cursor:pointer; position:relative; transition:.2s;
+    border:2px solid #fff;
 }
-
-.page-header p{
-color:#6c757d;
-font-size:15px;
+.swatch:hover { transform:translateY(-4px); box-shadow:0 12px 28px rgba(0,0,0,.15); }
+.swatch-color { height:80px; }
+.swatch-label {
+    background:#fff; padding:10px; font-size:12px;
+    font-weight:700; font-family:'Courier New',monospace;
+    text-align:center; color:#212529;
 }
-
-.controls{
-background:#fff;
-border-radius:16px;
-padding:22px 24px;
-box-shadow:0 10px 30px rgba(0,0,0,.06);
-margin-bottom:24px;
-display:flex;
-align-items:center;
-gap:20px;
-flex-wrap:wrap;
+.swatch .copied-badge {
+    position:absolute; top:8px; right:8px;
+    background:rgba(0,0,0,.7); color:#fff;
+    font-size:10px; padding:4px 10px; border-radius:20px;
+    display:none; font-weight:600;
 }
-
-.controls label{
-font-size:13px;
-font-weight:600;
-color:#495057;
-}
-
-.controls input[type="color"]{
-width:60px;
-height:48px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-padding:2px;
-}
-
-.controls input[type="text"]{
-padding:12px 14px;
-border:1px solid #dee2e6;
-border-radius:8px;
-font-family:'Courier New',monospace;
-font-size:14px;
-width:120px;
-text-transform:uppercase;
-}
-
-.btn{
-padding:12px 24px;
-border-radius:50px;
-border:none;
-background:#0d6efd;
-color:#fff;
-font-weight:600;
-cursor:pointer;
-font-family:inherit;
-font-size:14px;
-transition:.2s;
-}
-
-.btn:hover{
-background:#0b5ed7;
-}
-
-.section{
-margin-bottom:28px;
-}
-
-.section h3{
-font-size:16px;
-margin-bottom:12px;
-color:#212529;
-}
-
-.palette-row{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-gap:12px;
-}
-
-.swatch{
-border-radius:12px;
-overflow:hidden;
-box-shadow:0 6px 18px rgba(0,0,0,.08);
-cursor:pointer;
-position:relative;
-transition:.2s;
-}
-
-.swatch:hover{
-transform:translateY(-4px);
-}
-
-.swatch-color{
-height:80px;
-}
-
-.swatch-label{
-background:#fff;
-padding:8px 10px;
-font-size:12px;
-font-weight:700;
-font-family:'Courier New',monospace;
-text-align:center;
-color:#212529;
-}
-
-.swatch .copied-badge{
-position:absolute;
-top:8px;
-right:8px;
-background:rgba(0,0,0,.6);
-color:#fff;
-font-size:10px;
-padding:3px 8px;
-border-radius:20px;
-display:none;
-}
-
-.back-link{
-display:inline-block;
-margin-top:10px;
-color:#6c757d;
-font-weight:500;
-text-decoration:none;
-}
-
+.back-link { display:inline-block; margin-top:15px; color:#6c757d; font-weight:500; text-decoration:none; }
+.back-link:hover { color:#0d6efd; }
 </style>
 </head>
-
 <body>
-
 <div class="wrapper">
+    <div class="page-header">
+        <h1><i class="fa-solid fa-palette"></i> Color Palette Generator</h1>
+        <p>Pick a base color and get complementary, analogous, triadic and shade palettes instantly.</p>
+    </div>
 
-<div class="page-header">
-    <h1><i class="fa-solid fa-palette"></i> Color Palette Generator</h1>
-    <p>Pick a base color and get complementary, analogous, triadic and shade palettes instantly.</p>
-</div>
+    <div class="controls">
+        <label>Base Color</label>
+        <input type="color" id="baseColorPicker" value="#0d6efd">
+        <input type="text" id="baseColorHex" value="#0D6EFD">
+        <button class="btn" id="randomBtn"><i class="fa-solid fa-shuffle"></i> Random Color</button>
+    </div>
 
-<div class="controls">
-    <label>Base Color</label>
-    <input type="color" id="baseColorPicker" value="#0d6efd">
-    <input type="text" id="baseColorHex" value="#0D6EFD">
-    <button class="btn" id="randomBtn"><i class="fa-solid fa-shuffle"></i> Random Color</button>
-</div>
+    <div class="section">
+        <h3><i class="fa-solid fa-sun"></i> Shades (Light to Dark)</h3>
+        <div class="palette-row" id="shadesRow"></div>
+    </div>
 
-<div class="section">
-    <h3>Shades (Light to Dark)</h3>
-    <div class="palette-row" id="shadesRow"></div>
-</div>
+    <div class="section">
+        <h3><i class="fa-solid fa-circle-half-stroke"></i> Complementary</h3>
+        <div class="palette-row" id="complementaryRow"></div>
+    </div>
 
-<div class="section">
-    <h3>Complementary</h3>
-    <div class="palette-row" id="complementaryRow"></div>
-</div>
+    <div class="section">
+        <h3><i class="fa-solid fa-code-branch"></i> Analogous</h3>
+        <div class="palette-row" id="analogousRow"></div>
+    </div>
 
-<div class="section">
-    <h3>Analogous</h3>
-    <div class="palette-row" id="analogousRow"></div>
-</div>
+    <div class="section">
+        <h3><i class="fa-solid fa-star-of-life"></i> Triadic</h3>
+        <div class="palette-row" id="triadicRow"></div>
+    </div>
 
-<div class="section">
-    <h3>Triadic</h3>
-    <div class="palette-row" id="triadicRow"></div>
-</div>
+    <div class="section">
+        <h3><i class="fa-solid fa-layer-group"></i> Split Complementary</h3>
+        <div class="palette-row" id="splitCompRow"></div>
+    </div>
 
-<a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+    <div class="section">
+        <h3><i class="fa-solid fa-square"></i> Tetradic</h3>
+        <div class="palette-row" id="tetradicRow"></div>
+    </div>
 
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
 </div>
 
 <script>
+    const baseColorPicker = document.getElementById("baseColorPicker");
+    const baseColorHex = document.getElementById("baseColorHex");
+    const randomBtn = document.getElementById("randomBtn");
 
-const baseColorPicker = document.getElementById("baseColorPicker");
-const baseColorHex = document.getElementById("baseColorHex");
-const randomBtn = document.getElementById("randomBtn");
-
-function hexToHsl(hex){
-
-    let r = parseInt(hex.slice(1,3),16)/255;
-    let g = parseInt(hex.slice(3,5),16)/255;
-    let b = parseInt(hex.slice(5,7),16)/255;
-
-    const max = Math.max(r,g,b), min = Math.min(r,g,b);
-    let h, s, l = (max+min)/2;
-
-    if(max === min){
-        h = s = 0;
-    } else {
-        const d = max - min;
-        s = l > 0.5 ? d/(2-max-min) : d/(max+min);
-
-        switch(max){
-            case r: h = (g-b)/d + (g < b ? 6 : 0); break;
-            case g: h = (b-r)/d + 2; break;
-            case b: h = (r-g)/d + 4; break;
+    function hexToHsl(hex){
+        let r = parseInt(hex.slice(1,3),16)/255;
+        let g = parseInt(hex.slice(3,5),16)/255;
+        let b = parseInt(hex.slice(5,7),16)/255;
+        const max = Math.max(r,g,b), min = Math.min(r,g,b);
+        let h, s, l = (max+min)/2;
+        if(max === min){
+            h = s = 0;
+        } else {
+            const d = max - min;
+            s = l > 0.5 ? d/(2-max-min) : d/(max+min);
+            switch(max){
+                case r: h = (g-b)/d + (g < b ? 6 : 0); break;
+                case g: h = (b-r)/d + 2; break;
+                case b: h = (r-g)/d + 4; break;
+            }
+            h /= 6;
         }
-        h /= 6;
+        return [h*360, s*100, l*100];
     }
 
-    return [h*360, s*100, l*100];
+    function hslToHex(h, s, l){
+        h = ((h % 360) + 360) % 360;
+        s /= 100; l /= 100;
+        const c = (1 - Math.abs(2*l - 1)) * s;
+        const x = c * (1 - Math.abs((h/60) % 2 - 1));
+        const m = l - c/2;
+        let r,g,b;
+        if(h < 60){ r=c; g=x; b=0; }
+        else if(h < 120){ r=x; g=c; b=0; }
+        else if(h < 180){ r=0; g=c; b=x; }
+        else if(h < 240){ r=0; g=x; b=c; }
+        else if(h < 300){ r=x; g=0; b=c; }
+        else { r=c; g=0; b=x; }
+        const toHex = v => Math.round((v+m)*255).toString(16).padStart(2,"0");
+        return "#" + toHex(r) + toHex(g) + toHex(b);
+    }
 
-}
+    function isValidHex(hex){ return /^#[0-9a-fA-F]{6}$/.test(hex); }
 
-function hslToHex(h, s, l){
-
-    h = ((h % 360) + 360) % 360;
-    s /= 100;
-    l /= 100;
-
-    const c = (1 - Math.abs(2*l - 1)) * s;
-    const x = c * (1 - Math.abs((h/60) % 2 - 1));
-    const m = l - c/2;
-
-    let r,g,b;
-
-    if(h < 60){ r=c; g=x; b=0; }
-    else if(h < 120){ r=x; g=c; b=0; }
-    else if(h < 180){ r=0; g=c; b=x; }
-    else if(h < 240){ r=0; g=x; b=c; }
-    else if(h < 300){ r=x; g=0; b=c; }
-    else { r=c; g=0; b=x; }
-
-    const toHex = v => Math.round((v+m)*255).toString(16).padStart(2,"0");
-
-    return "#" + toHex(r) + toHex(g) + toHex(b);
-
-}
-
-function isValidHex(hex){
-    return /^#[0-9a-fA-F]{6}$/.test(hex);
-}
-
-function createSwatch(hex, label){
-
-    const swatch = document.createElement("div");
-    swatch.className = "swatch";
-
-    swatch.innerHTML = `
-        <div class="swatch-color" style="background:${hex};"></div>
-        <div class="swatch-label">${hex.toUpperCase()}</div>
-        <div class="copied-badge">Copied!</div>
-    `;
-
-    swatch.addEventListener("click", function(){
-        navigator.clipboard.writeText(hex.toUpperCase()).then(() => {
-            const badge = swatch.querySelector(".copied-badge");
-            badge.style.display = "block";
-            setTimeout(() => { badge.style.display = "none"; }, 1200);
+    function createSwatch(hex){
+        const swatch = document.createElement("div");
+        swatch.className = "swatch";
+        swatch.innerHTML = `
+            <div class="swatch-color" style="background:${hex};"></div>
+            <div class="swatch-label">${hex.toUpperCase()}</div>
+            <div class="copied-badge">Copied!</div>
+        `;
+        swatch.addEventListener("click", function(){
+            navigator.clipboard.writeText(hex.toUpperCase()).then(() => {
+                const badge = swatch.querySelector(".copied-badge");
+                badge.style.display = "block";
+                setTimeout(() => { badge.style.display = "none"; }, 1200);
+            });
         });
+        return swatch;
+    }
+
+    function renderRow(elId, hexList){
+        const row = document.getElementById(elId);
+        row.innerHTML = "";
+        hexList.forEach(hex => row.appendChild(createSwatch(hex)));
+    }
+
+    function generatePalettes(){
+        const hex = baseColorHex.value.trim();
+        if(!isValidHex(hex)) return;
+        const [h, s, l] = hexToHsl(hex);
+
+        // Shades
+        const shades = [90, 75, 60, 45, l, 30, 15].map(lightness =>
+            hslToHex(h, s, Math.max(5, Math.min(95, lightness)))
+        );
+
+        // Complementary
+        const complementary = [hslToHex(h, s, l), hslToHex(h + 180, s, l)];
+
+        // Analogous
+        const analogous = [hslToHex(h - 30, s, l), hslToHex(h, s, l), hslToHex(h + 30, s, l)];
+
+        // Triadic
+        const triadic = [hslToHex(h, s, l), hslToHex(h + 120, s, l), hslToHex(h + 240, s, l)];
+
+        // Split Complementary
+        const splitComp = [hslToHex(h, s, l), hslToHex(h + 150, s, l), hslToHex(h + 210, s, l)];
+
+        // Tetradic
+        const tetradic = [hslToHex(h, s, l), hslToHex(h + 90, s, l), hslToHex(h + 180, s, l), hslToHex(h + 270, s, l)];
+
+        renderRow("shadesRow", shades);
+        renderRow("complementaryRow", complementary);
+        renderRow("analogousRow", analogous);
+        renderRow("triadicRow", triadic);
+        renderRow("splitCompRow", splitComp);
+        renderRow("tetradicRow", tetradic);
+    }
+
+    baseColorPicker.addEventListener("input", function(){
+        baseColorHex.value = this.value.toUpperCase();
+        generatePalettes();
     });
 
-    return swatch;
+    baseColorHex.addEventListener("input", function(){
+        const val = this.value.startsWith("#") ? this.value : "#" + this.value;
+        if(isValidHex(val)){
+            baseColorPicker.value = val;
+            generatePalettes();
+        }
+    });
 
-}
-
-function renderRow(elId, hexList){
-    const row = document.getElementById(elId);
-    row.innerHTML = "";
-    hexList.forEach(hex => row.appendChild(createSwatch(hex)));
-}
-
-function generatePalettes(){
-
-    const hex = baseColorHex.value.trim();
-
-    if(!isValidHex(hex)){
-        return;
-    }
-
-    const [h, s, l] = hexToHsl(hex);
-
-    // Shades: light to dark
-    const shades = [90, 75, 60, 45, l, 30, 15].map(lightness =>
-        hslToHex(h, s, Math.max(5, Math.min(95, lightness)))
-    );
-
-    // Complementary
-    const complementary = [
-        hslToHex(h, s, l),
-        hslToHex(h + 180, s, l)
-    ];
-
-    // Analogous
-    const analogous = [
-        hslToHex(h - 30, s, l),
-        hslToHex(h, s, l),
-        hslToHex(h + 30, s, l)
-    ];
-
-    // Triadic
-    const triadic = [
-        hslToHex(h, s, l),
-        hslToHex(h + 120, s, l),
-        hslToHex(h + 240, s, l)
-    ];
-
-    renderRow("shadesRow", shades);
-    renderRow("complementaryRow", complementary);
-    renderRow("analogousRow", analogous);
-    renderRow("triadicRow", triadic);
-
-}
-
-baseColorPicker.addEventListener("input", function(){
-    baseColorHex.value = this.value.toUpperCase();
-    generatePalettes();
-});
-
-baseColorHex.addEventListener("input", function(){
-    const val = this.value.startsWith("#") ? this.value : "#" + this.value;
-    if(isValidHex(val)){
-        baseColorPicker.value = val;
+    randomBtn.addEventListener("click", function(){
+        const randomHex = "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6,"0");
+        baseColorPicker.value = randomHex;
+        baseColorHex.value = randomHex.toUpperCase();
         generatePalettes();
-    }
-});
+    });
 
-randomBtn.addEventListener("click", function(){
-    const randomHex = "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6,"0");
-    baseColorPicker.value = randomHex;
-    baseColorHex.value = randomHex.toUpperCase();
     generatePalettes();
-});
-
-generatePalettes();
-
 </script>
-
 </body>
 </html>

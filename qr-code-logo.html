@@ -3,492 +3,241 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QR Code Generator with Logo - Bharat Tools</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<title>QR Code Generator with Logo - BharatOS-Tools</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+<!-- Correct QRCode CDN -->
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-<script>
-if (!window.QRCode) {
-    document.write('<scr' + 'ipt src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"><\/scr' + 'ipt>');
-}
-</script>
-
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-background:#f4f6fb;
-color:#222;
-padding:30px 16px 60px;
-}
-
-.wrapper{
-max-width:960px;
-margin:0 auto;
-}
-
-.page-header{
-text-align:center;
-margin-bottom:30px;
-}
-
-.page-header h1{
-font-size:32px;
-font-weight:700;
-color:#212529;
-margin-bottom:8px;
-}
-
-.page-header h1 i{
-color:#0d6efd;
-}
-
-.page-header p{
-color:#6c757d;
-font-size:15px;
-}
-
-.layout{
-display:grid;
-grid-template-columns:1fr 340px;
-gap:24px;
-}
-
-@media(max-width:800px){
-.layout{
-grid-template-columns:1fr;
-}
-}
-
-.panel{
-background:#fff;
-border-radius:16px;
-padding:24px;
-box-shadow:0 10px 30px rgba(0,0,0,.06);
-margin-bottom:20px;
-}
-
-.panel h3{
-font-size:15px;
-margin-bottom:14px;
-color:#212529;
-}
-
-label{
-display:block;
-font-size:13px;
-font-weight:600;
-color:#495057;
-margin-bottom:6px;
-}
-
-textarea, select{
-width:100%;
-padding:12px;
-border:1px solid #dee2e6;
-border-radius:8px;
-font-family:inherit;
-font-size:14px;
-margin-bottom:16px;
-resize:vertical;
-}
-
-textarea{
-min-height:70px;
-}
-
-.color-row{
-display:flex;
-gap:16px;
-margin-bottom:16px;
-}
-
-.color-field{
-flex:1;
-}
-
-.color-field input[type="color"]{
-width:100%;
-height:44px;
-border:1px solid #dee2e6;
-border-radius:8px;
-cursor:pointer;
-padding:2px;
-}
-
-.upload-zone{
-position:relative;
-border:2px dashed #0d6efd;
-border-radius:10px;
-padding:20px;
-text-align:center;
-background:#f8f9fa;
-cursor:pointer;
-margin-bottom:10px;
-transition:.2s;
-}
-
-.upload-zone:hover, .upload-zone.dragover{
-background:#eef5ff;
-border-color:#0b5ed7;
-}
-
-.upload-zone input{
-position:absolute;
-inset:0;
-opacity:0;
-cursor:pointer;
-}
-
-.upload-zone .icon{
-font-size:26px;
-color:#0d6efd;
-margin-bottom:6px;
-}
-
-.upload-zone .txt{
-font-size:13px;
-color:#6c757d;
-}
-
-.logo-preview{
-display:none;
-align-items:center;
-gap:10px;
-background:#f8f9fa;
-padding:8px 12px;
-border-radius:8px;
-margin-bottom:10px;
-}
-
-.logo-preview img{
-width:36px;
-height:36px;
-object-fit:contain;
-border-radius:6px;
-}
-
-.logo-preview span{
-font-size:13px;
-color:#495057;
-flex:1;
-}
-
-.logo-preview button{
-background:#fff0f0;
-color:#dc3545;
-border:none;
-width:26px;
-height:26px;
-border-radius:50%;
-cursor:pointer;
-}
-
-.preview-panel{
-text-align:center;
-position:sticky;
-top:20px;
-height:fit-content;
-}
-
-#qrCanvas{
-max-width:100%;
-border-radius:12px;
-box-shadow:0 10px 25px rgba(0,0,0,.1);
-}
-
-.btn{
-width:100%;
-padding:14px;
-border-radius:10px;
-border:none;
-font-weight:600;
-cursor:pointer;
-font-size:15px;
-font-family:inherit;
-margin-top:14px;
-transition:.2s;
-}
-
-.btn-primary{
-background:#0d6efd;
-color:#fff;
-}
-
-.btn-primary:hover{
-background:#0b5ed7;
-}
-
-.btn-secondary{
-background:#198754;
-color:#fff;
-}
-
-.btn-secondary:hover{
-background:#157347;
-}
-
-#status{
-margin-top:12px;
-font-size:13px;
-font-weight:600;
-min-height:18px;
-}
-
-.back-link{
-display:inline-block;
-margin-top:10px;
-color:#6c757d;
-font-weight:500;
-text-decoration:none;
-}
-
+*{ margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+body{ background: linear-gradient(135deg, #f4f6fb 0%, #e8f1f9 100%); color:#222; padding:30px 16px 60px; min-height:100vh; }
+.wrapper{ max-width:1000px; margin:0 auto; }
+.page-header{ text-align:center; margin-bottom:30px; }
+.page-header h1{ font-size:32px; font-weight:800; color:#1a2b45; margin-bottom:8px; }
+.page-header h1 i{ color:#0d6efd; }
+.page-header p{ color:#6c757d; font-size:15px; }
+.layout{ display:grid; grid-template-columns:1fr 380px; gap:24px; }
+@media(max-width:800px){ .layout{ grid-template-columns:1fr; } }
+.panel{ background:#fff; border-radius:20px; padding:28px; box-shadow:0 10px 40px rgba(13, 110, 253, 0.06); border:1px solid rgba(13, 110, 253, 0.05); margin-bottom:20px; }
+.panel h3{ font-size:16px; margin-bottom:16px; color:#1a2b45; font-weight:700; display:flex; align-items:center; gap:8px; }
+.panel h3 i{ color:#0d6efd; }
+label{ display:block; font-size:13px; font-weight:600; color:#495057; margin-bottom:6px; }
+textarea, select{ width:100%; padding:14px; border:2px solid #e9ecef; border-radius:12px; font-family:inherit; font-size:14px; margin-bottom:16px; resize:vertical; transition:all 0.3s; background:#f8fafc; }
+textarea:focus, select:focus{ outline:none; border-color:#0d6efd; background:#fff; box-shadow:0 0 0 4px rgba(13, 110, 253, 0.1); }
+textarea{ min-height:80px; }
+.color-row{ display:flex; gap:16px; margin-bottom:16px; }
+.color-field{ flex:1; }
+.color-field input[type="color"]{ width:100%; height:50px; border:2px solid #e9ecef; border-radius:12px; cursor:pointer; padding:4px; background:#fff; }
+.upload-zone{ position:relative; border:2px dashed #0d6efd; border-radius:12px; padding:25px 20px; text-align:center; background:#f8fafc; cursor:pointer; margin-bottom:10px; transition:all 0.3s; }
+.upload-zone:hover, .upload-zone.dragover{ background:#eef5ff; border-color:#0b5ed7; transform:translateY(-2px); }
+.upload-zone input{ position:absolute; inset:0; opacity:0; cursor:pointer; }
+.upload-zone .icon{ font-size:28px; color:#0d6efd; margin-bottom:8px; }
+.upload-zone .txt{ font-size:13px; color:#6c757d; }
+.logo-preview{ display:none; align-items:center; gap:12px; background:#f8fafc; padding:10px 14px; border-radius:12px; margin-bottom:10px; border:1px solid #e9ecef; }
+.logo-preview img{ width:40px; height:40px; object-fit:contain; border-radius:8px; }
+.logo-preview span{ font-size:13px; color:#495057; flex:1; }
+.logo-preview button{ background:#fff0f0; color:#dc3545; border:none; width:30px; height:30px; border-radius:50%; cursor:pointer; font-size:14px; }
+.preview-panel{ text-align:center; position:sticky; top:20px; height:fit-content; }
+.canvas-wrapper{ background:#fff; border-radius:16px; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,0.08); margin-bottom:15px; border:2px solid #f0f0f0; }
+#qrCanvas{ max-width:100%; border-radius:8px; }
+.btn{ width:100%; padding:14px; border-radius:12px; border:none; font-weight:700; cursor:pointer; font-size:15px; font-family:inherit; margin-top:12px; transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:8px; }
+.btn-primary{ background:linear-gradient(135deg, #0d6efd, #0b5ed7); color:#fff; }
+.btn-primary:hover{ transform:translateY(-2px); box-shadow:0 10px 25px rgba(13, 110, 253, 0.3); }
+.btn-secondary{ background:linear-gradient(135deg, #198754, #157347); color:#fff; }
+.btn-secondary:hover{ transform:translateY(-2px); box-shadow:0 10px 25px rgba(25, 135, 84, 0.3); }
+.btn:disabled{ opacity:0.6; cursor:not-allowed; transform:none; }
+#status{ margin-top:12px; font-size:13px; font-weight:600; min-height:20px; text-align:center; }
+.status-success{ color:#198754; }
+.status-error{ color:#dc3545; }
+.status-loading{ color:#0d6efd; }
+.back-link{ display:inline-block; margin-top:15px; color:#6c757d; font-weight:500; text-decoration:none; }
+.back-link:hover{ color:#0d6efd; }
 </style>
 </head>
-
 <body>
-
 <div class="wrapper">
-
-<div class="page-header">
-    <h1><i class="fa-solid fa-qrcode"></i> QR Code Generator with Logo</h1>
-    <p>Create a custom QR code and embed your logo in the center — scannable and on-brand.</p>
-</div>
-
-<div class="layout">
-
-    <div>
-        <div class="panel">
-            <h3>Content</h3>
-            <label>Text, URL, or any data</label>
-            <textarea id="qrText" placeholder="https://example.com">https://aloky7882-sys.github.io/BHARAT-TOOLS/</textarea>
-        </div>
-
-        <div class="panel">
-            <h3>Appearance</h3>
-            <div class="color-row">
-                <div class="color-field">
-                    <label>QR Color</label>
-                    <input type="color" id="fgColor" value="#0d6efd">
-                </div>
-                <div class="color-field">
-                    <label>Background</label>
-                    <input type="color" id="bgColor" value="#ffffff">
-                </div>
-            </div>
-
-            <label>Size</label>
-            <select id="qrSize">
-                <option value="300">Small (300px)</option>
-                <option value="500" selected>Medium (500px)</option>
-                <option value="800">Large (800px)</option>
-            </select>
-        </div>
-
-        <div class="panel">
-            <h3>Logo (optional)</h3>
-            <div class="upload-zone" id="logoDropZone">
-                <div class="icon"><i class="fa-solid fa-image"></i></div>
-                <div class="txt">Click or drag a logo image here</div>
-                <input type="file" id="logoUpload" accept="image/*">
-            </div>
-            <div class="logo-preview" id="logoPreview">
-                <img id="logoPreviewImg" alt="Logo">
-                <span id="logoFileName"></span>
-                <button id="removeLogo"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-        </div>
+    <div class="page-header">
+        <h1><i class="fa-solid fa-qrcode"></i> QR Code with Logo</h1>
+        <p>Create a custom QR code and embed your logo in the center — scannable and on-brand.</p>
     </div>
 
-    <div class="preview-panel">
-        <div class="panel">
-            <canvas id="qrCanvas"></canvas>
+    <div class="layout">
+        <div>
+            <div class="panel">
+                <h3><i class="fa-solid fa-link"></i> Content</h3>
+                <label>Text, URL, or any data</label>
+                <textarea id="qrText" placeholder="https://example.com">https://aloky7882-sys.github.io/BHARATOS-TOOLS/</textarea>
+            </div>
+
+            <div class="panel">
+                <h3><i class="fa-solid fa-palette"></i> Appearance</h3>
+                <div class="color-row">
+                    <div class="color-field">
+                        <label>QR Color</label>
+                        <input type="color" id="fgColor" value="#0d6efd">
+                    </div>
+                    <div class="color-field">
+                        <label>Background</label>
+                        <input type="color" id="bgColor" value="#ffffff">
+                    </div>
+                </div>
+                <label>Size</label>
+                <select id="qrSize">
+                    <option value="300">Small (300px)</option>
+                    <option value="500" selected>Medium (500px)</option>
+                    <option value="800">Large (800px)</option>
+                </select>
+            </div>
+
+            <div class="panel">
+                <h3><i class="fa-solid fa-image"></i> Logo (Optional)</h3>
+                <div class="upload-zone" id="logoDropZone">
+                    <div class="icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                    <div class="txt">Click or drag a logo image here</div>
+                    <input type="file" id="logoUpload" accept="image/*">
+                </div>
+                <div class="logo-preview" id="logoPreview">
+                    <img id="logoPreviewImg" alt="Logo">
+                    <span id="logoFileName"></span>
+                    <button id="removeLogo"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-panel">
+            <div class="canvas-wrapper">
+                <canvas id="qrCanvas"></canvas>
+            </div>
             <div id="status"></div>
-            <button class="btn btn-primary" id="generateBtn">Generate QR Code</button>
-            <button class="btn btn-secondary" id="downloadBtn">Download PNG</button>
+            <button class="btn btn-primary" id="generateBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate QR Code</button>
+            <button class="btn btn-secondary" id="downloadBtn"><i class="fa-solid fa-download"></i> Download PNG</button>
         </div>
     </div>
 
-</div>
-
-<a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
-
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
 </div>
 
 <script>
+    const qrText = document.getElementById("qrText");
+    const fgColor = document.getElementById("fgColor");
+    const bgColor = document.getElementById("bgColor");
+    const qrSize = document.getElementById("qrSize");
+    const qrCanvas = document.getElementById("qrCanvas");
+    const status = document.getElementById("status");
+    const generateBtn = document.getElementById("generateBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const logoDropZone = document.getElementById("logoDropZone");
+    const logoUpload = document.getElementById("logoUpload");
+    const logoPreview = document.getElementById("logoPreview");
+    const logoPreviewImg = document.getElementById("logoPreviewImg");
+    const logoFileName = document.getElementById("logoFileName");
+    const removeLogo = document.getElementById("removeLogo");
 
-const qrText = document.getElementById("qrText");
-const fgColor = document.getElementById("fgColor");
-const bgColor = document.getElementById("bgColor");
-const qrSize = document.getElementById("qrSize");
-const qrCanvas = document.getElementById("qrCanvas");
-const status = document.getElementById("status");
-const generateBtn = document.getElementById("generateBtn");
-const downloadBtn = document.getElementById("downloadBtn");
+    let logoImage = null;
 
-const logoDropZone = document.getElementById("logoDropZone");
-const logoUpload = document.getElementById("logoUpload");
-const logoPreview = document.getElementById("logoPreview");
-const logoPreviewImg = document.getElementById("logoPreviewImg");
-const logoFileName = document.getElementById("logoFileName");
-const removeLogo = document.getElementById("removeLogo");
-
-let logoImage = null;
-
-function processLogoFile(file){
-    if(!file || !file.type.startsWith("image/")) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e){
-        const img = new Image();
-        img.onload = function(){
-            logoImage = img;
-            logoPreviewImg.src = e.target.result;
-            logoFileName.innerText = file.name;
-            logoPreview.style.display = "flex";
-            generateQR();
-        };
-        img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-}
-
-logoUpload.addEventListener("change", function(){
-    processLogoFile(this.files[0]);
-});
-
-logoDropZone.addEventListener("dragover", function(e){
-    e.preventDefault();
-    logoDropZone.classList.add("dragover");
-});
-
-logoDropZone.addEventListener("dragleave", function(){
-    logoDropZone.classList.remove("dragover");
-});
-
-logoDropZone.addEventListener("drop", function(e){
-    e.preventDefault();
-    logoDropZone.classList.remove("dragover");
-    processLogoFile(e.dataTransfer.files[0]);
-});
-
-removeLogo.addEventListener("click", function(e){
-    e.stopPropagation();
-    logoImage = null;
-    logoUpload.value = "";
-    logoPreview.style.display = "none";
-    generateQR();
-});
-
-function generateQR(){
-
-    const text = qrText.value.trim();
-
-    if(!text){
-        status.innerText = "❌ Please enter some text or a URL.";
-        status.style.color = "#dc3545";
-        return;
-    }
-
-    if(typeof QRCode === "undefined" || !QRCode.toCanvas){
-        status.innerText = "⏳ Loading QR engine, please wait a moment and try again...";
-        status.style.color = "#0d6efd";
-
-        let tries = 0;
-        const wait = setInterval(function(){
-            tries++;
-            if(typeof QRCode !== "undefined" && QRCode.toCanvas){
-                clearInterval(wait);
+    function processLogoFile(file){
+        if(!file || !file.type.startsWith("image/")) return;
+        const reader = new FileReader();
+        reader.onload = function(e){
+            const img = new Image();
+            img.onload = function(){
+                logoImage = img;
+                logoPreviewImg.src = e.target.result;
+                logoFileName.innerText = file.name;
+                logoPreview.style.display = "flex";
                 generateQR();
-            } else if(tries >= 30){
-                clearInterval(wait);
-                status.innerText = "❌ Could not load the QR engine. Please check your internet connection and refresh the page.";
-                status.style.color = "#dc3545";
-            }
-        }, 300);
-
-        return;
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
     }
 
-    const size = parseInt(qrSize.value);
+    logoUpload.addEventListener("change", function(){ processLogoFile(this.files[0]); });
+    logoDropZone.addEventListener("dragover", function(e){ e.preventDefault(); logoDropZone.classList.add("dragover"); });
+    logoDropZone.addEventListener("dragleave", function(){ logoDropZone.classList.remove("dragover"); });
+    logoDropZone.addEventListener("drop", function(e){ e.preventDefault(); logoDropZone.classList.remove("dragover"); processLogoFile(e.dataTransfer.files[0]); });
+    removeLogo.addEventListener("click", function(e){
+        e.stopPropagation();
+        logoImage = null;
+        logoUpload.value = "";
+        logoPreview.style.display = "none";
+        generateQR();
+    });
 
-    const options = {
-        width: size,
-        margin: 2,
-        color: {
-            dark: fgColor.value,
-            light: bgColor.value
-        },
-        errorCorrectionLevel: logoImage ? "H" : "M"
-    };
-
-    try{
-
-        QRCode.toCanvas(qrCanvas, text, options, function(err){
-
-            if(err){
-                console.error(err);
-                status.innerText = "❌ Could not generate QR code: " + err.message;
-                status.style.color = "#dc3545";
-                return;
-            }
-
-            if(logoImage){
-
-                const ctx = qrCanvas.getContext("2d");
-                const logoSize = size * 0.22;
-                const x = (size - logoSize) / 2;
-                const y = (size - logoSize) / 2;
-
-                ctx.fillStyle = "#ffffff";
-                ctx.fillRect(x - 6, y - 6, logoSize + 12, logoSize + 12);
-
-                ctx.drawImage(logoImage, x, y, logoSize, logoSize);
-
-            }
-
-            status.innerText = "✅ QR code ready. Test scan it before using widely.";
-            status.style.color = "#198754";
-
-        });
-
-    } catch(e){
-        console.error(e);
-        status.innerText = "❌ Something went wrong: " + e.message;
-        status.style.color = "#dc3545";
+    function generateQR(){
+        const text = qrText.value.trim();
+        if(!text){
+            status.innerText = "❌ Please enter some text or a URL.";
+            status.className = "status-error";
+            return;
+        }
+        if(typeof QRCode === "undefined" || !QRCode.toCanvas){
+            status.innerText = "⏳ Loading QR engine...";
+            status.className = "status-loading";
+            let tries = 0;
+            const wait = setInterval(function(){
+                tries++;
+                if(typeof QRCode !== "undefined" && QRCode.toCanvas){
+                    clearInterval(wait);
+                    generateQR();
+                } else if(tries >= 30){
+                    clearInterval(wait);
+                    status.innerText = "❌ Could not load the QR engine. Please check your internet connection and refresh the page.";
+                    status.className = "status-error";
+                }
+            }, 300);
+            return;
+        }
+        const size = parseInt(qrSize.value);
+        const options = {
+            width: size,
+            margin: 2,
+            color: { dark: fgColor.value, light: bgColor.value },
+            errorCorrectionLevel: logoImage ? "H" : "M"
+        };
+        try{
+            QRCode.toCanvas(qrCanvas, text, options, function(err){
+                if(err){
+                    status.innerText = "❌ Could not generate QR code: " + err.message;
+                    status.className = "status-error";
+                    return;
+                }
+                if(logoImage){
+                    const ctx = qrCanvas.getContext("2d");
+                    const logoSize = size * 0.22;
+                    const x = (size - logoSize) / 2;
+                    const y = (size - logoSize) / 2;
+                    // White padding behind logo
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillRect(x - 8, y - 8, logoSize + 16, logoSize + 16);
+                    ctx.drawImage(logoImage, x, y, logoSize, logoSize);
+                }
+                status.innerText = "✅ QR code ready. Test scan before using widely.";
+                status.className = "status-success";
+            });
+        } catch(e){
+            status.innerText = "❌ Something went wrong: " + e.message;
+            status.className = "status-error";
+        }
     }
 
-}
+    generateBtn.addEventListener("click", generateQR);
+    downloadBtn.addEventListener("click", function(){
+        if(!qrCanvas.width || qrCanvas.width === 0){
+            status.innerText = "❌ Generate the QR code first before downloading.";
+            status.className = "status-error";
+            return;
+        }
+        const link = document.createElement("a");
+        link.download = "qr-code-with-logo.png";
+        link.href = qrCanvas.toDataURL("image/png");
+        link.click();
+        status.innerText = "✅ Download started!";
+        status.className = "status-success";
+    });
 
-generateBtn.addEventListener("click", generateQR);
-
-downloadBtn.addEventListener("click", function(){
-
-    if(!qrCanvas.width || qrCanvas.width === 0){
-        status.innerText = "❌ Generate the QR code first before downloading.";
-        status.style.color = "#dc3545";
-        return;
-    }
-
-    const link = document.createElement("a");
-    link.download = "qr-code.png";
-    link.href = qrCanvas.toDataURL("image/png");
-    link.click();
-
-});
-
-generateQR();
-
+    // Initial generate
+    generateQR();
 </script>
-
 </body>
 </html>

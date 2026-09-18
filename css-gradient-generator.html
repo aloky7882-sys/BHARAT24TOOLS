@@ -3,537 +3,279 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CSS Gradient Generator - Bharat Tools</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<title>CSS Gradient Generator - BharatOS-Tools</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+body { background: linear-gradient(135deg, #f4f6fb 0%, #e8f1f9 100%); color:#222; padding:30px 16px 60px; min-height:100vh; }
+.wrapper { max-width:1000px; margin:0 auto; }
+.page-header { text-align:center; margin-bottom:30px; }
+.page-header h1 { font-size:32px; font-weight:800; color:#1a2b45; margin-bottom:8px; }
+.page-header h1 i { color:#0d6efd; }
+.page-header p { color:#6c757d; font-size:15px; }
+.preview-box {
+    width:100%; height:280px; border-radius:20px;
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+    margin-bottom:24px; transition:background .15s ease;
+    border: 3px solid #fff;
 }
-
-body{
-background:#f4f6fb;
-color:#222;
-padding:30px 16px 60px;
+.panel { background:#fff; border-radius:20px; padding:28px; box-shadow:0 10px 40px rgba(13, 110, 253, 0.06); margin-bottom:20px; border:1px solid rgba(13, 110, 253, 0.05); }
+.panel h3 { font-size:16px; margin-bottom:16px; color:#1a2b45; font-weight:700; display:flex; align-items:center; gap:8px; }
+.panel h3 i { color:#0d6efd; }
+.row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:16px; }
+.type-toggle { display:flex; gap:10px; }
+.type-toggle button {
+    padding:10px 20px; border:2px solid #e9ecef; background:#fff;
+    border-radius:50px; font-weight:600; cursor:pointer; color:#495057;
+    transition:.2s; font-family:inherit; font-size:13px;
 }
-
-.wrapper{
-max-width:1000px;
-margin:0 auto;
+.type-toggle button.active { background:#0d6efd; border-color:#0d6efd; color:#fff; }
+.type-toggle button:hover:not(.active) { border-color:#0d6efd; color:#0d6efd; }
+.angle-control { display:flex; align-items:center; gap:12px; flex:1; min-width:220px; }
+.angle-control label { font-size:13px; color:#495057; font-weight:600; white-space:nowrap; }
+.angle-control input[type="range"] { flex:1; accent-color: #0d6efd; }
+.angle-value { font-weight:700; color:#0d6efd; min-width:44px; text-align:right; }
+.stops-list { display:flex; flex-direction:column; gap:12px; margin-bottom:16px; }
+.stop-row { display:flex; align-items:center; gap:12px; background:#f8fafc; padding:10px 14px; border-radius:12px; border:1px solid #e9ecef; }
+.stop-row input[type="color"] { width:44px; height:44px; border:none; border-radius:8px; cursor:pointer; background:none; padding:0; }
+.stop-row input[type="range"] { flex:1; accent-color: #0d6efd; }
+.stop-row .pos-value { font-size:13px; color:#6c757d; min-width:42px; text-align:right; font-weight:600; }
+.stop-row .remove-stop {
+    background:#fff0f0; color:#dc3545; border:none;
+    width:32px; height:32px; border-radius:50%;
+    cursor:pointer; font-size:14px; flex-shrink:0; transition:.2s;
 }
-
-.page-header{
-text-align:center;
-margin-bottom:30px;
+.stop-row .remove-stop:hover { background:#dc3545; color:#fff; }
+.btn-row { display:flex; gap:12px; flex-wrap:wrap; }
+.btn { padding:12px 22px; border-radius:12px; border:none; font-weight:700; cursor:pointer; font-size:14px; font-family:inherit; transition:.2s; display:flex; align-items:center; gap:8px; }
+.btn-primary { background:linear-gradient(135deg, #0d6efd, #0b5ed7); color:#fff; }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(13, 110, 253, 0.3); }
+.btn-secondary { background:#eef2f7; color:#212529; }
+.btn-secondary:hover { background:#dfe6ee; }
+.code-box {
+    background:#1e1e2e; color:#e6e6e6; border-radius:14px;
+    padding:18px 20px; font-family:'Courier New',monospace;
+    font-size:14px; line-height:1.7; white-space:pre-wrap;
+    word-break:break-all; position:relative; border: 2px solid #2d2d3d;
 }
-
-.page-header h1{
-font-size:32px;
-font-weight:700;
-color:#212529;
-margin-bottom:8px;
+.copy-btn {
+    position:absolute; top:14px; right:14px;
+    background:#0d6efd; color:#fff; border:none;
+    padding:8px 16px; border-radius:10px; font-size:13px;
+    font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif;
+    transition:.2s;
 }
-
-.page-header h1 i{
-color:#0d6efd;
-}
-
-.page-header p{
-color:#6c757d;
-font-size:15px;
-}
-
-.preview-box{
-width:100%;
-height:280px;
-border-radius:20px;
-box-shadow:0 15px 35px rgba(0,0,0,.12);
-margin-bottom:24px;
-transition:background .15s ease;
-}
-
-.panel{
-background:#fff;
-border-radius:16px;
-padding:24px;
-box-shadow:0 10px 30px rgba(0,0,0,.06);
-margin-bottom:20px;
-}
-
-.panel h3{
-font-size:16px;
-margin-bottom:16px;
-color:#212529;
-}
-
-.row{
-display:flex;
-gap:12px;
-flex-wrap:wrap;
-align-items:center;
-margin-bottom:16px;
-}
-
-.type-toggle{
-display:flex;
-gap:10px;
-}
-
-.type-toggle button{
-padding:10px 20px;
-border:2px solid #dee2e6;
-background:#fff;
-border-radius:50px;
-font-weight:600;
-cursor:pointer;
-color:#495057;
-transition:.2s;
-font-family:inherit;
-}
-
-.type-toggle button.active{
-background:#0d6efd;
-border-color:#0d6efd;
-color:#fff;
-}
-
-.angle-control{
-display:flex;
-align-items:center;
-gap:12px;
-flex:1;
-min-width:220px;
-}
-
-.angle-control label{
-font-size:14px;
-color:#495057;
-font-weight:600;
-white-space:nowrap;
-}
-
-.angle-control input[type="range"]{
-flex:1;
-}
-
-.angle-value{
-font-weight:700;
-color:#0d6efd;
-min-width:44px;
-text-align:right;
-}
-
-.stops-list{
-display:flex;
-flex-direction:column;
-gap:12px;
-margin-bottom:16px;
-}
-
-.stop-row{
-display:flex;
-align-items:center;
-gap:12px;
-background:#f8f9fa;
-padding:10px 14px;
-border-radius:10px;
-}
-
-.stop-row input[type="color"]{
-width:44px;
-height:44px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-background:none;
-padding:0;
-}
-
-.stop-row input[type="range"]{
-flex:1;
-}
-
-.stop-row .pos-value{
-font-size:13px;
-color:#6c757d;
-min-width:38px;
-text-align:right;
-}
-
-.stop-row .remove-stop{
-background:#fff0f0;
-color:#dc3545;
-border:none;
-width:32px;
-height:32px;
-border-radius:50%;
-cursor:pointer;
-font-size:14px;
-flex-shrink:0;
-}
-
-.stop-row .remove-stop:hover{
-background:#dc3545;
-color:#fff;
-}
-
-.btn-row{
-display:flex;
-gap:12px;
-flex-wrap:wrap;
-}
-
-.btn{
-padding:12px 22px;
-border-radius:10px;
-border:none;
-font-weight:600;
-cursor:pointer;
-font-size:14px;
-font-family:inherit;
-transition:.2s;
-}
-
-.btn-primary{
-background:#0d6efd;
-color:#fff;
-}
-
-.btn-primary:hover{
-background:#0b5ed7;
-}
-
-.btn-secondary{
-background:#eef2f7;
-color:#212529;
-}
-
-.btn-secondary:hover{
-background:#dfe6ee;
-}
-
-.code-box{
-background:#1e1e2e;
-color:#e6e6e6;
-border-radius:12px;
-padding:18px 20px;
-font-family:'Courier New',monospace;
-font-size:14px;
-line-height:1.7;
-white-space:pre-wrap;
-word-break:break-all;
-position:relative;
-}
-
-.copy-btn{
-position:absolute;
-top:14px;
-right:14px;
-background:#0d6efd;
-color:#fff;
-border:none;
-padding:8px 16px;
-border-radius:8px;
-font-size:13px;
-font-weight:600;
-cursor:pointer;
-font-family:'Poppins',sans-serif;
-}
-
-.copy-btn:hover{
-background:#0b5ed7;
-}
-
-.presets{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
-gap:10px;
-}
-
-.preset-swatch{
-height:60px;
-border-radius:10px;
-cursor:pointer;
-border:2px solid transparent;
-transition:.2s;
-}
-
-.preset-swatch:hover{
-transform:scale(1.05);
-border-color:#0d6efd;
-}
-
-.back-link{
-display:inline-block;
-margin-top:10px;
-color:#6c757d;
-font-weight:500;
-text-decoration:none;
-}
-
-@media(max-width:600px){
-.preview-box{
-height:180px;
-}
-.page-header h1{
-font-size:24px;
-}
-}
-
+.copy-btn:hover { background:#0b5ed7; }
+.copy-btn.copied { background:#198754; }
+.presets { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:12px; }
+.preset-swatch { height:60px; border-radius:12px; cursor:pointer; border:3px solid transparent; transition:.2s; }
+.preset-swatch:hover { transform:scale(1.05); border-color:#0d6efd; }
+.back-link { display:inline-block; margin-top:15px; color:#6c757d; font-weight:500; text-decoration:none; }
+.back-link:hover { color:#0d6efd; }
+@media(max-width:600px){ .preview-box{height:180px;} .page-header h1{font-size:24px;} }
 </style>
 </head>
-
 <body>
-
 <div class="wrapper">
+    <div class="page-header">
+        <h1><i class="fa-solid fa-droplet"></i> CSS Gradient Generator</h1>
+        <p>Build multi-color gradients visually and copy ready-to-use CSS.</p>
+    </div>
 
-<div class="page-header">
-    <h1><i class="fa-solid fa-droplet"></i> CSS Gradient Generator</h1>
-    <p>Build multi-color gradients visually and copy ready-to-use CSS.</p>
-</div>
+    <div class="preview-box" id="previewBox"></div>
 
-<div class="preview-box" id="previewBox"></div>
-
-<div class="panel">
-    <h3>Gradient Type</h3>
-    <div class="row">
-        <div class="type-toggle">
-            <button id="typeLinear" class="active">Linear</button>
-            <button id="typeRadial">Radial</button>
+    <div class="panel">
+        <h3><i class="fa-solid fa-sliders"></i> Gradient Type</h3>
+        <div class="row">
+            <div class="type-toggle">
+                <button id="typeLinear" class="active">Linear</button>
+                <button id="typeRadial">Radial</button>
+            </div>
+            <div class="angle-control" id="angleControl">
+                <label>Angle</label>
+                <input type="range" id="angle" min="0" max="360" value="90">
+                <span class="angle-value" id="angleValue">90°</span>
+            </div>
         </div>
+    </div>
 
-        <div class="angle-control" id="angleControl">
-            <label>Angle</label>
-            <input type="range" id="angle" min="0" max="360" value="90">
-            <span class="angle-value" id="angleValue">90°</span>
+    <div class="panel">
+        <h3><i class="fa-solid fa-palette"></i> Color Stops</h3>
+        <div class="stops-list" id="stopsList"></div>
+        <div class="btn-row">
+            <button class="btn btn-secondary" id="addStop"><i class="fa-solid fa-plus"></i> Add Color</button>
+            <button class="btn btn-secondary" id="randomBtn"><i class="fa-solid fa-shuffle"></i> Random</button>
         </div>
     </div>
-</div>
 
-<div class="panel">
-    <h3>Color Stops</h3>
-    <div class="stops-list" id="stopsList"></div>
-    <div class="btn-row">
-        <button class="btn btn-secondary" id="addStop"><i class="fa-solid fa-plus"></i> Add Color</button>
-        <button class="btn btn-secondary" id="randomBtn"><i class="fa-solid fa-shuffle"></i> Random</button>
+    <div class="panel">
+        <h3><i class="fa-solid fa-star"></i> Preset Gradients</h3>
+        <div class="presets" id="presets"></div>
     </div>
-</div>
 
-<div class="panel">
-    <h3>Preset Gradients</h3>
-    <div class="presets" id="presets"></div>
-</div>
-
-<div class="panel">
-    <h3>CSS Code</h3>
-    <div class="code-box">
-        <button class="copy-btn" id="copyBtn">Copy</button>
-        <span id="cssOutput"></span>
+    <div class="panel">
+        <h3><i class="fa-solid fa-code"></i> CSS Code</h3>
+        <div class="code-box">
+            <button class="copy-btn" id="copyBtn">Copy</button>
+            <span id="cssOutput"></span>
+        </div>
     </div>
-</div>
 
-<a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
-
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
 </div>
 
 <script>
+    const previewBox = document.getElementById("previewBox");
+    const stopsList = document.getElementById("stopsList");
+    const cssOutput = document.getElementById("cssOutput");
+    const angleInput = document.getElementById("angle");
+    const angleValue = document.getElementById("angleValue");
+    const angleControl = document.getElementById("angleControl");
+    const typeLinearBtn = document.getElementById("typeLinear");
+    const typeRadialBtn = document.getElementById("typeRadial");
 
-const previewBox = document.getElementById("previewBox");
-const stopsList = document.getElementById("stopsList");
-const cssOutput = document.getElementById("cssOutput");
-const angleInput = document.getElementById("angle");
-const angleValue = document.getElementById("angleValue");
-const angleControl = document.getElementById("angleControl");
-const typeLinearBtn = document.getElementById("typeLinear");
-const typeRadialBtn = document.getElementById("typeRadial");
+    let gradientType = "linear";
+    let stops = [
+        { color: "#0d6efd", pos: 0 },
+        { color: "#8e2de2", pos: 100 }
+    ];
 
-let gradientType = "linear";
+    const presetList = [
+        ["#ff9a9e", "#fad0c4"], ["#a1c4fd", "#c2e9fb"], ["#fbc2eb", "#a6c1ee"],
+        ["#84fab0", "#8fd3f4"], ["#f6d365", "#fda085"], ["#5ee7df", "#b490ca"],
+        ["#d4fc79", "#96e6a1"], ["#ff5858", "#f09819"], ["#0d6efd", "#00c6ff"],
+        ["#8e2de2", "#4a00e0"], ["#ee0979", "#ff6a00"], ["#1f4037", "#99f2c8"]
+    ];
 
-let stops = [
-    { color: "#0d6efd", pos: 0 },
-    { color: "#8e2de2", pos: 100 }
-];
-
-const presetList = [
-    ["#ff9a9e", "#fad0c4"],
-    ["#a1c4fd", "#c2e9fb"],
-    ["#fbc2eb", "#a6c1ee"],
-    ["#84fab0", "#8fd3f4"],
-    ["#f6d365", "#fda085"],
-    ["#5ee7df", "#b490ca"],
-    ["#d4fc79", "#96e6a1"],
-    ["#ff5858", "#f09819"],
-    ["#0d6efd", "#00c6ff"],
-    ["#8e2de2", "#4a00e0"],
-    ["#ee0979", "#ff6a00"],
-    ["#1f4037", "#99f2c8"]
-];
-
-function renderStops(){
-
-    stopsList.innerHTML = "";
-
-    stops.forEach((stop, index) => {
-
-        const row = document.createElement("div");
-        row.className = "stop-row";
-
-        row.innerHTML = `
-            <input type="color" value="${stop.color}" data-index="${index}" class="stop-color">
-            <input type="range" min="0" max="100" value="${stop.pos}" data-index="${index}" class="stop-pos">
-            <span class="pos-value">${stop.pos}%</span>
-            <button class="remove-stop" data-index="${index}" ${stops.length <= 2 ? "disabled style='opacity:.3;cursor:not-allowed;'" : ""}>
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        `;
-
-        stopsList.appendChild(row);
-
-    });
-
-    stopsList.querySelectorAll(".stop-color").forEach(el => {
-        el.addEventListener("input", function(){
-            stops[this.dataset.index].color = this.value;
-            update();
+    function renderStops(){
+        stopsList.innerHTML = "";
+        stops.forEach((stop, index) => {
+            const row = document.createElement("div");
+            row.className = "stop-row";
+            row.innerHTML = `
+                <input type="color" value="${stop.color}" data-index="${index}" class="stop-color">
+                <input type="range" min="0" max="100" value="${stop.pos}" data-index="${index}" class="stop-pos">
+                <span class="pos-value">${stop.pos}%</span>
+                <button class="remove-stop" data-index="${index}" ${stops.length <= 2 ? "disabled style='opacity:.3;cursor:not-allowed;'" : ""}>
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            `;
+            stopsList.appendChild(row);
         });
-    });
 
-    stopsList.querySelectorAll(".stop-pos").forEach(el => {
-        el.addEventListener("input", function(){
-            stops[this.dataset.index].pos = parseInt(this.value);
-            this.nextElementSibling.innerText = this.value + "%";
-            update();
+        stopsList.querySelectorAll(".stop-color").forEach(el => {
+            el.addEventListener("input", function(){
+                stops[this.dataset.index].color = this.value;
+                update();
+            });
         });
-    });
-
-    stopsList.querySelectorAll(".remove-stop").forEach(el => {
-        el.addEventListener("click", function(){
-            if(stops.length <= 2) return;
-            stops.splice(this.dataset.index, 1);
-            renderStops();
-            update();
+        stopsList.querySelectorAll(".stop-pos").forEach(el => {
+            el.addEventListener("input", function(){
+                stops[this.dataset.index].pos = parseInt(this.value);
+                this.nextElementSibling.innerText = this.value + "%";
+                update();
+            });
         });
-    });
-
-}
-
-function buildGradientString(){
-
-    const sorted = [...stops].sort((a,b) => a.pos - b.pos);
-    const stopStr = sorted.map(s => `${s.color} ${s.pos}%`).join(", ");
-
-    if(gradientType === "linear"){
-        return `linear-gradient(${angleInput.value}deg, ${stopStr})`;
-    } else {
-        return `radial-gradient(circle, ${stopStr})`;
+        stopsList.querySelectorAll(".remove-stop").forEach(el => {
+            el.addEventListener("click", function(){
+                if(stops.length <= 2) return;
+                stops.splice(this.dataset.index, 1);
+                renderStops();
+                update();
+            });
+        });
     }
 
-}
+    function buildGradientString(){
+        const sorted = [...stops].sort((a,b) => a.pos - b.pos);
+        const stopStr = sorted.map(s => `${s.color} ${s.pos}%`).join(", ");
+        if(gradientType === "linear"){
+            return `linear-gradient(${angleInput.value}deg, ${stopStr})`;
+        } else {
+            return `radial-gradient(circle, ${stopStr})`;
+        }
+    }
 
-function update(){
+    function update(){
+        const gradientStr = buildGradientString();
+        previewBox.style.background = gradientStr;
+        cssOutput.innerText = `background: ${gradientStr};`;
+    }
 
-    const gradientStr = buildGradientString();
+    document.getElementById("addStop").addEventListener("click", function(){
+        if(stops.length >= 6) return;
+        stops.push({ color: "#ffffff", pos: 50 });
+        renderStops();
+        update();
+    });
 
-    previewBox.style.background = gradientStr;
+    document.getElementById("randomBtn").addEventListener("click", function(){
+        function randColor(){
+            return "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6,"0");
+        }
+        const count = 2 + Math.floor(Math.random()*3);
+        stops = [];
+        for(let i=0;i<count;i++){
+            stops.push({ color: randColor(), pos: Math.round((i/(count-1))*100) });
+        }
+        angleInput.value = Math.floor(Math.random()*360);
+        angleValue.innerText = angleInput.value + "°";
+        renderStops();
+        update();
+    });
 
-    cssOutput.innerText = `background: ${gradientStr};`;
+    angleInput.addEventListener("input", function(){
+        angleValue.innerText = this.value + "°";
+        update();
+    });
 
-}
+    typeLinearBtn.addEventListener("click", function(){
+        gradientType = "linear";
+        typeLinearBtn.classList.add("active");
+        typeRadialBtn.classList.remove("active");
+        angleControl.style.display = "flex";
+        update();
+    });
 
-document.getElementById("addStop").addEventListener("click", function(){
-    if(stops.length >= 6) return;
-    stops.push({ color: "#ffffff", pos: 50 });
+    typeRadialBtn.addEventListener("click", function(){
+        gradientType = "radial";
+        typeRadialBtn.classList.add("active");
+        typeLinearBtn.classList.remove("active");
+        angleControl.style.display = "none";
+        update();
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", function(){
+        navigator.clipboard.writeText(cssOutput.innerText).then(() => {
+            this.innerText = "Copied!";
+            this.classList.add("copied");
+            setTimeout(() => { this.innerText = "Copy"; this.classList.remove("copied"); }, 1500);
+        });
+    });
+
+    function renderPresets(){
+        const presetsEl = document.getElementById("presets");
+        presetsEl.innerHTML = "";
+        presetList.forEach(pair => {
+            const swatch = document.createElement("div");
+            swatch.className = "preset-swatch";
+            swatch.style.background = `linear-gradient(90deg, ${pair[0]}, ${pair[1]})`;
+            swatch.addEventListener("click", function(){
+                stops = [
+                    { color: pair[0], pos: 0 },
+                    { color: pair[1], pos: 100 }
+                ];
+                renderStops();
+                update();
+            });
+            presetsEl.appendChild(swatch);
+        });
+    }
+
     renderStops();
+    renderPresets();
     update();
-});
-
-document.getElementById("randomBtn").addEventListener("click", function(){
-
-    function randColor(){
-        return "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6,"0");
-    }
-
-    const count = 2 + Math.floor(Math.random()*2);
-    stops = [];
-
-    for(let i=0;i<count;i++){
-        stops.push({ color: randColor(), pos: Math.round((i/(count-1))*100) });
-    }
-
-    angleInput.value = Math.floor(Math.random()*360);
-    angleValue.innerText = angleInput.value + "°";
-
-    renderStops();
-    update();
-
-});
-
-angleInput.addEventListener("input", function(){
-    angleValue.innerText = this.value + "°";
-    update();
-});
-
-typeLinearBtn.addEventListener("click", function(){
-    gradientType = "linear";
-    typeLinearBtn.classList.add("active");
-    typeRadialBtn.classList.remove("active");
-    angleControl.style.display = "flex";
-    update();
-});
-
-typeRadialBtn.addEventListener("click", function(){
-    gradientType = "radial";
-    typeRadialBtn.classList.add("active");
-    typeLinearBtn.classList.remove("active");
-    angleControl.style.display = "none";
-    update();
-});
-
-document.getElementById("copyBtn").addEventListener("click", function(){
-    navigator.clipboard.writeText(cssOutput.innerText).then(() => {
-        this.innerText = "Copied!";
-        setTimeout(() => { this.innerText = "Copy"; }, 1500);
-    });
-});
-
-function renderPresets(){
-
-    const presetsEl = document.getElementById("presets");
-    presetsEl.innerHTML = "";
-
-    presetList.forEach(pair => {
-
-        const swatch = document.createElement("div");
-        swatch.className = "preset-swatch";
-        swatch.style.background = `linear-gradient(90deg, ${pair[0]}, ${pair[1]})`;
-
-        swatch.addEventListener("click", function(){
-            stops = [
-                { color: pair[0], pos: 0 },
-                { color: pair[1], pos: 100 }
-            ];
-            renderStops();
-            update();
-        });
-
-        presetsEl.appendChild(swatch);
-
-    });
-
-}
-
-renderStops();
-renderPresets();
-update();
-
 </script>
-
 </body>
 </html>
