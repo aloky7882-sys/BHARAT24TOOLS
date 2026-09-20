@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aloky7882-sys.github.io/BHARAT24TOOLS/sitemap.xml
