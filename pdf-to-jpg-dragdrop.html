@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PDF to JPG - Bharat Tools</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg, #0d6efd, #4d9cff);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+}
+
+.container{
+background:#fff;
+padding:40px;
+border-radius:20px;
+box-shadow:0 20px 60px rgba(0,0,0,.2);
+max-width:800px;
+width:100%;
+text-align:center;
+}
+
+h1{
+margin-bottom:10px;
+color:#0d6efd;
+}
+
+.subtitle{
+font-size:13px;
+color:#6c757d;
+margin-bottom:25px;
+}
+
+.upload-zone{
+position:relative;
+border:2px dashed #0d6efd;
+border-radius:12px;
+padding:40px 20px;
+margin:20px 0;
+background:#f8f9fa;
+cursor:pointer;
+transition:all .3s ease;
+overflow:hidden;
+}
+
+.upload-zone:hover,
+.upload-zone.dragover{
+background:#eef5ff;
+border-color:#0b5ed7;
+transform:translateY(-2px);
+box-shadow:0 10px 25px rgba(13, 110, 253, 0.15);
+}
+
+.upload-zone input{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+opacity:0;
+cursor:pointer;
+margin:0;
+}
+
+.upload-icon{
+width:76px;
+height:76px;
+margin:0 auto 14px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#e7f0ff;
+color:#0d6efd;
+font-size:34px;
+transition:transform .3s ease;
+}
+
+.upload-zone:hover .upload-icon{
+transform:translateY(-5px) scale(1.1);
+}
+
+.upload-title{
+font-size:18px;
+font-weight:700;
+color:#212529;
+margin-bottom:6px;
+}
+
+.upload-subtitle{
+font-size:14px;
+color:#6c757d;
+margin-bottom:10px;
+}
+
+.upload-formats{
+display:inline-block;
+padding:5px 10px;
+border-radius:20px;
+background:#fff;
+border:1px solid #dee2e6;
+color:#6c757d;
+font-size:12px;
+font-weight:600;
+}
+
+#file-name{
+margin-top:12px;
+font-weight:600;
+color:#198754;
+font-size:14px;
+display:none;
+}
+
+#status{
+margin-top:15px;
+font-size:14px;
+font-weight:600;
+padding:12px;
+border-radius:8px;
+display:none;
+}
+
+#status.success{
+background:#d4edda;
+color:#155724;
+display:block;
+}
+
+#status.error{
+background:#f8d7da;
+color:#721c24;
+display:block;
+}
+
+#status.info{
+background:#d1ecf1;
+color:#0c5460;
+display:block;
+}
+
+#canvasContainer {
+margin-top: 25px;
+display: none;
+}
+
+canvas{
+max-width:100%;
+border:1px solid #ddd;
+border-radius:8px;
+margin-bottom:15px;
+}
+
+#pageControls {
+display: none;
+text-align: center;
+margin: 20px 0;
+}
+
+#pageControls button {
+background: #0d6efd;
+color: white;
+border: none;
+padding: 8px 15px;
+border-radius: 6px;
+margin: 0 5px;
+cursor: pointer;
+font-weight: 600;
+font-size: 13px;
+}
+
+#pageControls button:hover {
+background: #0b5ed7;
+}
+
+#pageControls button:disabled {
+opacity: 0.5;
+cursor: not-allowed;
+}
+
+#downloadControls {
+display: none;
+margin-top: 20px;
+}
+
+button.download-btn {
+width:100%;
+padding:14px;
+background:#0d6efd;
+color:#fff;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+font-weight:600;
+transition:all .3s ease;
+margin-bottom:8px;
+}
+
+button.download-btn:hover {
+background:#0b5ed7;
+transform:translateY(-2px);
+box-shadow:0 10px 20px rgba(13, 110, 253, 0.3);
+}
+
+.page-info {
+color: #6c757d;
+font-size: 13px;
+margin-top: 8px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1><i class="fa-solid fa-file-pdf" style="color:#0d6efd;"></i> PDF to JPG</h1>
+<p class="subtitle">Convert all PDF pages to high-quality JPG images</p>
+
+<div class="upload-zone" id="dropZone">
+<div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+<div class="upload-title">Drag & Drop PDF here</div>
+<div class="upload-subtitle">or click to choose</div>
+<div class="upload-formats">PDF</div>
+<input type="file" id="upload" accept=".pdf,application/pdf">
+</div>
+
+<div id="file-name"></div>
+<div id="status"></div>
+
+<div id="canvasContainer">
+<canvas id="canvas"></canvas>
+</div>
+
+<div id="pageControls">
+<button id="prevBtn">← Previous</button>
+<span id="pageInfo"></span>
+<button id="nextBtn">Next →</button>
+</div>
+
+<div id="downloadControls">
+<button class="download-btn" id="downloadSingle"><i class="fa-solid fa-download"></i> Download This Page</button>
+<button class="download-btn" id="downloadAll" style="background: #198754;"><i class="fa-solid fa-download"></i> Download All as ZIP</button>
+</div>
+
+</div>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+const upload = document.getElementById("upload");
+const dropZone = document.getElementById("dropZone");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const fileNameBox = document.getElementById("file-name");
+const statusEl = document.getElementById("status");
+const canvasContainer = document.getElementById("canvasContainer");
+const pageControls = document.getElementById("pageControls");
+const downloadControls = document.getElementById("downloadControls");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const pageInfo = document.getElementById("pageInfo");
+
+let selectedFile = null;
+let pdfDoc = null;
+let currentPage = 1;
+
+function showStatus(message, type) {
+    statusEl.className = type;
+    statusEl.innerHTML = message;
+}
+
+async function renderPage(pageNum) {
+    try {
+        const page = await pdfDoc.getPage(pageNum);
+        const viewport = page.getViewport({ scale: 2 });
+        
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        
+        await page.render({
+            canvasContext: ctx,
+            viewport: viewport
+        }).promise;
+        
+        pageInfo.textContent = `Page ${pageNum} of ${pdfDoc.numPages}`;
+        prevBtn.disabled = pageNum === 1;
+        nextBtn.disabled = pageNum === pdfDoc.numPages;
+    } catch(err) {
+        console.error("Render error:", err);
+        showStatus("❌ Failed to render page", "error");
+    }
+}
+
+async function processPDF(file) {
+    if(!file) return;
+
+    if(file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+        showStatus("❌ Please select a PDF file.", "error");
+        canvasContainer.style.display = "none";
+        pageControls.style.display = "none";
+        downloadControls.style.display = "none";
+        return;
+    }
+
+    selectedFile = file;
+    fileNameBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> ' + file.name;
+    fileNameBox.style.display = "block";
+    showStatus("📂 Loading PDF...", "info");
+    canvasContainer.style.display = "none";
+    pageControls.style.display = "none";
+    downloadControls.style.display = "none";
+
+    if (typeof pdfjsLib === "undefined") {
+        showStatus("❌ PDF library not loaded. Refresh page.", "error");
+        return;
+    }
+
+    try {
+        const arrayBuffer = await file.arrayBuffer();
+        pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        
+        currentPage = 1;
+        await renderPage(currentPage);
+        
+        canvasContainer.style.display = "block";
+        pageControls.style.display = "block";
+        downloadControls.style.display = "block";
+        showStatus(`✅ PDF loaded! ${pdfDoc.numPages} page(s) ready.`, "success");
+    } catch(err) {
+        console.error("PDF error:", err);
+        showStatus("❌ Cannot read this PDF. Try another.", "error");
+    }
+}
+
+upload.addEventListener("change", () => processPDF(upload.files[0]));
+
+dropZone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZone.classList.add("dragover");
+});
+
+dropZone.addEventListener("dragleave", () => dropZone.classList.remove("dragover"));
+
+dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove("dragover");
+    processPDF(e.dataTransfer.files[0]);
+});
+
+prevBtn.addEventListener("click", async () => {
+    if (currentPage > 1) {
+        currentPage--;
+        await renderPage(currentPage);
+    }
+});
+
+nextBtn.addEventListener("click", async () => {
+    if (currentPage < pdfDoc.numPages) {
+        currentPage++;
+        await renderPage(currentPage);
+    }
+});
+
+document.getElementById("downloadSingle").addEventListener("click", () => {
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL("image/jpeg", 0.95);
+    link.download = selectedFile.name.replace(/\.pdf$/i, "") + `-page-${currentPage}.jpg`;
+    link.click();
+});
+
+document.getElementById("downloadAll").addEventListener("click", async () => {
+    document.getElementById("downloadAll").disabled = true;
+    showStatus("⏳ Generating images...", "info");
+    
+    try {
+        // Note: Using a different approach without external zip library
+        for (let i = 1; i <= pdfDoc.numPages; i++) {
+            await renderPage(i);
+            
+            const link = document.createElement("a");
+            link.href = canvas.toDataURL("image/jpeg", 0.95);
+            link.download = selectedFile.name.replace(/\.pdf$/i, "") + `-page-${i}.jpg`;
+            
+            // Small delay between downloads
+            await new Promise(resolve => {
+                setTimeout(() => {
+                    link.click();
+                    resolve();
+                }, 300);
+            });
+        }
+        
+        await renderPage(currentPage); // Return to current page
+        showStatus("🎉 All pages downloaded!", "success");
+    } catch(err) {
+        console.error("Download error:", err);
+        showStatus("❌ Download failed: " + err.message, "error");
+    }
+    document.getElementById("downloadAll").disabled = false;
+});
+
+</script>
+
+</body>
+</html>
