@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Text Summarizer - Bharat24Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; min-height: 100vh; background: linear-gradient(135deg, #f4f7fb 0%, #e8f1f9 100%); color: #1a2b45; }
+        .navbar { background: #fff; padding: 18px 5%; box-shadow: 0 2px 15px rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+        .navbar .logo { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #0d6efd, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: flex; align-items: center; gap: 8px; }
+        .navbar a { text-decoration: none; color: #4b5563; font-weight: 600; padding: 8px 16px; border-radius: 20px; transition: all 0.3s; }
+        .navbar a:hover { background: #eef4ff; color: #0d6efd; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        h1 { font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 10px; color: #1a2b45; }
+        h1 i { color: #0d6efd; }
+        .subtitle { text-align: center; color: #6c757d; margin-bottom: 30px; }
+        .panel { background: #fff; border-radius: 20px; padding: 30px; box-shadow: 0 10px 40px rgba(13,110,253,.08); margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; color: #1a2b45; font-size: .95rem; }
+        textarea { width: 100%; min-height: 200px; padding: 16px; border: 2px solid #e9ecef; border-radius: 14px; font-family: inherit; font-size: .95rem; resize: vertical; background: #f8fafc; transition: .3s; }
+        textarea:focus { outline: none; border-color: #0d6efd; background: #fff; box-shadow: 0 0 0 4px rgba(13,110,253,.1); }
+        select { width: 100%; padding: 14px; border: 2px solid #e9ecef; border-radius: 14px; font-family: inherit; font-size: .95rem; background: #f8fafc; }
+        .btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #0d6efd, #a855f7); color: #fff; border: none; border-radius: 14px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 16px; transition: .3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(13,110,253,.3); }
+        .btn:disabled { opacity: .6; cursor: not-allowed; }
+        #status { padding: 14px; border-radius: 12px; margin-top: 15px; text-align: center; font-weight: 600; display: none; }
+        #status.loading { background: #eef4ff; color: #0d6efd; display: block; }
+        #status.success { background: #d4edda; color: #155724; display: block; }
+        #status.error { background: #f8d7da; color: #721c24; display: block; }
+        #output { display: none; margin-top: 20px; padding: 20px; background: #f8fafc; border-left: 4px solid #0d6efd; border-radius: 10px; line-height: 1.7; color: #1a2b45; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo"><i class="fa-solid fa-bolt"></i> Bharat24Tools</div>
+    <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Home</a>
+</nav>
+
+<div class="container">
+    <h1><i class="fa-solid fa-robot"></i> AI Text Summarizer</h1>
+    <p class="subtitle">Summarize long text with advanced AI in seconds!</p>
+
+    <div class="panel">
+        <label>Paste your text here:</label>
+        <textarea id="inputText" placeholder="Paste or type any long text here..."></textarea>
+
+        <label style="margin-top:20px;">Summary Length:</label>
+        <select id="summaryLength">
+            <option value="short">Short (2-3 sentences)</option>
+            <option value="medium" selected>Medium (4-5 sentences)</option>
+            <option value="long">Long (6-8 sentences)</option>
+        </select>
+
+        <button class="btn" id="summarizeBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Summarize Now</button>
+        <div id="status"></div>
+    </div>
+
+    <div id="output"></div>
+</div>
+
+<script>
+    // Simple extractive summarization
+    function summarize(text, length) {
+        // Split into sentences
+        const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+        if (sentences.length <= 3) return text;
+
+        // Calculate word frequency
+        const words = text.toLowerCase().match(/\b\w+\b/g) || [];
+        const stopWords = ['the','is','a','an','and','or','but','in','on','at','to','for','of','with','by','from','up','about','into','over','after','is','are','was','were','be','been','being','have','has','had','do','does','did','will','would','shall','should','may','might','must','can','could','i','you','he','she','it','we','they','this','that','these','those'];
+        const freq = {};
+        words.forEach(w => { if (!stopWords.includes(w) && w.length > 3) freq[w] = (freq[w] || 0) + 1; });
+
+        // Score sentences
+        const sentenceScores = sentences.map((s, i) => {
+            const sWords = s.toLowerCase().match(/\b\w+\b/g) || [];
+            let score = 0;
+            sWords.forEach(w => { if (freq[w]) score += freq[w]; });
+            score = score / Math.sqrt(sWords.length); // normalize
+            if (i === 0 || i === sentences.length - 1) score *= 1.2; // first & last important
+            return { sentence: s.trim(), score, index: i };
+        });
+
+        // Sort by score
+        sentenceScores.sort((a, b) => b.score - a.score);
+        let count = length === 'short' ? 3 : length === 'medium' ? 5 : 8;
+        count = Math.min(count, sentences.length);
+
+        const selected = sentenceScores.slice(0, count).sort((a, b) => a.index - b.index);
+        return selected.map(s => s.sentence).join(' ');
+    }
+
+    const summarizeBtn = document.getElementById('summarizeBtn');
+    const inputText = document.getElementById('inputText');
+    const summaryLength = document.getElementById('summaryLength');
+    const statusEl = document.getElementById('status');
+    const output = document.getElementById('output');
+
+    summarizeBtn.addEventListener('click', () => {
+        const text = inputText.value.trim();
+
+        if (text.length < 50) {
+            statusEl.className = 'error';
+            statusEl.textContent = '❌ Please enter at least 50 characters.';
+            return;
+        }
+
+        summarizeBtn.disabled = true;
+        statusEl.className = 'loading';
+        statusEl.textContent = '🤖 AI is summarizing your text...';
+
+        setTimeout(() => {
+            try {
+                const summary = summarize(text, summaryLength.value);
+                output.style.display = 'block';
+                output.innerHTML = `<h3 style="color:#0d6efd;margin-bottom:12px;">📝 Summary:</h3><p>${summary}</p>
+                    <p style="margin-top:16px;font-size:.85rem;color:#6c757d;"><strong>Original:</strong> ${text.split(/\s+/).length} words | <strong>Summary:</strong> ${summary.split(/\s+/).length} words | <strong>Reduced:</strong> ${Math.round((1 - summary.split(/\s+/).length / text.split(/\s+/).length) * 100)}%</p>`;
+
+                statusEl.className = 'success';
+                statusEl.textContent = '✅ Summary generated successfully!';
+            } catch(e) {
+                statusEl.className = 'error';
+                statusEl.textContent = '❌ Error: ' + e.message;
+            }
+            summarizeBtn.disabled = false;
+        }, 800);
+    });
+</script>
+</body>
+</html>

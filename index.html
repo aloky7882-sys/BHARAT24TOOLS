@@ -12,7 +12,6 @@
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/">
-
     <meta property="og:type" content="website">
     <meta property="og:title" content="Bharat24Tools - Free Image, PDF & Calculator Tools">
     <meta property="og:description" content="Free online Image Tools, PDF Tools, Calculators, QR Generator and Password Generator. No signup, no watermark, 100% free.">
@@ -20,7 +19,6 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Bharat24Tools - Free Image, PDF & Calculator Tools">
     <meta name="twitter:description" content="Free online Image Tools, PDF Tools, Calculators, QR Generator and Password Generator. No signup, no watermark, 100% free.">
-
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -35,21 +33,9 @@
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Is Bharat24Tools free to use?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Yes, every tool on Bharat24Tools is completely free to use. There is no signup, no hidden charges and no watermark added to your files." }
-            },
-            {
-                "@type": "Question",
-                "name": "Are my files uploaded to a server?",
-                "acceptedAnswer": { "@type": "Answer", "text": "No. All conversions and calculations run directly inside your browser using JavaScript. Your images, PDFs and Excel files are never uploaded or stored on any server." }
-            },
-            {
-                "@type": "Question",
-                "name": "Do I need to install any software to use Bharat24Tools?",
-                "acceptedAnswer": { "@type": "Answer", "text": "No installation is required. Bharat24Tools works entirely in your web browser on desktop, laptop and mobile devices." }
-            }
+            { "@type": "Question", "name": "Is Bharat24Tools free to use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, every tool on Bharat24Tools is completely free to use." } },
+            { "@type": "Question", "name": "Are my files uploaded to a server?", "acceptedAnswer": { "@type": "Answer", "text": "No. All conversions run directly inside your browser." } },
+            { "@type": "Question", "name": "Do I need to install any software?", "acceptedAnswer": { "@type": "Answer", "text": "No installation is required." } }
         ]
     }
     </script>
@@ -68,21 +54,24 @@
     <nav class="navbar">
         <div class="logo">
             <i class="fa-solid fa-bolt"></i>
-            <span>Bharat24Tools</span>
+            <span data-lang="brand">Bharat24Tools</span>
         </div>
-        <div class="menu-btn">
-            <i class="fa-solid fa-bars"></i>
-        </div>
+        <div class="menu-btn"><i class="fa-solid fa-bars"></i></div>
         <ul class="menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#image-tools">Image Tools</a></li>
-            <li><a href="#pdf-tools">PDF Tools</a></li>
-            <li><a href="#design-tools">Design Tools</a></li>
-            <li><a href="#calculator-tools">Calculators</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="index.html" data-lang="home">Home</a></li>
+            <li><a href="#image-tools" data-lang="imageTools">Image Tools</a></li>
+            <li><a href="#pdf-tools" data-lang="pdfTools">PDF Tools</a></li>
+            <li><a href="#design-tools" data-lang="designTools">Design Tools</a></li>
+            <li><a href="#calculator-tools" data-lang="calcTools">Calculators</a></li>
+            <li><a href="contact.html" data-lang="contact">Contact</a></li>
         </ul>
         <div class="nav-actions">
             <span id="onlineCounter" class="online-counter"><span class="dot"></span> <span id="onlineCount">1</span></span>
+            <select id="langSelector" class="lang-selector" title="Language">
+                <option value="en">🌐 EN</option>
+                <option value="hi">🌐 हिं</option>
+            </select>
+            <button id="dashboardBtn" class="nav-icon-btn" title="Dashboard"><i class="fa-solid fa-chart-line"></i></button>
             <button id="themeToggle" class="nav-icon-btn" title="Dark Mode"><i class="fa-solid fa-moon"></i></button>
         </div>
     </nav>
@@ -98,54 +87,92 @@
             <i class="fa-solid fa-font float-icon" style="top:60%;right:8%;animation-delay:2.5s;"></i>
         </div>
         <div class="hero-content">
-            <span class="badge">🚀 India's Fast Growing Tool Website</span>
-            <h1>Free Online Image, PDF & Calculator Tools</h1>
-            <p>Compress Images, Merge PDF, Convert Files, Generate QR Codes, Calculate EMI, Password Generator and much more...<br>No Signup • No Watermark • 100% Free</p>
+            <span class="badge" data-lang="badge">🚀 India's Fast Growing Tool Website</span>
+            <h1 data-lang="heroTitle">Free Online Image, PDF & Calculator Tools</h1>
+            <p data-lang="heroDesc">Compress Images, Merge PDF, Convert Files, Generate QR Codes, Calculate EMI, Password Generator and much more...<br>No Signup • No Watermark • 100% Free</p>
             <div class="hero-search">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="search" placeholder="Search any tool...">
+                <input type="text" id="search" data-lang-placeholder="searchPlaceholder" placeholder="Search any tool...">
                 <button id="voiceSearchBtn" class="voice-btn" title="Voice Search"><i class="fa-solid fa-microphone"></i></button>
             </div>
             <div class="hero-buttons">
-                <a href="#image-tools" class="primary-btn">Explore Tools</a>
-                <a href="#pdf-tools" class="secondary-btn">PDF Tools</a>
+                <a href="#image-tools" class="primary-btn" data-lang="exploreBtn">Explore Tools</a>
+                <a href="#pdf-tools" class="secondary-btn" data-lang="pdfBtn">PDF Tools</a>
             </div>
             <div class="stats">
-                <div><h2 class="counter" data-target="100" data-suffix="+">0+</h2><p>Tools</p></div>
-                <div><h2 class="counter" data-target="100" data-suffix="K+">0K+</h2><p>Users</p></div>
-                <div><h2>24×7</h2><p>Available</p></div>
+                <div><h2 class="counter" data-target="100" data-suffix="+">0+</h2><p data-lang="toolsLabel">Tools</p></div>
+                <div><h2 class="counter" data-target="100" data-suffix="K+">0K+</h2><p data-lang="usersLabel">Users</p></div>
+                <div><h2>24×7</h2><p data-lang="availLabel">Available</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!--================ TRENDING TOOLS ================-->
+    <section class="trending-tools">
+        <h2 class="section-title" data-lang="trendingTitle">🔥 Trending Now</h2>
+        <div class="trending-list" id="trendingList">
+            <div class="trending-item">
+                <span class="trend-rank">1</span>
+                <div class="trend-info">
+                    <h4>Image Compressor</h4>
+                    <div class="trend-stars">⭐⭐⭐⭐⭐ <span>(4.9)</span></div>
+                </div>
+                <a href="image-compressor.html" class="trend-btn">Try</a>
+            </div>
+            <div class="trending-item">
+                <span class="trend-rank">2</span>
+                <div class="trend-info">
+                    <h4>PDF to JPG</h4>
+                    <div class="trend-stars">⭐⭐⭐⭐⭐ <span>(4.8)</span></div>
+                </div>
+                <a href="pdf-to-jpg-dragdrop.html" class="trend-btn">Try</a>
+            </div>
+            <div class="trending-item">
+                <span class="trend-rank">3</span>
+                <div class="trend-info">
+                    <h4>EMI Calculator</h4>
+                    <div class="trend-stars">⭐⭐⭐⭐⭐ <span>(4.9)</span></div>
+                </div>
+                <a href="emi-calculator.html" class="trend-btn">Try</a>
+            </div>
+            <div class="trending-item">
+                <span class="trend-rank">4</span>
+                <div class="trend-info">
+                    <h4>Background Remover</h4>
+                    <div class="trend-stars">⭐⭐⭐⭐⭐ <span>(4.7)</span></div>
+                </div>
+                <a href="background-remover.html" class="trend-btn">Try</a>
             </div>
         </div>
     </section>
 
     <!--================ RECENT TOOLS ================-->
     <section class="recent-tools" id="recentToolsSection" style="display:none;">
-        <h2 class="section-title">🕒 Recent Tools</h2>
+        <h2 class="section-title" data-lang="recentTitle">🕒 Recent Tools</h2>
         <div class="recent-tools-list" id="recentToolsList"></div>
     </section>
 
     <!--================ CATEGORY SECTION ================-->
     <section class="categories">
-        <div class="category-box" data-cat="image"><i class="fa-solid fa-image"></i><span>Image Tools</span></div>
-        <div class="category-box" data-cat="pdf"><i class="fa-solid fa-file-pdf"></i><span>PDF Tools</span></div>
-        <div class="category-box" data-cat="calculator"><i class="fa-solid fa-calculator"></i><span>Calculators</span></div>
-        <div class="category-box" data-cat="qrcode"><i class="fa-solid fa-qrcode"></i><span>QR Tools</span></div>
-        <div class="category-box" data-cat="text"><i class="fa-solid fa-font"></i><span>Text Tools</span></div>
-        <div class="category-box" data-cat="design"><i class="fa-solid fa-palette"></i><span>Design Tools</span></div>
+        <div class="category-box" data-cat="image"><i class="fa-solid fa-image"></i><span data-lang="imageTools">Image Tools</span></div>
+        <div class="category-box" data-cat="pdf"><i class="fa-solid fa-file-pdf"></i><span data-lang="pdfTools">PDF Tools</span></div>
+        <div class="category-box" data-cat="calculator"><i class="fa-solid fa-calculator"></i><span data-lang="calcTools">Calculators</span></div>
+        <div class="category-box" data-cat="qrcode"><i class="fa-solid fa-qrcode"></i><span data-lang="qrTools">QR Tools</span></div>
+        <div class="category-box" data-cat="text"><i class="fa-solid fa-font"></i><span data-lang="textTools">Text Tools</span></div>
+        <div class="category-box" data-cat="design"><i class="fa-solid fa-palette"></i><span data-lang="designTools">Design Tools</span></div>
     </section>
 
     <!--================ TOOL SECTION START ================-->
     <main class="tool-wrapper">
-
         <div id="category-filter-tabs" style="display:flex;gap:8px;overflow-x:auto;padding:4px 0 18px;margin-bottom:10px;">
-            <button type="button" class="filter-tab active" data-filter="all">All</button>
-            <button type="button" class="filter-tab" data-filter="image">🖼 Image</button>
-            <button type="button" class="filter-tab" data-filter="pdf">📄 PDF</button>
-            <button type="button" class="filter-tab" data-filter="design">🎨 Design</button>
-            <button type="button" class="filter-tab" data-filter="calculator">🧰 Utility</button>
+            <button type="button" class="filter-tab active" data-filter="all" data-lang="allTab">All</button>
+            <button type="button" class="filter-tab" data-filter="image">🖼 <span data-lang="imageTools">Image</span></button>
+            <button type="button" class="filter-tab" data-filter="pdf">📄 <span data-lang="pdfTools">PDF</span></button>
+            <button type="button" class="filter-tab" data-filter="design">🎨 <span data-lang="designTools">Design</span></button>
+            <button type="button" class="filter-tab" data-filter="calculator">🧰 <span data-lang="utilityTab">Utility</span></button>
         </div>
 
-        <!-- ================= IMAGE TOOLS ================= -->
+        <!-- IMAGE TOOLS -->
         <div class="tool-category" data-category="image">
         <h2 id="image-tools">🖼 Image Tools</h2>
         <div class="container">
@@ -154,8 +181,12 @@
                 <div class="tool-icon">🖼</div>
                 <h2>Image Compressor</h2>
                 <p>Compress JPG, PNG & WEBP Images without losing quality.</p>
+                <div class="rating" data-tool="image-compressor">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="image-compressor.html" class="tool-btn" data-tool="image-compressor.html">Open Tool</a>
+                    <a href="image-compressor.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="Image Compressor"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -164,8 +195,12 @@
                 <div class="tool-icon">📐</div>
                 <h2>Image Resizer</h2>
                 <p>Resize images in custom dimensions instantly.</p>
+                <div class="rating" data-tool="image-resizer">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="image-resizer.html" class="tool-btn" data-tool="image-resizer.html">Open Tool</a>
+                    <a href="image-resizer.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="Image Resizer"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -174,8 +209,12 @@
                 <div class="tool-icon">✂️</div>
                 <h2>Image Cropper</h2>
                 <p>Crop your images with live preview.</p>
+                <div class="rating" data-tool="image-cropper">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="image-cropper.html" class="tool-btn" data-tool="image-cropper.html">Open Tool</a>
+                    <a href="image-cropper.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="Image Cropper"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -184,8 +223,12 @@
                 <div class="tool-icon">🖼</div>
                 <h2>JPG to PNG</h2>
                 <p>Convert JPG images into PNG format.</p>
+                <div class="rating" data-tool="jpg-to-png">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="jpg-to-png.html" class="tool-btn" data-tool="jpg-to-png.html">Open Tool</a>
+                    <a href="jpg-to-png.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="JPG to PNG"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -194,19 +237,13 @@
                 <div class="tool-icon">🖼</div>
                 <h2>PNG to JPG</h2>
                 <p>Convert PNG images into JPG format.</p>
-                <div class="card-footer">
-                    <a href="png-to-jpg.html" class="tool-btn" data-tool="png-to-jpg.html">Open Tool</a>
-                    <button class="share-btn" data-tool="PNG to JPG"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="rating" data-tool="png-to-jpg">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
                 </div>
-            </div>
-            <div class="card" data-tool-name="Image to Excel">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">📊</div>
-                <h2>Image to Excel</h2>
-                <p>Embed images in Excel spreadsheets professionally.</p>
                 <div class="card-footer">
-                    <a href="image-to-excel.html" class="tool-btn" data-tool="image-to-excel.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Image to Excel"><i class="fa-solid fa-share-nodes"></i></button>
+                    <a href="png-to-jpg.html" class="tool-btn">Open Tool</a>
+                    <button class="share-btn" data-tool="PNG to JPG"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
             <div class="card" data-tool-name="Image to Word">
@@ -214,15 +251,33 @@
                 <div class="tool-icon">📄</div>
                 <h2>Image to Word</h2>
                 <p>Create Word documents with images embedded.</p>
+                <div class="rating" data-tool="image-to-word">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="image-to-word.html" class="tool-btn" data-tool="image-to-word.html">Open Tool</a>
+                    <a href="image-to-word.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="Image to Word"><i class="fa-solid fa-share-nodes"></i></button>
+                </div>
+            </div>
+            <div class="card" data-tool-name="Background Remover">
+                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
+                <div class="tool-icon">🪄</div>
+                <h2>Background Remover</h2>
+                <p>Remove photo background using AI.</p>
+                <div class="rating" data-tool="background-remover">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
+                <div class="card-footer">
+                    <a href="background-remover.html" class="tool-btn">Open Tool</a>
+                    <button class="share-btn" data-tool="Background Remover"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
         </div>
         </div>
 
-        <!-- ================= PDF TOOLS ================= -->
+        <!-- PDF TOOLS -->
         <div class="tool-category" data-category="pdf">
         <h2 id="pdf-tools" class="section-title">📄 PDF Tools</h2>
         <div class="container">
@@ -231,8 +286,12 @@
                 <div class="tool-icon">📄</div>
                 <h2>JPG to PDF</h2>
                 <p>Convert JPG images into PDF documents.</p>
+                <div class="rating" data-tool="jpg-to-pdf">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="jpg-to-pdf-dragdrop.html" class="tool-btn" data-tool="jpg-to-pdf-dragdrop.html">Open Tool</a>
+                    <a href="jpg-to-pdf-dragdrop.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="JPG to PDF"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -241,8 +300,12 @@
                 <div class="tool-icon">🖼</div>
                 <h2>PDF to JPG</h2>
                 <p>Convert PDF pages into high-quality JPG images.</p>
+                <div class="rating" data-tool="pdf-to-jpg">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="pdf-to-jpg-dragdrop.html" class="tool-btn" data-tool="pdf-to-jpg-dragdrop.html">Open Tool</a>
+                    <a href="pdf-to-jpg-dragdrop.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="PDF to JPG"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -251,8 +314,12 @@
                 <div class="tool-icon">📊</div>
                 <h2>Excel to PDF</h2>
                 <p>Convert Excel spreadsheets into PDF documents.</p>
+                <div class="rating" data-tool="excel-to-pdf">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="excel-to-pdf-dragdrop.html" class="tool-btn" data-tool="excel-to-pdf-dragdrop.html">Open Tool</a>
+                    <a href="excel-to-pdf-dragdrop.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="Excel to PDF"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -261,8 +328,12 @@
                 <div class="tool-icon">📑</div>
                 <h2>Merge PDF</h2>
                 <p>Combine multiple PDF files into one.</p>
+                <div class="rating" data-tool="merge-pdf">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="merge-pdf-dragdrop.html" class="tool-btn" data-tool="merge-pdf-dragdrop.html">Open Tool</a>
+                    <a href="merge-pdf-dragdrop.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="Merge PDF"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -271,8 +342,12 @@
                 <div class="tool-icon">✂️</div>
                 <h2>Split PDF</h2>
                 <p>Extract or split pages from any PDF file.</p>
+                <div class="rating" data-tool="split-pdf">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="split-pdf-dragdrop.html" class="tool-btn" data-tool="split-pdf-dragdrop.html">Open Tool</a>
+                    <a href="split-pdf-dragdrop.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="Split PDF"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -280,46 +355,20 @@
                 <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
                 <div class="tool-icon">📃</div>
                 <h2>Word to PDF</h2>
-                <p>Convert Word (.docx) documents into PDF instantly.</p>
+                <p>Convert Word documents into PDF instantly.</p>
+                <div class="rating" data-tool="word-to-pdf">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="word-to-pdf.html" class="tool-btn" data-tool="word-to-pdf.html">Open Tool</a>
+                    <a href="word-to-pdf.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="Word to PDF"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="Images to PDF">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">📸</div>
-                <h2>Images to PDF</h2>
-                <p>Combine multiple images into a single PDF.</p>
-                <div class="card-footer">
-                    <a href="images-to-pdf.html" class="tool-btn" data-tool="images-to-pdf.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Images to PDF"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="Excel to Image">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">📊</div>
-                <h2>Excel to Image</h2>
-                <p>Convert Excel to PNG, JPG, or WebP images.</p>
-                <div class="card-footer">
-                    <a href="excel-to-image.html" class="tool-btn" data-tool="excel-to-image.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Excel to Image"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="Word to Image">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">📄</div>
-                <h2>Word to Image</h2>
-                <p>Convert Word documents to high-quality images.</p>
-                <div class="card-footer">
-                    <a href="word-to-image.html" class="tool-btn" data-tool="word-to-image.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Word to Image"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
         </div>
         </div>
 
-        <!-- ================= DESIGN TOOLS ================= -->
+        <!-- DESIGN TOOLS -->
         <div class="tool-category" data-category="design">
         <h2 id="design-tools" class="section-title">🎨 Design & Developer Tools</h2>
         <div class="container">
@@ -328,8 +377,12 @@
                 <div class="tool-icon">🎨</div>
                 <h2>CSS Gradient Generator</h2>
                 <p>Build multi-color gradients visually.</p>
+                <div class="rating" data-tool="css-gradient">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="css-gradient-generator.html" class="tool-btn" data-tool="css-gradient-generator.html">Open Tool</a>
+                    <a href="css-gradient-generator.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="CSS Gradient Generator"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -338,39 +391,13 @@
                 <div class="tool-icon">📱</div>
                 <h2>QR Code with Logo</h2>
                 <p>Create QR code with your logo.</p>
+                <div class="rating" data-tool="qr-logo">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="qr-code-logo.html" class="tool-btn" data-tool="qr-code-logo.html">Open Tool</a>
+                    <a href="qr-code-logo.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="QR Code with Logo"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="Text Diff Checker">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">🔍</div>
-                <h2>Text Diff Checker</h2>
-                <p>Compare two texts and see changes.</p>
-                <div class="card-footer">
-                    <a href="text-diff-checker.html" class="tool-btn" data-tool="text-diff-checker.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Text Diff Checker"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="Unit Converter">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">🔁</div>
-                <h2>Unit Converter</h2>
-                <p>Convert length, weight, temperature.</p>
-                <div class="card-footer">
-                    <a href="unit-converter.html" class="tool-btn" data-tool="unit-converter.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Unit Converter"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="JSON Formatter">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">{ }</div>
-                <h2>JSON Formatter</h2>
-                <p>Format, validate & minify JSON.</p>
-                <div class="card-footer">
-                    <a href="json-formatter.html" class="tool-btn" data-tool="json-formatter.html">Open Tool</a>
-                    <button class="share-btn" data-tool="JSON Formatter"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
             <div class="card" data-tool-name="Color Palette Generator">
@@ -378,95 +405,33 @@
                 <div class="tool-icon">🎨</div>
                 <h2>Color Palette Generator</h2>
                 <p>Generate color palettes instantly.</p>
+                <div class="rating" data-tool="color-palette">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="color-palette-generator.html" class="tool-btn" data-tool="color-palette-generator.html">Open Tool</a>
+                    <a href="color-palette-generator.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="Color Palette Generator"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
-            <div class="card" data-tool-name="Favicon Generator">
+            <div class="card" data-tool-name="AI Text Summarizer">
                 <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">⭐</div>
-                <h2>Favicon Generator</h2>
-                <p>Turn image into favicon sizes.</p>
-                <div class="card-footer">
-                    <a href="favicon-generator.html" class="tool-btn" data-tool="favicon-generator.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Favicon Generator"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="tool-icon">🤖</div>
+                <h2>AI Text Summarizer</h2>
+                <p>Summarize long text with AI.</p>
+                <div class="rating" data-tool="ai-summarizer">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
                 </div>
-            </div>
-            <div class="card" data-tool-name="Base64 Encoder">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">🔤</div>
-                <h2>Base64 Encoder/Decoder</h2>
-                <p>Convert text or files to Base64.</p>
                 <div class="card-footer">
-                    <a href="base64-tool.html" class="tool-btn" data-tool="base64-tool.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Base64 Encoder"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="Meme Generator">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">😂</div>
-                <h2>Meme Generator</h2>
-                <p>Add text to any image and download.</p>
-                <div class="card-footer">
-                    <a href="meme-generator.html" class="tool-btn" data-tool="meme-generator.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Meme Generator"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="Image to Text OCR">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">🔎</div>
-                <h2>Image to Text (OCR)</h2>
-                <p>Extract text from any image using AI.</p>
-                <div class="card-footer">
-                    <a href="image-to-text.html" class="tool-btn" data-tool="image-to-text.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Image to Text OCR"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="Voice to Text">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">🎙️</div>
-                <h2>Voice to Text</h2>
-                <p>Speak and get instant text.</p>
-                <div class="card-footer">
-                    <a href="voice-to-text.html" class="tool-btn" data-tool="voice-to-text.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Voice to Text"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="Text to Voice">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">🔊</div>
-                <h2>Text to Voice</h2>
-                <p>Convert any text into speech.</p>
-                <div class="card-footer">
-                    <a href="text-to-voice.html" class="tool-btn" data-tool="text-to-voice.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Text to Voice"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="Background Remover">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">🪄</div>
-                <h2>Background Remover</h2>
-                <p>Remove photo background using AI.</p>
-                <div class="card-footer">
-                    <a href="background-remover.html" class="tool-btn" data-tool="background-remover.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Background Remover"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="Text Tone Checker">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">💬</div>
-                <h2>Text Tone Checker</h2>
-                <p>Check if your message sounds rude.</p>
-                <div class="card-footer">
-                    <a href="text-tone-checker.html" class="tool-btn" data-tool="text-tone-checker.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Text Tone Checker"><i class="fa-solid fa-share-nodes"></i></button>
+                    <a href="ai-text-summarizer.html" class="tool-btn">Open Tool</a>
+                    <button class="share-btn" data-tool="AI Text Summarizer"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
         </div>
         </div>
 
-        <!-- ================= UTILITY TOOLS ================= -->
+        <!-- UTILITY TOOLS -->
         <div class="tool-category" data-category="calculator">
         <h2 id="calculator-tools" class="section-title">🧰 Utility Tools</h2>
         <div class="container">
@@ -475,8 +440,12 @@
                 <div class="tool-icon">📱</div>
                 <h2>QR Code Generator</h2>
                 <p>Create QR codes for links & text.</p>
+                <div class="rating" data-tool="qr-generator">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="qr-generator.html" class="tool-btn" data-tool="qr-generator.html">Open Tool</a>
+                    <a href="qr-generator.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="QR Code Generator"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
@@ -485,29 +454,13 @@
                 <div class="tool-icon">🔐</div>
                 <h2>Password Generator</h2>
                 <p>Create strong and secure passwords.</p>
+                <div class="rating" data-tool="password-generator">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="password-generator.html" class="tool-btn" data-tool="password-generator.html">Open Tool</a>
+                    <a href="password-generator.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="Password Generator"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="Word Counter">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">📝</div>
-                <h2>Word Counter</h2>
-                <p>Count words, characters & paragraphs.</p>
-                <div class="card-footer">
-                    <a href="word-counter.html" class="tool-btn" data-tool="word-counter.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Word Counter"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-            <div class="card" data-tool-name="Age Calculator">
-                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">🎂</div>
-                <h2>Age Calculator</h2>
-                <p>Calculate your exact age in seconds.</p>
-                <div class="card-footer">
-                    <a href="age-calculator.html" class="tool-btn" data-tool="age-calculator.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Age Calculator"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
             <div class="card" data-tool-name="EMI Calculator">
@@ -515,19 +468,27 @@
                 <div class="tool-icon">💰</div>
                 <h2>EMI Calculator</h2>
                 <p>Calculate your monthly loan EMI.</p>
+                <div class="rating" data-tool="emi-calculator">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="emi-calculator.html" class="tool-btn" data-tool="emi-calculator.html">Open Tool</a>
+                    <a href="emi-calculator.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="EMI Calculator"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
-            <div class="card" data-tool-name="Scientific Calculator">
+            <div class="card" data-tool-name="Age Calculator">
                 <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
-                <div class="tool-icon">🧮</div>
-                <h2>Scientific Calculator</h2>
-                <p>Perform advanced math calculations.</p>
+                <div class="tool-icon">🎂</div>
+                <h2>Age Calculator</h2>
+                <p>Calculate your exact age in seconds.</p>
+                <div class="rating" data-tool="age-calculator">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="scientific-calculator.html" class="tool-btn" data-tool="scientific-calculator.html">Open Tool</a>
-                    <button class="share-btn" data-tool="Scientific Calculator"><i class="fa-solid fa-share-nodes"></i></button>
+                    <a href="age-calculator.html" class="tool-btn">Open Tool</a>
+                    <button class="share-btn" data-tool="Age Calculator"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
             <div class="card" data-tool-name="GST Calculator">
@@ -535,9 +496,27 @@
                 <div class="tool-icon">🧾</div>
                 <h2>GST Calculator</h2>
                 <p>Add or remove GST from any amount.</p>
+                <div class="rating" data-tool="gst-calculator">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
                 <div class="card-footer">
-                    <a href="gst-calculator.html" class="tool-btn" data-tool="gst-calculator.html">Open Tool</a>
+                    <a href="gst-calculator.html" class="tool-btn">Open Tool</a>
                     <button class="share-btn" data-tool="GST Calculator"><i class="fa-solid fa-share-nodes"></i></button>
+                </div>
+            </div>
+            <div class="card" data-tool-name="Word Counter">
+                <button class="fav-btn"><i class="fa-regular fa-star"></i></button>
+                <div class="tool-icon">📝</div>
+                <h2>Word Counter</h2>
+                <p>Count words, characters & paragraphs.</p>
+                <div class="rating" data-tool="word-counter">
+                    <span class="star" data-value="1">★</span><span class="star" data-value="2">★</span><span class="star" data-value="3">★</span><span class="star" data-value="4">★</span><span class="star" data-value="5">★</span>
+                    <span class="rating-count">(0)</span>
+                </div>
+                <div class="card-footer">
+                    <a href="word-counter.html" class="tool-btn">Open Tool</a>
+                    <button class="share-btn" data-tool="Word Counter"><i class="fa-solid fa-share-nodes"></i></button>
                 </div>
             </div>
         </div>
@@ -552,33 +531,24 @@
         <div class="feature-box"><h3>💯 Free Forever</h3><p>No signup, no watermark, no hidden charges.</p></div>
     </section>
 
-    <!--================ ABOUT / SEO CONTENT SECTION ================-->
+    <!--================ ABOUT SECTION ================-->
     <section id="about" style="max-width:900px;margin:0 auto;padding:40px 20px;">
         <h2>About Bharat24Tools</h2>
         <p>Bharat24Tools is a free collection of everyday online utilities built for students, professionals and small business owners across India...</p>
-        <p>Every tool on this website runs entirely on the client side, meaning your files are processed on your own device using JavaScript and are never uploaded to a server...</p>
-
-        <h2>How to Use Bharat24Tools</h2>
-        <p>Using any tool on Bharat24Tools is simple: open the tool you need, upload or drag-and-drop your file, and click the action button. Your converted file downloads automatically...</p>
-
-        <h2>Why Choose Bharat24Tools</h2>
-        <p>Unlike many online converters that limit free usage, add watermarks, or require a paid plan for basic features, Bharat24Tools keeps every tool completely free with no daily limits...</p>
-
         <h2>Frequently Asked Questions</h2>
-        <details style="margin-bottom:12px;"><summary style="cursor:pointer;font-weight:600;">Is Bharat24Tools free to use?</summary><p>Yes, every tool on Bharat24Tools is completely free to use...</p></details>
-        <details style="margin-bottom:12px;"><summary style="cursor:pointer;font-weight:600;">Are my files uploaded to a server?</summary><p>No. All conversions run directly inside your browser using JavaScript...</p></details>
-        <details style="margin-bottom:12px;"><summary style="cursor:pointer;font-weight:600;">Do I need to install any software?</summary><p>No installation is required...</p></details>
+        <details style="margin-bottom:12px;"><summary style="cursor:pointer;font-weight:600;">Is Bharat24Tools free to use?</summary><p>Yes, every tool is completely free.</p></details>
+        <details style="margin-bottom:12px;"><summary style="cursor:pointer;font-weight:600;">Are my files uploaded to a server?</summary><p>No. All conversions run directly inside your browser.</p></details>
     </section>
 
     <!--================ FOOTER ================-->
-    <footer id="contact" style="background: #0b1a2e; color: #f0f4fa; padding: 50px 20px 20px;">
+    <footer id="contact" style="background:#0b1a2e;color:#f0f4fa;padding:50px 20px 20px;">
         <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:30px;">
             <div style="flex:1 1 220px;">
                 <h2 style="color:#fff;font-size:1.8rem;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-bolt" style="color:#0d6efd;"></i> Bharat24Tools</h2>
                 <p style="color:#a0b8d0;margin-top:8px;">Free online Image, PDF &amp; Utility tools. No signup, no watermark, 100% free.</p>
                 <div style="margin-top:16px;display:flex;gap:16px;font-size:1.4rem;">
-                    <a href="https://www.facebook.com/alokyadav.roy" target="_blank" rel="noopener noreferrer" style="color:#a0b8d0;"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="https://www.instagram.com/alok_y26?igsi=eDJnYzNiOTYzdWk5" target="_blank" rel="noopener noreferrer" style="color:#a0b8d0;"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/alokyadav.roy" target="_blank" style="color:#a0b8d0;"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/alok_y26?igsi=eDJnYzNiOTYzdWk5" target="_blank" style="color:#a0b8d0;"><i class="fa-brands fa-instagram"></i></a>
                 </div>
                 <div style="margin-top:20px;">
                     <h4 style="color:#fff;font-size:1rem;margin-bottom:8px;">📧 Newsletter</h4>
@@ -616,6 +586,29 @@
             &copy; 2026 Bharat24Tools. All rights reserved. | Made with ❤️ in India
         </div>
     </footer>
+
+    <!-- Dashboard Modal -->
+    <div id="dashboardModal" class="dashboard-modal">
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h3><i class="fa-solid fa-chart-line"></i> My Dashboard</h3>
+                <button id="dashboardClose"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="dashboard-body">
+                <div class="dash-stat"><h4 id="dashRecentCount">0</h4><p>Recent Tools</p></div>
+                <div class="dash-stat"><h4 id="dashFavCount">0</h4><p>Favorites</p></div>
+                <div class="dash-stat"><h4 id="dashRatingsCount">0</h4><p>Tools Rated</p></div>
+                <div class="dash-section">
+                    <h4>⭐ My Favorites</h4>
+                    <div id="dashFavList" class="dash-list"></div>
+                </div>
+                <div class="dash-section">
+                    <h4>🕒 Recent Tools</h4>
+                    <div id="dashRecentList" class="dash-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Back to Top -->
     <button id="backToTop" class="back-to-top" title="Back to Top"><i class="fa-solid fa-arrow-up"></i></button>
