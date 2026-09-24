@@ -98,7 +98,7 @@ if (langToggle) {
     });
 }
 
-// ===== Live Clock =====
+// ===== Live Clock (India Time) =====
 const liveClock = document.getElementById("liveClock");
 if (liveClock) {
     const updateClock = () => {
@@ -107,7 +107,7 @@ if (liveClock) {
         liveClock.innerHTML = '<i class="fa-regular fa-clock"></i> ' + now.toLocaleTimeString('en-IN', options);
     };
     updateClock();
-    setInterval(updateClock, 60000);
+    setInterval(updateClock, 30000);
 }
 
 // ===== Back to Top =====

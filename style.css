@@ -202,24 +202,25 @@ align-items:center;
 
 .live-clock{
 color:#fff;
-font-size:0.85rem;
+font-size:0.9rem;
 font-weight:600;
-background:rgba(255,255,255,.15);
-padding:6px 12px;
+background:rgba(255,255,255,.18);
+padding:8px 14px;
 border-radius:20px;
 display:flex;
 align-items:center;
 gap:6px;
+white-space:nowrap;
 }
 
 .nav-icon-btn{
-background:rgba(255,255,255,.15);
+background:rgba(255,255,255,.18);
 border:none;
 color:#fff;
-width:40px;
-height:40px;
+width:45px;
+height:45px;
 border-radius:50%;
-font-size:1rem;
+font-size:1.15rem;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -227,7 +228,7 @@ transition:.3s;
 }
 
 .nav-icon-btn:hover{
-background:rgba(255,255,255,.3);
+background:rgba(255,255,255,.35);
 transform:rotate(20deg);
 }
 
@@ -506,6 +507,10 @@ box-shadow:var(--shadow);
 transition:.35s;
 position:relative;
 overflow:hidden;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+min-height:200px;
 }
 
 .card::before{
@@ -551,12 +556,14 @@ color:var(--text-light);
 font-size:0.78rem;
 line-height:1.4;
 margin-bottom:10px;
+flex-grow:1;
 }
 
+/* REPLACED: Fixed uniform button size */
 .card .tool-btn {
 display:inline-block;
-width:auto;
-padding:6px 16px;
+width:100%;
+padding:8px 16px;
 border:none;
 border-radius:50px;
 background:#0d6efd;
@@ -567,6 +574,7 @@ text-align:center;
 text-decoration:none;
 box-sizing:border-box;
 transition:.3s;
+margin-top:auto;
 }
 
 .card .tool-btn:hover {
@@ -878,7 +886,14 @@ display:flex;
 }
 
 .live-clock{
-display:none;
+font-size:0.75rem;
+padding:6px 10px;
+}
+
+.nav-icon-btn{
+width:40px;
+height:40px;
+font-size:1rem;
 }
 
 .hero{
@@ -913,6 +928,11 @@ font-size:30px;
 .container{
 grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
 gap:10px;
+}
+
+.card{
+min-height:190px;
+padding:14px 12px;
 }
 
 .features{
