@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF to Word - Bharat24Tools</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- PDF.js for text extraction -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- Docx for creating .docx files -->
+<script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+<!-- FileSaver -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<!-- JSZip -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+body {
+    min-height:100vh;
+    background:linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%);
+    background-attachment:fixed;
+    color:#e0e7ff;
+}
+header {
+    background:rgba(15,15,30,0.95);
+    backdrop-filter:blur(10px);
+    padding:16px 24px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    border-bottom:2px solid rgba(168,85,247,0.3);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+header a {
+    color:#cbd5e1;
+    text-decoration:none;
+    font-weight:600;
+    font-size:1rem;
+    transition:all 0.3s;
+    padding:8px 12px;
+    border-radius:6px;
+}
+header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
+.brand {
+    font-weight:800;
+    font-size:1.3rem;
+    background:linear-gradient(135deg, #a855f7, #ec4899);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    flex:1;
+}
+main { max-width:1000px; margin:0 auto; padding:40px 20px 60px; }
+h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
+.subtitle { text-align:center; color:#a5b4fc; margin-bottom:40px; }
+.card {
+    background:rgba(30,27,75,0.9);
+    backdrop-filter:blur(10px);
+    border-radius:16px;
+    padding:40px;
+    border:1px solid rgba(168,85,247,0.3);
+    margin-bottom:24px;
+}
+.upload-zone {
+    border:3px dashed rgba(168,85,247,0.6);
+    border-radius:16px;
+    padding:50px 30px;
+    text-align:center;
+    cursor:pointer;
+    transition:all 0.3s;
+    background:rgba(99,102,241,0.05);
+}
+.upload-zone:hover, .upload-zone.active {
+    border-color:#a855f7;
+    background:rgba(168,85,247,0.15);
+}
+.upload-icon { font-size:3rem; color:#a855f7; margin-bottom:16px; }
+.upload-zone p { color:#cbd5e1; margin:8px 0; }
+.highlight { color:#e0e7ff; font-weight:700; }
+input[type="file"] { display:none; }
+
+.file-list {
+    display:none;
+    margin-top:20px;
+    max-height:250px;
+    overflow-y:auto;
+    border-radius:10px;
+    background:rgba(15,15,30,0.6);
+    padding:12px;
+}
+.file-item {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px;
+    background:rgba(99,102,241,0.1);
+    border-radius:8px;
+    margin-bottom:8px;
+    font-size:0.85rem;
+    color:#cbd5e1;
+}
+.file-item i { color:#a855f7; }
+.file-item span { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.file-item .size { color:#a5b4fc; font-size:0.75rem; }
+.file-item .remove {
+    background:transparent;
+    border:none;
+    color:#dc3545;
+    cursor:pointer;
+    font-size:1rem;
+    padding:4px;
+}
+
+.controls { display:none; margin-top:24px; }
+.control-group { margin-bottom:20px; }
+.control-group label {
+    display:block;
+    font-weight:700;
+    margin-bottom:10px;
+    font-size:0.95rem;
+}
+.input-field {
+    width:100%;
+    padding:14px 16px;
+    background:rgba(15,15,30,0.8);
+    border:2px solid rgba(168,85,247,0.4);
+    border-radius:10px;
+    color:#e0e7ff;
+    font-family:inherit;
+    font-size:1rem;
+    font-weight:600;
+    transition:all 0.3s;
+}
+.input-field:focus {
+    outline:none;
+    border-color:#a855f7;
+    box-shadow:0 0 0 4px rgba(168,85,247,0.15);
+}
+
+.convert-btn {
+    width:100%;
+    padding:16px;
+    background:linear-gradient(135deg, #a855f7, #ec4899);
+    border:none;
+    border-radius:12px;
+    color:#fff;
+    font-weight:700;
+    font-size:1.05rem;
+    cursor:pointer;
+    transition:all 0.3s;
+    font-family:inherit;
+    margin-top:16px;
+}
+.convert-btn:hover:not(:disabled) {
+    transform:translateY(-2px);
+    box-shadow:0 10px 30px rgba(168,85,247,0.4);
+}
+.convert-btn:disabled { opacity:0.6; cursor:not-allowed; }
+
+.progress-bar {
+    display:none;
+    width:100%;
+    height:12px;
+    background:rgba(15,15,30,0.8);
+    border-radius:20px;
+    margin-top:16px;
+    overflow:hidden;
+}
+.progress-bar .fill {
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, #a855f7, #ec4899);
+    transition:width 0.3s;
+}
+.progress-text {
+    display:none;
+    text-align:center;
+    margin-top:10px;
+    font-size:0.85rem;
+    color:#a5b4fc;
+}
+
+.status {
+    display:none;
+    margin-top:20px;
+    padding:16px;
+    border-radius:10px;
+    text-align:center;
+    font-weight:600;
+}
+.status.loading { background:rgba(99,102,241,0.2); color:#a5b4fc; }
+.status.success { background:rgba(34,197,94,0.2); color:#86efac; }
+.status.error { background:rgba(239,68,68,0.2); color:#fca5a5; }
+
+.preview-text {
+    display:none;
+    margin-top:20px;
+    padding:18px;
+    background:#fff;
+    color:#1a1a1a;
+    border-radius:12px;
+    max-height:280px;
+    overflow-y:auto;
+    font-size:0.9rem;
+    line-height:1.7;
+    white-space:pre-wrap;
+    font-family:'Calibri', 'Arial', sans-serif;
+    border:2px solid rgba(168,85,247,0.3);
+}
+.preview-text strong {
+    display:block;
+    color:#0d6efd;
+    margin-bottom:10px;
+    font-size:0.85rem;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+}
+
+.results { display:none; margin-top:24px; }
+.result-item {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px;
+    background:rgba(34,197,94,0.1);
+    border-radius:10px;
+    margin-bottom:10px;
+    border-left:3px solid #22c55e;
+    flex-wrap:wrap;
+}
+.result-item i.fa-file-word { color:#2b579a; font-size:1.4rem; }
+.result-item .name {
+    flex:1;
+    font-size:0.9rem;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    min-width:100px;
+}
+.result-item .badge {
+    font-size:0.75rem;
+    background:rgba(34,197,94,0.25);
+    color:#86efac;
+    padding:4px 10px;
+    border-radius:20px;
+    font-weight:700;
+    white-space:nowrap;
+}
+.result-item button {
+    background:linear-gradient(135deg, #0d6efd, #a855f7);
+    color:#fff;
+    border:none;
+    padding:8px 14px;
+    border-radius:8px;
+    font-size:0.8rem;
+    font-weight:600;
+    cursor:pointer;
+    font-family:inherit;
+    transition:all 0.3s;
+}
+.result-item button:hover {
+    transform:scale(1.05);
+    box-shadow:0 5px 15px rgba(13,110,253,0.4);
+}
+.download-all-btn {
+    width:100%;
+    padding:14px;
+    background:linear-gradient(135deg, #198754, #22c55e);
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    font-weight:700;
+    font-size:1rem;
+    cursor:pointer;
+    margin-top:12px;
+    font-family:inherit;
+    transition:all 0.3s;
+}
+.download-all-btn:hover {
+    transform:translateY(-2px);
+    box-shadow:0 10px 30px rgba(25,135,84,0.4);
+}
+
+.info-box {
+    background:rgba(99,102,241,0.1);
+    border-left:4px solid #a855f7;
+    padding:16px;
+    border-radius:8px;
+    margin-top:20px;
+    font-size:0.85rem;
+    color:#a5b4fc;
+    line-height:1.7;
+}
+.info-box strong { color:#e0e7ff; }
+
+@media(max-width:768px){
+    .card { padding:24px; }
+    h1 { font-size:1.5rem; }
+    .upload-zone { padding:40px 20px; }
+    .result-item { flex-direction:column; align-items:flex-start; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <a href="index.html"><i class="fas fa-arrow-left"></i> Back</a>
+    <div class="brand"><i class="fas fa-microchip"></i> Bharat24Tools</div>
+</header>
+
+<main>
+    <h1>📄 PDF to Word</h1>
+    <p class="subtitle">PDF के अंदर का टेक्स्ट निकालकर Word में बदलो — एडिट करने लायक</p>
+
+    <div class="card">
+        <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon"><i class="fas fa-file-pdf"></i></div>
+            <p><span class="highlight">Click करो या Drag करो</span></p>
+            <p>एक या एक से ज्यादा PDF फाइलें</p>
+            <p style="font-size:0.8rem; opacity:0.8;">Max size: 50MB per file</p>
+        </div>
+        <input type="file" id="fileInput" accept=".pdf,application/pdf" multiple>
+
+        <div class="file-list" id="fileList"></div>
+
+        <div class="controls" id="controls">
+            <div class="control-group">
+                <label>📝 Document Title (Optional):</label>
+                <input type="text" id="docTitle" class="input-field" placeholder="My Document" value="Converted Document">
+            </div>
+
+            <button class="convert-btn" id="convertBtn">
+                <i class="fas fa-file-word"></i> Word Document बनाओ
+            </button>
+
+            <div class="progress-bar" id="progressBar">
+                <div class="fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText"></div>
+        </div>
+
+        <div class="status" id="status"></div>
+        <div class="preview-text" id="previewText"></div>
+
+        <div class="results" id="results">
+            <div id="resultList"></div>
+            <button class="download-all-btn" id="downloadAllBtn" style="display:none;">
+                <i class="fas fa-download"></i> Download All as ZIP
+            </button>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 कैसे काम करता है:</strong> यह टूल PDF के हर पेज से टेक्स्ट निकालता है और उसे Word (.docx) फाइल में डालता है। टेक्स्ट असली टेक्स्ट होगा — जिसे तुम Word में एडिट कर सकोगे। सारी प्रोसेसिंग तुम्हारे ब्राउज़र में।
+        </div>
+    </div>
+</main>
+
+<script>
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const fileList = document.getElementById('fileList');
+    const controls = document.getElementById('controls');
+    const convertBtn = document.getElementById('convertBtn');
+    const docTitle = document.getElementById('docTitle');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    const status = document.getElementById('status');
+    const previewText = document.getElementById('previewText');
+    const results = document.getElementById('results');
+    const resultList = document.getElementById('resultList');
+    const downloadAllBtn = document.getElementById('downloadAllBtn');
+
+    let pdfFiles = [];
+    let convertedResults = [];
+
+    // ============ Upload ============
+    uploadZone.addEventListener('click', () => fileInput.click());
+    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('active');
+        handleFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+    function handleFiles(files) {
+        const newFiles = Array.from(files).filter(f =>
+            f.type.includes('pdf') || f.name.toLowerCase().endsWith('.pdf')
+        );
+        if (newFiles.length === 0) {
+            showStatus('❌ कृपया valid PDF फाइलें चुनें', 'error');
+            return;
+        }
+        const tooBig = newFiles.filter(f => f.size > 50 * 1024 * 1024);
+        if (tooBig.length > 0) {
+            showStatus('❌ कुछ फाइलें 50MB से बड़ी हैं', 'error');
+            return;
+        }
+        pdfFiles = pdfFiles.concat(newFiles);
+        renderFileList();
+        controls.style.display = 'block';
+        results.style.display = 'none';
+        previewText.style.display = 'none';
+        showStatus(`✅ ${newFiles.length} PDF फाइल(s) add हुई`, 'success');
+    }
+
+    function renderFileList() {
+        if (pdfFiles.length === 0) {
+            fileList.style.display = 'none';
+            controls.style.display = 'none';
+            return;
+        }
+        fileList.style.display = 'block';
+        fileList.innerHTML = '';
+        pdfFiles.forEach((file, index) => {
+            const item = document.createElement('div');
+            item.className = 'file-item';
+            item.innerHTML = `
+                <i class="fas fa-file-pdf"></i>
+                <span>${file.name}</span>
+                <span class="size">${formatSize(file.size)}</span>
+                <button class="remove" data-index="${index}" title="Remove">
+                    <i class="fas fa-times-circle"></i>
+                </button>
+            `;
+            fileList.appendChild(item);
+        });
+        fileList.querySelectorAll('.remove').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                pdfFiles.splice(parseInt(btn.dataset.index), 1);
+                renderFileList();
+            });
+        });
+    }
+
+    function formatSize(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+        return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    // ============ Convert ============
+    convertBtn.addEventListener('click', async () => {
+        if (pdfFiles.length === 0) {
+            showStatus('❌ पहले PDF फाइल चुनें', 'error');
+            return;
+        }
+        if (typeof window.docx === 'undefined' || !window.docx.Document) {
+            showStatus('❌ Docx library load नहीं हुई। Page refresh करें।', 'error');
+            return;
+        }
+
+        convertBtn.disabled = true;
+        progressBar.style.display = 'block';
+        progressText.style.display = 'block';
+        results.style.display = 'none';
+        previewText.style.display = 'none';
+        convertedResults = [];
+        progressFill.style.width = '0%';
+
+        try {
+            let firstTextPreview = '';
+
+            for (let i = 0; i < pdfFiles.length; i++) {
+                const file = pdfFiles[i];
+                const progress = ((i + 0.5) / pdfFiles.length) * 100;
+                progressFill.style.width = progress + '%';
+                progressText.textContent = `Converting ${i + 1} of ${pdfFiles.length}: ${file.name}`;
+                showStatus(`⏳ ${file.name} को convert कर रहे हैं...`, 'loading');
+
+                try {
+                    const text = await extractTextFromPDF(file);
+
+                    if (!text || text.trim().length === 0) {
+                        throw new Error('इस PDF में कोई टेक्स्ट नहीं मिला');
+                    }
+
+                    if (i === 0) {
+                        firstTextPreview = text.substring(0, 2000) + (text.length > 2000 ? '\n\n... (preview truncated)' : '');
+                    }
+
+                    const docxBlob = await createWordDoc(text, docTitle.value || 'Converted Document');
+                    convertedResults.push({
+                        name: file.name.replace(/\.pdf$/i, '') + '.docx',
+                        blob: docxBlob
+                    });
+                } catch (err) {
+                    console.error('Error:', file.name, err);
+                    showStatus(`❌ ${file.name}: ${err.message}`, 'error');
+                }
+
+                progressFill.style.width = ((i + 1) / pdfFiles.length) * 100 + '%';
+            }
+
+            if (convertedResults.length === 0) {
+                throw new Error('कोई भी PDF convert नहीं हो सकी');
+            }
+
+            // Show preview
+            if (firstTextPreview) {
+                previewText.innerHTML = '<strong>📋 Preview (First PDF):</strong>' + escapeHtml(firstTextPreview);
+                previewText.style.display = 'block';
+            }
+
+            displayResults();
+            showStatus(`🎉 ${convertedResults.length} Word document तैयार!`, 'success');
+        } catch (error) {
+            console.error(error);
+            showStatus('❌ Error: ' + error.message, 'error');
+        }
+
+        convertBtn.disabled = false;
+        setTimeout(() => {
+            progressBar.style.display = 'none';
+            progressText.style.display = 'none';
+        }, 2500);
+    });
+
+    // ============ Extract Text from PDF ============
+    async function extractTextFromPDF(file) {
+        const arrayBuffer = await file.arrayBuffer();
+        const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        const numPages = pdfDoc.numPages;
+        let fullText = '';
+
+        for (let i = 1; i <= numPages; i++) {
+            const page = await pdfDoc.getPage(i);
+            const textContent = await page.getTextContent();
+
+            // Join text items with proper spacing
+            let lastY = null;
+            let pageText = '';
+
+            textContent.items.forEach(item => {
+                if (lastY !== null && Math.abs(lastY - item.transform[5]) > 5) {
+                    pageText += '\n';
+                } else if (pageText.length > 0 && !pageText.endsWith(' ') && !item.str.startsWith(' ')) {
+                    pageText += ' ';
+                }
+                pageText += item.str;
+                lastY = item.transform[5];
+            });
+
+            fullText += `--- Page ${i} ---\n${pageText.trim()}\n\n`;
+        }
+
+        return fullText;
+    }
+
+    // ============ Create Word Document ============
+    async function createWordDoc(text, title) {
+        const { Document, Packer, Paragraph, TextRun, AlignmentType } = window.docx;
+
+        const lines = text.split('\n');
+
+        const paragraphs = lines.map(line => {
+            // Detect page markers
+            if (line.startsWith('--- Page')) {
+                return new Paragraph({
+                    children: [
+                        new TextRun({
+                            text: line,
+                            bold: true,
+                            color: '0d6efd',
+                            size: 22
+                        })
+                    ],
+                    spacing: { before: 200, after: 100 }
+                });
+            }
+            return new Paragraph({
+                children: [
+                    new TextRun({
+                        text: line || ' ',
+                        size: 22,
+                        font: 'Calibri'
+                    })
+                ],
+                spacing: { after: 100 }
+            });
+        });
+
+        const doc = new Document({
+            sections: [{
+                children: [
+                    new Paragraph({
+                        alignment: AlignmentType.CENTER,
+                        children: [
+                            new TextRun({
+                                text: title,
+                                bold: true,
+                                size: 32,
+                                color: '0d6efd'
+                            })
+                        ],
+                        spacing: { after: 200 }
+                    }),
+                    new Paragraph({
+                        alignment: AlignmentType.CENTER,
+                        children: [
+                            new TextRun({
+                                text: new Date().toLocaleDateString('en-IN'),
+                                italics: true,
+                                size: 22,
+                                color: '666666'
+                            })
+                        ],
+                        spacing: { after: 300 }
+                    }),
+                    ...paragraphs,
+                    new Paragraph({
+                        alignment: AlignmentType.CENTER,
+                        children: [
+                            new TextRun({
+                                text: 'Created with Bharat24Tools',
+                                italics: true,
+                                size: 18,
+                                color: '808080'
+                            })
+                        ],
+                        spacing: { before: 400 }
+                    })
+                ]
+            }]
+        });
+
+        return await Packer.toBlob(doc);
+    }
+
+    // ============ Escape HTML ============
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // ============ Display Results ============
+    function displayResults() {
+        resultList.innerHTML = '';
+        convertedResults.forEach((res, i) => {
+            const item = document.createElement('div');
+            item.className = 'result-item';
+            item.innerHTML = `
+                <i class="fas fa-file-word"></i>
+                <span class="name">${res.name}</span>
+                <span class="badge">📄 Word</span>
+                <button data-index="${i}"><i class="fas fa-download"></i> Download</button>
+            `;
+            resultList.appendChild(item);
+        });
+        resultList.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const idx = parseInt(btn.dataset.index);
+                saveAs(convertedResults[idx].blob, convertedResults[idx].name);
+            });
+        });
+        downloadAllBtn.style.display = convertedResults.length > 1 ? 'block' : 'none';
+        results.style.display = 'block';
+    }
+
+    // ============ Download All ZIP ============
+    downloadAllBtn.addEventListener('click', async () => {
+        downloadAllBtn.disabled = true;
+        downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating ZIP...';
+        try {
+            const zip = new JSZip();
+            convertedResults.forEach(r => zip.file(r.name, r.blob));
+            const zipBlob = await zip.generateAsync({ type: 'blob' });
+            saveAs(zipBlob, 'converted-word-docs.zip');
+            downloadAllBtn.innerHTML = '<i class="fas fa-check"></i> Downloaded!';
+        } catch (err) {
+            downloadAllBtn.innerHTML = '<i class="fas fa-times"></i> Failed';
+        }
+        setTimeout(() => {
+            downloadAllBtn.disabled = false;
+            downloadAllBtn.innerHTML = '<i class="fas fa-download"></i> Download All as ZIP';
+        }, 2000);
+    });
+
+    // ============ Status ============
+    function showStatus(message, type) {
+        status.textContent = message;
+        status.className = `status ${type}`;
+        status.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

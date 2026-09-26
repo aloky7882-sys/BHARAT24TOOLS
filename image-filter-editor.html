@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Filter & Editor - Bharat24Tools</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- FileSaver -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+body {
+    min-height:100vh;
+    background:linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%);
+    background-attachment:fixed;
+    color:#e0e7ff;
+}
+header {
+    background:rgba(15,15,30,0.95);
+    backdrop-filter:blur(10px);
+    padding:16px 24px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    border-bottom:2px solid rgba(168,85,247,0.3);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+header a {
+    color:#cbd5e1;
+    text-decoration:none;
+    font-weight:600;
+    font-size:1rem;
+    transition:all 0.3s;
+    padding:8px 12px;
+    border-radius:6px;
+}
+header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
+.brand {
+    font-weight:800;
+    font-size:1.3rem;
+    background:linear-gradient(135deg, #a855f7, #ec4899);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    flex:1;
+}
+main { max-width:1200px; margin:0 auto; padding:40px 20px 60px; }
+h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
+.subtitle { text-align:center; color:#a5b4fc; margin-bottom:40px; }
+.card {
+    background:rgba(30,27,75,0.9);
+    backdrop-filter:blur(10px);
+    border-radius:16px;
+    padding:40px;
+    border:1px solid rgba(168,85,247,0.3);
+    margin-bottom:24px;
+}
+.upload-zone {
+    border:3px dashed rgba(168,85,247,0.6);
+    border-radius:16px;
+    padding:50px 30px;
+    text-align:center;
+    cursor:pointer;
+    transition:all 0.3s;
+    background:rgba(99,102,241,0.05);
+}
+.upload-zone:hover, .upload-zone.active {
+    border-color:#a855f7;
+    background:rgba(168,85,247,0.15);
+}
+.upload-icon { font-size:3rem; color:#a855f7; margin-bottom:16px; }
+.upload-zone p { color:#cbd5e1; margin:8px 0; }
+.highlight { color:#e0e7ff; font-weight:700; }
+input[type="file"] { display:none; }
+
+.layout {
+    display:none;
+    grid-template-columns:1fr 380px;
+    gap:24px;
+    margin-top:24px;
+}
+@media(max-width:900px){
+    .layout { grid-template-columns:1fr; }
+}
+
+.canvas-area {
+    background:rgba(20,20,40,0.8);
+    border-radius:14px;
+    padding:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:400px;
+    border:1px solid rgba(168,85,247,0.2);
+    overflow:hidden;
+}
+#mainCanvas {
+    max-width:100%;
+    max-height:600px;
+    border-radius:8px;
+    display:none;
+}
+
+.panel {
+    background:rgba(20,20,40,0.8);
+    border-radius:14px;
+    padding:18px;
+    border:1px solid rgba(168,85,247,0.2);
+    margin-bottom:14px;
+}
+.panel h3 {
+    font-size:0.9rem;
+    margin-bottom:12px;
+    font-weight:700;
+    color:#e0e7ff;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+.panel h3 i { color:#a855f7; }
+
+.control-group {
+    margin-bottom:12px;
+}
+.control-group label {
+    display:flex;
+    justify-content:space-between;
+    font-weight:600;
+    font-size:0.78rem;
+    color:#cbd5e1;
+    margin-bottom:6px;
+}
+.control-group label span {
+    color:#a855f7;
+    font-weight:700;
+    background:rgba(168,85,247,0.15);
+    padding:2px 8px;
+    border-radius:6px;
+    font-size:0.72rem;
+}
+.control-group input[type="range"] {
+    width:100%;
+    accent-color:#a855f7;
+    height:6px;
+}
+
+.preset-grid {
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:8px;
+    margin-top:6px;
+}
+.preset-btn {
+    padding:10px 6px;
+    background:rgba(15,15,30,0.6);
+    border:2px solid rgba(168,85,247,0.3);
+    color:#cbd5e1;
+    border-radius:8px;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:0.7rem;
+    font-weight:600;
+    transition:all 0.3s;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+}
+.preset-btn i { font-size:0.95rem; }
+.preset-btn:hover {
+    border-color:#a855f7;
+    color:#a855f7;
+}
+.preset-btn.active {
+    background:linear-gradient(135deg, #a855f7, #ec4899);
+    color:#fff;
+    border-color:transparent;
+}
+
+.transform-buttons {
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:8px;
+}
+.transform-btn {
+    padding:12px;
+    background:rgba(15,15,30,0.6);
+    border:2px solid rgba(168,85,247,0.3);
+    color:#cbd5e1;
+    border-radius:8px;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:0.78rem;
+    font-weight:600;
+    transition:all 0.3s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+}
+.transform-btn:hover {
+    border-color:#a855f7;
+    color:#a855f7;
+    background:rgba(168,85,247,0.1);
+}
+.transform-btn.active {
+    background:linear-gradient(135deg, #a855f7, #ec4899);
+    color:#fff;
+    border-color:transparent;
+}
+
+.action-row {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:12px;
+}
+.btn {
+    padding:14px;
+    border-radius:12px;
+    border:none;
+    font-weight:700;
+    font-size:0.9rem;
+    cursor:pointer;
+    transition:all 0.3s;
+    font-family:inherit;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+.btn-primary {
+    background:linear-gradient(135deg, #198754, #22c55e);
+    color:#fff;
+    grid-column:span 2;
+}
+.btn-primary:hover {
+    transform:translateY(-2px);
+    box-shadow:0 10px 30px rgba(25,135,84,0.4);
+}
+.btn-secondary {
+    background:rgba(15,15,30,0.8);
+    color:#cbd5e1;
+    border:2px solid rgba(168,85,247,0.3);
+}
+.btn-secondary:hover {
+    border-color:#a855f7;
+    color:#a855f7;
+}
+.btn:disabled { opacity:0.6; cursor:not-allowed; }
+
+.status {
+    display:none;
+    margin-top:16px;
+    padding:14px;
+    border-radius:10px;
+    text-align:center;
+    font-weight:600;
+    font-size:0.9rem;
+}
+.status.loading { background:rgba(99,102,241,0.2); color:#a5b4fc; }
+.status.success { background:rgba(34,197,94,0.2); color:#86efac; }
+.status.error { background:rgba(239,68,68,0.2); color:#fca5a5; }
+
+.info-box {
+    background:rgba(99,102,241,0.1);
+    border-left:4px solid #a855f7;
+    padding:14px;
+    border-radius:8px;
+    margin-top:16px;
+    font-size:0.82rem;
+    color:#a5b4fc;
+    line-height:1.6;
+}
+.info-box strong { color:#e0e7ff; }
+
+@media(max-width:768px){
+    .card { padding:20px; }
+    h1 { font-size:1.5rem; }
+    .upload-zone { padding:35px 20px; }
+    .preset-grid { grid-template-columns:repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <a href="index.html"><i class="fas fa-arrow-left"></i> Back</a>
+    <div class="brand"><i class="fas fa-microchip"></i> Bharat24Tools</div>
+</header>
+
+<main>
+    <h1>🎨 Image Filter & Editor</h1>
+    <p class="subtitle">अपनी इमेज को प्रोफेशनल तरीके से एडिट करो — बिना किसी ऐप के</p>
+
+    <div class="card">
+        <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon"><i class="fas fa-magic"></i></div>
+            <p><span class="highlight">Click करो या Drag करो</span></p>
+            <p>अपनी इमेज चुनो (JPG, PNG, WebP)</p>
+        </div>
+        <input type="file" id="fileInput" accept="image/*">
+
+        <div class="layout" id="layout">
+            <!-- LEFT: Canvas -->
+            <div>
+                <div class="canvas-area">
+                    <canvas id="mainCanvas"></canvas>
+                </div>
+                <div class="status" id="status"></div>
+            </div>
+
+            <!-- RIGHT: Controls -->
+            <div>
+                <!-- Preset Filters -->
+                <div class="panel">
+                    <h3><i class="fas fa-magic"></i> Preset Filters</h3>
+                    <div class="preset-grid">
+                        <button class="preset-btn active" data-preset="none"><i class="fas fa-ban"></i>None</button>
+                        <button class="preset-btn" data-preset="vivid"><i class="fas fa-sun"></i>Vivid</button>
+                        <button class="preset-btn" data-preset="warm"><i class="fas fa-fire"></i>Warm</button>
+                        <button class="preset-btn" data-preset="cool"><i class="fas fa-snowflake"></i>Cool</button>
+                        <button class="preset-btn" data-preset="vintage"><i class="fas fa-camera-retro"></i>Vintage</button>
+                        <button class="preset-btn" data-preset="bw"><i class="fas fa-adjust"></i>B&W</button>
+                        <button class="preset-btn" data-preset="sepia"><i class="fas fa-book"></i>Sepia</button>
+                        <button class="preset-btn" data-preset="dramatic"><i class="fas fa-bolt"></i>Drama</button>
+                    </div>
+                </div>
+
+                <!-- Adjustments -->
+                <div class="panel">
+                    <h3><i class="fas fa-sliders-h"></i> Adjustments</h3>
+
+                    <div class="control-group">
+                        <label>Brightness <span id="brightnessVal">100%</span></label>
+                        <input type="range" id="brightness" min="0" max="200" value="100">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Contrast <span id="contrastVal">100%</span></label>
+                        <input type="range" id="contrast" min="0" max="200" value="100">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Saturation <span id="saturationVal">100%</span></label>
+                        <input type="range" id="saturation" min="0" max="200" value="100">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Hue Rotate <span id="hueVal">0°</span></label>
+                        <input type="range" id="hue" min="0" max="360" value="0">
+                    </div>
+
+                    <div class="control-group">
+                        <label>Blur <span id="blurVal">0px</span></label>
+                        <input type="range" id="blur" min="0" max="10" value="0" step="0.5">
+                    </div>
+                </div>
+
+                <!-- Transform -->
+                <div class="panel">
+                    <h3><i class="fas fa-sync-alt"></i> Transform</h3>
+                    <div class="transform-buttons">
+                        <button class="transform-btn" id="rotateLeft">
+                            <i class="fas fa-undo"></i> Rotate ←
+                        </button>
+                        <button class="transform-btn" id="rotateRight">
+                            <i class="fas fa-redo"></i> Rotate →
+                        </button>
+                        <button class="transform-btn" id="flipH">
+                            <i class="fas fa-arrows-alt-h"></i> Flip H
+                        </button>
+                        <button class="transform-btn" id="flipV">
+                            <i class="fas fa-arrows-alt-v"></i> Flip V
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="action-row">
+                    <button class="btn btn-secondary" id="resetBtn">
+                        <i class="fas fa-undo-alt"></i> Reset
+                    </button>
+                    <button class="btn btn-primary" id="downloadBtn">
+                        <i class="fas fa-download"></i> Download Image
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 कैसे काम करता है:</strong> सारे फिल्टर canvas पर असली टाइम में लगते हैं। जब तुम Download दबाओगे, तभी इमेज को Full Quality में save किया जाएगा। 100% प्राइवेट।
+        </div>
+    </div>
+</main>
+
+<script>
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const layout = document.getElementById('layout');
+    const mainCanvas = document.getElementById('mainCanvas');
+    const status = document.getElementById('status');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    const brightness = document.getElementById('brightness');
+    const contrast = document.getElementById('contrast');
+    const saturation = document.getElementById('saturation');
+    const hue = document.getElementById('hue');
+    const blur = document.getElementById('blur');
+
+    const brightnessVal = document.getElementById('brightnessVal');
+    const contrastVal = document.getElementById('contrastVal');
+    const saturationVal = document.getElementById('saturationVal');
+    const hueVal = document.getElementById('hueVal');
+    const blurVal = document.getElementById('blurVal');
+
+    let originalImage = null;
+    let rotation = 0;
+    let flipX = 1;
+    let flipY = 1;
+    let currentPreset = 'none';
+
+    // ============ Upload ============
+    uploadZone.addEventListener('click', () => fileInput.click());
+    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('active');
+        if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) handleFile(e.target.files[0]);
+    });
+
+    function handleFile(file) {
+        if (!file.type.startsWith('image/')) {
+            showStatus('❌ कृपया valid image चुनें', 'error');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                originalImage = img;
+                mainCanvas.width = img.width;
+                mainCanvas.height = img.height;
+                mainCanvas.style.display = 'block';
+                layout.style.display = 'grid';
+                resetAll();
+                updateCanvas();
+                showStatus(`✅ Image loaded: ${file.name}`, 'success');
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // ============ Filters & Values ============
+    function getFilterString() {
+        let b = brightness.value / 100;
+        let c = contrast.value / 100;
+        let s = saturation.value / 100;
+        let h = hue.value;
+        let bl = blur.value;
+
+        // Apply presets
+        if (currentPreset === 'vivid') {
+            s *= 1.5; c *= 1.2;
+        } else if (currentPreset === 'warm') {
+            h = 15;
+        } else if (currentPreset === 'cool') {
+            h = -15;
+        } else if (currentPreset === 'vintage') {
+            s *= 0.7; c *= 0.9;
+        } else if (currentPreset === 'bw') {
+            s = 0;
+        } else if (currentPreset === 'sepia') {
+            s = 0;
+        } else if (currentPreset === 'dramatic') {
+            c *= 1.5; b *= 0.9;
+        }
+
+        let filter = `brightness(${b}) contrast(${c}) saturate(${s}) hue-rotate(${h}deg) blur(${bl}px)`;
+        if (currentPreset === 'sepia') {
+            filter += ' sepia(0.8)';
+        }
+        return filter;
+    }
+
+    function updateCanvas() {
+        if (!originalImage) return;
+
+        const ctx = mainCanvas.getContext('2d');
+
+        // Determine rotated dimensions
+        let w = originalImage.width;
+        let h = originalImage.height;
+        if (rotation % 180 !== 0) {
+            mainCanvas.width = h;
+            mainCanvas.height = w;
+        } else {
+            mainCanvas.width = w;
+            mainCanvas.height = h;
+        }
+
+        ctx.save();
+
+        // Apply flip & rotation around center
+        ctx.translate(mainCanvas.width / 2, mainCanvas.height / 2);
+        ctx.rotate((rotation * Math.PI) / 180);
+        ctx.scale(flipX, flipY);
+
+        // Apply filters
+        ctx.filter = getFilterString();
+
+        ctx.drawImage(originalImage, -w / 2, -h / 2, w, h);
+        ctx.restore();
+    }
+
+    // ============ Slider Events ============
+    const sliders = [
+        { el: brightness, val: brightnessVal, suffix: '%' },
+        { el: contrast, val: contrastVal, suffix: '%' },
+        { el: saturation, val: saturationVal, suffix: '%' },
+        { el: hue, val: hueVal, suffix: '°' },
+        { el: blur, val: blurVal, suffix: 'px' }
+    ];
+
+    sliders.forEach(({ el, val, suffix }) => {
+        el.addEventListener('input', () => {
+            val.textContent = el.value + suffix;
+            updateCanvas();
+        });
+    });
+
+    // ============ Presets ============
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentPreset = btn.dataset.preset;
+            updateCanvas();
+        });
+    });
+
+    // ============ Transform ============
+    document.getElementById('rotateLeft').addEventListener('click', () => {
+        rotation = (rotation - 90 + 360) % 360;
+        updateCanvas();
+    });
+    document.getElementById('rotateRight').addEventListener('click', () => {
+        rotation = (rotation + 90) % 360;
+        updateCanvas();
+    });
+    document.getElementById('flipH').addEventListener('click', () => {
+        flipX *= -1;
+        updateCanvas();
+    });
+    document.getElementById('flipV').addEventListener('click', () => {
+        flipY *= -1;
+        updateCanvas();
+    });
+
+    // ============ Reset ============
+    resetBtn.addEventListener('click', resetAll);
+
+    function resetAll() {
+        brightness.value = 100; brightnessVal.textContent = '100%';
+        contrast.value = 100; contrastVal.textContent = '100%';
+        saturation.value = 100; saturationVal.textContent = '100%';
+        hue.value = 0; hueVal.textContent = '0°';
+        blur.value = 0; blurVal.textContent = '0px';
+        rotation = 0;
+        flipX = 1;
+        flipY = 1;
+        currentPreset = 'none';
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-preset="none"]').classList.add('active');
+        if (originalImage) updateCanvas();
+        showStatus('🔄 Reset हो गया', 'success');
+    }
+
+    // ============ Download ============
+    downloadBtn.addEventListener('click', () => {
+        if (!originalImage) {
+            showStatus('❌ पहले इमेज चुनें', 'error');
+            return;
+        }
+
+        // Create a fresh canvas at full resolution
+        const w = originalImage.width;
+        const h = originalImage.height;
+        const tempCanvas = document.createElement('canvas');
+        let tw, th;
+        if (rotation % 180 !== 0) {
+            tw = h; th = w;
+        } else {
+            tw = w; th = h;
+        }
+        tempCanvas.width = tw;
+        tempCanvas.height = th;
+
+        const ctx = tempCanvas.getContext('2d');
+        ctx.save();
+        ctx.translate(tw / 2, th / 2);
+        ctx.rotate((rotation * Math.PI) / 180);
+        ctx.scale(flipX, flipY);
+        ctx.filter = getFilterString();
+        ctx.drawImage(originalImage, -w / 2, -h / 2, w, h);
+        ctx.restore();
+
+        tempCanvas.toBlob((blob) => {
+            saveAs(blob, 'edited-image-' + Date.now() + '.png');
+            showStatus('🎉 Image downloaded successfully!', 'success');
+        }, 'image/png');
+    });
+
+    // ============ Status ============
+    function showStatus(message, type) {
+        status.textContent = message;
+        status.className = `status ${type}`;
+        status.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

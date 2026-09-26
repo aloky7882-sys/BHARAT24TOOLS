@@ -64,23 +64,18 @@
 
 <body>
 
-    <!-- Scroll Progress Bar -->
     <div id="scrollProgress" class="scroll-progress"></div>
-
-    <!-- Custom Cursor -->
     <div class="custom-cursor" id="customCursor"></div>
-
-    <!-- Toast Notification -->
     <div id="toast" class="toast"></div>
 
     <!--================ NAVBAR ================-->
     <nav class="navbar">
+        <div class="menu-btn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
         <div class="logo">
             <i class="fa-solid fa-bolt"></i>
             <span>Bharat24Tools</span>
-        </div>
-        <div class="menu-btn">
-            <i class="fa-solid fa-bars"></i>
         </div>
         <ul class="menu">
             <li><a href="index.html">Home</a></li>
@@ -147,12 +142,12 @@
         <div class="category-box">
             <i class="fa-solid fa-image"></i>
             <span>Image Tools</span>
-            <small class="cat-count">7 Tools</small>
+            <small class="cat-count">12 Tools</small>
         </div>
         <div class="category-box">
             <i class="fa-solid fa-file-pdf"></i>
             <span>PDF Tools</span>
-            <small class="cat-count">9 Tools</small>
+            <small class="cat-count">14 Tools</small>
         </div>
         <div class="category-box">
             <i class="fa-solid fa-calculator"></i>
@@ -179,7 +174,6 @@
     <!--================ TOOL SECTION START ================-->
     <main class="tool-wrapper">
 
-        <!-- ================= CATEGORY FILTER TABS ================= -->
         <div id="category-filter-tabs" style="display:flex;gap:8px;overflow-x:auto;padding:4px 0 18px;margin-bottom:10px;">
             <button type="button" class="filter-tab active" data-filter="all" style="flex-shrink:0;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;background:#1a73e8;color:#fff;">All</button>
             <button type="button" class="filter-tab" data-filter="image" style="flex-shrink:0;border:1px solid #d5d9e0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;padding:8px 18px;border-radius:20px;background:#fff;color:#4b5563;">🖼 Image</button>
@@ -239,6 +233,43 @@
                 <h2>Image to Word</h2>
                 <p>Create Word documents with images embedded.</p>
                 <a href="image-to-word.html" class="tool-btn">Open Tool</a>
+                <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
+            </div>
+
+            <!-- ===== 5 NEW IMAGE TOOLS ===== -->
+            <div class="card" data-tool="Batch Image Compress">
+                <div class="tool-icon">🗜️</div>
+                <h2>Batch Image Compress</h2>
+                <p>Compress 50+ images at once with quality control.</p>
+                <a href="batch-image-compress.html" class="tool-btn">Open Tool</a>
+                <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
+            </div>
+            <div class="card" data-tool="Image Watermark">
+                <div class="tool-icon">💧</div>
+                <h2>Image Watermark</h2>
+                <p>Add text or logo watermark on your images.</p>
+                <a href="image-watermark.html" class="tool-btn">Open Tool</a>
+                <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
+            </div>
+            <div class="card" data-tool="HEIC to JPG">
+                <div class="tool-icon">🍎</div>
+                <h2>HEIC to JPG</h2>
+                <p>Convert iPhone HEIC images to JPG format.</p>
+                <a href="heic-to-jpg.html" class="tool-btn">Open Tool</a>
+                <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
+            </div>
+            <div class="card" data-tool="Image to PDF (Quality)">
+                <div class="tool-icon">📄</div>
+                <h2>Image to PDF (Quality)</h2>
+                <p>Convert images to PDF with quality & page controls.</p>
+                <a href="image-to-pdf-quality.html" class="tool-btn">Open Tool</a>
+                <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
+            </div>
+            <div class="card" data-tool="Image Filter/Editor">
+                <div class="tool-icon">🎨</div>
+                <h2>Image Filter & Editor</h2>
+                <p>Edit images with filters, brightness & effects.</p>
+                <a href="image-filter-editor.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
             </div>
         </div>
@@ -309,6 +340,43 @@
                 <h2>Word to Image</h2>
                 <p>Convert Word documents to high-quality images.</p>
                 <a href="word-to-image.html" class="tool-btn">Open Tool</a>
+                <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
+            </div>
+
+            <!-- ===== 5 NEW PDF TOOLS ===== -->
+            <div class="card" data-tool="Compress PDF">
+                <div class="tool-icon">📉</div>
+                <h2>Compress PDF</h2>
+                <p>Reduce PDF file size without losing quality.</p>
+                <a href="compress-pdf.html" class="tool-btn">Open Tool</a>
+                <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
+            </div>
+            <div class="card" data-tool="Protect PDF">
+                <div class="tool-icon">🔒</div>
+                <h2>Protect PDF</h2>
+                <p>Add password protection to your PDF files.</p>
+                <a href="protect-pdf.html" class="tool-btn">Open Tool</a>
+                <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
+            </div>
+            <div class="card" data-tool="Rotate PDF">
+                <div class="tool-icon">🔄</div>
+                <h2>Rotate PDF</h2>
+                <p>Rotate PDF pages to 90°, 180° or 270°.</p>
+                <a href="rotate-pdf.html" class="tool-btn">Open Tool</a>
+                <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
+            </div>
+            <div class="card" data-tool="Unlock PDF">
+                <div class="tool-icon">🔓</div>
+                <h2>Unlock PDF</h2>
+                <p>Remove password from your protected PDF.</p>
+                <a href="unlock-pdf.html" class="tool-btn">Open Tool</a>
+                <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
+            </div>
+            <div class="card" data-tool="PDF to Word">
+                <div class="tool-icon">📝</div>
+                <h2>PDF to Word</h2>
+                <p>Convert PDF text into editable Word document.</p>
+                <a href="pdf-to-word.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
             </div>
         </div>
@@ -621,13 +689,9 @@
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
     <button id="backToTop" class="back-to-top" title="Back to Top"><i class="fa-solid fa-arrow-up"></i></button>
-
-    <!-- WhatsApp Float -->
     <a href="https://wa.me/918881440719" target="_blank" class="whatsapp-float" title="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
 
-    <!-- AI Chatbot -->
     <div id="chatbotToggle" class="chatbot-toggle"><i class="fa-solid fa-robot"></i></div>
     <div id="chatbotWindow" class="chatbot-window">
         <div class="chatbot-header">

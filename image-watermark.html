@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Watermark - Bharat24Tools</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- JSZip for batch download -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<!-- FileSaver -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+body {
+    min-height:100vh;
+    background:linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%);
+    background-attachment:fixed;
+    color:#e0e7ff;
+}
+header {
+    background:rgba(15,15,30,0.95);
+    backdrop-filter:blur(10px);
+    padding:16px 24px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    border-bottom:2px solid rgba(168,85,247,0.3);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+header a {
+    color:#cbd5e1;
+    text-decoration:none;
+    font-weight:600;
+    font-size:1rem;
+    transition:all 0.3s;
+    padding:8px 12px;
+    border-radius:6px;
+}
+header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
+.brand {
+    font-weight:800;
+    font-size:1.3rem;
+    background:linear-gradient(135deg, #a855f7, #ec4899);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    flex:1;
+}
+main { max-width:1200px; margin:0 auto; padding:40px 20px 60px; }
+h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
+.subtitle { text-align:center; color:#a5b4fc; margin-bottom:40px; }
+.card {
+    background:rgba(30,27,75,0.9);
+    backdrop-filter:blur(10px);
+    border-radius:16px;
+    padding:40px;
+    border:1px solid rgba(168,85,247,0.3);
+    margin-bottom:24px;
+}
+.upload-zone {
+    border:3px dashed rgba(168,85,247,0.6);
+    border-radius:16px;
+    padding:50px 30px;
+    text-align:center;
+    cursor:pointer;
+    transition:all 0.3s;
+    background:rgba(99,102,241,0.05);
+}
+.upload-zone:hover, .upload-zone.active {
+    border-color:#a855f7;
+    background:rgba(168,85,247,0.15);
+}
+.upload-icon { font-size:3rem; color:#a855f7; margin-bottom:16px; }
+.upload-zone p { color:#cbd5e1; margin:8px 0; }
+.highlight { color:#e0e7ff; font-weight:700; }
+input[type="file"] { display:none; }
+
+.layout {
+    display:none;
+    grid-template-columns:1fr 380px;
+    gap:24px;
+    margin-top:24px;
+}
+@media(max-width:900px){
+    .layout { grid-template-columns:1fr; }
+}
+
+.panel {
+    background:rgba(20,20,40,0.8);
+    border-radius:14px;
+    padding:22px;
+    border:1px solid rgba(168,85,247,0.2);
+    margin-bottom:18px;
+}
+.panel h3 {
+    font-size:0.95rem;
+    margin-bottom:14px;
+    font-weight:700;
+    color:#e0e7ff;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+.panel h3 i { color:#a855f7; }
+
+.toggle-group {
+    display:flex;
+    gap:8px;
+    margin-bottom:14px;
+}
+.toggle-btn {
+    flex:1;
+    padding:10px 14px;
+    background:rgba(15,15,30,0.6);
+    border:2px solid rgba(168,85,247,0.3);
+    color:#cbd5e1;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    font-family:inherit;
+    font-size:0.85rem;
+    transition:all 0.3s;
+}
+.toggle-btn.active {
+    background:linear-gradient(135deg, #a855f7, #ec4899);
+    color:#fff;
+    border-color:transparent;
+}
+.toggle-btn:hover:not(.active) { border-color:#a855f7; color:#a855f7; }
+
+.control-group { margin-bottom:14px; }
+.control-group label {
+    display:block;
+    font-weight:600;
+    font-size:0.82rem;
+    margin-bottom:6px;
+    color:#cbd5e1;
+}
+.control-group input[type="text"],
+.control-group input[type="number"],
+.control-group select {
+    width:100%;
+    padding:10px 12px;
+    background:rgba(15,15,30,0.8);
+    border:2px solid rgba(168,85,247,0.3);
+    border-radius:8px;
+    color:#e0e7ff;
+    font-family:inherit;
+    font-size:0.85rem;
+    font-weight:600;
+    transition:all 0.3s;
+}
+.control-group input:focus,
+.control-group select:focus {
+    outline:none;
+    border-color:#a855f7;
+    box-shadow:0 0 0 3px rgba(168,85,247,0.15);
+}
+.control-group input[type="color"] {
+    width:100%;
+    height:44px;
+    border:2px solid rgba(168,85,247,0.3);
+    border-radius:8px;
+    background:transparent;
+    cursor:pointer;
+    padding:3px;
+}
+.range-wrapper {
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.range-wrapper input[type="range"] {
+    flex:1;
+    accent-color:#a855f7;
+}
+.range-value {
+    min-width:55px;
+    text-align:center;
+    font-weight:700;
+    color:#a855f7;
+    background:rgba(168,85,247,0.15);
+    padding:5px 8px;
+    border-radius:8px;
+    font-size:0.78rem;
+}
+
+.position-grid {
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:6px;
+}
+.position-btn {
+    padding:10px;
+    background:rgba(15,15,30,0.6);
+    border:2px solid rgba(168,85,247,0.3);
+    color:#cbd5e1;
+    border-radius:8px;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:0.7rem;
+    transition:all 0.3s;
+}
+.position-btn.active {
+    background:linear-gradient(135deg, #a855f7, #ec4899);
+    color:#fff;
+    border-color:transparent;
+}
+.position-btn:hover:not(.active) { border-color:#a855f7; }
+
+.preview-panel {
+    position:sticky;
+    top:100px;
+    height:fit-content;
+}
+.preview-canvas-wrapper {
+    background:#1a1a2e;
+    border-radius:14px;
+    padding:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:300px;
+    overflow:hidden;
+    border:2px solid rgba(168,85,247,0.2);
+}
+#previewCanvas {
+    max-width:100%;
+    max-height:400px;
+    border-radius:8px;
+}
+
+.action-btn {
+    width:100%;
+    padding:14px;
+    background:linear-gradient(135deg, #a855f7, #ec4899);
+    border:none;
+    border-radius:12px;
+    color:#fff;
+    font-weight:700;
+    font-size:1rem;
+    cursor:pointer;
+    transition:all 0.3s;
+    font-family:inherit;
+    margin-top:12px;
+}
+.action-btn:hover:not(:disabled) {
+    transform:translateY(-2px);
+    box-shadow:0 10px 30px rgba(168,85,247,0.4);
+}
+.action-btn:disabled { opacity:0.6; cursor:not-allowed; }
+
+.progress-bar {
+    display:none;
+    width:100%;
+    height:10px;
+    background:rgba(15,15,30,0.8);
+    border-radius:20px;
+    margin-top:14px;
+    overflow:hidden;
+}
+.progress-bar .fill {
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, #a855f7, #ec4899);
+    transition:width 0.3s;
+}
+
+.status {
+    display:none;
+    margin-top:16px;
+    padding:14px;
+    border-radius:10px;
+    text-align:center;
+    font-weight:600;
+    font-size:0.9rem;
+}
+.status.loading { background:rgba(99,102,241,0.2); color:#a5b4fc; }
+.status.success { background:rgba(34,197,94,0.2); color:#86efac; }
+.status.error { background:rgba(239,68,68,0.2); color:#fca5a5; }
+
+.file-count {
+    background:rgba(99,102,241,0.15);
+    padding:10px 14px;
+    border-radius:10px;
+    margin-bottom:14px;
+    text-align:center;
+    font-weight:600;
+    font-size:0.85rem;
+    color:#a5b4fc;
+}
+
+.download-all-btn {
+    display:none;
+    width:100%;
+    padding:14px;
+    background:linear-gradient(135deg, #198754, #22c55e);
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    font-weight:700;
+    font-size:1rem;
+    cursor:pointer;
+    margin-top:12px;
+    font-family:inherit;
+    transition:all 0.3s;
+}
+.download-all-btn:hover {
+    transform:translateY(-2px);
+    box-shadow:0 10px 30px rgba(25,135,84,0.4);
+}
+
+.info-box {
+    background:rgba(99,102,241,0.1);
+    border-left:4px solid #a855f7;
+    padding:14px;
+    border-radius:8px;
+    margin-top:20px;
+    font-size:0.82rem;
+    color:#a5b4fc;
+    line-height:1.6;
+}
+.info-box strong { color:#e0e7ff; }
+
+.logo-upload-zone {
+    border:2px dashed rgba(168,85,247,0.5);
+    border-radius:10px;
+    padding:20px;
+    text-align:center;
+    cursor:pointer;
+    transition:all 0.3s;
+    position:relative;
+}
+.logo-upload-zone:hover {
+    border-color:#a855f7;
+    background:rgba(168,85,247,0.1);
+}
+.logo-upload-zone input {
+    position:absolute;
+    inset:0;
+    opacity:0;
+    cursor:pointer;
+}
+.logo-upload-zone .icon { font-size:1.5rem; color:#a855f7; margin-bottom:6px; }
+.logo-upload-zone .txt { font-size:0.78rem; color:#a5b4fc; }
+.logo-preview-img {
+    max-width:80px;
+    max-height:80px;
+    margin:10px auto 0;
+    display:none;
+    border-radius:6px;
+}
+
+@media(max-width:768px){
+    .card { padding:20px; }
+    h1 { font-size:1.5rem; }
+    .upload-zone { padding:35px 20px; }
+    .preview-panel { position:static; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <a href="index.html"><i class="fas fa-arrow-left"></i> Back</a>
+    <div class="brand"><i class="fas fa-microchip"></i> Bharat24Tools</div>
+</header>
+
+<main>
+    <h1>💧 Image Watermark</h1>
+    <p class="subtitle">अपनी इमेज पर टेक्स्ट या लोगो वॉटरमार्क लगाओ — प्रोफेशनल लुक के साथ</p>
+
+    <div class="card">
+        <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon"><i class="fas fa-image"></i></div>
+            <p><span class="highlight">Click करो या Drag करो</span></p>
+            <p>एक या एक से ज्यादा इमेज (JPG, PNG, WebP)</p>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" multiple>
+
+        <div class="layout" id="layout">
+            <!-- LEFT: Controls -->
+            <div>
+                <div class="file-count" id="fileCount">0 images selected</div>
+
+                <div class="panel">
+                    <h3><i class="fas fa-font"></i> Watermark Type</h3>
+                    <div class="toggle-group">
+                        <button class="toggle-btn active" id="typeText" data-type="text">📝 Text</button>
+                        <button class="toggle-btn" id="typeLogo" data-type="logo">🖼️ Logo</button>
+                    </div>
+                </div>
+
+                <!-- TEXT SETTINGS -->
+                <div class="panel" id="textSettings">
+                    <h3><i class="fas fa-pen"></i> Text Settings</h3>
+                    <div class="control-group">
+                        <label>Watermark Text</label>
+                        <input type="text" id="watermarkText" value="Bharat24Tools" placeholder="Enter text">
+                    </div>
+                    <div class="control-group">
+                        <label>Font Size</label>
+                        <div class="range-wrapper">
+                            <input type="range" id="fontSize" min="12" max="200" value="48">
+                            <span class="range-value" id="fontSizeVal">48px</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Text Color</label>
+                        <input type="color" id="textColor" value="#ffffff">
+                    </div>
+                </div>
+
+                <!-- LOGO SETTINGS -->
+                <div class="panel" id="logoSettings" style="display:none;">
+                    <h3><i class="fas fa-image"></i> Logo Settings</h3>
+                    <div class="logo-upload-zone">
+                        <div class="icon"><i class="fas fa-cloud-arrow-up"></i></div>
+                        <div class="txt">Click to upload logo</div>
+                        <input type="file" id="logoInput" accept="image/*">
+                    </div>
+                    <img id="logoPreview" class="logo-preview-img" alt="Logo">
+                    <div class="control-group" style="margin-top:12px;">
+                        <label>Logo Size</label>
+                        <div class="range-wrapper">
+                            <input type="range" id="logoSize" min="30" max="400" value="100">
+                            <span class="range-value" id="logoSizeVal">100px</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COMMON SETTINGS -->
+                <div class="panel">
+                    <h3><i class="fas fa-sliders-h"></i> Appearance</h3>
+                    <div class="control-group">
+                        <label>Opacity</label>
+                        <div class="range-wrapper">
+                            <input type="range" id="opacity" min="5" max="100" value="60">
+                            <span class="range-value" id="opacityVal">60%</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Rotation</label>
+                        <div class="range-wrapper">
+                            <input type="range" id="rotation" min="0" max="360" value="0">
+                            <span class="range-value" id="rotationVal">0°</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- POSITION -->
+                <div class="panel">
+                    <h3><i class="fas fa-th"></i> Position</h3>
+                    <div class="position-grid">
+                        <button class="position-btn" data-pos="tl">↖ Top Left</button>
+                        <button class="position-btn" data-pos="tc">↑ Top Center</button>
+                        <button class="position-btn" data-pos="tr">↗ Top Right</button>
+                        <button class="position-btn" data-pos="ml">← Middle Left</button>
+                        <button class="position-btn active" data-pos="center">⊙ Center</button>
+                        <button class="position-btn" data-pos="mr">→ Middle Right</button>
+                        <button class="position-btn" data-pos="bl">↙ Bottom Left</button>
+                        <button class="position-btn" data-pos="bc">↓ Bottom Center</button>
+                        <button class="position-btn" data-pos="br">↘ Bottom Right</button>
+                    </div>
+                </div>
+
+                <button class="action-btn" id="applyBtn">
+                    <i class="fas fa-wand-magic-sparkles"></i> Apply Watermark to All
+                </button>
+                <div class="progress-bar" id="progressBar">
+                    <div class="fill" id="progressFill"></div>
+                </div>
+                <button class="download-all-btn" id="downloadAllBtn">
+                    <i class="fas fa-download"></i> Download All as ZIP
+                </button>
+
+                <div class="status" id="status"></div>
+            </div>
+
+            <!-- RIGHT: Preview -->
+            <div class="preview-panel">
+                <div class="panel">
+                    <h3><i class="fas fa-eye"></i> Live Preview</h3>
+                    <div class="preview-canvas-wrapper">
+                        <canvas id="previewCanvas"></canvas>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <strong>💡 Preview:</strong> यहाँ आपकी इमेज पर वॉटरमार्क लाइव दिखेगा। Settings बदलने पर तुरंत अपडेट होगा।
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <strong>🔒 100% Private:</strong> सारी प्रोसेसिंग तुम्हारे ब्राउज़र में — कोई इमेज सर्वर पर नहीं जाती।
+        </div>
+    </div>
+</main>
+
+<script>
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const layout = document.getElementById('layout');
+    const fileCount = document.getElementById('fileCount');
+    const previewCanvas = document.getElementById('previewCanvas');
+    const applyBtn = document.getElementById('applyBtn');
+    const downloadAllBtn = document.getElementById('downloadAllBtn');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+    const status = document.getElementById('status');
+
+    const typeText = document.getElementById('typeText');
+    const typeLogo = document.getElementById('typeLogo');
+    const textSettings = document.getElementById('textSettings');
+    const logoSettings = document.getElementById('logoSettings');
+    const watermarkText = document.getElementById('watermarkText');
+    const fontSize = document.getElementById('fontSize');
+    const fontSizeVal = document.getElementById('fontSizeVal');
+    const textColor = document.getElementById('textColor');
+    const logoInput = document.getElementById('logoInput');
+    const logoPreview = document.getElementById('logoPreview');
+    const logoSize = document.getElementById('logoSize');
+    const logoSizeVal = document.getElementById('logoSizeVal');
+    const opacity = document.getElementById('opacity');
+    const opacityVal = document.getElementById('opacityVal');
+    const rotation = document.getElementById('rotation');
+    const rotationVal = document.getElementById('rotationVal');
+
+    let imageFiles = [];
+    let firstImage = null;
+    let logoImage = null;
+    let watermarkType = 'text';
+    let watermarkPosition = 'center';
+    let watermarkedResults = [];
+
+    // ============ Upload ============
+    uploadZone.addEventListener('click', () => fileInput.click());
+    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('active');
+        handleFiles(e.dataTransfer.files);
+    });
+    fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+    function handleFiles(files) {
+        const newFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+        if (newFiles.length === 0) {
+            showStatus('❌ कृपया valid image चुनें', 'error');
+            return;
+        }
+        imageFiles = imageFiles.concat(newFiles);
+        fileCount.textContent = imageFiles.length + ' image(s) selected';
+        layout.style.display = 'grid';
+        showStatus(`✅ ${newFiles.length} image(s) added (Total: ${imageFiles.length})`, 'success');
+
+        // Load first image for preview
+        if (!firstImage) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    firstImage = img;
+                    updatePreview();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(newFiles[0]);
+        } else {
+            updatePreview();
+        }
+    }
+
+    // ============ Type Toggle ============
+    typeText.addEventListener('click', () => {
+        watermarkType = 'text';
+        typeText.classList.add('active');
+        typeLogo.classList.remove('active');
+        textSettings.style.display = 'block';
+        logoSettings.style.display = 'none';
+        updatePreview();
+    });
+    typeLogo.addEventListener('click', () => {
+        watermarkType = 'logo';
+        typeLogo.classList.add('active');
+        typeText.classList.remove('active');
+        logoSettings.style.display = 'block';
+        textSettings.style.display = 'none';
+        updatePreview();
+    });
+
+    // ============ Logo Upload ============
+    logoInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file || !file.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            const img = new Image();
+            img.onload = () => {
+                logoImage = img;
+                logoPreview.src = ev.target.result;
+                logoPreview.style.display = 'block';
+                updatePreview();
+            };
+            img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // ============ Sliders ============
+    fontSize.addEventListener('input', () => {
+        fontSizeVal.textContent = fontSize.value + 'px';
+        updatePreview();
+    });
+    logoSize.addEventListener('input', () => {
+        logoSizeVal.textContent = logoSize.value + 'px';
+        updatePreview();
+    });
+    opacity.addEventListener('input', () => {
+        opacityVal.textContent = opacity.value + '%';
+        updatePreview();
+    });
+    rotation.addEventListener('input', () => {
+        rotationVal.textContent = rotation.value + '°';
+        updatePreview();
+    });
+    watermarkText.addEventListener('input', updatePreview);
+    textColor.addEventListener('input', updatePreview);
+
+    // ============ Position Buttons ============
+    document.querySelectorAll('.position-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.position-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            watermarkPosition = btn.dataset.pos;
+            updatePreview();
+        });
+    });
+
+    // ============ Live Preview ============
+    function updatePreview() {
+        if (!firstImage) return;
+
+        const maxPreviewSize = 500;
+        let w = firstImage.width;
+        let h = firstImage.height;
+        const scale = Math.min(maxPreviewSize / w, maxPreviewSize / h, 1);
+        w = Math.round(w * scale);
+        h = Math.round(h * scale);
+
+        previewCanvas.width = w;
+        previewCanvas.height = h;
+        const ctx = previewCanvas.getContext('2d');
+
+        // Draw image
+        ctx.drawImage(firstImage, 0, 0, w, h);
+
+        // Draw watermark
+        drawWatermark(ctx, w, h, scale);
+    }
+
+    function drawWatermark(ctx, w, h, scale) {
+        ctx.save();
+        ctx.globalAlpha = opacity.value / 100;
+
+        // Calculate position
+        const pos = getPosition(w, h);
+        ctx.translate(pos.x, pos.y);
+        ctx.rotate((parseInt(rotation.value) * Math.PI) / 180);
+
+        if (watermarkType === 'text') {
+            const size = parseInt(fontSize.value) * scale;
+            ctx.font = `bold ${size}px Poppins, sans-serif`;
+            ctx.fillStyle = textColor.value;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(watermarkText.value || 'Watermark', 0, 0);
+        } else if (logoImage) {
+            const size = parseInt(logoSize.value) * scale;
+            const ratio = logoImage.height / logoImage.width;
+            const lw = size;
+            const lh = size * ratio;
+            ctx.drawImage(logoImage, -lw / 2, -lh / 2, lw, lh);
+        }
+
+        ctx.restore();
+    }
+
+    function getPosition(w, h) {
+        const margin = 30;
+        switch (watermarkPosition) {
+            case 'tl': return { x: margin, y: margin };
+            case 'tc': return { x: w / 2, y: margin };
+            case 'tr': return { x: w - margin, y: margin };
+            case 'ml': return { x: margin, y: h / 2 };
+            case 'center': return { x: w / 2, y: h / 2 };
+            case 'mr': return { x: w - margin, y: h / 2 };
+            case 'bl': return { x: margin, y: h - margin };
+            case 'bc': return { x: w / 2, y: h - margin };
+            case 'br': return { x: w - margin, y: h - margin };
+            default: return { x: w / 2, y: h / 2 };
+        }
+    }
+
+    // ============ Apply Watermark ============
+    applyBtn.addEventListener('click', async () => {
+        if (imageFiles.length === 0) {
+            showStatus('❌ पहले इमेज चुनें', 'error');
+            return;
+        }
+
+        applyBtn.disabled = true;
+        progressBar.style.display = 'block';
+        progressFill.style.width = '0%';
+        watermarkedResults = [];
+        downloadAllBtn.style.display = 'none';
+
+        try {
+            for (let i = 0; i < imageFiles.length; i++) {
+                const file = imageFiles[i];
+                progressFill.style.width = ((i / imageFiles.length) * 100) + '%';
+                showStatus(`⏳ Processing ${i + 1}/${imageFiles.length}: ${file.name}`, 'loading');
+
+                try {
+                    const blob = await applyWatermarkToImage(file);
+                    watermarkedResults.push({
+                        name: file.name.replace(/\.[^/.]+$/, '') + '-watermarked.png',
+                        blob
+                    });
+                } catch (err) {
+                    console.error('Error:', file.name, err);
+                }
+            }
+
+            progressFill.style.width = '100%';
+
+            if (watermarkedResults.length === 0) {
+                throw new Error('कोई भी इमेज प्रोसेस नहीं हो सकी');
+            }
+
+            downloadAllBtn.style.display = 'block';
+            showStatus(`🎉 ${watermarkedResults.length} इमेज पर watermark लग गया!`, 'success');
+        } catch (err) {
+            showStatus('❌ Error: ' + err.message, 'error');
+        }
+
+        applyBtn.disabled = false;
+        setTimeout(() => { progressBar.style.display = 'none'; }, 2000);
+    });
+
+    function applyWatermarkToImage(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+
+                    ctx.drawImage(img, 0, 0);
+
+                    ctx.save();
+                    ctx.globalAlpha = opacity.value / 100;
+
+                    const pos = getPosition(canvas.width, canvas.height);
+                    ctx.translate(pos.x, pos.y);
+                    ctx.rotate((parseInt(rotation.value) * Math.PI) / 180);
+
+                    if (watermarkType === 'text') {
+                        const size = parseInt(fontSize.value);
+                        ctx.font = `bold ${size}px Poppins, sans-serif`;
+                        ctx.fillStyle = textColor.value;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(watermarkText.value || 'Watermark', 0, 0);
+                    } else if (logoImage) {
+                        const size = parseInt(logoSize.value);
+                        const ratio = logoImage.height / logoImage.width;
+                        const lw = size;
+                        const lh = size * ratio;
+                        ctx.drawImage(logoImage, -lw / 2, -lh / 2, lw, lh);
+                    }
+
+                    ctx.restore();
+
+                    canvas.toBlob((blob) => {
+                        if (blob) resolve(blob);
+                        else reject(new Error('Failed to create blob'));
+                    }, 'image/png');
+                };
+                img.onerror = () => reject(new Error('Image load failed'));
+                img.src = e.target.result;
+            };
+            reader.onerror = () => reject(new Error('File read failed'));
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // ============ Download All ZIP ============
+    downloadAllBtn.addEventListener('click', async () => {
+        if (watermarkedResults.length === 0) {
+            showStatus('❌ पहले watermark लगाओ', 'error');
+            return;
+        }
+        downloadAllBtn.disabled = true;
+        downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating ZIP...';
+
+        try {
+            const zip = new JSZip();
+            watermarkedResults.forEach(r => zip.file(r.name, r.blob));
+            const zipBlob = await zip.generateAsync({ type: 'blob' });
+            saveAs(zipBlob, 'watermarked-images.zip');
+            downloadAllBtn.innerHTML = '<i class="fas fa-check"></i> Downloaded!';
+        } catch (err) {
+            downloadAllBtn.innerHTML = '<i class="fas fa-times"></i> Failed';
+        }
+        setTimeout(() => {
+            downloadAllBtn.disabled = false;
+            downloadAllBtn.innerHTML = '<i class="fas fa-download"></i> Download All as ZIP';
+        }, 2000);
+    });
+
+    // ============ Status ============
+    function showStatus(message, type) {
+        status.textContent = message;
+        status.className = `status ${type}`;
+        status.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
