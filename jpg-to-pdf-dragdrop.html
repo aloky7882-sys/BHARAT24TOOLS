@@ -3,440 +3,254 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JPG to PDF - Bharat Tools</title>
-
-<!-- Font Awesome: better icon, without changing the page design -->
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
-<!-- jsPDF -->
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-
-<!-- jsPDF fallback -->
+<title>JPG to PDF - Bharat24Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-if (!window.jspdf || !window.jspdf.jsPDF) {
-    document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"><\/script>');
-}
+// Fallback agar primary CDN fail ho
+window.addEventListener('load', function() {
+    if (typeof window.jspdf === 'undefined') {
+        var s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js';
+        s.onload = function() { console.log('jsPDF loaded from fallback'); };
+        document.head.appendChild(s);
+    }
+});
 </script>
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+body {
+    min-height:100vh;
+    background:linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
 }
-
-body{
-background:#f4f6fb;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
-padding:20px;
+.container {
+    background:rgba(30,27,75,0.95);
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
+    max-width:700px;
+    width:100%;
+    text-align:center;
+    border:1px solid rgba(168,85,247,0.3);
+    color:#e0e7ff;
 }
-
-.container{
-background:#fff;
-padding:30px;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,.1);
-width:100%;
-max-width:700px;
-text-align:center;
+h1 {
+    margin-bottom:10px;
+    font-size:1.8rem;
+    font-weight:800;
+    background:linear-gradient(135deg,#a855f7,#ec4899);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
-
-h1{
-margin-bottom:20px;
+.subtitle { font-size:14px; color:#a5b4fc; margin-bottom:25px; }
+.upload-zone {
+    position:relative;
+    border:3px dashed rgba(168,85,247,0.6);
+    border-radius:12px;
+    padding:40px 20px;
+    margin:20px 0;
+    background:rgba(99,102,241,0.05);
+    cursor:pointer;
+    transition:all .3s ease;
+    overflow:hidden;
 }
-
-input{
-margin:20px 0;
-width:100%;
+.upload-zone:hover, .upload-zone.dragover {
+    background:rgba(168,85,247,0.15);
+    border-color:#a855f7;
+    transform:translateY(-2px);
 }
-
-.upload-zone{
-position:relative;
-border:2px dashed #0d6efd;
-border-radius:12px;
-padding:32px 20px;
-margin:20px 0;
-background:#f8f9fa;
-cursor:pointer;
-transition:all .2s ease;
-overflow:hidden;
+.upload-zone input {
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    opacity:0;
+    cursor:pointer;
 }
-
-.upload-zone:hover,
-.upload-zone.dragover{
-background:#eef5ff;
-border-color:#0b5ed7;
-transform:translateY(-1px);
+.upload-icon {
+    width:76px;
+    height:76px;
+    margin:0 auto 14px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(168,85,247,0.2);
+    font-size:34px;
 }
-
-.upload-zone input{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-opacity:0;
-cursor:pointer;
-margin:0;
+.upload-title { font-size:18px; font-weight:700; margin-bottom:6px; }
+.upload-subtitle { font-size:14px; color:#a5b4fc; margin-bottom:10px; }
+.upload-formats {
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:20px;
+    background:rgba(168,85,247,0.15);
+    color:#a855f7;
+    font-size:12px;
+    font-weight:600;
 }
-
-.upload-icon{
-width:76px;
-height:76px;
-margin:0 auto 14px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#e7f0ff;
-color:#0d6efd;
-font-size:34px;
-transition:transform .2s ease;
+#preview {
+    max-width:100%;
+    max-height:300px;
+    display:none;
+    margin:20px auto;
+    border-radius:12px;
+    background:#fff;
 }
-
-.upload-zone:hover .upload-icon{
-transform:translateY(-3px);
+button {
+    width:100%;
+    padding:15px;
+    background:linear-gradient(135deg,#a855f7,#ec4899);
+    border:none;
+    border-radius:10px;
+    color:#fff;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:15px;
+    font-family:inherit;
+    transition:all .3s;
+    display:none;
 }
-
-.upload-title{
-font-size:18px;
-font-weight:700;
-color:#212529;
-margin-bottom:6px;
+button:hover:not(:disabled) {
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(168,85,247,0.4);
 }
-
-.upload-subtitle{
-font-size:14px;
-color:#6c757d;
-margin-bottom:10px;
+button:disabled { opacity:0.6; cursor:not-allowed; }
+#status {
+    margin-top:15px;
+    font-size:14px;
+    font-weight:600;
+    padding:12px;
+    border-radius:8px;
+    display:none;
 }
-
-.upload-formats{
-display:inline-block;
-padding:5px 10px;
-border-radius:20px;
-background:#fff;
-border:1px solid #dee2e6;
-color:#6c757d;
-font-size:12px;
-font-weight:600;
-}
-
-img{
-width:100%;
-max-height:400px;
-object-fit:contain;
-display:none;
-margin-top:20px;
-border-radius:10px;
-}
-
-button{
-width:100%;
-padding:15px;
-background:#0d6efd;
-color:#fff;
-border:none;
-border-radius:8px;
-font-size:18px;
-cursor:pointer;
-margin-top:20px;
-}
-
-button:hover{
-background:#0b5ed7;
-}
-
-#status{
-margin-top:15px;
-font-size:15px;
-font-weight:600;
-}
-
+#status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
+#status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
+#status.info { background:rgba(99,102,241,0.2); color:#a5b4fc; display:block; }
 </style>
-
 </head>
-
 <body>
 
 <div class="container">
+    <h1>📄 JPG to PDF</h1>
+    <p class="subtitle">Convert JPG images to PDF documents</p>
 
-<h1>
-<i class="fa-solid fa-file-image" style="color:#0d6efd;"></i>
-JPG to PDF Converter
-</h1>
-
-<div class="upload-zone" id="dropZone">
-    <div class="upload-icon">
-        <i class="fa-solid fa-cloud-arrow-up"></i>
+    <div class="upload-zone" id="dropZone">
+        <div class="upload-icon">📤</div>
+        <div class="upload-title">Drag & Drop JPG here</div>
+        <div class="upload-subtitle">or click to choose</div>
+        <div class="upload-formats">JPG / JPEG</div>
+        <input type="file" id="upload" accept=".jpg,.jpeg,image/jpeg">
     </div>
 
-    <div class="upload-title">
-        Drag & Drop your JPG here
-    </div>
-
-    <div class="upload-subtitle">
-        or click to choose an image
-    </div>
-
-    <div class="upload-formats">
-        JPG / JPEG
-    </div>
-
-    <input type="file" id="upload" accept=".jpg,.jpeg,image/jpeg">
-</div>
-
-<img id="preview" alt="Selected JPG preview">
-
-<button id="download" style="display:none;">
-Convert & Download PDF
-</button>
-
-<div id="status"></div>
-
+    <img id="preview" alt="Preview">
+    <button id="download">Convert & Download PDF</button>
+    <div id="status"></div>
 </div>
 
 <script>
-
 let imageData = "";
-let imageType = "JPEG";
 let selectedFile = null;
 
 const upload = document.getElementById("upload");
 const preview = document.getElementById("preview");
 const download = document.getElementById("download");
 const status = document.getElementById("status");
-
-
-/* ==============================
-   SELECT JPG
-================================ */
-
 const dropZone = document.getElementById("dropZone");
 
-function processSelectedFile(file){
-    if(!file) return;
+function showStatus(message, type) {
+    status.textContent = message;
+    status.className = type;
+    status.style.display = 'block';
+}
 
-    if(
-        file.type !== "image/jpeg" &&
-        !file.name.toLowerCase().endsWith(".jpg") &&
-        !file.name.toLowerCase().endsWith(".jpeg")
-    ){
-        status.innerText = "❌ Please select a JPG/JPEG image.";
-        status.style.color = "#dc3545";
-        download.style.display = "none";
-        preview.style.display = "none";
+function processFile(file) {
+    if (!file) return;
+    if (file.type !== "image/jpeg" && !file.name.toLowerCase().endsWith(".jpg") && !file.name.toLowerCase().endsWith(".jpeg")) {
+        showStatus("❌ Please select a JPG/JPEG image.", "error");
         return;
     }
 
     selectedFile = file;
-    status.innerText = "Reading image...";
-    status.style.color = "#0d6efd";
+    showStatus("📂 Reading image...", "info");
 
     const reader = new FileReader();
-
-    reader.onload = function(e){
+    reader.onload = function(e) {
         imageData = e.target.result;
-        imageType = "JPEG";
-
-        preview.onload = function(){
-            preview.style.display = "block";
-            download.style.display = "block";
-            status.innerText =
-                "✅ JPG image ready. Click Convert & Download PDF.";
-            status.style.color = "#198754";
-        };
-
         preview.src = imageData;
+        preview.style.display = "block";
+        preview.onload = function() {
+            download.style.display = "block";
+            showStatus("✅ JPG ready! Click Convert.", "success");
+        };
     };
-
-    reader.onerror = function(){
-        status.innerText = "❌ Could not read the image.";
-        status.style.color = "#dc3545";
+    reader.onerror = function() {
+        showStatus("❌ Could not read image.", "error");
     };
-
     reader.readAsDataURL(file);
 }
 
-upload.addEventListener("change", function(){
-    processSelectedFile(this.files[0]);
-});
-
-dropZone.addEventListener("dragover", function(e){
-    e.preventDefault();
-    dropZone.classList.add("dragover");
-});
-
-dropZone.addEventListener("dragleave", function(){
-    dropZone.classList.remove("dragover");
-});
-
-dropZone.addEventListener("drop", function(e){
+upload.addEventListener("change", function() { processFile(this.files[0]); });
+dropZone.addEventListener("dragover", function(e) { e.preventDefault(); dropZone.classList.add("dragover"); });
+dropZone.addEventListener("dragleave", function() { dropZone.classList.remove("dragover"); });
+dropZone.addEventListener("drop", function(e) {
     e.preventDefault();
     dropZone.classList.remove("dragover");
-    processSelectedFile(e.dataTransfer.files[0]);
+    processFile(e.dataTransfer.files[0]);
 });
 
-/* ==============================
-   CONVERT JPG → PDF
-================================ */
-
-download.addEventListener("click", function(){
-
-    if(!selectedFile || !imageData){
-        status.innerText = "❌ Please select a JPG image first.";
-        status.style.color = "#dc3545";
+download.addEventListener("click", function() {
+    if (!selectedFile || !imageData) {
+        showStatus("❌ Please select a JPG first.", "error");
         return;
     }
 
-    status.innerText = "Converting... Please wait.";
-    status.style.color = "#0d6efd";
+    if (typeof window.jspdf === "undefined" || !window.jspdf.jsPDF) {
+        showStatus("⏳ Loading PDF engine... Please wait 3 seconds and try again.", "info");
+        return;
+    }
+
+    showStatus("⏳ Converting to PDF...", "info");
     download.disabled = true;
 
-    function createPDF(){
+    try {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4", compress: true });
 
-        try{
-            const { jsPDF } = window.jspdf;
-            const img = new Image();
+        const img = new Image();
+        img.onload = function() {
+            const pageW = 210, pageH = 297, margin = 10;
+            const maxW = pageW - margin * 2;
+            const maxH = pageH - margin * 2;
+            let w = maxW;
+            let h = (img.height * w) / img.width;
+            if (h > maxH) { h = maxH; w = (img.width * h) / img.height; }
+            const x = (pageW - w) / 2;
+            const y = (pageH - h) / 2;
 
-            img.onload = function(){
+            pdf.addImage(imageData, "JPEG", x, y, w, h, undefined, "FAST");
+            const fileName = selectedFile.name.replace(/\.(jpg|jpeg)$/i, "") + ".pdf";
+            pdf.save(fileName);
 
-                try{
-                    const pageWidth = 210;
-                    const pageHeight = 297;
-                    const margin = 10;
-
-                    const maxWidth = pageWidth - margin * 2;
-                    const maxHeight = pageHeight - margin * 2;
-
-                    let imgWidth = maxWidth;
-                    let imgHeight = (img.height * imgWidth) / img.width;
-
-                    if(imgHeight > maxHeight){
-                        imgHeight = maxHeight;
-                        imgWidth = (img.width * imgHeight) / img.height;
-                    }
-
-                    const x = (pageWidth - imgWidth) / 2;
-                    const y = (pageHeight - imgHeight) / 2;
-
-                    const pdf = new jsPDF({
-                        orientation: "portrait",
-                        unit: "mm",
-                        format: "a4",
-                        compress: true
-                    });
-
-                    pdf.addImage(
-                        imageData,
-                        "JPEG",
-                        x,
-                        y,
-                        imgWidth,
-                        imgHeight,
-                        undefined,
-                        "FAST"
-                    );
-
-                    const fileName =
-                        selectedFile.name.replace(/\.(jpg|jpeg)$/i, "") + ".pdf";
-
-                    const blob = pdf.output("blob");
-
-                    if(!blob || blob.size < 100){
-                        throw new Error("PDF could not be created.");
-                    }
-
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement("a");
-
-                    link.href = url;
-                    link.download = fileName;
-                    link.style.display = "none";
-
-                    document.body.appendChild(link);
-                    link.click();
-
-                    setTimeout(function(){
-                        link.remove();
-                    }, 1000);
-
-                    status.innerText = "🎉 PDF created successfully! If download did not start, tap Open PDF.";
-                    status.style.color = "#28a745";
-
-                    const oldOpen = document.getElementById("openPdfBtn");
-                    if(oldOpen) oldOpen.remove();
-
-                    const openBtn = document.createElement("button");
-                    openBtn.id = "openPdfBtn";
-                    openBtn.type = "button";
-                    openBtn.innerText = "📄 Open PDF";
-                    openBtn.style.marginTop = "10px";
-                    openBtn.style.background = "#198754";
-
-                    openBtn.onclick = function(){
-                        window.open(url, "_blank");
-                    };
-
-                    status.insertAdjacentElement("afterend", openBtn);
-
-                    download.disabled = false;
-
-                }catch(error){
-                    console.error("PDF creation error:", error);
-                    status.innerText = "❌ PDF conversion failed: " + error.message;
-                    status.style.color = "#dc3545";
-                    download.disabled = false;
-                }
-            };
-
-            img.onerror = function(){
-                status.innerText = "❌ Could not process the JPG image.";
-                status.style.color = "#dc3545";
-                download.disabled = false;
-            };
-
-            img.src = imageData;
-
-        }catch(error){
-            console.error("jsPDF error:", error);
-            status.innerText = "❌ PDF conversion failed: " + error.message;
-            status.style.color = "#dc3545";
+            showStatus("🎉 PDF downloaded successfully!", "success");
             download.disabled = false;
-        }
+        };
+        img.onerror = function() {
+            showStatus("❌ Failed to process image.", "error");
+            download.disabled = false;
+        };
+        img.src = imageData;
+    } catch (err) {
+        showStatus("❌ Error: " + err.message, "error");
+        download.disabled = false;
     }
-
-    if(window.jspdf && window.jspdf.jsPDF){
-        createPDF();
-    }else{
-        status.innerText = "Loading PDF engine...";
-        let tries = 0;
-
-        const wait = setInterval(function(){
-            tries++;
-
-            if(window.jspdf && window.jspdf.jsPDF){
-                clearInterval(wait);
-                createPDF();
-            }
-
-            if(tries >= 40){
-                clearInterval(wait);
-                status.innerText = "❌ PDF library failed to load. Please refresh.";
-                status.style.color = "#dc3545";
-                download.disabled = false;
-            }
-        }, 250);
-    }
-
 });
-
 </script>
-
 </body>
 </html>
