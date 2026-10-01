@@ -5,252 +5,303 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JPG to PDF - Bharat24Tools</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-// Fallback agar primary CDN fail ho
-window.addEventListener('load', function() {
-    if (typeof window.jspdf === 'undefined') {
-        var s = document.createElement('script');
-        s.src = 'https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js';
-        s.onload = function() { console.log('jsPDF loaded from fallback'); };
-        document.head.appendChild(s);
-    }
-});
-</script>
-
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-body {
-    min-height:100vh;
-    background:linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-}
-.container {
-    background:rgba(30,27,75,0.95);
-    padding:40px;
-    border-radius:20px;
-    box-shadow:0 20px 60px rgba(0,0,0,.4);
-    max-width:700px;
-    width:100%;
-    text-align:center;
-    border:1px solid rgba(168,85,247,0.3);
-    color:#e0e7ff;
-}
-h1 {
-    margin-bottom:10px;
-    font-size:1.8rem;
-    font-weight:800;
-    background:linear-gradient(135deg,#a855f7,#ec4899);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-.subtitle { font-size:14px; color:#a5b4fc; margin-bottom:25px; }
-.upload-zone {
-    position:relative;
-    border:3px dashed rgba(168,85,247,0.6);
-    border-radius:12px;
-    padding:40px 20px;
-    margin:20px 0;
-    background:rgba(99,102,241,0.05);
-    cursor:pointer;
-    transition:all .3s ease;
-    overflow:hidden;
-}
-.upload-zone:hover, .upload-zone.dragover {
-    background:rgba(168,85,247,0.15);
-    border-color:#a855f7;
-    transform:translateY(-2px);
-}
-.upload-zone input {
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    opacity:0;
-    cursor:pointer;
-}
-.upload-icon {
-    width:76px;
-    height:76px;
-    margin:0 auto 14px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(168,85,247,0.2);
-    font-size:34px;
-}
-.upload-title { font-size:18px; font-weight:700; margin-bottom:6px; }
-.upload-subtitle { font-size:14px; color:#a5b4fc; margin-bottom:10px; }
-.upload-formats {
-    display:inline-block;
-    padding:5px 10px;
-    border-radius:20px;
-    background:rgba(168,85,247,0.15);
-    color:#a855f7;
-    font-size:12px;
-    font-weight:600;
-}
-#preview {
-    max-width:100%;
-    max-height:300px;
-    display:none;
-    margin:20px auto;
-    border-radius:12px;
-    background:#fff;
-}
-button {
-    width:100%;
-    padding:15px;
-    background:linear-gradient(135deg,#a855f7,#ec4899);
-    border:none;
-    border-radius:10px;
-    color:#fff;
-    font-size:16px;
-    font-weight:700;
-    cursor:pointer;
-    margin-top:15px;
-    font-family:inherit;
-    transition:all .3s;
-    display:none;
-}
-button:hover:not(:disabled) {
-    transform:translateY(-2px);
-    box-shadow:0 10px 25px rgba(168,85,247,0.4);
-}
-button:disabled { opacity:0.6; cursor:not-allowed; }
-#status {
-    margin-top:15px;
-    font-size:14px;
-    font-weight:600;
-    padding:12px;
-    border-radius:8px;
-    display:none;
-}
-#status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
-#status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
-#status.info { background:rgba(99,102,241,0.2); color:#a5b4fc; display:block; }
+body { min-height:100vh; background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); padding:30px 16px 60px; color:#e0e7ff; }
+
+header { background:rgba(15,15,30,0.95); padding:16px 24px; display:flex; align-items:center; gap:20px; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; margin:-30px -16px 30px; }
+header a { color:#cbd5e1; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:6px; transition:all 0.3s; }
+header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
+.brand { font-weight:800; font-size:1.3rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; flex:1; }
+
+main { max-width:750px; margin:0 auto; }
+h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
+.subtitle { text-align:center; color:#a5b4fc; margin-bottom:30px; font-size:0.95rem; }
+
+.card { background:rgba(30,27,75,0.9); border-radius:20px; padding:36px; border:1px solid rgba(168,85,247,0.3); box-shadow:0 20px 60px rgba(0,0,0,0.4); }
+
+.upload-zone { border:3px dashed rgba(168,85,247,0.6); border-radius:16px; padding:50px 25px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); }
+.upload-zone:hover, .upload-zone.active { border-color:#a855f7; background:rgba(168,85,247,0.15); transform:translateY(-2px); }
+.upload-icon { font-size:3rem; margin-bottom:14px; }
+.upload-zone p { color:#cbd5e1; margin:6px 0; }
+.highlight { color:#e0e7ff; font-weight:700; }
+input[type="file"] { display:none; }
+
+.badge-row { display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
+.badge { background:rgba(34,197,94,0.15); color:#86efac; padding:5px 12px; border-radius:20px; font-size:0.72rem; font-weight:600; }
+
+.file-list { display:none; margin-top:22px; padding:18px; background:rgba(15,15,30,0.6); border-radius:14px; max-height:320px; overflow-y:auto; }
+.file-list h3 { font-size:1rem; margin-bottom:12px; color:#e0e7ff; display:flex; justify-content:space-between; align-items:center; }
+.file-list h3 .count { color:#a855f7; font-weight:700; font-size:0.85rem; }
+
+.file-item { display:flex; align-items:center; gap:12px; padding:10px; background:rgba(99,102,241,0.1); border-radius:10px; margin-bottom:8px; border-left:3px solid #a855f7; cursor:grab; transition:all 0.2s; }
+.file-item:active { cursor:grabbing; }
+.file-item:hover { background:rgba(99,102,241,0.2); }
+.file-item img { width:50px; height:50px; object-fit:cover; border-radius:6px; background:#fff; }
+.file-item .info { flex:1; min-width:0; }
+.file-item .name { font-size:0.82rem; color:#e0e7ff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.file-item .size { font-size:0.72rem; color:#a5b4fc; margin-top:2px; }
+.file-item .page-num { background:rgba(168,85,247,0.9); color:#fff; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; flex-shrink:0; }
+.file-item .remove { background:rgba(220,53,69,0.2); color:#dc3545; border:none; width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:0.9rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s; }
+.file-item .remove:hover { background:rgba(220,53,69,0.4); }
+
+.drag-hint { text-align:center; font-size:0.75rem; color:#a5b4fc; margin-top:10px; font-style:italic; }
+
+.controls { display:none; margin-top:22px; padding:22px; background:rgba(20,20,40,0.8); border-radius:14px; border:1px solid rgba(168,85,247,0.2); }
+
+button.primary-btn { width:100%; padding:16px; background:linear-gradient(135deg,#a855f7,#ec4899); border:none; border-radius:12px; color:#fff; font-weight:700; font-size:1.05rem; cursor:pointer; font-family:inherit; transition:all 0.3s; }
+button.primary-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 30px rgba(168,85,247,0.4); }
+button.primary-btn:disabled { opacity:0.6; cursor:not-allowed; }
+
+.progress-bar { display:none; width:100%; height:10px; background:rgba(15,15,30,0.8); border-radius:20px; margin-top:16px; overflow:hidden; }
+.progress-bar .fill { height:100%; width:0%; background:linear-gradient(90deg,#a855f7,#ec4899); transition:width 0.3s; }
+
+.status { display:none; margin-top:20px; padding:16px; border-radius:12px; text-align:center; font-weight:600; font-size:0.9rem; line-height:1.5; }
+.status.loading { background:rgba(99,102,241,0.2); color:#a5b4fc; display:block; }
+.status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
+.status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
+
+.info-box { background:rgba(99,102,241,0.1); border-left:4px solid #a855f7; padding:16px; border-radius:10px; margin-top:22px; font-size:0.85rem; color:#a5b4fc; line-height:1.7; }
+.info-box strong { color:#e0e7ff; }
+
+@media(max-width:600px) { .card { padding:22px; } h1 { font-size:1.6rem; } .upload-zone { padding:38px 18px; } }
 </style>
 </head>
 <body>
 
-<div class="container">
+<header>
+    <a href="index.html">← Back</a>
+    <div class="brand">⚡ Bharat24Tools</div>
+</header>
+
+<main>
     <h1>📄 JPG to PDF</h1>
-    <p class="subtitle">Convert JPG images to PDF documents</p>
+    <p class="subtitle">कई images को एक PDF में बदलो — Server-powered</p>
 
-    <div class="upload-zone" id="dropZone">
-        <div class="upload-icon">📤</div>
-        <div class="upload-title">Drag & Drop JPG here</div>
-        <div class="upload-subtitle">or click to choose</div>
-        <div class="upload-formats">JPG / JPEG</div>
-        <input type="file" id="upload" accept=".jpg,.jpeg,image/jpeg">
+    <div class="card">
+        <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon">🖼️</div>
+            <p><span class="highlight">Click करो या Drag करो</span></p>
+            <p>JPG / PNG images (max 15MB each, 10 files)</p>
+            <div class="badge-row">
+                <span class="badge">⚡ Fast</span>
+                <span class="badge">🔒 Private</span>
+                <span class="badge">📚 Multiple Files</span>
+            </div>
+        </div>
+        <input type="file" id="fileInput" accept="image/jpeg,image/jpg,image/png" multiple>
+
+        <div class="file-list" id="fileList">
+            <h3>
+                <span>📚 Selected Images</span>
+                <span class="count" id="fileCount">0</span>
+            </h3>
+            <div id="fileListInner"></div>
+            <p class="drag-hint">💡 Drag करके order बदलो</p>
+        </div>
+
+        <div class="controls" id="controls">
+            <button class="primary-btn" id="convertBtn">📄 Create PDF</button>
+            <div class="progress-bar" id="progressBar"><div class="fill" id="progressFill"></div></div>
+        </div>
+
+        <div class="status" id="status"></div>
+
+        <div class="info-box">
+            <strong>💡 कैसे काम करता है:</strong> तुम्हारी images हमारे server पर Ghostscript से एक single PDF में merge होती हैं। Order वही रहेगा जैसा तुमने set किया।
+        </div>
     </div>
-
-    <img id="preview" alt="Preview">
-    <button id="download">Convert & Download PDF</button>
-    <div id="status"></div>
-</div>
+</main>
 
 <script>
-let imageData = "";
-let selectedFile = null;
+const API_URL = 'https://bharat24tools-api.onrender.com';
 
-const upload = document.getElementById("upload");
-const preview = document.getElementById("preview");
-const download = document.getElementById("download");
-const status = document.getElementById("status");
-const dropZone = document.getElementById("dropZone");
+const uploadZone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+const fileList = document.getElementById('fileList');
+const fileListInner = document.getElementById('fileListInner');
+const fileCount = document.getElementById('fileCount');
+const controls = document.getElementById('controls');
+const convertBtn = document.getElementById('convertBtn');
+const progressBar = document.getElementById('progressBar');
+const progressFill = document.getElementById('progressFill');
+const status = document.getElementById('status');
 
-function showStatus(message, type) {
-    status.textContent = message;
-    status.className = type;
-    status.style.display = 'block';
-}
+let selectedFiles = []; // Array of { file, id }
 
-function processFile(file) {
-    if (!file) return;
-    if (file.type !== "image/jpeg" && !file.name.toLowerCase().endsWith(".jpg") && !file.name.toLowerCase().endsWith(".jpeg")) {
-        showStatus("❌ Please select a JPG/JPEG image.", "error");
-        return;
-    }
-
-    selectedFile = file;
-    showStatus("📂 Reading image...", "info");
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        imageData = e.target.result;
-        preview.src = imageData;
-        preview.style.display = "block";
-        preview.onload = function() {
-            download.style.display = "block";
-            showStatus("✅ JPG ready! Click Convert.", "success");
-        };
-    };
-    reader.onerror = function() {
-        showStatus("❌ Could not read image.", "error");
-    };
-    reader.readAsDataURL(file);
-}
-
-upload.addEventListener("change", function() { processFile(this.files[0]); });
-dropZone.addEventListener("dragover", function(e) { e.preventDefault(); dropZone.classList.add("dragover"); });
-dropZone.addEventListener("dragleave", function() { dropZone.classList.remove("dragover"); });
-dropZone.addEventListener("drop", function(e) {
+// Upload events
+uploadZone.addEventListener('click', () => fileInput.click());
+uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
+uploadZone.addEventListener('drop', (e) => {
     e.preventDefault();
-    dropZone.classList.remove("dragover");
-    processFile(e.dataTransfer.files[0]);
+    uploadZone.classList.remove('active');
+    if (e.dataTransfer.files.length > 0) handleFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) handleFiles(e.target.files);
 });
 
-download.addEventListener("click", function() {
-    if (!selectedFile || !imageData) {
-        showStatus("❌ Please select a JPG first.", "error");
+function handleFiles(files) {
+    const validFiles = Array.from(files).filter(f => 
+        f.type === 'image/jpeg' || f.type === 'image/jpg' || f.type === 'image/png' ||
+        f.name.toLowerCase().endsWith('.jpg') || f.name.toLowerCase().endsWith('.jpeg') || f.name.toLowerCase().endsWith('.png')
+    );
+
+    if (validFiles.length === 0) {
+        showStatus('❌ कृपया JPG या PNG images चुनें', 'error');
         return;
     }
 
-    if (typeof window.jspdf === "undefined" || !window.jspdf.jsPDF) {
-        showStatus("⏳ Loading PDF engine... Please wait 3 seconds and try again.", "info");
+    // Size check
+    const tooBig = validFiles.filter(f => f.size > 15 * 1024 * 1024);
+    if (tooBig.length > 0) {
+        showStatus('❌ कुछ images 15MB से बड़ी हैं', 'error');
         return;
     }
 
-    showStatus("⏳ Converting to PDF...", "info");
-    download.disabled = true;
+    // Total files check
+    if (selectedFiles.length + validFiles.length > 10) {
+        showStatus(`❌ Max 10 images allowed. Currently: ${selectedFiles.length}`, 'error');
+        return;
+    }
+
+    validFiles.forEach(file => {
+        selectedFiles.push({ file, id: Date.now() + Math.random() });
+    });
+
+    renderFileList();
+    showStatus(`✅ ${validFiles.length} image(s) added. Total: ${selectedFiles.length}`, 'success');
+}
+
+function renderFileList() {
+    if (selectedFiles.length === 0) {
+        fileList.style.display = 'none';
+        controls.style.display = 'none';
+        return;
+    }
+
+    fileList.style.display = 'block';
+    controls.style.display = 'block';
+    fileCount.textContent = selectedFiles.length + ' / 10';
+
+    fileListInner.innerHTML = '';
+
+    selectedFiles.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'file-item';
+        div.dataset.id = item.id;
+
+        const url = URL.createObjectURL(item.file);
+        div.innerHTML = `
+            <div class="page-num">${index + 1}</div>
+            <img src="${url}" alt="preview">
+            <div class="info">
+                <div class="name">${item.file.name}</div>
+                <div class="size">${(item.file.size / 1024).toFixed(1)} KB</div>
+            </div>
+            <button class="remove" data-id="${item.id}">✕</button>
+        `;
+        fileListInner.appendChild(div);
+    });
+
+    // Remove buttons
+    fileListInner.querySelectorAll('.remove').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = parseFloat(btn.dataset.id);
+            selectedFiles = selectedFiles.filter(f => f.id !== id);
+            renderFileList();
+        });
+    });
+
+    // Enable drag reorder
+    if (typeof Sortable !== 'undefined' && !fileListInner._sortable) {
+        fileListInner._sortable = Sortable.create(fileListInner, {
+            animation: 200,
+            ghostClass: 'dragging',
+            onEnd: function (evt) {
+                const moved = selectedFiles.splice(evt.oldIndex, 1)[0];
+                selectedFiles.splice(evt.newIndex, 0, moved);
+                renderFileList();
+            }
+        });
+    }
+}
+
+// Simple drag-sort without library (fallback)
+fileListInner.addEventListener('dragend', () => {
+    // handled by Sortable if loaded
+});
+
+convertBtn.addEventListener('click', async () => {
+    if (selectedFiles.length === 0) {
+        showStatus('❌ कृपया images चुनें', 'error');
+        return;
+    }
+
+    convertBtn.disabled = true;
+    progressBar.style.display = 'block';
+    progressFill.style.width = '20%';
+    showStatus('⏳ Uploading images... (if server was sleeping, wait 30s)', 'loading');
+
+    setTimeout(() => {
+        if (convertBtn.disabled) {
+            progressFill.style.width = '60%';
+            showStatus('⏳ Creating PDF on server...', 'loading');
+        }
+    }, 5000);
 
     try {
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4", compress: true });
+        const formData = new FormData();
+        selectedFiles.forEach(item => {
+            formData.append('files', item.file);
+        });
 
-        const img = new Image();
-        img.onload = function() {
-            const pageW = 210, pageH = 297, margin = 10;
-            const maxW = pageW - margin * 2;
-            const maxH = pageH - margin * 2;
-            let w = maxW;
-            let h = (img.height * w) / img.width;
-            if (h > maxH) { h = maxH; w = (img.width * h) / img.height; }
-            const x = (pageW - w) / 2;
-            const y = (pageH - h) / 2;
+        const res = await fetch(API_URL + '/jpg-to-pdf', {
+            method: 'POST',
+            body: formData
+        });
 
-            pdf.addImage(imageData, "JPEG", x, y, w, h, undefined, "FAST");
-            const fileName = selectedFile.name.replace(/\.(jpg|jpeg)$/i, "") + ".pdf";
-            pdf.save(fileName);
+        progressFill.style.width = '90%';
 
-            showStatus("🎉 PDF downloaded successfully!", "success");
-            download.disabled = false;
-        };
-        img.onerror = function() {
-            showStatus("❌ Failed to process image.", "error");
-            download.disabled = false;
-        };
-        img.src = imageData;
+        if (!res.ok) {
+            const errText = await res.text();
+            throw new Error(errText || 'Server error ' + res.status);
+        }
+
+        const blob = await res.blob();
+        progressFill.style.width = '100%';
+
+        // Download
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'images-' + Date.now() + '.pdf';
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+        showStatus(`🎉 PDF created! ${selectedFiles.length} images combined`, 'success');
     } catch (err) {
-        showStatus("❌ Error: " + err.message, "error");
-        download.disabled = false;
+        console.error(err);
+        showStatus('❌ Error: ' + err.message, 'error');
     }
+
+    convertBtn.disabled = false;
+    setTimeout(() => {
+        progressBar.style.display = 'none';
+        progressFill.style.width = '0%';
+    }, 4000);
 });
+
+function showStatus(msg, type) {
+    status.textContent = msg;
+    status.className = 'status ' + type;
+}
 </script>
+
+<!-- Sortable.js for drag-reorder -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+
 </body>
 </html>

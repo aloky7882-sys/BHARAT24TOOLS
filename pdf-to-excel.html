@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Word to PDF - Bharat24Tools</title>
+<title>PDF to Excel - Bharat24Tools</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
@@ -51,6 +51,8 @@ button.primary-btn:disabled { opacity:0.6; cursor:not-allowed; }
 .info-box { background:rgba(99,102,241,0.1); border-left:4px solid #a855f7; padding:16px; border-radius:10px; margin-top:22px; font-size:0.85rem; color:#a5b4fc; line-height:1.7; }
 .info-box strong { color:#e0e7ff; }
 
+.warning-box { background:rgba(251,191,36,0.1); border-left:4px solid #fbbf24; padding:14px; border-radius:10px; margin-top:12px; font-size:0.82rem; color:#fde68a; line-height:1.6; }
+
 @media(max-width:600px) { .card { padding:22px; } h1 { font-size:1.6rem; } .upload-zone { padding:38px 18px; } }
 </style>
 </head>
@@ -62,35 +64,39 @@ button.primary-btn:disabled { opacity:0.6; cursor:not-allowed; }
 </header>
 
 <main>
-    <h1>📄 Word to PDF</h1>
-    <p class="subtitle">Word document को PDF में बदलो — Server-powered</p>
+    <h1>📊 PDF to Excel</h1>
+    <p class="subtitle">PDF का टेक्स्ट निकालकर Excel file बनाओ — Server-powered</p>
 
     <div class="card">
         <div class="upload-zone" id="uploadZone">
-            <div class="upload-icon">📝</div>
+            <div class="upload-icon">📄</div>
             <p><span class="highlight">Click करो या Drag करो</span></p>
-            <p>Word file (.docx, max 15MB)</p>
+            <p>PDF file (max 15MB)</p>
             <div class="badge-row">
                 <span class="badge">⚡ Fast</span>
                 <span class="badge">🔒 Private</span>
-                <span class="badge">📄 Real PDF</span>
+                <span class="badge">📊 XLSX Output</span>
             </div>
         </div>
-        <input type="file" id="fileInput" accept=".docx">
+        <input type="file" id="fileInput" accept=".pdf,application/pdf">
 
         <div class="controls" id="controls">
             <div class="file-info">
                 <span class="name" id="fileName">-</span>
                 <span class="size" id="fileSize">-</span>
             </div>
-            <button class="primary-btn" id="convertBtn">📄 Convert to PDF</button>
+            <button class="primary-btn" id="convertBtn">📊 Convert to Excel</button>
             <div class="progress-bar" id="progressBar"><div class="fill" id="progressFill"></div></div>
         </div>
 
         <div class="status" id="status"></div>
 
         <div class="info-box">
-            <strong>💡 कैसे काम करता है:</strong> तुम्हारी Word file से text extract होता है और reportlab से clean PDF बनती है। अच्छे fonts, spacing और headings के साथ।
+            <strong>💡 कैसे काम करता है:</strong> तुम्हारी PDF से text extract होता है और एक Excel file (.xlsx) बनती है जिसमें हर line एक row में होगी। इसे तुम Excel या Google Sheets में edit कर सकोगे।
+        </div>
+
+        <div class="warning-box">
+            <strong>⚠️ ध्यान दो:</strong> यह tool सिर्फ text-based PDF के लिए है। Scanned images वाली PDF में text नहीं मिलेगा। Tables का structure भी simplified रहेगा।
         </div>
     </div>
 </main>
@@ -123,8 +129,8 @@ fileInput.addEventListener('change', (e) => {
 });
 
 function handleFile(file) {
-    if (!file.name.toLowerCase().endsWith('.docx')) {
-        showStatus('❌ कृपया .docx file चुनें (सिर्फ Word documents)', 'error');
+    if (!file.name.toLowerCase().endsWith('.pdf')) {
+        showStatus('❌ कृपया PDF file चुनें', 'error');
         return;
     }
     if (file.size > 15 * 1024 * 1024) {
@@ -149,7 +155,7 @@ convertBtn.addEventListener('click', async () => {
     setTimeout(() => {
         if (convertBtn.disabled) {
             progressFill.style.width = '60%';
-            showStatus('⏳ Converting Word to PDF on server...', 'loading');
+            showStatus('⏳ Extracting text and creating Excel...', 'loading');
         }
     }, 5000);
 
@@ -157,7 +163,7 @@ convertBtn.addEventListener('click', async () => {
         const formData = new FormData();
         formData.append('file', selectedFile);
 
-        const res = await fetch(API_URL + '/word-to-pdf', {
+        const res = await fetch(API_URL + '/pdf-to-excel', {
             method: 'POST',
             body: formData
         });
@@ -175,11 +181,11 @@ convertBtn.addEventListener('click', async () => {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = selectedFile.name.replace(/\.docx$/i, '') + '.pdf';
+        link.download = selectedFile.name.replace(/\.pdf$/i, '') + '.xlsx';
         link.click();
         setTimeout(() => URL.revokeObjectURL(url), 5000);
 
-        showStatus('🎉 PDF created successfully!', 'success');
+        showStatus('🎉 Excel file created successfully!', 'success');
     } catch (err) {
         console.error(err);
         showStatus('❌ Error: ' + err.message, 'error');
