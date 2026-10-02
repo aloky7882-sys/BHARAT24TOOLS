@@ -1,9 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Background Remover AI - BharatOS-Tools</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <title>Background Remover AI - Remove Photo Background Free | Bharat24Tools</title>
+    <meta name="description" content="Remove photo background instantly using AI. Free background remover with brush tool for fine-tuning. Works in browser, no upload, transparent PNG output.">
+    <meta name="keywords" content="background remover, remove background, ai background remover, transparent png, photo background eraser, free background remover">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/background-remover.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/background-remover.html">
+    <meta property="og:title" content="Background Remover AI - Remove Photo Background Free | Bharat24Tools">
+    <meta property="og:description" content="Remove photo background instantly using AI. Free, brush tool for fine-tuning.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Background Remover AI - Remove Photo Background Free | Bharat24Tools">
+    <meta name="twitter:description" content="Remove photo background instantly using AI. Free, brush tool for fine-tuning.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Background Remover AI",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/background-remover.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -181,7 +218,7 @@
 <body>
     <header>
         <a href="index.html"><i class="fas fa-arrow-left"></i> Back</a>
-        <div class="brand"><i class="fas fa-microchip"></i> BharatOS-Tools</div>
+        <div class="brand"><i class="fas fa-microchip"></i> Bharat24Tools</div>
     </header>
     <main>
         <h1>🎭 Background Remover AI</h1>
@@ -229,7 +266,6 @@
         </div>
     </main>
 
-    <!-- TensorFlow.js and BodyPix -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2"></script>
 
@@ -252,13 +288,12 @@
         let net = null;
         let originalImage = null;
         let isDrawing = false;
-        let brushMode = 'erase'; // erase or restore
+        let brushMode = 'erase';
         let lastX = 0;
         let lastY = 0;
         let scaleX = 1;
         let scaleY = 1;
 
-        // Load BodyPix Model
         async function loadModel() {
             try {
                 net = await bodyPix.load({
@@ -320,7 +355,6 @@
 
         window.addEventListener('resize', setupCanvasScaling);
 
-        // Brush mode toggle
         eraseBtn.addEventListener('click', () => {
             brushMode = 'erase';
             eraseBtn.classList.add('active');
@@ -335,7 +369,6 @@
             brushSizeLabel.innerText = brushSize.value + 'px';
         });
 
-        // Auto Background Removal
         removeBtn.addEventListener('click', async () => {
             if (!originalImage || !net) {
                 showStatus('❌ Image or model not ready', 'error');
@@ -367,7 +400,6 @@
             removeBtn.disabled = false;
         });
 
-        // Touch / Click to Erase or Restore
         function getCanvasCoords(e) {
             const rect = outputCanvas.getBoundingClientRect();
             let clientX, clientY;
@@ -395,7 +427,6 @@
                 ctx.arc(coords.x, coords.y, size / 2, 0, Math.PI * 2);
                 ctx.fill();
             } else {
-                // Restore: draw original image portion
                 ctx.globalCompositeOperation = 'source-over';
                 ctx.save();
                 ctx.beginPath();
@@ -427,7 +458,6 @@
         }, { passive: false });
         canvasContainer.addEventListener('touchend', () => { isDrawing = false; });
 
-        // Download
         downloadBtn.addEventListener('click', () => {
             if (!outputCanvas || outputCanvas.width === 0) {
                 showStatus('❌ No processed image', 'error');

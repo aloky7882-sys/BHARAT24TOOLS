@@ -1,107 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QR Code Generator - Bharat Tools</title>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-<style>
+    <title>QR Code Generator - Create QR Codes Free Online | Bharat24Tools</title>
+    <meta name="description" content="Create QR codes instantly for links, text, phone numbers, WiFi and more. Free QR code generator, no signup, download PNG instantly.">
+    <meta name="keywords" content="qr code generator, free qr code, create qr code, qr code maker, url to qr, text to qr">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/qr-generator.html">
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/qr-generator.html">
+    <meta property="og:title" content="QR Code Generator - Create QR Codes Free Online | Bharat24Tools">
+    <meta property="og:description" content="Create QR codes instantly for links, text, phone numbers, WiFi and more. Free, no signup.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
 
-body{
-background:#f4f6fb;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="QR Code Generator - Create QR Codes Free Online | Bharat24Tools">
+    <meta name="twitter:description" content="Create QR codes instantly for links, text, phone numbers, WiFi and more. Free, no signup.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-.container{
-background:white;
-padding:30px;
-border-radius:15px;
-box-shadow:0 10px 25px rgba(0,0,0,.1);
-text-align:center;
-width:90%;
-max-width:500px;
-}
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "QR Code Generator",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/qr-generator.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
 
-input{
-width:100%;
-padding:15px;
-font-size:16px;
-margin:20px 0;
-border:1px solid #ddd;
-border-radius:8px;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-button{
-background:#0d6efd;
-color:white;
-border:none;
-padding:15px 30px;
-border-radius:8px;
-cursor:pointer;
-font-size:16px;
-}
+        body {
+            background: #f4f6fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-button:hover{
-background:#084298;
-}
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,.1);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
 
-img{
-margin-top:25px;
-display:none;
-max-width:250px;
-}
+        h1 {
+            margin-bottom: 10px;
+            color: #1a2b45;
+        }
 
-</style>
+        input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
 
+        button {
+            background: #0d6efd;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #084298;
+        }
+
+        img {
+            margin-top: 25px;
+            display: none;
+            max-width: 250px;
+            border-radius: 8px;
+        }
+
+        .download-btn {
+            background: #198754;
+            display: none;
+            margin-top: 15px;
+        }
+
+        .download-btn:hover {
+            background: #157347;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>📱 QR Code Generator</h1>
+    <h1>📱 QR Code Generator</h1>
+    <p style="color:#6c757d;font-size:14px;">Enter text or URL to create a QR code</p>
 
-<input type="text" id="text" placeholder="Enter text or URL">
+    <input type="text" id="text" placeholder="Enter text or URL" value="https://aloky7882-sys.github.io/BHARAT24TOOLS/">
 
-<button onclick="generateQR()">Generate QR</button>
+    <button onclick="generateQR()">Generate QR</button>
 
-<br>
+    <br>
 
-<img id="qr">
+    <img id="qr" alt="QR Code">
+
+    <button class="download-btn" id="downloadBtn" onclick="downloadQR()">⬇ Download PNG</button>
+
+    <a href="index.html" class="back-link">← Back to Home</a>
 
 </div>
 
 <script>
 
-function generateQR(){
+    function generateQR(){
+        let text = document.getElementById("text").value;
+        let qr = document.getElementById("qr");
+        let downloadBtn = document.getElementById("downloadBtn");
 
-let text=document.getElementById("text").value;
+        if(text == ""){
+            alert("Please enter some text or URL");
+            return;
+        }
 
-let qr=document.getElementById("qr");
+        qr.src = "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=" + encodeURIComponent(text);
+        qr.style.display = "block";
+        downloadBtn.style.display = "inline-block";
+    }
 
-if(text==""){
+    function downloadQR(){
+        let qr = document.getElementById("qr");
+        if(!qr.src) return;
+        let a = document.createElement("a");
+        a.href = qr.src;
+        a.download = "qr-code.png";
+        a.target = "_blank";
+        a.click();
+    }
 
-alert("Enter Text");
-
-return;
-
-}
-
-qr.src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data="+encodeURIComponent(text);
-
-qr.style.display="block";
-
-}
+    // Auto-generate on load
+    window.addEventListener("load", generateQR);
 
 </script>
 

@@ -1,123 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI Calculator - Calculate Loan EMI Online Free | Bharat24Tools</title>
+    <meta name="description" content="Calculate your monthly loan EMI instantly for home, car, personal and education loans. Free EMI calculator with accurate results. No signup required.">
+    <meta name="keywords" content="emi calculator, loan emi calculator, home loan emi, car loan emi, personal loan emi, monthly emi calculator">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/emi-calculator.html">
 
-<title>EMI Calculator - BHARAT TOOLS</title>
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/emi-calculator.html">
+    <meta property="og:title" content="EMI Calculator - Calculate Loan EMI Online Free | Bharat24Tools">
+    <meta property="og:description" content="Calculate your monthly loan EMI instantly for home, car, personal and education loans. Free, no signup.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
 
-<style>
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="EMI Calculator - Calculate Loan EMI Online Free | Bharat24Tools">
+    <meta name="twitter:description" content="Calculate your monthly loan EMI instantly for home, car, personal and education loans. Free, no signup.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-body{
-    font-family:Arial, sans-serif;
-    background:#f2f2f2;
-    text-align:center;
-    padding:30px;
-}
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "EMI Calculator",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/emi-calculator.html",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
 
-.container{
-    background:white;
-    max-width:450px;
-    margin:auto;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 0 10px #aaa;
-}
-
-h1{
-    color:#0066ff;
-}
-
-input{
-    width:90%;
-    padding:12px;
-    margin:10px;
-    font-size:16px;
-    border:1px solid #ccc;
-    border-radius:5px;
-}
-
-button{
-    width:90%;
-    padding:12px;
-    background:#0066ff;
-    color:white;
-    border:none;
-    border-radius:5px;
-    font-size:16px;
-    cursor:pointer;
-}
-
-button:hover{
-    background:#004dcc;
-}
-
-#result{
-    margin-top:20px;
-    font-size:18px;
-    font-weight:bold;
-}
-
-</style>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body {
+            background: linear-gradient(135deg, #f4f6fb 0%, #e8f1f9 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: #fff;
+            max-width: 480px;
+            width: 100%;
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(13, 110, 253, 0.12);
+            border: 1px solid rgba(13, 110, 253, 0.06);
+        }
+        h1 {
+            font-size: 1.8rem;
+            color: #1a2b45;
+            margin-bottom: 8px;
+            font-weight: 800;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        h1 i { color: #0d6efd; }
+        .subtitle {
+            color: #6c757d;
+            font-size: 0.92rem;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 18px;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1a2b45;
+            margin-bottom: 8px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 1rem;
+            font-family: inherit;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            background: #f8fafc;
+            color: #1a2b45;
+            transition: all 0.3s;
+        }
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #0d6efd;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(13, 110, 253, 0.3);
+        }
+        #result {
+            margin-top: 24px;
+            padding: 22px;
+            background: linear-gradient(135deg, #eef4ff, #e1ecff);
+            border-radius: 16px;
+            border-left: 4px solid #0d6efd;
+            display: none;
+        }
+        #result.show { display: block; }
+        #result .emi-main {
+            font-size: 1.6rem;
+            color: #0d6efd;
+            font-weight: 800;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        #result .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.92rem;
+            color: #495057;
+            border-bottom: 1px dashed #c3d4ee;
+        }
+        #result .row:last-child { border-bottom: none; }
+        #result .row span:last-child {
+            font-weight: 700;
+            color: #1a2b45;
+        }
+        .error {
+            color: #dc3545 !important;
+            background: #fff0f0 !important;
+            border-left-color: #dc3545 !important;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #6c757d;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .back-link:hover { color: #0d6efd; }
+        @media (max-width: 480px) {
+            .container { padding: 28px 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="container">
+    <h1><i class="fa-solid fa-money-bill-trend-up"></i> EMI Calculator</h1>
+    <p class="subtitle">Calculate your monthly loan EMI instantly</p>
 
-<h1>💰 EMI Calculator</h1>
+    <div class="input-group">
+        <label>Loan Amount (₹)</label>
+        <input type="number" id="amount" placeholder="e.g. 500000">
+    </div>
 
-<p>Calculate Your Loan EMI</p>
+    <div class="input-group">
+        <label>Interest Rate (% per year)</label>
+        <input type="number" id="rate" placeholder="e.g. 8.5" step="0.01">
+    </div>
 
-<input type="number" id="amount" placeholder="Loan Amount">
+    <div class="input-group">
+        <label>Loan Tenure (Years)</label>
+        <input type="number" id="time" placeholder="e.g. 5">
+    </div>
 
-<input type="number" id="rate" placeholder="Interest Rate (%)">
+    <button onclick="calculateEMI()">
+        <i class="fa-solid fa-calculator"></i> Calculate EMI
+    </button>
 
-<input type="number" id="time" placeholder="Loan Tenure (Years)">
+    <div id="result"></div>
 
-
-<button onclick="calculateEMI()">Calculate EMI</button>
-
-
-<div id="result"></div>
-
-
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
 </div>
 
-
 <script>
+    function calculateEMI(){
+        const amount = parseFloat(document.getElementById("amount").value);
+        const rate = parseFloat(document.getElementById("rate").value);
+        const years = parseFloat(document.getElementById("time").value);
+        const resultBox = document.getElementById("result");
 
-function calculateEMI(){
+        if(!amount || !rate || !years || amount <= 0 || rate <= 0 || years <= 0){
+            resultBox.className = "show error";
+            resultBox.innerHTML = "❌ Please fill all fields with valid values.";
+            return;
+        }
 
-let principal = document.getElementById("amount").value;
-let rate = document.getElementById("rate").value;
-let years = document.getElementById("time").value;
+        const monthlyRate = rate / 12 / 100;
+        const months = years * 12;
 
+        const emi = (amount * monthlyRate * Math.pow(1 + monthlyRate, months)) /
+                    (Math.pow(1 + monthlyRate, months) - 1);
 
-if(principal=="" || rate=="" || years==""){
-    alert("Please fill all details");
-    return;
-}
+        const totalPayment = emi * months;
+        const totalInterest = totalPayment - amount;
 
+        const formatINR = (num) => "₹" + Math.round(num).toLocaleString("en-IN");
 
-let monthlyRate = rate / 12 / 100;
-
-let months = years * 12;
-
-
-let emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) /
-(Math.pow(1 + monthlyRate, months) - 1);
-
-
-document.getElementById("result").innerHTML =
-"Monthly EMI: ₹ " + emi.toFixed(2);
-
-}
-
+        resultBox.className = "show";
+        resultBox.innerHTML = `
+            <div class="emi-main">${formatINR(emi)} / month</div>
+            <div class="row">
+                <span>Principal Amount</span>
+                <span>${formatINR(amount)}</span>
+            </div>
+            <div class="row">
+                <span>Total Interest</span>
+                <span>${formatINR(totalInterest)}</span>
+            </div>
+            <div class="row">
+                <span>Total Payment</span>
+                <span>${formatINR(totalPayment)}</span>
+            </div>
+            <div class="row">
+                <span>Loan Tenure</span>
+                <span>${months} months (${years} years)</span>
+            </div>
+        `;
+    }
 </script>
-
 
 </body>
 </html>

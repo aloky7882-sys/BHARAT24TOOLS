@@ -1,338 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Batch Image Compressor - Bharat24Tools</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<!-- JSZip for batch download -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<!-- FileSaver -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-<style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-body {
-    min-height:100vh;
-    background:linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%);
-    background-attachment:fixed;
-    color:#e0e7ff;
-}
-header {
-    background:rgba(15,15,30,0.95);
-    backdrop-filter:blur(10px);
-    padding:16px 24px;
-    display:flex;
-    align-items:center;
-    gap:20px;
-    border-bottom:2px solid rgba(168,85,247,0.3);
-    position:sticky;
-    top:0;
-    z-index:100;
-}
-header a {
-    color:#cbd5e1;
-    text-decoration:none;
-    font-weight:600;
-    font-size:1rem;
-    transition:all 0.3s;
-    padding:8px 12px;
-    border-radius:6px;
-}
-header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
-.brand {
-    font-weight:800;
-    font-size:1.3rem;
-    background:linear-gradient(135deg, #a855f7, #ec4899);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    flex:1;
-}
-main { max-width:1100px; margin:0 auto; padding:40px 20px 60px; }
-h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
-.subtitle { text-align:center; color:#a5b4fc; margin-bottom:40px; }
-.card {
-    background:rgba(30,27,75,0.9);
-    backdrop-filter:blur(10px);
-    border-radius:16px;
-    padding:40px;
-    border:1px solid rgba(168,85,247,0.3);
-    margin-bottom:24px;
-}
-.upload-zone {
-    border:3px dashed rgba(168,85,247,0.6);
-    border-radius:16px;
-    padding:50px 30px;
-    text-align:center;
-    cursor:pointer;
-    transition:all 0.3s;
-    background:rgba(99,102,241,0.05);
-}
-.upload-zone:hover, .upload-zone.active {
-    border-color:#a855f7;
-    background:rgba(168,85,247,0.15);
-}
-.upload-icon { font-size:3rem; color:#a855f7; margin-bottom:16px; }
-.upload-zone p { color:#cbd5e1; margin:8px 0; }
-.highlight { color:#e0e7ff; font-weight:700; }
-input[type="file"] { display:none; }
+    <title>Batch Image Compressor - Compress 50+ Images Free | Bharat24Tools</title>
+    <meta name="description" content="Compress 50+ images at once with quality control. Free batch image compressor for JPG, PNG, WebP. Download all as ZIP. No upload, no watermark.">
+    <meta name="keywords" content="batch image compressor, compress multiple images, bulk image compressor, compress 50 images, free batch compressor">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/batch-image-compress.html">
 
-.controls {
-    display:none;
-    margin-top:24px;
-    padding:24px;
-    background:rgba(20,20,40,0.8);
-    border-radius:12px;
-    border:1px solid rgba(168,85,247,0.2);
-}
-.controls-grid {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:18px;
-    margin-bottom:18px;
-}
-.control-group label {
-    display:block;
-    font-weight:700;
-    margin-bottom:8px;
-    font-size:0.9rem;
-}
-.control-group select,
-.control-group input[type="number"] {
-    width:100%;
-    padding:12px;
-    background:rgba(15,15,30,0.8);
-    border:2px solid rgba(168,85,247,0.4);
-    border-radius:10px;
-    color:#e0e7ff;
-    font-family:inherit;
-    font-weight:600;
-    font-size:0.9rem;
-    transition:all 0.3s;
-}
-.control-group select:focus,
-.control-group input:focus {
-    outline:none;
-    border-color:#a855f7;
-    box-shadow:0 0 0 4px rgba(168,85,247,0.15);
-}
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/batch-image-compress.html">
+    <meta property="og:title" content="Batch Image Compressor - Compress 50+ Images Free | Bharat24Tools">
+    <meta property="og:description" content="Compress 50+ images at once with quality control. Free, no upload.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
 
-.range-wrapper {
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-.range-wrapper input[type="range"] {
-    flex:1;
-    accent-color:#a855f7;
-    height:6px;
-}
-.range-value {
-    min-width:60px;
-    text-align:center;
-    font-weight:700;
-    color:#a855f7;
-    background:rgba(168,85,247,0.15);
-    padding:6px 10px;
-    border-radius:8px;
-    font-size:0.85rem;
-}
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Batch Image Compressor - Compress 50+ Images Free | Bharat24Tools">
+    <meta name="twitter:description" content="Compress 50+ images at once with quality control. Free, no upload.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-.image-grid {
-    display:none;
-    margin-top:20px;
-    max-height:500px;
-    overflow-y:auto;
-    padding:14px;
-    background:rgba(15,15,30,0.6);
-    border-radius:12px;
-}
-.grid-inner {
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));
-    gap:12px;
-}
-.image-item {
-    background:rgba(99,102,241,0.1);
-    border-radius:10px;
-    padding:10px;
-    text-align:center;
-    position:relative;
-    transition:all 0.3s;
-}
-.image-item:hover {
-    background:rgba(99,102,241,0.2);
-}
-.image-item img {
-    width:100%;
-    height:90px;
-    object-fit:cover;
-    border-radius:8px;
-    background:#fff;
-    margin-bottom:8px;
-}
-.image-item .name {
-    font-size:0.7rem;
-    color:#cbd5e1;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    margin-bottom:4px;
-}
-.image-item .size {
-    font-size:0.7rem;
-    color:#a5b4fc;
-    font-weight:600;
-}
-.image-item .status {
-    font-size:0.65rem;
-    margin-top:4px;
-    font-weight:700;
-    min-height:12px;
-}
-.image-item .status.ok { color:#86efac; }
-.image-item .status.fail { color:#fca5a5; }
-.image-item .remove {
-    position:absolute;
-    top:6px;
-    right:6px;
-    background:rgba(220,53,69,0.9);
-    color:#fff;
-    border:none;
-    width:22px;
-    height:22px;
-    border-radius:50%;
-    cursor:pointer;
-    font-size:0.7rem;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Batch Image Compressor",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/batch-image-compress.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
 
-.action-btn {
-    width:100%;
-    padding:16px;
-    background:linear-gradient(135deg, #a855f7, #ec4899);
-    border:none;
-    border-radius:12px;
-    color:#fff;
-    font-weight:700;
-    font-size:1.05rem;
-    cursor:pointer;
-    transition:all 0.3s;
-    font-family:inherit;
-    margin-top:16px;
-}
-.action-btn:hover:not(:disabled) {
-    transform:translateY(-2px);
-    box-shadow:0 10px 30px rgba(168,85,247,0.4);
-}
-.action-btn:disabled { opacity:0.6; cursor:not-allowed; }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
-.progress-bar {
-    display:none;
-    width:100%;
-    height:12px;
-    background:rgba(15,15,30,0.8);
-    border-radius:20px;
-    margin-top:16px;
-    overflow:hidden;
-}
-.progress-bar .fill {
-    height:100%;
-    width:0%;
-    background:linear-gradient(90deg, #a855f7, #ec4899);
-    transition:width 0.3s;
-}
-.progress-text {
-    display:none;
-    text-align:center;
-    margin-top:10px;
-    font-size:0.85rem;
-    color:#a5b4fc;
-}
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body {
+            min-height:100vh;
+            background:linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%);
+            background-attachment:fixed;
+            color:#e0e7ff;
+        }
+        header {
+            background:rgba(15,15,30,0.95);
+            backdrop-filter:blur(10px);
+            padding:16px 24px;
+            display:flex;
+            align-items:center;
+            gap:20px;
+            border-bottom:2px solid rgba(168,85,247,0.3);
+            position:sticky;
+            top:0;
+            z-index:100;
+        }
+        header a {
+            color:#cbd5e1;
+            text-decoration:none;
+            font-weight:600;
+            font-size:1rem;
+            transition:all 0.3s;
+            padding:8px 12px;
+            border-radius:6px;
+        }
+        header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
+        .brand {
+            font-weight:800;
+            font-size:1.3rem;
+            background:linear-gradient(135deg, #a855f7, #ec4899);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            flex:1;
+        }
+        main { max-width:1100px; margin:0 auto; padding:40px 20px 60px; }
+        h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
+        .subtitle { text-align:center; color:#a5b4fc; margin-bottom:40px; }
+        .card {
+            background:rgba(30,27,75,0.9);
+            backdrop-filter:blur(10px);
+            border-radius:16px;
+            padding:40px;
+            border:1px solid rgba(168,85,247,0.3);
+            margin-bottom:24px;
+        }
+        .upload-zone {
+            border:3px dashed rgba(168,85,247,0.6);
+            border-radius:16px;
+            padding:50px 30px;
+            text-align:center;
+            cursor:pointer;
+            transition:all 0.3s;
+            background:rgba(99,102,241,0.05);
+        }
+        .upload-zone:hover, .upload-zone.active {
+            border-color:#a855f7;
+            background:rgba(168,85,247,0.15);
+        }
+        .upload-icon { font-size:3rem; color:#a855f7; margin-bottom:16px; }
+        .upload-zone p { color:#cbd5e1; margin:8px 0; }
+        .highlight { color:#e0e7ff; font-weight:700; }
+        input[type="file"] { display:none; }
 
-.status {
-    display:none;
-    margin-top:20px;
-    padding:16px;
-    border-radius:10px;
-    text-align:center;
-    font-weight:600;
-}
-.status.loading { background:rgba(99,102,241,0.2); color:#a5b4fc; }
-.status.success { background:rgba(34,197,94,0.2); color:#86efac; }
-.status.error { background:rgba(239,68,68,0.2); color:#fca5a5; }
+        .controls {
+            display:none;
+            margin-top:24px;
+            padding:24px;
+            background:rgba(20,20,40,0.8);
+            border-radius:12px;
+            border:1px solid rgba(168,85,247,0.2);
+        }
+        .controls-grid {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:18px;
+            margin-bottom:18px;
+        }
+        .control-group label {
+            display:block;
+            font-weight:700;
+            margin-bottom:8px;
+            font-size:0.9rem;
+        }
+        .control-group select,
+        .control-group input[type="number"] {
+            width:100%;
+            padding:12px;
+            background:rgba(15,15,30,0.8);
+            border:2px solid rgba(168,85,247,0.4);
+            border-radius:10px;
+            color:#e0e7ff;
+            font-family:inherit;
+            font-weight:600;
+            font-size:0.9rem;
+            transition:all 0.3s;
+        }
+        .control-group select:focus,
+        .control-group input:focus {
+            outline:none;
+            border-color:#a855f7;
+            box-shadow:0 0 0 4px rgba(168,85,247,0.15);
+        }
 
-.stats-grid {
-    display:none;
-    grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
-    gap:12px;
-    margin-top:20px;
-    margin-bottom:16px;
-}
-.stat-box {
-    background:rgba(99,102,241,0.15);
-    padding:14px;
-    border-radius:10px;
-    text-align:center;
-}
-.stat-box .label {
-    font-size:0.72rem;
-    color:#a5b4fc;
-    margin-bottom:4px;
-    text-transform:uppercase;
-    letter-spacing:0.5px;
-}
-.stat-box .value {
-    font-size:1.15rem;
-    font-weight:800;
-    color:#e0e7ff;
-}
-.stat-box .value.green { color:#86efac; }
-.stat-box .value.pink { color:#f9a8d4; }
+        .range-wrapper {
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+        .range-wrapper input[type="range"] {
+            flex:1;
+            accent-color:#a855f7;
+            height:6px;
+        }
+        .range-value {
+            min-width:60px;
+            text-align:center;
+            font-weight:700;
+            color:#a855f7;
+            background:rgba(168,85,247,0.15);
+            padding:6px 10px;
+            border-radius:8px;
+            font-size:0.85rem;
+        }
 
-.download-all-btn {
-    display:none;
-    width:100%;
-    padding:14px;
-    background:linear-gradient(135deg, #198754, #22c55e);
-    color:#fff;
-    border:none;
-    border-radius:10px;
-    font-weight:700;
-    font-size:1rem;
-    cursor:pointer;
-    margin-top:12px;
-    font-family:inherit;
-    transition:all 0.3s;
-}
-.download-all-btn:hover {
-    transform:translateY(-2px);
-    box-shadow:0 10px 30px rgba(25,135,84,0.4);
-}
+        .image-grid {
+            display:none;
+            margin-top:20px;
+            max-height:500px;
+            overflow-y:auto;
+            padding:14px;
+            background:rgba(15,15,30,0.6);
+            border-radius:12px;
+        }
+        .grid-inner {
+            display:grid;
+            grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));
+            gap:12px;
+        }
+        .image-item {
+            background:rgba(99,102,241,0.1);
+            border-radius:10px;
+            padding:10px;
+            text-align:center;
+            position:relative;
+            transition:all 0.3s;
+        }
+        .image-item:hover {
+            background:rgba(99,102,241,0.2);
+        }
+        .image-item img {
+            width:100%;
+            height:90px;
+            object-fit:cover;
+            border-radius:8px;
+            background:#fff;
+            margin-bottom:8px;
+        }
+        .image-item .name {
+            font-size:0.7rem;
+            color:#cbd5e1;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            margin-bottom:4px;
+        }
+        .image-item .size {
+            font-size:0.7rem;
+            color:#a5b4fc;
+            font-weight:600;
+        }
+        .image-item .status {
+            font-size:0.65rem;
+            margin-top:4px;
+            font-weight:700;
+            min-height:12px;
+        }
+        .image-item .status.ok { color:#86efac; }
+        .image-item .status.fail { color:#fca5a5; }
+        .image-item .remove {
+            position:absolute;
+            top:6px;
+            right:6px;
+            background:rgba(220,53,69,0.9);
+            color:#fff;
+            border:none;
+            width:22px;
+            height:22px;
+            border-radius:50%;
+            cursor:pointer;
+            font-size:0.7rem;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
 
-.info-box {
-    background:rgba(99,102,241,0.1);
-    border-left:4px solid #a855f7;
-    padding:16px;
-    border-radius:8px;
-    margin-top:20px;
-    font-size:0.85rem;
-    color:#a5b4fc;
-    line-height:1.7;
-}
-.info-box strong { color:#e0e7ff; }
+        .action-btn {
+            width:100%;
+            padding:16px;
+            background:linear-gradient(135deg, #a855f7, #ec4899);
+            border:none;
+            border-radius:12px;
+            color:#fff;
+            font-weight:700;
+            font-size:1.05rem;
+            cursor:pointer;
+            transition:all 0.3s;
+            font-family:inherit;
+            margin-top:16px;
+        }
+        .action-btn:hover:not(:disabled) {
+            transform:translateY(-2px);
+            box-shadow:0 10px 30px rgba(168,85,247,0.4);
+        }
+        .action-btn:disabled { opacity:0.6; cursor:not-allowed; }
 
-@media(max-width:768px){
-    .card { padding:24px; }
-    h1 { font-size:1.5rem; }
-    .upload-zone { padding:40px 20px; }
-    .controls-grid { grid-template-columns:1fr; }
-    .grid-inner { grid-template-columns:repeat(auto-fill, minmax(110px, 1fr)); }
-}
-</style>
+        .progress-bar {
+            display:none;
+            width:100%;
+            height:12px;
+            background:rgba(15,15,30,0.8);
+            border-radius:20px;
+            margin-top:16px;
+            overflow:hidden;
+        }
+        .progress-bar .fill {
+            height:100%;
+            width:0%;
+            background:linear-gradient(90deg, #a855f7, #ec4899);
+            transition:width 0.3s;
+        }
+        .progress-text {
+            display:none;
+            text-align:center;
+            margin-top:10px;
+            font-size:0.85rem;
+            color:#a5b4fc;
+        }
+
+        .status {
+            display:none;
+            margin-top:20px;
+            padding:16px;
+            border-radius:10px;
+            text-align:center;
+            font-weight:600;
+        }
+        .status.loading { background:rgba(99,102,241,0.2); color:#a5b4fc; }
+        .status.success { background:rgba(34,197,94,0.2); color:#86efac; }
+        .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; }
+
+        .stats-grid {
+            display:none;
+            grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+            gap:12px;
+            margin-top:20px;
+            margin-bottom:16px;
+        }
+        .stat-box {
+            background:rgba(99,102,241,0.15);
+            padding:14px;
+            border-radius:10px;
+            text-align:center;
+        }
+        .stat-box .label {
+            font-size:0.72rem;
+            color:#a5b4fc;
+            margin-bottom:4px;
+            text-transform:uppercase;
+            letter-spacing:0.5px;
+        }
+        .stat-box .value {
+            font-size:1.15rem;
+            font-weight:800;
+            color:#e0e7ff;
+        }
+        .stat-box .value.green { color:#86efac; }
+        .stat-box .value.pink { color:#f9a8d4; }
+
+        .download-all-btn {
+            display:none;
+            width:100%;
+            padding:14px;
+            background:linear-gradient(135deg, #198754, #22c55e);
+            color:#fff;
+            border:none;
+            border-radius:10px;
+            font-weight:700;
+            font-size:1rem;
+            cursor:pointer;
+            margin-top:12px;
+            font-family:inherit;
+            transition:all 0.3s;
+        }
+        .download-all-btn:hover {
+            transform:translateY(-2px);
+            box-shadow:0 10px 30px rgba(25,135,84,0.4);
+        }
+
+        .info-box {
+            background:rgba(99,102,241,0.1);
+            border-left:4px solid #a855f7;
+            padding:16px;
+            border-radius:8px;
+            margin-top:20px;
+            font-size:0.85rem;
+            color:#a5b4fc;
+            line-height:1.7;
+        }
+        .info-box strong { color:#e0e7ff; }
+
+        @media(max-width:768px){
+            .card { padding:24px; }
+            h1 { font-size:1.5rem; }
+            .upload-zone { padding:40px 20px; }
+            .controls-grid { grid-template-columns:1fr; }
+            .grid-inner { grid-template-columns:repeat(auto-fill, minmax(110px, 1fr)); }
+        }
+    </style>
 </head>
 <body>
 
@@ -452,7 +487,6 @@ input[type="file"] { display:none; }
     let imageFiles = [];
     let compressedResults = [];
 
-    // ============ Upload ============
     uploadZone.addEventListener('click', () => fileInput.click());
     uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
     uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
@@ -483,7 +517,6 @@ input[type="file"] { display:none; }
         showStatus(`✅ ${newFiles.length} इमेज add हुईं (Total: ${imageFiles.length})`, 'success');
     }
 
-    // ============ Render Image Grid ============
     function renderImageGrid() {
         if (imageFiles.length === 0) {
             imageGrid.style.display = 'none';
@@ -529,12 +562,10 @@ input[type="file"] { display:none; }
         return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
     }
 
-    // ============ Quality Slider ============
     qualityRange.addEventListener('input', () => {
         qualityValue.textContent = qualityRange.value + '%';
     });
 
-    // ============ Compress ============
     compressBtn.addEventListener('click', async () => {
         if (imageFiles.length === 0) {
             showStatus('❌ पहले इमेज चुनें', 'error');
@@ -564,7 +595,6 @@ input[type="file"] { display:none; }
                 progressFill.style.width = progress + '%';
                 progressText.textContent = `Compressing ${i + 1} of ${imageFiles.length}: ${file.name}`;
 
-                // Update card status
                 const card = gridInner.querySelector(`[data-index="${i}"]`);
                 if (card) {
                     const st = card.querySelector('.status');
@@ -602,7 +632,6 @@ input[type="file"] { display:none; }
                 progressFill.style.width = ((i + 1) / imageFiles.length) * 100 + '%';
             }
 
-            // Show stats
             const saved = totalOriginal - totalCompressed;
             const percent = totalOriginal > 0 ? ((saved / totalOriginal) * 100).toFixed(1) : 0;
 
@@ -627,7 +656,6 @@ input[type="file"] { display:none; }
         }, 2500);
     });
 
-    // ============ Compress Single Image ============
     function compressImage(file, quality, maxW, format) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -638,7 +666,6 @@ input[type="file"] { display:none; }
                     let w = img.width;
                     let h = img.height;
 
-                    // Resize if too wide
                     if (w > maxW) {
                         h = Math.round((h * maxW) / w);
                         w = maxW;
@@ -666,7 +693,6 @@ input[type="file"] { display:none; }
         });
     }
 
-    // ============ Download All as ZIP ============
     downloadAllBtn.addEventListener('click', async () => {
         if (compressedResults.length === 0) {
             showStatus('❌ पहले compress करें', 'error');
@@ -690,7 +716,6 @@ input[type="file"] { display:none; }
         }, 2000);
     });
 
-    // ============ Status ============
     function showStatus(message, type) {
         status.textContent = message;
         status.className = `status ${type}`;

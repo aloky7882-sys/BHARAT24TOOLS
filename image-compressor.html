@@ -1,9 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced AI Image Compressor - HARI TOOLS</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <title>Image Compressor - Compress JPG, PNG, WebP Free | Bharat24Tools</title>
+    <meta name="description" content="Compress JPG, PNG and WebP images online without losing quality. Free image compressor with quality control. Works in browser, no upload, no watermark.">
+    <meta name="keywords" content="image compressor, compress jpg, compress png, compress webp, free image compressor, reduce image size, online image optimizer">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-compressor.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-compressor.html">
+    <meta property="og:title" content="Image Compressor - Compress JPG, PNG, WebP Free | Bharat24Tools">
+    <meta property="og:description" content="Compress JPG, PNG and WebP images online without losing quality. Free, no upload.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Image Compressor - Compress JPG, PNG, WebP Free | Bharat24Tools">
+    <meta name="twitter:description" content="Compress JPG, PNG and WebP images online without losing quality. Free, no upload.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Image Compressor",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/image-compressor.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -461,7 +498,7 @@
 
 <header>
     <a href="index.html" class="back"><i class="fas fa-arrow-left"></i> Back</a>
-    <span class="brand"><i class="fas fa-compress"></i> HARI TOOLS</span>
+    <span class="brand"><i class="fas fa-compress"></i> Bharat24Tools</span>
 </header>
 
 <div class="container">
@@ -533,7 +570,6 @@ class AdvancedImageCompressor {
     }
 
     init() {
-        // Upload zone
         this.uploadZone.addEventListener('click', () => this.fileInput.click());
         
         this.uploadZone.addEventListener('dragover', (e) => {
@@ -555,12 +591,10 @@ class AdvancedImageCompressor {
             this.handleFiles(e.target.files);
         });
 
-        // Quality slider
         this.qualitySlider.addEventListener('input', (e) => {
             this.qualityValue.textContent = e.target.value + '%';
         });
 
-        // Compress button
         this.compressBtn.addEventListener('click', () => this.compressAll());
     }
 
@@ -602,7 +636,6 @@ class AdvancedImageCompressor {
                     const quality = parseInt(this.qualitySlider.value) / 100;
                     const targetSize = this.getTargetSize();
                     
-                    // Create canvas
                     const canvas = document.createElement('canvas');
                     canvas.width = img.width;
                     canvas.height = img.height;
@@ -610,13 +643,11 @@ class AdvancedImageCompressor {
                     const ctx = canvas.getContext('2d', { alpha: false });
                     ctx.drawImage(img, 0, 0);
                     
-                    // Compress with quality adjustment
                     let compressedBlob = null;
                     let finalQuality = quality;
                     
                     canvas.toBlob(
                         (blob) => {
-                            // If target size is set, adjust quality to match
                             if (targetSize > 0 && blob.size > targetSize) {
                                 finalQuality = this.calculateQuality(blob.size, targetSize, quality);
                                 

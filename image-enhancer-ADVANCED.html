@@ -1,11 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <title>Advanced AI Image Enhancer - Improve Photo Quality | HARI TOOLS</title>
-    <meta name="description" content="Enhance image quality with AI. Increase file size, improve details, sharpen photos. 100% free, no upload.">
+
+    <title>Advanced AI Image Enhancer - Improve Photo Quality Free | Bharat24Tools</title>
+    <meta name="description" content="Enhance image quality with AI. Upscale, sharpen, denoise and improve photo details. Free online image enhancer, works in browser, no upload.">
+    <meta name="keywords" content="image enhancer, ai image enhancer, photo quality enhancer, upscale image, sharpen image, denoise image, free image enhancer">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-enhancer-ADVANCED.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-enhancer-ADVANCED.html">
+    <meta property="og:title" content="Advanced AI Image Enhancer - Improve Photo Quality Free | Bharat24Tools">
+    <meta property="og:description" content="Enhance image quality with AI. Upscale, sharpen, denoise and improve photo details. Free, no upload.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Advanced AI Image Enhancer - Improve Photo Quality Free | Bharat24Tools">
+    <meta name="twitter:description" content="Enhance image quality with AI. Upscale, sharpen, denoise and improve photo details. Free, no upload.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Advanced AI Image Enhancer",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/image-enhancer-ADVANCED.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
@@ -374,7 +409,7 @@
 
     <header>
         <a href="index.html" class="back"><i class="fas fa-arrow-left"></i> Back</a>
-        <span class="brand"><i class="fas fa-sparkles"></i> HARI TOOLS</span>
+        <span class="brand"><i class="fas fa-sparkles"></i> Bharat24Tools</span>
     </header>
 
     <main>
@@ -484,7 +519,7 @@
     </main>
 
     <footer>
-        &copy; 2026 HARI TOOLS. All rights reserved. Made with ❤️ in India.
+        &copy; 2026 Bharat24Tools. All rights reserved. Made with ❤️ in India.
     </footer>
 
     <script>
@@ -631,22 +666,18 @@
                 this.showStatus('<span class="loading-spinner"></span>Image enhance ho raha hai...', 'loading');
 
                 try {
-                    // Create canvas for processing
                     const tempCanvas = document.createElement('canvas');
                     tempCanvas.width = this.originalImage.width * this.scale;
                     tempCanvas.height = this.originalImage.height * this.scale;
                     const tempCtx = tempCanvas.getContext('2d');
 
-                    // Upscale with high quality
                     tempCtx.imageSmoothingEnabled = true;
                     tempCtx.imageSmoothingQuality = 'high';
                     tempCtx.drawImage(this.originalImage, 0, 0, tempCanvas.width, tempCanvas.height);
 
-                    // Get image data
                     const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
                     const data = imageData.data;
 
-                    // Apply enhancements
                     if (this.features.sharpen) {
                         this.applySharpen(data, tempCanvas.width, tempCanvas.height, this.quality);
                     }
@@ -659,7 +690,6 @@
 
                     tempCtx.putImageData(imageData, 0, 0);
 
-                    // Display enhanced result
                     const displayScale = Math.min(1, 400 / Math.max(tempCanvas.width, tempCanvas.height));
                     
                     this.enhancedCanvas.width = tempCanvas.width * displayScale;
@@ -668,11 +698,9 @@
                     const displayCtx = this.enhancedCanvas.getContext('2d');
                     displayCtx.drawImage(tempCanvas, 0, 0, this.enhancedCanvas.width, this.enhancedCanvas.height);
 
-                    // Get target quality
                     const targetSize = this.getTargetSizeInBytes();
                     const quality = this.calculateQuality(targetSize, tempCanvas);
 
-                    // Export with target size
                     this.enhancedImage = tempCanvas;
                     tempCanvas.toBlob((blob) => {
                         this.enhancedBlob = blob;

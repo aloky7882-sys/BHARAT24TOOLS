@@ -1,9 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Cropper - BHARAT TOOLS</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <title>Image Cropper - Crop Images Online Free | Bharat24Tools</title>
+    <meta name="description" content="Crop JPG, PNG, WebP images online with live preview. Free image cropper with aspect ratio presets and custom dimensions. Works in browser, no upload.">
+    <meta name="keywords" content="image cropper, crop image online, crop jpg, crop png, free image cropper, photo cropper, crop photo online">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-cropper.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-cropper.html">
+    <meta property="og:title" content="Image Cropper - Crop Images Online Free | Bharat24Tools">
+    <meta property="og:description" content="Crop JPG, PNG, WebP images online with live preview. Free, no upload.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Image Cropper - Crop Images Online Free | Bharat24Tools">
+    <meta name="twitter:description" content="Crop JPG, PNG, WebP images online with live preview. Free, no upload.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Image Cropper",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/image-cropper.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
         * {
@@ -64,7 +101,6 @@
             color: #666;
         }
 
-        /* Upload */
         .drop-area {
             position: relative;
             background: linear-gradient(135deg, #f8f9fa, #eef5ff);
@@ -132,7 +168,6 @@
             font-weight: 600;
         }
 
-        /* Controls */
         .controls-section {
             background: linear-gradient(135deg, #f8f9fa, #eef5ff);
             border-radius: 14px;
@@ -186,7 +221,6 @@
             font-size: 14px;
         }
 
-        /* Presets */
         .preset-buttons {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -211,7 +245,6 @@
             border-color: #0d6efd;
         }
 
-        /* Canvas Area */
         .canvas-wrapper {
             display: none;
             background: linear-gradient(135deg, #f8f9fa, #eef5ff);
@@ -276,7 +309,6 @@
             font-weight: 700;
         }
 
-        /* Buttons */
         .button-group {
             display: flex;
             gap: 12px;
@@ -328,7 +360,6 @@
             background: #c82333;
         }
 
-        /* Status */
         #status {
             padding: 14px 18px;
             border-radius: 10px;
@@ -411,7 +442,6 @@
 
     <div id="status"></div>
 
-    <!-- Controls -->
     <div class="controls-section" id="controlsSection">
         <h3><i class="fas fa-sliders-h"></i> Crop Settings</h3>
         
@@ -449,10 +479,8 @@
         </div>
     </div>
 
-    <!-- Original Preview -->
     <img id="originalPreview" class="original-preview">
 
-    <!-- Canvas Area -->
     <div class="canvas-wrapper" id="canvasWrapper">
         <h3>✨ Cropped Result</h3>
         <canvas id="canvas"></canvas>
@@ -468,7 +496,6 @@
         </div>
     </div>
 
-    <!-- Buttons -->
     <div class="button-group">
         <button class="btn btn-crop show" id="cropBtn">
             <i class="fas fa-crop"></i> Crop Image
@@ -549,7 +576,6 @@ dropZone.addEventListener("drop", (e) => {
     processFile(e.dataTransfer.files[0]);
 });
 
-// Presets
 document.querySelectorAll(".preset-btn").forEach(btn => {
     btn.addEventListener("click", () => {
         const preset = btn.dataset.preset;

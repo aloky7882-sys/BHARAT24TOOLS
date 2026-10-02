@@ -1,86 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scientific Calculator - BHARAT TOOLS</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <title>Scientific Calculator - Advanced Online Calculator Free | Bharat24Tools</title>
+    <meta name="description" content="Advanced online scientific calculator with sin, cos, tan, log, factorial and more. Free, works in browser, supports DEG and RAD modes.">
+    <meta name="keywords" content="scientific calculator, online calculator, advanced calculator, trigonometry calculator, log calculator, free scientific calculator">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/scientific-calculator.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/scientific-calculator.html">
+    <meta property="og:title" content="Scientific Calculator - Advanced Online Calculator Free | Bharat24Tools">
+    <meta property="og:description" content="Advanced online scientific calculator with sin, cos, tan, log, factorial and more. Free, DEG and RAD modes.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Scientific Calculator - Advanced Online Calculator Free | Bharat24Tools">
+    <meta name="twitter:description" content="Advanced online scientific calculator with sin, cos, tan, log, factorial and more. Free, DEG and RAD modes.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Scientific Calculator",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/scientific-calculator.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #f4f6f9; font-family: Arial, sans-serif; }
-        .calc-container { max-width: 420px; margin: 30px auto; background: #1e222b; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); color: #fff; }
-        .calc-screen { width: 100%; background: #282c34; border: none; padding: 15px; text-align: right; color: #61dafb; font-size: 28px; border-radius: 10px; margin-bottom: 15px; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; min-height: 65px; overflow-x: auto; }
-        .calc-mode { text-align: left; font-size: 12px; color: #aaa; margin-bottom: 5px; padding-left: 5px; font-weight: bold; }
-        .calc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-        button { padding: 15px 5px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: #3a3f4d; color: #fff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #f4f6fb 0%, #e8f1f9 100%);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            padding: 30px 16px 60px;
+        }
+        .navbar {
+            background: #fff;
+            padding: 18px 5%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin: -30px -16px 30px;
+        }
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0d6efd, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        .navbar a:hover { background: #eef4ff; color: #0d6efd; }
+
+        .calc-container {
+            max-width: 420px;
+            margin: 0 auto;
+            background: #1e222b;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            color: #fff;
+        }
+        .calc-mode {
+            text-align: left;
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 5px;
+            padding-left: 5px;
+            font-weight: bold;
+        }
+        .calc-screen {
+            width: 100%;
+            background: #282c34;
+            border: none;
+            padding: 15px;
+            text-align: right;
+            color: #61dafb;
+            font-size: 28px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
+            min-height: 65px;
+            overflow-x: auto;
+        }
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 15px 5px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #3a3f4d;
+            color: #fff;
+            font-family: inherit;
+        }
         button:active { transform: scale(0.95); }
         .btn-op { background: #ff9933; color: #fff; }
         .btn-fn { background: #4b5263; color: #61dafb; font-size: 14px; }
         .btn-clear { background: #e06c75; color: #fff; }
         .btn-equal { background: #138808; color: #fff; grid-column: span 2; }
-        .history-box { max-width: 420px; margin: 15px auto; background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); color: #333; max-height: 150px; overflow-y: auto; }
-        .history-title { font-weight: bold; font-size: 14px; margin-bottom: 8px; border-bottom: 1px solid #ddd; padding-bottom: 5px; color: #555; }
-        .history-item { font-size: 13px; padding: 3px 0; text-align: right; color: #666; cursor: pointer; }
+
+        .history-box {
+            max-width: 420px;
+            margin: 15px auto;
+            background: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            color: #333;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .history-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            color: #555;
+        }
+        .history-item {
+            font-size: 13px;
+            padding: 3px 0;
+            text-align: right;
+            color: #666;
+            cursor: pointer;
+        }
         .history-item:hover { color: #138808; }
-        .seo-text { max-width: 800px; margin: 40px auto; padding: 20px; text-align: left; line-height: 1.6; color: #444; }
+
+        .seo-text {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: left;
+            line-height: 1.6;
+            color: #444;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .seo-text h3 {
+            color: #0d6efd;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #6c757d;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+        @media(max-width: 480px) {
+            .calc-container { padding: 15px; }
+            button { padding: 12px 3px; font-size: 14px; }
+            .calc-screen { font-size: 22px; }
+        }
     </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <div class="logo">🇮🇳 BHARAT TOOLS</div>
-    <ul class="menu">
-        <li><a href="index.html">Home</a></li>
-    </ul>
+    <div class="logo">⚡ Bharat24Tools</div>
+    <a href="index.html">← Home</a>
 </nav>
 
 <div class="calc-container">
     <div class="calc-mode" id="modeDisplay">DEG</div>
     <div class="calc-screen" id="display">0</div>
-    
+
     <div class="calc-grid">
-        <!-- Row 1 -->
         <button class="btn-fn" onclick="toggleDegRad()">DEG/RAD</button>
         <button class="btn-fn" onclick="input('sin(')">sin</button>
         <button class="btn-fn" onclick="input('cos(')">cos</button>
         <button class="btn-fn" onclick="input('tan(')">tan</button>
         <button class="btn-clear" onclick="clearAll()">AC</button>
 
-        <!-- Row 2 -->
         <button class="btn-fn" onclick="input('log(')">log</button>
         <button class="btn-fn" onclick="input('ln(')">ln</button>
         <button class="btn-fn" onclick="input('√(')">√</button>
         <button class="btn-fn" onclick="input('^')">xʸ</button>
         <button class="btn-clear" onclick="backspace()">DEL</button>
 
-        <!-- Row 3 -->
         <button class="btn-fn" onclick="input('π')">π</button>
         <button class="btn-fn" onclick="input('e')">e</button>
         <button class="btn-fn" onclick="input('!')">!</button>
         <button class="btn-fn" onclick="input('(')">(</button>
         <button class="btn-fn" onclick="input(')')">)</button>
 
-        <!-- Row 4 -->
         <button onclick="input('7')">7</button>
         <button onclick="input('8')">8</button>
         <button onclick="input('9')">9</button>
         <button class="btn-op" onclick="input('%')">mod</button>
         <button class="btn-op" onclick="input('/')">÷</button>
 
-        <!-- Row 5 -->
         <button onclick="input('4')">4</button>
         <button onclick="input('5')">5</button>
         <button onclick="input('6')">6</button>
         <button class="btn-op" onclick="input('*')">×</button>
         <button class="btn-op" onclick="input('-')">−</button>
 
-        <!-- Row 6 -->
         <button onclick="input('1')">1</button>
         <button onclick="input('2')">2</button>
         <button onclick="input('3')">3</button>
         <button class="btn-op" onclick="input('+')">+</button>
         <button class="btn-equal" onclick="calculate()">=</button>
 
-        <!-- Row 7 -->
         <button onclick="input('0')" style="grid-column: span 2;">0</button>
         <button onclick="input('.')">.</button>
     </div>
@@ -93,11 +255,12 @@
 
 <div class="seo-text">
     <h3>About Advanced Scientific Calculator</h3>
-    <p>Bharat Tools features a full-fledged professional online scientific calculator designed for students, engineers, and developers. It smoothly evaluates trigonometric operations like sin, cos, tan, logarithmic expressions, factorials, and powers without throwing errors or breaking layout constraints.</p>
+    <p>Bharat24Tools features a full-fledged professional online scientific calculator designed for students, engineers, and developers. It smoothly evaluates trigonometric operations like sin, cos, tan, logarithmic expressions, factorials, and powers without throwing errors or breaking layout constraints.</p>
+    <p>You can switch between DEG and RAD modes with a single tap, and your calculation history is saved so you can quickly reference or re-use previous results.</p>
 </div>
 
-<footer style="text-align:center;padding:25px;background:#111;color:white;margin-top:40px;">
-    © 2026 BHARAT TOOLS | Made with ❤️ by Alok
+<footer>
+    &copy; 2026 Bharat24Tools | Made with ❤️ in India
 </footer>
 
 <script>
@@ -146,31 +309,22 @@
     }
 
     function parseScientificJson(expr) {
-        // Handle Constants
         expr = expr.replace(/π/g, Math.PI).replace(/e/g, Math.E);
 
-        // Handle Trigonometry (sin, cos, tan)
         expr = expr.replace(/(sin|cos|tan)\(([^)]+)\)/g, function(match, func, angleExpr) {
             try {
                 let angle = eval(angleExpr);
-                if (!isRad) angle = angle * (Math.PI / 180); // DEG to RAD
+                if (!isRad) angle = angle * (Math.PI / 180);
                 if (func === 'sin') return Math.sin(angle);
                 if (func === 'cos') return Math.cos(angle);
                 if (func === 'tan') return Math.tan(angle);
             } catch(e) { return 'Error'; }
         });
 
-        // Handle Logs
         expr = expr.replace(/log\(([^)]+)\)/g, (m, p1) => Math.log10(eval(p1)));
         expr = expr.replace(/ln\(([^)]+)\)/g, (m, p1) => Math.log(eval(p1)));
-
-        // Handle Square Root
         expr = expr.replace(/√\(([^)]+)\)/g, (m, p1) => Math.sqrt(eval(p1)));
-
-        // Handle Power (x^y)
         expr = expr.replace(/([^+\-*/%()]+)\^([^+\-*/%()]+)/g, (m, base, exp) => `Math.pow(${base},${exp})`);
-
-        // Handle Factorial (!)
         expr = expr.replace(/(\d+)!/g, (m, p1) => factorial(parseInt(p1)));
 
         return expr;
@@ -185,11 +339,9 @@
             if (isNaN(result) || !isFinite(result)) {
                 display.innerText = 'Error';
             } else {
-                // Rounding decimal errors to max 10 places
                 result = parseFloat(result.toFixed(10));
                 display.innerText = result;
-                
-                // Add to History list
+
                 let item = document.createElement('div');
                 item.className = 'history-item';
                 item.innerText = `${originalExpr} = ${result}`;

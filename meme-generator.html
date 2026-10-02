@@ -1,458 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meme Generator - Bharat Tools</title>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Anton&display=swap" rel="stylesheet">
+    <title>Meme Generator - Create Custom Memes Free | Bharat24Tools</title>
+    <meta name="description" content="Add top and bottom text to any image and download your meme. Free meme generator with adjustable font size, colors and outline. Works in browser.">
+    <meta name="keywords" content="meme generator, meme maker, create meme, custom meme, free meme generator, funny memes">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/meme-generator.html">
 
-<style>
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/meme-generator.html">
+    <meta property="og:title" content="Meme Generator - Create Custom Memes Free | Bharat24Tools">
+    <meta property="og:description" content="Add top and bottom text to any image and download your meme. Free, works in browser.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Meme Generator - Create Custom Memes Free | Bharat24Tools">
+    <meta name="twitter:description" content="Add top and bottom text to any image and download your meme. Free, works in browser.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-body{
-background:#f4f6fb;
-color:#222;
-padding:30px 16px 60px;
-}
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Meme Generator",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/meme-generator.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
 
-.wrapper{
-max-width:1000px;
-margin:0 auto;
-}
-
-.page-header{
-text-align:center;
-margin-bottom:26px;
-}
-
-.page-header h1{
-font-size:32px;
-font-weight:700;
-color:#212529;
-margin-bottom:8px;
-}
-
-.page-header h1 i{
-color:#0d6efd;
-}
-
-.page-header p{
-color:#6c757d;
-font-size:15px;
-}
-
-.layout{
-display:grid;
-grid-template-columns:340px 1fr;
-gap:24px;
-}
-
-@media(max-width:800px){
-.layout{
-grid-template-columns:1fr;
-}
-}
-
-.panel{
-background:#fff;
-border-radius:16px;
-padding:22px;
-box-shadow:0 10px 30px rgba(0,0,0,.06);
-margin-bottom:20px;
-}
-
-.panel h3{
-font-size:14px;
-margin-bottom:12px;
-color:#495057;
-}
-
-.upload-zone{
-position:relative;
-border:2px dashed #0d6efd;
-border-radius:10px;
-padding:24px 16px;
-text-align:center;
-background:#f8f9fa;
-cursor:pointer;
-margin-bottom:6px;
-transition:.2s;
-}
-
-.upload-zone:hover, .upload-zone.dragover{
-background:#eef5ff;
-border-color:#0b5ed7;
-}
-
-.upload-zone input{
-position:absolute;
-inset:0;
-opacity:0;
-cursor:pointer;
-}
-
-.upload-zone .icon{
-font-size:26px;
-color:#0d6efd;
-margin-bottom:6px;
-}
-
-.upload-zone .txt{
-font-size:13px;
-color:#6c757d;
-}
-
-label{
-display:block;
-font-size:12px;
-font-weight:600;
-color:#6c757d;
-margin:14px 0 6px;
-}
-
-input[type="text"]{
-width:100%;
-padding:12px;
-border:1px solid #dee2e6;
-border-radius:8px;
-font-family:inherit;
-font-size:14px;
-text-transform:uppercase;
-}
-
-input[type="range"]{
-width:100%;
-}
-
-.color-row{
-display:flex;
-gap:10px;
-}
-
-.color-row .cfield{
-flex:1;
-}
-
-.color-row input[type="color"]{
-width:100%;
-height:40px;
-border:1px solid #dee2e6;
-border-radius:8px;
-cursor:pointer;
-padding:2px;
-}
-
-.range-value{
-font-size:12px;
-color:#0d6efd;
-font-weight:700;
-float:right;
-}
-
-.btn{
-width:100%;
-padding:14px;
-border-radius:10px;
-border:none;
-font-weight:700;
-cursor:pointer;
-font-size:15px;
-font-family:inherit;
-margin-top:16px;
-}
-
-.btn-primary{
-background:#198754;
-color:#fff;
-}
-
-.btn-primary:hover{
-background:#157347;
-}
-
-.canvas-wrap{
-text-align:center;
-}
-
-#memeCanvas{
-max-width:100%;
-border-radius:12px;
-box-shadow:0 15px 35px rgba(0,0,0,.1);
-background:#eee;
-}
-
-#status{
-margin-top:12px;
-font-size:13px;
-font-weight:600;
-min-height:18px;
-text-align:center;
-}
-
-.back-link{
-display:inline-block;
-margin-top:10px;
-color:#6c757d;
-font-weight:500;
-text-decoration:none;
-}
-
-</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Anton&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body { background:#f4f6fb; color:#222; padding:30px 16px 60px; }
+        .wrapper { max-width:1000px; margin:0 auto; }
+        .page-header { text-align:center; margin-bottom:26px; }
+        .page-header h1 { font-size:32px; font-weight:700; color:#212529; margin-bottom:8px; }
+        .page-header h1 i { color:#0d6efd; }
+        .page-header p { color:#6c757d; font-size:15px; }
+        .layout { display:grid; grid-template-columns:340px 1fr; gap:24px; }
+        @media(max-width:800px){ .layout{ grid-template-columns:1fr; } }
+        .panel { background:#fff; border-radius:16px; padding:22px; box-shadow:0 10px 30px rgba(0,0,0,.06); margin-bottom:20px; }
+        .panel h3 { font-size:14px; margin-bottom:12px; color:#495057; }
+        .upload-zone {
+            position:relative; border:2px dashed #0d6efd; border-radius:10px;
+            padding:24px 16px; text-align:center; background:#f8f9fa;
+            cursor:pointer; margin-bottom:6px; transition:.2s;
+        }
+        .upload-zone:hover, .upload-zone.dragover { background:#eef5ff; border-color:#0b5ed7; }
+        .upload-zone input { position:absolute; inset:0; opacity:0; cursor:pointer; }
+        .upload-zone .icon { font-size:26px; color:#0d6efd; margin-bottom:6px; }
+        .upload-zone .txt { font-size:13px; color:#6c757d; }
+        label { display:block; font-size:12px; font-weight:600; color:#6c757d; margin:14px 0 6px; }
+        input[type="text"] {
+            width:100%; padding:12px; border:1px solid #dee2e6; border-radius:8px;
+            font-family:inherit; font-size:14px; text-transform:uppercase;
+        }
+        input[type="range"] { width:100%; }
+        .color-row { display:flex; gap:10px; }
+        .color-row .cfield { flex:1; }
+        .color-row input[type="color"] {
+            width:100%; height:40px; border:1px solid #dee2e6;
+            border-radius:8px; cursor:pointer; padding:2px;
+        }
+        .range-value { font-size:12px; color:#0d6efd; font-weight:700; float:right; }
+        .btn {
+            width:100%; padding:14px; border-radius:10px; border:none;
+            font-weight:700; cursor:pointer; font-size:15px;
+            font-family:inherit; margin-top:16px;
+        }
+        .btn-primary { background:#198754; color:#fff; }
+        .btn-primary:hover { background:#157347; }
+        .canvas-wrap { text-align:center; }
+        #memeCanvas {
+            max-width:100%; border-radius:12px;
+            box-shadow:0 15px 35px rgba(0,0,0,.1); background:#eee;
+        }
+        #status { margin-top:12px; font-size:13px; font-weight:600; min-height:18px; text-align:center; }
+        .back-link { display:inline-block; margin-top:10px; color:#6c757d; font-weight:500; text-decoration:none; }
+    </style>
 </head>
 
 <body>
-
 <div class="wrapper">
+    <div class="page-header">
+        <h1><i class="fa-solid fa-face-grin-squint-tears"></i> Meme Generator</h1>
+        <p>Upload an image, add top and bottom text, and download your meme.</p>
+    </div>
 
-<div class="page-header">
-    <h1><i class="fa-solid fa-face-grin-squint-tears"></i> Meme Generator</h1>
-    <p>Upload an image, add top and bottom text, and download your meme.</p>
-</div>
-
-<div class="layout">
-
-    <div>
-        <div class="panel">
-            <h3>Image</h3>
-            <div class="upload-zone" id="dropZone">
-                <div class="icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-                <div class="txt">Click or drag an image here</div>
-                <input type="file" id="upload" accept="image/*">
-            </div>
-        </div>
-
-        <div class="panel">
-            <h3>Text</h3>
-
-            <label>Top Text</label>
-            <input type="text" id="topText" placeholder="TOP TEXT">
-
-            <label>Bottom Text</label>
-            <input type="text" id="bottomText" placeholder="BOTTOM TEXT">
-
-            <label>Font Size <span class="range-value" id="fontSizeValue">42px</span></label>
-            <input type="range" id="fontSize" min="20" max="90" value="42">
-
-            <label>Text Color / Outline</label>
-            <div class="color-row">
-                <div class="cfield">
-                    <input type="color" id="textColor" value="#ffffff">
-                </div>
-                <div class="cfield">
-                    <input type="color" id="strokeColor" value="#000000">
+    <div class="layout">
+        <div>
+            <div class="panel">
+                <h3>Image</h3>
+                <div class="upload-zone" id="dropZone">
+                    <div class="icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                    <div class="txt">Click or drag an image here</div>
+                    <input type="file" id="upload" accept="image/*">
                 </div>
             </div>
 
-            <button class="btn btn-primary" id="downloadBtn"><i class="fa-solid fa-download"></i> Download Meme</button>
+            <div class="panel">
+                <h3>Text</h3>
+                <label>Top Text</label>
+                <input type="text" id="topText" placeholder="TOP TEXT">
+
+                <label>Bottom Text</label>
+                <input type="text" id="bottomText" placeholder="BOTTOM TEXT">
+
+                <label>Font Size <span class="range-value" id="fontSizeValue">42px</span></label>
+                <input type="range" id="fontSize" min="20" max="90" value="42">
+
+                <label>Text Color / Outline</label>
+                <div class="color-row">
+                    <div class="cfield">
+                        <input type="color" id="textColor" value="#ffffff">
+                    </div>
+                    <div class="cfield">
+                        <input type="color" id="strokeColor" value="#000000">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" id="downloadBtn"><i class="fa-solid fa-download"></i> Download Meme</button>
+            </div>
+        </div>
+
+        <div class="panel canvas-wrap">
+            <canvas id="memeCanvas" width="600" height="450"></canvas>
+            <div id="status">Upload an image to get started.</div>
         </div>
     </div>
 
-    <div class="panel canvas-wrap">
-        <canvas id="memeCanvas" width="600" height="450"></canvas>
-        <div id="status">Upload an image to get started.</div>
-    </div>
-
-</div>
-
-<a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
-
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
 </div>
 
 <script>
+    const upload = document.getElementById("upload");
+    const dropZone = document.getElementById("dropZone");
+    const canvas = document.getElementById("memeCanvas");
+    const ctx = canvas.getContext("2d");
+    const topText = document.getElementById("topText");
+    const bottomText = document.getElementById("bottomText");
+    const fontSize = document.getElementById("fontSize");
+    const fontSizeValue = document.getElementById("fontSizeValue");
+    const textColor = document.getElementById("textColor");
+    const strokeColor = document.getElementById("strokeColor");
+    const downloadBtn = document.getElementById("downloadBtn");
+    const status = document.getElementById("status");
 
-const upload = document.getElementById("upload");
-const dropZone = document.getElementById("dropZone");
-const canvas = document.getElementById("memeCanvas");
-const ctx = canvas.getContext("2d");
-const topText = document.getElementById("topText");
-const bottomText = document.getElementById("bottomText");
-const fontSize = document.getElementById("fontSize");
-const fontSizeValue = document.getElementById("fontSizeValue");
-const textColor = document.getElementById("textColor");
-const strokeColor = document.getElementById("strokeColor");
-const downloadBtn = document.getElementById("downloadBtn");
-const status = document.getElementById("status");
+    let currentImage = null;
 
-let currentImage = null;
+    function drawPlaceholder(){
+        canvas.width = 600;
+        canvas.height = 450;
+        ctx.fillStyle = "#eeeeee";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#999";
+        ctx.font = "18px Poppins, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("Upload an image to preview your meme", canvas.width/2, canvas.height/2);
+    }
 
-function drawPlaceholder(){
-    canvas.width = 600;
-    canvas.height = 450;
-    ctx.fillStyle = "#eeeeee";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#999";
-    ctx.font = "18px Poppins, sans-serif";
-    ctx.textAlign = "center";
-    ctx.fillText("Upload an image to preview your meme", canvas.width/2, canvas.height/2);
-}
+    function wrapText(text, maxWidth){
+        const words = text.split(" ");
+        const lines = [];
+        let line = "";
+        words.forEach(word => {
+            const testLine = line ? line + " " + word : word;
+            if(ctx.measureText(testLine).width > maxWidth && line){
+                lines.push(line);
+                line = word;
+            } else {
+                line = testLine;
+            }
+        });
+        if(line) lines.push(line);
+        return lines;
+    }
 
-function wrapText(text, maxWidth, size){
+    function drawMemeText(text, size, yAnchor, isTop){
+        if(!text) return;
+        const upperText = text.toUpperCase();
+        ctx.font = `bold ${size}px 'Anton', Impact, sans-serif`;
+        ctx.textAlign = "center";
+        ctx.lineWidth = size / 10;
+        ctx.strokeStyle = strokeColor.value;
+        ctx.fillStyle = textColor.value;
+        ctx.lineJoin = "round";
 
-    const words = text.split(" ");
-    const lines = [];
-    let line = "";
+        const maxWidth = canvas.width * 0.9;
+        const lines = wrapText(upperText, maxWidth);
+        const lineHeight = size * 1.15;
 
-    words.forEach(word => {
-        const testLine = line ? line + " " + word : word;
-        if(ctx.measureText(testLine).width > maxWidth && line){
-            lines.push(line);
-            line = word;
-        } else {
-            line = testLine;
+        lines.forEach((line, i) => {
+            let y;
+            if(isTop){
+                y = yAnchor + (i * lineHeight);
+            } else {
+                y = yAnchor - ((lines.length - 1 - i) * lineHeight);
+            }
+            ctx.strokeText(line, canvas.width/2, y);
+            ctx.fillText(line, canvas.width/2, y);
+        });
+    }
+
+    function render(){
+        if(!currentImage){
+            drawPlaceholder();
+            return;
         }
-    });
-
-    if(line) lines.push(line);
-
-    return lines;
-
-}
-
-function drawMemeText(text, size, yAnchor, isTop){
-
-    if(!text) return;
-
-    const upperText = text.toUpperCase();
-
-    ctx.font = `bold ${size}px 'Anton', Impact, sans-serif`;
-    ctx.textAlign = "center";
-    ctx.lineWidth = size / 10;
-    ctx.strokeStyle = strokeColor.value;
-    ctx.fillStyle = textColor.value;
-    ctx.lineJoin = "round";
-
-    const maxWidth = canvas.width * 0.9;
-    const lines = wrapText(upperText, maxWidth, size);
-    const lineHeight = size * 1.15;
-
-    lines.forEach((line, i) => {
-
-        let y;
-
-        if(isTop){
-            y = yAnchor + (i * lineHeight);
-        } else {
-            y = yAnchor - ((lines.length - 1 - i) * lineHeight);
+        const maxDim = 800;
+        let w = currentImage.width;
+        let h = currentImage.height;
+        if(w > maxDim || h > maxDim){
+            const scale = maxDim / Math.max(w, h);
+            w = w * scale;
+            h = h * scale;
         }
-
-        ctx.strokeText(line, canvas.width/2, y);
-        ctx.fillText(line, canvas.width/2, y);
-
-    });
-
-}
-
-function render(){
-
-    if(!currentImage){
-        drawPlaceholder();
-        return;
+        canvas.width = w;
+        canvas.height = h;
+        ctx.drawImage(currentImage, 0, 0, w, h);
+        const size = parseInt(fontSize.value);
+        drawMemeText(topText.value, size, size * 0.9, true);
+        drawMemeText(bottomText.value, size, canvas.height - (size * 0.35), false);
     }
 
-    const maxDim = 800;
-    let w = currentImage.width;
-    let h = currentImage.height;
-
-    if(w > maxDim || h > maxDim){
-        const scale = maxDim / Math.max(w, h);
-        w = w * scale;
-        h = h * scale;
-    }
-
-    canvas.width = w;
-    canvas.height = h;
-
-    ctx.drawImage(currentImage, 0, 0, w, h);
-
-    const size = parseInt(fontSize.value);
-
-    drawMemeText(topText.value, size, size * 0.9, true);
-    drawMemeText(bottomText.value, size, canvas.height - (size * 0.35), false);
-
-}
-
-function processFile(file){
-
-    if(!file || !file.type.startsWith("image/")){
-        status.innerText = "❌ Please select an image file.";
-        return;
-    }
-
-    const reader = new FileReader();
-
-    reader.onload = function(e){
-        const img = new Image();
-        img.onload = function(){
-            currentImage = img;
-            status.innerText = "✅ Image loaded. Add your text!";
-            render();
+    function processFile(file){
+        if(!file || !file.type.startsWith("image/")){
+            status.innerText = "❌ Please select an image file.";
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e){
+            const img = new Image();
+            img.onload = function(){
+                currentImage = img;
+                status.innerText = "✅ Image loaded. Add your text!";
+                render();
+            };
+            img.src = e.target.result;
         };
-        img.src = e.target.result;
-    };
-
-    reader.readAsDataURL(file);
-
-}
-
-upload.addEventListener("change", function(){
-    processFile(this.files[0]);
-});
-
-dropZone.addEventListener("dragover", function(e){
-    e.preventDefault();
-    dropZone.classList.add("dragover");
-});
-
-dropZone.addEventListener("dragleave", function(){
-    dropZone.classList.remove("dragover");
-});
-
-dropZone.addEventListener("drop", function(e){
-    e.preventDefault();
-    dropZone.classList.remove("dragover");
-    processFile(e.dataTransfer.files[0]);
-});
-
-[topText, bottomText, textColor, strokeColor].forEach(el => {
-    el.addEventListener("input", render);
-});
-
-fontSize.addEventListener("input", function(){
-    fontSizeValue.innerText = this.value + "px";
-    render();
-});
-
-downloadBtn.addEventListener("click", function(){
-
-    if(!currentImage){
-        status.innerText = "❌ Please upload an image first.";
-        return;
+        reader.readAsDataURL(file);
     }
 
-    const link = document.createElement("a");
-    link.download = "meme.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+    upload.addEventListener("change", function(){
+        processFile(this.files[0]);
+    });
 
-    status.innerText = "🎉 Meme downloaded!";
+    dropZone.addEventListener("dragover", function(e){
+        e.preventDefault();
+        dropZone.classList.add("dragover");
+    });
 
-});
+    dropZone.addEventListener("dragleave", function(){
+        dropZone.classList.remove("dragover");
+    });
 
-drawPlaceholder();
+    dropZone.addEventListener("drop", function(e){
+        e.preventDefault();
+        dropZone.classList.remove("dragover");
+        processFile(e.dataTransfer.files[0]);
+    });
 
-// Ensure the Anton font is ready before first real render (avoids fallback-font flash)
-document.fonts.ready.then(render);
+    [topText, bottomText, textColor, strokeColor].forEach(el => {
+        el.addEventListener("input", render);
+    });
 
+    fontSize.addEventListener("input", function(){
+        fontSizeValue.innerText = this.value + "px";
+        render();
+    });
+
+    downloadBtn.addEventListener("click", function(){
+        if(!currentImage){
+            status.innerText = "❌ Please upload an image first.";
+            return;
+        }
+        const link = document.createElement("a");
+        link.download = "meme.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+        status.innerText = "🎉 Meme downloaded!";
+    });
+
+    drawPlaceholder();
+    document.fonts.ready.then(render);
 </script>
-
 </body>
 </html>

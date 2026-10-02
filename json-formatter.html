@@ -1,395 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JSON Formatter & Validator - Bharat Tools</title>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>JSON Formatter & Validator - Format, Minify JSON Free | Bharat24Tools</title>
+    <meta name="description" content="Format, validate and minify JSON with syntax highlighting online. Free JSON formatter, beautifier and validator. Works in browser, no upload.">
+    <meta name="keywords" content="json formatter, json validator, json beautifier, json minify, json parser, json editor online">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/json-formatter.html">
 
-<style>
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/json-formatter.html">
+    <meta property="og:title" content="JSON Formatter & Validator - Format, Minify JSON Free | Bharat24Tools">
+    <meta property="og:description" content="Format, validate and minify JSON with syntax highlighting online. Free, no upload.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="JSON Formatter & Validator - Format, Minify JSON Free | Bharat24Tools">
+    <meta name="twitter:description" content="Format, validate and minify JSON with syntax highlighting online. Free, no upload.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-body{
-background:#f4f6fb;
-color:#222;
-padding:30px 16px 60px;
-}
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "JSON Formatter & Validator",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/json-formatter.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
 
-.wrapper{
-max-width:1100px;
-margin:0 auto;
-}
-
-.page-header{
-text-align:center;
-margin-bottom:24px;
-}
-
-.page-header h1{
-font-size:32px;
-font-weight:700;
-color:#212529;
-margin-bottom:8px;
-}
-
-.page-header h1 i{
-color:#0d6efd;
-}
-
-.page-header p{
-color:#6c757d;
-font-size:15px;
-}
-
-.toolbar{
-display:flex;
-justify-content:center;
-gap:10px;
-flex-wrap:wrap;
-margin-bottom:20px;
-}
-
-.toolbar button{
-padding:11px 22px;
-border-radius:50px;
-border:none;
-font-weight:600;
-cursor:pointer;
-font-family:inherit;
-font-size:14px;
-transition:.2s;
-}
-
-.btn-primary{
-background:#0d6efd;
-color:#fff;
-}
-
-.btn-primary:hover{
-background:#0b5ed7;
-}
-
-.btn-secondary{
-background:#fff;
-color:#495057;
-box-shadow:0 4px 12px rgba(0,0,0,.06);
-}
-
-.btn-secondary:hover{
-background:#eef2f7;
-}
-
-.editor-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-}
-
-@media(max-width:850px){
-.editor-grid{
-grid-template-columns:1fr;
-}
-}
-
-.panel{
-background:#fff;
-border-radius:16px;
-padding:18px;
-box-shadow:0 10px 30px rgba(0,0,0,.06);
-}
-
-.panel h3{
-font-size:14px;
-margin-bottom:10px;
-color:#495057;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.copy-mini{
-background:#eef2f7;
-border:none;
-padding:6px 12px;
-border-radius:20px;
-font-size:12px;
-font-weight:600;
-cursor:pointer;
-color:#0d6efd;
-font-family:inherit;
-}
-
-.copy-mini:hover{
-background:#dfe6ee;
-}
-
-textarea, pre{
-width:100%;
-min-height:420px;
-max-height:420px;
-padding:16px;
-border:1px solid #dee2e6;
-border-radius:10px;
-font-family:'Courier New',monospace;
-font-size:13.5px;
-line-height:1.7;
-resize:vertical;
-overflow:auto;
-}
-
-textarea{
-color:#222;
-}
-
-pre{
-background:#1e1e2e;
-color:#e6e6e6;
-white-space:pre-wrap;
-word-break:break-word;
-margin:0;
-}
-
-.status-box{
-margin-top:12px;
-padding:10px 14px;
-border-radius:8px;
-font-size:13px;
-font-weight:600;
-display:none;
-}
-
-.status-valid{
-background:#eafaf0;
-color:#198754;
-display:block;
-}
-
-.status-invalid{
-background:#fff0f0;
-color:#dc3545;
-display:block;
-}
-
-.json-key{ color:#79c0ff; }
-.json-string{ color:#a5d6a7; }
-.json-number{ color:#ffb86c; }
-.json-boolean{ color:#ff79c6; }
-.json-null{ color:#ff5555; }
-
-.back-link{
-display:inline-block;
-margin-top:20px;
-color:#6c757d;
-font-weight:500;
-text-decoration:none;
-}
-
-</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body { background:#f4f6fb; color:#222; padding:30px 16px 60px; }
+        .wrapper { max-width:1100px; margin:0 auto; }
+        .page-header { text-align:center; margin-bottom:24px; }
+        .page-header h1 { font-size:32px; font-weight:700; color:#212529; margin-bottom:8px; }
+        .page-header h1 i { color:#0d6efd; }
+        .page-header p { color:#6c757d; font-size:15px; }
+        .toolbar { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+        .toolbar button {
+            padding:11px 22px; border-radius:50px; border:none;
+            font-weight:600; cursor:pointer; font-family:inherit;
+            font-size:14px; transition:.2s;
+        }
+        .btn-primary { background:#0d6efd; color:#fff; }
+        .btn-primary:hover { background:#0b5ed7; }
+        .btn-secondary { background:#fff; color:#495057; box-shadow:0 4px 12px rgba(0,0,0,.06); }
+        .btn-secondary:hover { background:#eef2f7; }
+        .editor-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+        @media(max-width:850px){ .editor-grid{ grid-template-columns:1fr; } }
+        .panel { background:#fff; border-radius:16px; padding:18px; box-shadow:0 10px 30px rgba(0,0,0,.06); }
+        .panel h3 { font-size:14px; margin-bottom:10px; color:#495057; display:flex; justify-content:space-between; align-items:center; }
+        .copy-mini {
+            background:#eef2f7; border:none; padding:6px 12px;
+            border-radius:20px; font-size:12px; font-weight:600;
+            cursor:pointer; color:#0d6efd; font-family:inherit;
+        }
+        .copy-mini:hover { background:#dfe6ee; }
+        textarea, pre {
+            width:100%; min-height:420px; max-height:420px;
+            padding:16px; border:1px solid #dee2e6; border-radius:10px;
+            font-family:'Courier New',monospace; font-size:13.5px;
+            line-height:1.7; resize:vertical; overflow:auto;
+        }
+        textarea { color:#222; }
+        pre {
+            background:#1e1e2e; color:#e6e6e6;
+            white-space:pre-wrap; word-break:break-word; margin:0;
+        }
+        .status-box {
+            margin-top:12px; padding:10px 14px; border-radius:8px;
+            font-size:13px; font-weight:600; display:none;
+        }
+        .status-valid { background:#eafaf0; color:#198754; display:block; }
+        .status-invalid { background:#fff0f0; color:#dc3545; display:block; }
+        .json-key{ color:#79c0ff; }
+        .json-string{ color:#a5d6a7; }
+        .json-number{ color:#ffb86c; }
+        .json-boolean{ color:#ff79c6; }
+        .json-null{ color:#ff5555; }
+        .back-link { display:inline-block; margin-top:20px; color:#6c757d; font-weight:500; text-decoration:none; }
+    </style>
 </head>
 
 <body>
-
 <div class="wrapper">
-
-<div class="page-header">
-    <h1><i class="fa-solid fa-brackets-curly"></i> JSON Formatter & Validator</h1>
-    <p>Paste JSON, format it beautifully, minify it, or catch syntax errors instantly.</p>
-</div>
-
-<div class="toolbar">
-    <button class="btn-primary" id="formatBtn"><i class="fa-solid fa-align-left"></i> Format / Beautify</button>
-    <button class="btn-secondary" id="minifyBtn"><i class="fa-solid fa-compress"></i> Minify</button>
-    <button class="btn-secondary" id="sampleBtn"><i class="fa-solid fa-file-code"></i> Load Sample</button>
-    <button class="btn-secondary" id="clearBtn"><i class="fa-solid fa-trash"></i> Clear</button>
-</div>
-
-<div class="editor-grid">
-
-    <div class="panel">
-        <h3>Input</h3>
-        <textarea id="inputBox" placeholder='Paste your JSON here, e.g. {"name":"Bharat Tools","free":true}'></textarea>
-        <div class="status-box" id="statusBox"></div>
+    <div class="page-header">
+        <h1><i class="fa-solid fa-brackets-curly"></i> JSON Formatter & Validator</h1>
+        <p>Paste JSON, format it beautifully, minify it, or catch syntax errors instantly.</p>
     </div>
 
-    <div class="panel">
-        <h3>Output <button class="copy-mini" id="copyBtn">Copy</button></h3>
-        <pre id="outputBox"></pre>
+    <div class="toolbar">
+        <button class="btn-primary" id="formatBtn"><i class="fa-solid fa-align-left"></i> Format / Beautify</button>
+        <button class="btn-secondary" id="minifyBtn"><i class="fa-solid fa-compress"></i> Minify</button>
+        <button class="btn-secondary" id="sampleBtn"><i class="fa-solid fa-file-code"></i> Load Sample</button>
+        <button class="btn-secondary" id="clearBtn"><i class="fa-solid fa-trash"></i> Clear</button>
     </div>
 
-</div>
+    <div class="editor-grid">
+        <div class="panel">
+            <h3>Input</h3>
+            <textarea id="inputBox" placeholder='Paste your JSON here, e.g. {"name":"Bharat Tools","free":true}'></textarea>
+            <div class="status-box" id="statusBox"></div>
+        </div>
 
-<a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        <div class="panel">
+            <h3>Output <button class="copy-mini" id="copyBtn">Copy</button></h3>
+            <pre id="outputBox"></pre>
+        </div>
+    </div>
 
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
 </div>
 
 <script>
+    const inputBox = document.getElementById("inputBox");
+    const outputBox = document.getElementById("outputBox");
+    const statusBox = document.getElementById("statusBox");
+    const formatBtn = document.getElementById("formatBtn");
+    const minifyBtn = document.getElementById("minifyBtn");
+    const sampleBtn = document.getElementById("sampleBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const copyBtn = document.getElementById("copyBtn");
 
-const inputBox = document.getElementById("inputBox");
-const outputBox = document.getElementById("outputBox");
-const statusBox = document.getElementById("statusBox");
-const formatBtn = document.getElementById("formatBtn");
-const minifyBtn = document.getElementById("minifyBtn");
-const sampleBtn = document.getElementById("sampleBtn");
-const clearBtn = document.getElementById("clearBtn");
-const copyBtn = document.getElementById("copyBtn");
+    let lastFormatted = "";
 
-let lastFormatted = "";
+    function escapeHTML(str){
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
 
-function escapeHTML(str){
-    return str
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-}
-
-function syntaxHighlight(json){
-
-    const escaped = escapeHTML(json);
-
-    return escaped.replace(
-        /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false)\b|\bnull\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g,
-        function(match){
-
-            let cls = "json-number";
-
-            if(/^"/.test(match)){
-                cls = /:$/.test(match) ? "json-key" : "json-string";
-            } else if(/true|false/.test(match)){
-                cls = "json-boolean";
-            } else if(/null/.test(match)){
-                cls = "json-null";
+    function syntaxHighlight(json){
+        const escaped = escapeHTML(json);
+        return escaped.replace(
+            /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false)\b|\bnull\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g,
+            function(match){
+                let cls = "json-number";
+                if(/^"/.test(match)){
+                    cls = /:$/.test(match) ? "json-key" : "json-string";
+                } else if(/true|false/.test(match)){
+                    cls = "json-boolean";
+                } else if(/null/.test(match)){
+                    cls = "json-null";
+                }
+                return `<span class="${cls}">${match}</span>`;
             }
+        );
+    }
 
-            return `<span class="${cls}">${match}</span>`;
+    function getErrorPosition(str, err){
+        const match = err.message.match(/position (\d+)/);
+        if(!match) return "";
+        const pos = parseInt(match[1]);
+        const before = str.substring(0, pos);
+        const line = before.split("\n").length;
+        const col = pos - before.lastIndexOf("\n");
+        return ` (line ${line}, column ${col})`;
+    }
 
+    function formatJSON(){
+        const raw = inputBox.value.trim();
+        if(!raw){
+            statusBox.className = "status-box";
+            outputBox.innerHTML = "";
+            return;
         }
-    );
-
-}
-
-function getErrorPosition(str, err){
-
-    const match = err.message.match(/position (\d+)/);
-
-    if(!match) return "";
-
-    const pos = parseInt(match[1]);
-    const before = str.substring(0, pos);
-    const line = before.split("\n").length;
-    const col = pos - before.lastIndexOf("\n");
-
-    return ` (line ${line}, column ${col})`;
-
-}
-
-function formatJSON(){
-
-    const raw = inputBox.value.trim();
-
-    if(!raw){
-        statusBox.className = "status-box";
-        outputBox.innerHTML = "";
-        return;
+        try{
+            const parsed = JSON.parse(raw);
+            const pretty = JSON.stringify(parsed, null, 4);
+            lastFormatted = pretty;
+            outputBox.innerHTML = syntaxHighlight(pretty);
+            statusBox.className = "status-box status-valid";
+            statusBox.innerText = "✅ Valid JSON";
+        } catch(err){
+            outputBox.innerHTML = "";
+            lastFormatted = "";
+            statusBox.className = "status-box status-invalid";
+            statusBox.innerText = "❌ Invalid JSON: " + err.message + getErrorPosition(raw, err);
+        }
     }
 
-    try{
-
-        const parsed = JSON.parse(raw);
-        const pretty = JSON.stringify(parsed, null, 4);
-
-        lastFormatted = pretty;
-        outputBox.innerHTML = syntaxHighlight(pretty);
-
-        statusBox.className = "status-box status-valid";
-        statusBox.innerText = "✅ Valid JSON";
-
-    } catch(err){
-
-        outputBox.innerHTML = "";
-        lastFormatted = "";
-
-        statusBox.className = "status-box status-invalid";
-        statusBox.innerText = "❌ Invalid JSON: " + err.message + getErrorPosition(raw, err);
-
+    function minifyJSON(){
+        const raw = inputBox.value.trim();
+        if(!raw) return;
+        try{
+            const parsed = JSON.parse(raw);
+            const minified = JSON.stringify(parsed);
+            lastFormatted = minified;
+            outputBox.innerHTML = syntaxHighlight(minified);
+            statusBox.className = "status-box status-valid";
+            statusBox.innerText = "✅ Valid JSON — minified";
+        } catch(err){
+            outputBox.innerHTML = "";
+            lastFormatted = "";
+            statusBox.className = "status-box status-invalid";
+            statusBox.innerText = "❌ Invalid JSON: " + err.message + getErrorPosition(raw, err);
+        }
     }
 
-}
+    formatBtn.addEventListener("click", formatJSON);
+    minifyBtn.addEventListener("click", minifyJSON);
 
-function minifyJSON(){
-
-    const raw = inputBox.value.trim();
-
-    if(!raw) return;
-
-    try{
-
-        const parsed = JSON.parse(raw);
-        const minified = JSON.stringify(parsed);
-
-        lastFormatted = minified;
-        outputBox.innerHTML = syntaxHighlight(minified);
-
-        statusBox.className = "status-box status-valid";
-        statusBox.innerText = "✅ Valid JSON — minified";
-
-    } catch(err){
-
-        outputBox.innerHTML = "";
-        lastFormatted = "";
-
-        statusBox.className = "status-box status-invalid";
-        statusBox.innerText = "❌ Invalid JSON: " + err.message + getErrorPosition(raw, err);
-
-    }
-
-}
-
-formatBtn.addEventListener("click", formatJSON);
-minifyBtn.addEventListener("click", minifyJSON);
-
-sampleBtn.addEventListener("click", function(){
-    inputBox.value = JSON.stringify({
-        name: "Bharat Tools",
-        free: true,
-        tools: ["PDF", "Image", "QR", "Calculators"],
-        rating: 4.8,
-        contact: null,
-        stats: { users: 100000, uptime: "24x7" }
-    }, null, 4);
-    formatJSON();
-});
-
-clearBtn.addEventListener("click", function(){
-    inputBox.value = "";
-    outputBox.innerHTML = "";
-    statusBox.className = "status-box";
-});
-
-copyBtn.addEventListener("click", function(){
-    if(!lastFormatted) return;
-    navigator.clipboard.writeText(lastFormatted).then(() => {
-        copyBtn.innerText = "Copied!";
-        setTimeout(() => { copyBtn.innerText = "Copy"; }, 1500);
+    sampleBtn.addEventListener("click", function(){
+        inputBox.value = JSON.stringify({
+            name: "Bharat Tools",
+            free: true,
+            tools: ["PDF", "Image", "QR", "Calculators"],
+            rating: 4.8,
+            contact: null,
+            stats: { users: 100000, uptime: "24x7" }
+        }, null, 4);
+        formatJSON();
     });
-});
 
-inputBox.addEventListener("input", function(){
-    if(inputBox.value.trim() === ""){
+    clearBtn.addEventListener("click", function(){
+        inputBox.value = "";
         outputBox.innerHTML = "";
         statusBox.className = "status-box";
-    }
-});
+    });
 
+    copyBtn.addEventListener("click", function(){
+        if(!lastFormatted) return;
+        navigator.clipboard.writeText(lastFormatted).then(() => {
+            copyBtn.innerText = "Copied!";
+            setTimeout(() => { copyBtn.innerText = "Copy"; }, 1500);
+        });
+    });
+
+    inputBox.addEventListener("input", function(){
+        if(inputBox.value.trim() === ""){
+            outputBox.innerHTML = "";
+            statusBox.className = "status-box";
+        }
+    });
 </script>
-
 </body>
 </html>

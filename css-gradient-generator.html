@@ -1,80 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CSS Gradient Generator - BharatOS-Tools</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-body { background: linear-gradient(135deg, #f4f6fb 0%, #e8f1f9 100%); color:#222; padding:30px 16px 60px; min-height:100vh; }
-.wrapper { max-width:1000px; margin:0 auto; }
-.page-header { text-align:center; margin-bottom:30px; }
-.page-header h1 { font-size:32px; font-weight:800; color:#1a2b45; margin-bottom:8px; }
-.page-header h1 i { color:#0d6efd; }
-.page-header p { color:#6c757d; font-size:15px; }
-.preview-box {
-    width:100%; height:280px; border-radius:20px;
-    box-shadow:0 15px 35px rgba(0,0,0,.12);
-    margin-bottom:24px; transition:background .15s ease;
-    border: 3px solid #fff;
-}
-.panel { background:#fff; border-radius:20px; padding:28px; box-shadow:0 10px 40px rgba(13, 110, 253, 0.06); margin-bottom:20px; border:1px solid rgba(13, 110, 253, 0.05); }
-.panel h3 { font-size:16px; margin-bottom:16px; color:#1a2b45; font-weight:700; display:flex; align-items:center; gap:8px; }
-.panel h3 i { color:#0d6efd; }
-.row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:16px; }
-.type-toggle { display:flex; gap:10px; }
-.type-toggle button {
-    padding:10px 20px; border:2px solid #e9ecef; background:#fff;
-    border-radius:50px; font-weight:600; cursor:pointer; color:#495057;
-    transition:.2s; font-family:inherit; font-size:13px;
-}
-.type-toggle button.active { background:#0d6efd; border-color:#0d6efd; color:#fff; }
-.type-toggle button:hover:not(.active) { border-color:#0d6efd; color:#0d6efd; }
-.angle-control { display:flex; align-items:center; gap:12px; flex:1; min-width:220px; }
-.angle-control label { font-size:13px; color:#495057; font-weight:600; white-space:nowrap; }
-.angle-control input[type="range"] { flex:1; accent-color: #0d6efd; }
-.angle-value { font-weight:700; color:#0d6efd; min-width:44px; text-align:right; }
-.stops-list { display:flex; flex-direction:column; gap:12px; margin-bottom:16px; }
-.stop-row { display:flex; align-items:center; gap:12px; background:#f8fafc; padding:10px 14px; border-radius:12px; border:1px solid #e9ecef; }
-.stop-row input[type="color"] { width:44px; height:44px; border:none; border-radius:8px; cursor:pointer; background:none; padding:0; }
-.stop-row input[type="range"] { flex:1; accent-color: #0d6efd; }
-.stop-row .pos-value { font-size:13px; color:#6c757d; min-width:42px; text-align:right; font-weight:600; }
-.stop-row .remove-stop {
-    background:#fff0f0; color:#dc3545; border:none;
-    width:32px; height:32px; border-radius:50%;
-    cursor:pointer; font-size:14px; flex-shrink:0; transition:.2s;
-}
-.stop-row .remove-stop:hover { background:#dc3545; color:#fff; }
-.btn-row { display:flex; gap:12px; flex-wrap:wrap; }
-.btn { padding:12px 22px; border-radius:12px; border:none; font-weight:700; cursor:pointer; font-size:14px; font-family:inherit; transition:.2s; display:flex; align-items:center; gap:8px; }
-.btn-primary { background:linear-gradient(135deg, #0d6efd, #0b5ed7); color:#fff; }
-.btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(13, 110, 253, 0.3); }
-.btn-secondary { background:#eef2f7; color:#212529; }
-.btn-secondary:hover { background:#dfe6ee; }
-.code-box {
-    background:#1e1e2e; color:#e6e6e6; border-radius:14px;
-    padding:18px 20px; font-family:'Courier New',monospace;
-    font-size:14px; line-height:1.7; white-space:pre-wrap;
-    word-break:break-all; position:relative; border: 2px solid #2d2d3d;
-}
-.copy-btn {
-    position:absolute; top:14px; right:14px;
-    background:#0d6efd; color:#fff; border:none;
-    padding:8px 16px; border-radius:10px; font-size:13px;
-    font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif;
-    transition:.2s;
-}
-.copy-btn:hover { background:#0b5ed7; }
-.copy-btn.copied { background:#198754; }
-.presets { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:12px; }
-.preset-swatch { height:60px; border-radius:12px; cursor:pointer; border:3px solid transparent; transition:.2s; }
-.preset-swatch:hover { transform:scale(1.05); border-color:#0d6efd; }
-.back-link { display:inline-block; margin-top:15px; color:#6c757d; font-weight:500; text-decoration:none; }
-.back-link:hover { color:#0d6efd; }
-@media(max-width:600px){ .preview-box{height:180px;} .page-header h1{font-size:24px;} }
-</style>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <title>CSS Gradient Generator - Create Linear & Radial Gradients Free | Bharat24Tools</title>
+    <meta name="description" content="Build multi-color CSS gradients visually and copy ready-to-use code. Free gradient generator with linear, radial, angle control and presets.">
+    <meta name="keywords" content="css gradient generator, linear gradient, radial gradient, css background, gradient maker, css code generator">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/css-gradient-generator.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/css-gradient-generator.html">
+    <meta property="og:title" content="CSS Gradient Generator - Create Linear & Radial Gradients Free | Bharat24Tools">
+    <meta property="og:description" content="Build multi-color CSS gradients visually and copy ready-to-use code. Free, with presets.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CSS Gradient Generator - Create Linear & Radial Gradients Free | Bharat24Tools">
+    <meta name="twitter:description" content="Build multi-color CSS gradients visually and copy ready-to-use code. Free, with presets.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "CSS Gradient Generator",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/css-gradient-generator.html",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body { background: linear-gradient(135deg, #f4f6fb 0%, #e8f1f9 100%); color:#222; padding:30px 16px 60px; min-height:100vh; }
+        .wrapper { max-width:1000px; margin:0 auto; }
+        .page-header { text-align:center; margin-bottom:30px; }
+        .page-header h1 { font-size:32px; font-weight:800; color:#1a2b45; margin-bottom:8px; }
+        .page-header h1 i { color:#0d6efd; }
+        .page-header p { color:#6c757d; font-size:15px; }
+        .preview-box {
+            width:100%; height:280px; border-radius:20px;
+            box-shadow:0 15px 35px rgba(0,0,0,.12);
+            margin-bottom:24px; transition:background .15s ease;
+            border: 3px solid #fff;
+        }
+        .panel { background:#fff; border-radius:20px; padding:28px; box-shadow:0 10px 40px rgba(13, 110, 253, 0.06); margin-bottom:20px; border:1px solid rgba(13, 110, 253, 0.05); }
+        .panel h3 { font-size:16px; margin-bottom:16px; color:#1a2b45; font-weight:700; display:flex; align-items:center; gap:8px; }
+        .panel h3 i { color:#0d6efd; }
+        .row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:16px; }
+        .type-toggle { display:flex; gap:10px; }
+        .type-toggle button {
+            padding:10px 20px; border:2px solid #e9ecef; background:#fff;
+            border-radius:50px; font-weight:600; cursor:pointer; color:#495057;
+            transition:.2s; font-family:inherit; font-size:13px;
+        }
+        .type-toggle button.active { background:#0d6efd; border-color:#0d6efd; color:#fff; }
+        .type-toggle button:hover:not(.active) { border-color:#0d6efd; color:#0d6efd; }
+        .angle-control { display:flex; align-items:center; gap:12px; flex:1; min-width:220px; }
+        .angle-control label { font-size:13px; color:#495057; font-weight:600; white-space:nowrap; }
+        .angle-control input[type="range"] { flex:1; accent-color: #0d6efd; }
+        .angle-value { font-weight:700; color:#0d6efd; min-width:44px; text-align:right; }
+        .stops-list { display:flex; flex-direction:column; gap:12px; margin-bottom:16px; }
+        .stop-row { display:flex; align-items:center; gap:12px; background:#f8fafc; padding:10px 14px; border-radius:12px; border:1px solid #e9ecef; }
+        .stop-row input[type="color"] { width:44px; height:44px; border:none; border-radius:8px; cursor:pointer; background:none; padding:0; }
+        .stop-row input[type="range"] { flex:1; accent-color: #0d6efd; }
+        .stop-row .pos-value { font-size:13px; color:#6c757d; min-width:42px; text-align:right; font-weight:600; }
+        .stop-row .remove-stop {
+            background:#fff0f0; color:#dc3545; border:none;
+            width:32px; height:32px; border-radius:50%;
+            cursor:pointer; font-size:14px; flex-shrink:0; transition:.2s;
+        }
+        .stop-row .remove-stop:hover { background:#dc3545; color:#fff; }
+        .btn-row { display:flex; gap:12px; flex-wrap:wrap; }
+        .btn { padding:12px 22px; border-radius:12px; border:none; font-weight:700; cursor:pointer; font-size:14px; font-family:inherit; transition:.2s; display:flex; align-items:center; gap:8px; }
+        .btn-primary { background:linear-gradient(135deg, #0d6efd, #0b5ed7); color:#fff; }
+        .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(13, 110, 253, 0.3); }
+        .btn-secondary { background:#eef2f7; color:#212529; }
+        .btn-secondary:hover { background:#dfe6ee; }
+        .code-box {
+            background:#1e1e2e; color:#e6e6e6; border-radius:14px;
+            padding:18px 20px; font-family:'Courier New',monospace;
+            font-size:14px; line-height:1.7; white-space:pre-wrap;
+            word-break:break-all; position:relative; border: 2px solid #2d2d3d;
+        }
+        .copy-btn {
+            position:absolute; top:14px; right:14px;
+            background:#0d6efd; color:#fff; border:none;
+            padding:8px 16px; border-radius:10px; font-size:13px;
+            font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif;
+            transition:.2s;
+        }
+        .copy-btn:hover { background:#0b5ed7; }
+        .copy-btn.copied { background:#198754; }
+        .presets { display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:12px; }
+        .preset-swatch { height:60px; border-radius:12px; cursor:pointer; border:3px solid transparent; transition:.2s; }
+        .preset-swatch:hover { transform:scale(1.05); border-color:#0d6efd; }
+        .back-link { display:inline-block; margin-top:15px; color:#6c757d; font-weight:500; text-decoration:none; }
+        .back-link:hover { color:#0d6efd; }
+        @media(max-width:600px){ .preview-box{height:180px;} .page-header h1{font-size:24px;} }
+    </style>
 </head>
 <body>
 <div class="wrapper">

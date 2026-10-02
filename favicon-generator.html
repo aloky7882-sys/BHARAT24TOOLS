@@ -1,455 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Favicon Generator - Bharat Tools</title>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Favicon Generator - Create All Favicon Sizes Free | Bharat24Tools</title>
+    <meta name="description" content="Turn one image into every favicon size you need. Free favicon generator creates 16x16, 32x32, 180x180, 192x192, 512x512 PNGs + ZIP download.">
+    <meta name="keywords" content="favicon generator, favicon maker, website icon, apple touch icon, android chrome icon, free favicon">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/favicon-generator.html">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/favicon-generator.html">
+    <meta property="og:title" content="Favicon Generator - Create All Favicon Sizes Free | Bharat24Tools">
+    <meta property="og:description" content="Turn one image into every favicon size you need. Free, ZIP download.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
 
-<style>
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Favicon Generator - Create All Favicon Sizes Free | Bharat24Tools">
+    <meta name="twitter:description" content="Turn one image into every favicon size you need. Free, ZIP download.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Favicon Generator",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/favicon-generator.html",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
 
-body{
-background:#f4f6fb;
-color:#222;
-padding:30px 16px 60px;
-}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
-.wrapper{
-max-width:800px;
-margin:0 auto;
-}
-
-.page-header{
-text-align:center;
-margin-bottom:26px;
-}
-
-.page-header h1{
-font-size:32px;
-font-weight:700;
-color:#212529;
-margin-bottom:8px;
-}
-
-.page-header h1 i{
-color:#0d6efd;
-}
-
-.page-header p{
-color:#6c757d;
-font-size:15px;
-}
-
-.panel{
-background:#fff;
-border-radius:16px;
-padding:24px;
-box-shadow:0 10px 30px rgba(0,0,0,.06);
-margin-bottom:20px;
-}
-
-.upload-zone{
-position:relative;
-border:2px dashed #0d6efd;
-border-radius:12px;
-padding:32px 20px;
-text-align:center;
-background:#f8f9fa;
-cursor:pointer;
-transition:all .2s ease;
-overflow:hidden;
-}
-
-.upload-zone:hover, .upload-zone.dragover{
-background:#eef5ff;
-border-color:#0b5ed7;
-}
-
-.upload-zone input{
-position:absolute;
-inset:0;
-opacity:0;
-cursor:pointer;
-}
-
-.upload-icon{
-width:76px;
-height:76px;
-margin:0 auto 14px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#e7f0ff;
-color:#0d6efd;
-font-size:34px;
-}
-
-.upload-title{
-font-size:18px;
-font-weight:700;
-color:#212529;
-margin-bottom:6px;
-}
-
-.upload-subtitle{
-font-size:14px;
-color:#6c757d;
-margin-bottom:10px;
-}
-
-.upload-formats{
-display:inline-block;
-padding:5px 10px;
-border-radius:20px;
-background:#fff;
-border:1px solid #dee2e6;
-color:#6c757d;
-font-size:12px;
-font-weight:600;
-}
-
-.sizes-grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
-gap:16px;
-margin-top:10px;
-}
-
-.size-card{
-text-align:center;
-background:#f8f9fa;
-border-radius:12px;
-padding:14px 10px;
-}
-
-.size-card img{
-background:repeating-conic-gradient(#e9ecef 0% 25%, #fff 0% 50%) 50% / 12px 12px;
-border-radius:8px;
-margin-bottom:8px;
-max-width:100%;
-}
-
-.size-card .label{
-font-size:12px;
-font-weight:700;
-color:#212529;
-}
-
-.size-card .dims{
-font-size:11px;
-color:#6c757d;
-margin-bottom:8px;
-}
-
-.size-card button{
-width:100%;
-padding:6px;
-font-size:11px;
-background:#eef2f7;
-border:none;
-border-radius:6px;
-cursor:pointer;
-color:#0d6efd;
-font-weight:600;
-font-family:inherit;
-}
-
-.size-card button:hover{
-background:#dfe6ee;
-}
-
-.btn{
-width:100%;
-padding:15px;
-border-radius:10px;
-border:none;
-font-weight:700;
-cursor:pointer;
-font-size:16px;
-font-family:inherit;
-margin-top:18px;
-transition:.2s;
-}
-
-.btn-primary{
-background:#198754;
-color:#fff;
-}
-
-.btn-primary:hover{
-background:#157347;
-}
-
-.code-box{
-background:#1e1e2e;
-color:#e6e6e6;
-border-radius:12px;
-padding:18px 20px;
-font-family:'Courier New',monospace;
-font-size:13px;
-line-height:1.8;
-white-space:pre-wrap;
-word-break:break-word;
-position:relative;
-margin-top:10px;
-}
-
-.copy-btn{
-position:absolute;
-top:14px;
-right:14px;
-background:#0d6efd;
-color:#fff;
-border:none;
-padding:8px 16px;
-border-radius:8px;
-font-size:13px;
-font-weight:600;
-cursor:pointer;
-font-family:'Poppins',sans-serif;
-}
-
-#status{
-margin-top:12px;
-font-size:14px;
-font-weight:600;
-}
-
-.back-link{
-display:inline-block;
-margin-top:10px;
-color:#6c757d;
-font-weight:500;
-text-decoration:none;
-}
-
-</style>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body { background:#f4f6fb; color:#222; padding:30px 16px 60px; }
+        .wrapper { max-width:800px; margin:0 auto; }
+        .page-header { text-align:center; margin-bottom:26px; }
+        .page-header h1 { font-size:32px; font-weight:700; color:#212529; margin-bottom:8px; }
+        .page-header h1 i { color:#0d6efd; }
+        .page-header p { color:#6c757d; font-size:15px; }
+        .panel { background:#fff; border-radius:16px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,.06); margin-bottom:20px; }
+        .upload-zone {
+            position:relative; border:2px dashed #0d6efd; border-radius:12px;
+            padding:32px 20px; text-align:center; background:#f8f9fa;
+            cursor:pointer; transition:all .2s ease; overflow:hidden;
+        }
+        .upload-zone:hover, .upload-zone.dragover { background:#eef5ff; border-color:#0b5ed7; }
+        .upload-zone input { position:absolute; inset:0; opacity:0; cursor:pointer; }
+        .upload-icon {
+            width:76px; height:76px; margin:0 auto 14px;
+            border-radius:50%; display:flex; align-items:center; justify-content:center;
+            background:#e7f0ff; color:#0d6efd; font-size:34px;
+        }
+        .upload-title { font-size:18px; font-weight:700; color:#212529; margin-bottom:6px; }
+        .upload-subtitle { font-size:14px; color:#6c757d; margin-bottom:10px; }
+        .upload-formats {
+            display:inline-block; padding:5px 10px; border-radius:20px;
+            background:#fff; border:1px solid #dee2e6; color:#6c757d;
+            font-size:12px; font-weight:600;
+        }
+        .sizes-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:16px; margin-top:10px; }
+        .size-card { text-align:center; background:#f8f9fa; border-radius:12px; padding:14px 10px; }
+        .size-card img {
+            background:repeating-conic-gradient(#e9ecef 0% 25%, #fff 0% 50%) 50% / 12px 12px;
+            border-radius:8px; margin-bottom:8px; max-width:100%;
+        }
+        .size-card .label { font-size:12px; font-weight:700; color:#212529; }
+        .size-card .dims { font-size:11px; color:#6c757d; margin-bottom:8px; }
+        .size-card button {
+            width:100%; padding:6px; font-size:11px;
+            background:#eef2f7; border:none; border-radius:6px;
+            cursor:pointer; color:#0d6efd; font-weight:600; font-family:inherit;
+        }
+        .size-card button:hover { background:#dfe6ee; }
+        .btn {
+            width:100%; padding:15px; border-radius:10px; border:none;
+            font-weight:700; cursor:pointer; font-size:16px;
+            font-family:inherit; margin-top:18px; transition:.2s;
+        }
+        .btn-primary { background:#198754; color:#fff; }
+        .btn-primary:hover { background:#157347; }
+        .code-box {
+            background:#1e1e2e; color:#e6e6e6; border-radius:12px;
+            padding:18px 20px; font-family:'Courier New',monospace;
+            font-size:13px; line-height:1.8; white-space:pre-wrap;
+            word-break:break-word; position:relative; margin-top:10px;
+        }
+        .copy-btn {
+            position:absolute; top:14px; right:14px;
+            background:#0d6efd; color:#fff; border:none;
+            padding:8px 16px; border-radius:8px; font-size:13px;
+            font-weight:600; cursor:pointer; font-family:'Poppins',sans-serif;
+        }
+        #status { margin-top:12px; font-size:14px; font-weight:600; }
+        .back-link { display:inline-block; margin-top:10px; color:#6c757d; font-weight:500; text-decoration:none; }
+    </style>
 </head>
 
 <body>
-
 <div class="wrapper">
-
-<div class="page-header">
-    <h1><i class="fa-solid fa-star"></i> Favicon Generator</h1>
-    <p>Upload one image and get every favicon size you need — ready to download.</p>
-</div>
-
-<div class="panel">
-    <div class="upload-zone" id="dropZone">
-        <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-        <div class="upload-title">Drag & Drop your image here</div>
-        <div class="upload-subtitle">Square images work best (e.g. 512x512)</div>
-        <div class="upload-formats">JPG / PNG / WEBP</div>
-        <input type="file" id="upload" accept="image/*">
+    <div class="page-header">
+        <h1><i class="fa-solid fa-star"></i> Favicon Generator</h1>
+        <p>Upload one image and get every favicon size you need — ready to download.</p>
     </div>
-    <div id="status"></div>
-</div>
 
-<div class="panel" id="resultsPanel" style="display:none;">
-    <h3 style="margin-bottom:14px;">Generated Sizes</h3>
-    <div class="sizes-grid" id="sizesGrid"></div>
-    <button class="btn btn-primary" id="downloadZipBtn"><i class="fa-solid fa-file-zipper"></i> Download All (ZIP)</button>
-</div>
-
-<div class="panel" id="codePanel" style="display:none;">
-    <h3>HTML Code (paste into your &lt;head&gt;)</h3>
-    <div class="code-box">
-        <button class="copy-btn" id="copyCodeBtn">Copy</button>
-        <span id="codeOutput"></span>
+    <div class="panel">
+        <div class="upload-zone" id="dropZone">
+            <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <div class="upload-title">Drag & Drop your image here</div>
+            <div class="upload-subtitle">Square images work best (e.g. 512x512)</div>
+            <div class="upload-formats">JPG / PNG / WEBP</div>
+            <input type="file" id="upload" accept="image/*">
+        </div>
+        <div id="status"></div>
     </div>
-</div>
 
-<a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+    <div class="panel" id="resultsPanel" style="display:none;">
+        <h3 style="margin-bottom:14px;">Generated Sizes</h3>
+        <div class="sizes-grid" id="sizesGrid"></div>
+        <button class="btn btn-primary" id="downloadZipBtn"><i class="fa-solid fa-file-zipper"></i> Download All (ZIP)</button>
+    </div>
 
+    <div class="panel" id="codePanel" style="display:none;">
+        <h3>HTML Code (paste into your &lt;head&gt;)</h3>
+        <div class="code-box">
+            <button class="copy-btn" id="copyCodeBtn">Copy</button>
+            <span id="codeOutput"></span>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
 </div>
 
 <script>
+    const upload = document.getElementById("upload");
+    const dropZone = document.getElementById("dropZone");
+    const status = document.getElementById("status");
+    const resultsPanel = document.getElementById("resultsPanel");
+    const sizesGrid = document.getElementById("sizesGrid");
+    const codePanel = document.getElementById("codePanel");
+    const codeOutput = document.getElementById("codeOutput");
+    const downloadZipBtn = document.getElementById("downloadZipBtn");
+    const copyCodeBtn = document.getElementById("copyCodeBtn");
 
-const upload = document.getElementById("upload");
-const dropZone = document.getElementById("dropZone");
-const status = document.getElementById("status");
-const resultsPanel = document.getElementById("resultsPanel");
-const sizesGrid = document.getElementById("sizesGrid");
-const codePanel = document.getElementById("codePanel");
-const codeOutput = document.getElementById("codeOutput");
-const downloadZipBtn = document.getElementById("downloadZipBtn");
-const copyCodeBtn = document.getElementById("copyCodeBtn");
+    const sizes = [
+        { size: 16, name: "favicon-16x16.png" },
+        { size: 32, name: "favicon-32x32.png" },
+        { size: 48, name: "favicon-48x48.png" },
+        { size: 96, name: "favicon-96x96.png" },
+        { size: 180, name: "apple-touch-icon.png" },
+        { size: 192, name: "android-chrome-192x192.png" },
+        { size: 512, name: "android-chrome-512x512.png" }
+    ];
 
-const sizes = [
-    { size: 16, name: "favicon-16x16.png" },
-    { size: 32, name: "favicon-32x32.png" },
-    { size: 48, name: "favicon-48x48.png" },
-    { size: 96, name: "favicon-96x96.png" },
-    { size: 180, name: "apple-touch-icon.png" },
-    { size: 192, name: "android-chrome-192x192.png" },
-    { size: 512, name: "android-chrome-512x512.png" }
-];
+    let generatedFiles = [];
 
-let generatedFiles = [];
+    function processFile(file){
+        if(!file || !file.type.startsWith("image/")){
+            status.innerText = "❌ Please select an image file.";
+            status.style.color = "#dc3545";
+            return;
+        }
 
-function processFile(file){
+        status.innerText = "Generating favicon sizes...";
+        status.style.color = "#0d6efd";
 
-    if(!file || !file.type.startsWith("image/")){
-        status.innerText = "❌ Please select an image file.";
-        status.style.color = "#dc3545";
-        return;
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+            const img = new Image();
+            img.onload = function(){
+                generateSizes(img);
+            };
+            img.onerror = function(){
+                status.innerText = "❌ Could not process the image.";
+                status.style.color = "#dc3545";
+            };
+            img.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
     }
 
-    status.innerText = "Generating favicon sizes...";
-    status.style.color = "#0d6efd";
+    function generateSizes(img){
+        sizesGrid.innerHTML = "";
+        generatedFiles = [];
 
-    const reader = new FileReader();
+        sizes.forEach(spec => {
+            const canvas = document.createElement("canvas");
+            canvas.width = spec.size;
+            canvas.height = spec.size;
 
-    reader.onload = function(e){
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, spec.size, spec.size);
 
-        const img = new Image();
+            const dataURL = canvas.toDataURL("image/png");
+            generatedFiles.push({ name: spec.name, dataURL: dataURL });
 
-        img.onload = function(){
-            generateSizes(img);
-        };
+            const card = document.createElement("div");
+            card.className = "size-card";
 
-        img.onerror = function(){
-            status.innerText = "❌ Could not process the image.";
-            status.style.color = "#dc3545";
-        };
+            card.innerHTML = `
+                <img src="${dataURL}" width="${Math.min(spec.size, 80)}" height="${Math.min(spec.size, 80)}" alt="${spec.name}">
+                <div class="label">${spec.size}×${spec.size}</div>
+                <div class="dims">${spec.name}</div>
+                <button class="dl-single">Download</button>
+            `;
 
-        img.src = e.target.result;
+            card.querySelector(".dl-single").addEventListener("click", function(){
+                const a = document.createElement("a");
+                a.href = dataURL;
+                a.download = spec.name;
+                a.click();
+            });
 
-    };
-
-    reader.readAsDataURL(file);
-
-}
-
-function generateSizes(img){
-
-    sizesGrid.innerHTML = "";
-    generatedFiles = [];
-
-    sizes.forEach(spec => {
-
-        const canvas = document.createElement("canvas");
-        canvas.width = spec.size;
-        canvas.height = spec.size;
-
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, spec.size, spec.size);
-
-        const dataURL = canvas.toDataURL("image/png");
-
-        generatedFiles.push({ name: spec.name, dataURL: dataURL });
-
-        const card = document.createElement("div");
-        card.className = "size-card";
-
-        card.innerHTML = `
-            <img src="${dataURL}" width="${Math.min(spec.size, 80)}" height="${Math.min(spec.size, 80)}" alt="${spec.name}">
-            <div class="label">${spec.size}×${spec.size}</div>
-            <div class="dims">${spec.name}</div>
-            <button class="dl-single">Download</button>
-        `;
-
-        card.querySelector(".dl-single").addEventListener("click", function(){
-            const a = document.createElement("a");
-            a.href = dataURL;
-            a.download = spec.name;
-            a.click();
+            sizesGrid.appendChild(card);
         });
 
-        sizesGrid.appendChild(card);
+        resultsPanel.style.display = "block";
+        codePanel.style.display = "block";
 
-    });
-
-    resultsPanel.style.display = "block";
-    codePanel.style.display = "block";
-
-    codeOutput.innerText =
+        codeOutput.innerText =
 `<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">`;
 
-    status.innerText = "✅ All sizes generated! Download individually or as ZIP.";
-    status.style.color = "#198754";
-
-}
-
-upload.addEventListener("change", function(){
-    processFile(this.files[0]);
-});
-
-dropZone.addEventListener("dragover", function(e){
-    e.preventDefault();
-    dropZone.classList.add("dragover");
-});
-
-dropZone.addEventListener("dragleave", function(){
-    dropZone.classList.remove("dragover");
-});
-
-dropZone.addEventListener("drop", function(e){
-    e.preventDefault();
-    dropZone.classList.remove("dragover");
-    processFile(e.dataTransfer.files[0]);
-});
-
-downloadZipBtn.addEventListener("click", async function(){
-
-    if(generatedFiles.length === 0) return;
-
-    if(typeof JSZip === "undefined"){
-        status.innerText = "❌ ZIP engine failed to load. Try downloading sizes individually.";
-        status.style.color = "#dc3545";
-        return;
+        status.innerText = "✅ All sizes generated! Download individually or as ZIP.";
+        status.style.color = "#198754";
     }
 
-    status.innerText = "Preparing ZIP file...";
-    status.style.color = "#0d6efd";
-
-    const zip = new JSZip();
-
-    generatedFiles.forEach(file => {
-        const base64Data = file.dataURL.split(",")[1];
-        zip.file(file.name, base64Data, { base64: true });
+    upload.addEventListener("change", function(){
+        processFile(this.files[0]);
     });
 
-    zip.file("favicon-code.html", codeOutput.innerText);
-
-    const blob = await zip.generateAsync({ type: "blob" });
-
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = "favicons.zip";
-    a.click();
-
-    status.innerText = "🎉 ZIP downloaded!";
-    status.style.color = "#198754";
-
-});
-
-copyCodeBtn.addEventListener("click", function(){
-    navigator.clipboard.writeText(codeOutput.innerText).then(() => {
-        copyCodeBtn.innerText = "Copied!";
-        setTimeout(() => { copyCodeBtn.innerText = "Copy"; }, 1500);
+    dropZone.addEventListener("dragover", function(e){
+        e.preventDefault();
+        dropZone.classList.add("dragover");
     });
-});
 
+    dropZone.addEventListener("dragleave", function(){
+        dropZone.classList.remove("dragover");
+    });
+
+    dropZone.addEventListener("drop", function(e){
+        e.preventDefault();
+        dropZone.classList.remove("dragover");
+        processFile(e.dataTransfer.files[0]);
+    });
+
+    downloadZipBtn.addEventListener("click", async function(){
+        if(generatedFiles.length === 0) return;
+
+        if(typeof JSZip === "undefined"){
+            status.innerText = "❌ ZIP engine failed to load. Try downloading sizes individually.";
+            status.style.color = "#dc3545";
+            return;
+        }
+
+        status.innerText = "Preparing ZIP file...";
+        status.style.color = "#0d6efd";
+
+        const zip = new JSZip();
+
+        generatedFiles.forEach(file => {
+            const base64Data = file.dataURL.split(",")[1];
+            zip.file(file.name, base64Data, { base64: true });
+        });
+
+        zip.file("favicon-code.html", codeOutput.innerText);
+
+        const blob = await zip.generateAsync({ type: "blob" });
+
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "favicons.zip";
+        a.click();
+
+        status.innerText = "🎉 ZIP downloaded!";
+        status.style.color = "#198754";
+    });
+
+    copyCodeBtn.addEventListener("click", function(){
+        navigator.clipboard.writeText(codeOutput.innerText).then(() => {
+            copyCodeBtn.innerText = "Copied!";
+            setTimeout(() => { copyCodeBtn.innerText = "Copy"; }, 1500);
+        });
+    });
 </script>
-
 </body>
 </html>

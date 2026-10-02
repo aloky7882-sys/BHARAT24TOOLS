@@ -1,378 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Text Diff Checker - Bharat Tools</title>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Text Diff Checker - Compare Two Texts Online Free | Bharat24Tools</title>
+    <meta name="description" content="Compare two texts and instantly see what changed. Free text diff checker with word, character and line comparison. Works in browser, no signup.">
+    <meta name="keywords" content="text diff checker, compare text, text comparison, diff tool, find differences, text compare online">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/text-diff-checker.html">
 
-<script src="https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js"></script>
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/text-diff-checker.html">
+    <meta property="og:title" content="Text Diff Checker - Compare Two Texts Online Free | Bharat24Tools">
+    <meta property="og:description" content="Compare two texts and instantly see what changed. Free, with word, character and line comparison.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
 
-<style>
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Text Diff Checker - Compare Two Texts Online Free | Bharat24Tools">
+    <meta name="twitter:description" content="Compare two texts and instantly see what changed. Free, with word, character and line comparison.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Text Diff Checker",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/text-diff-checker.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
 
-body{
-background:#f4f6fb;
-color:#222;
-padding:30px 16px 60px;
-}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/diff@5.2.0/dist/diff.min.js"></script>
 
-.wrapper{
-max-width:1100px;
-margin:0 auto;
-}
-
-.page-header{
-text-align:center;
-margin-bottom:26px;
-}
-
-.page-header h1{
-font-size:32px;
-font-weight:700;
-color:#212529;
-margin-bottom:8px;
-}
-
-.page-header h1 i{
-color:#0d6efd;
-}
-
-.page-header p{
-color:#6c757d;
-font-size:15px;
-}
-
-.controls-row{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:14px;
-margin-bottom:20px;
-flex-wrap:wrap;
-}
-
-.mode-toggle{
-display:flex;
-gap:8px;
-background:#fff;
-padding:6px;
-border-radius:50px;
-box-shadow:0 4px 15px rgba(0,0,0,.06);
-}
-
-.mode-toggle button{
-padding:9px 20px;
-border:none;
-background:transparent;
-border-radius:50px;
-font-weight:600;
-cursor:pointer;
-color:#495057;
-font-family:inherit;
-transition:.2s;
-}
-
-.mode-toggle button.active{
-background:#0d6efd;
-color:#fff;
-}
-
-.input-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-margin-bottom:20px;
-}
-
-@media(max-width:800px){
-.input-grid{
-grid-template-columns:1fr;
-}
-}
-
-.panel{
-background:#fff;
-border-radius:16px;
-padding:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.06);
-}
-
-.panel h3{
-font-size:14px;
-margin-bottom:10px;
-color:#495057;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.panel h3 .badge{
-font-size:11px;
-padding:3px 10px;
-border-radius:20px;
-font-weight:600;
-}
-
-.badge.original{
-background:#fff0f0;
-color:#dc3545;
-}
-
-.badge.changed{
-background:#eafaf0;
-color:#198754;
-}
-
-textarea{
-width:100%;
-min-height:220px;
-padding:14px;
-border:1px solid #dee2e6;
-border-radius:10px;
-font-family:'Courier New',monospace;
-font-size:14px;
-resize:vertical;
-line-height:1.6;
-}
-
-.action-row{
-text-align:center;
-margin:20px 0;
-}
-
-.btn{
-padding:14px 36px;
-border-radius:50px;
-border:none;
-background:#0d6efd;
-color:#fff;
-font-weight:700;
-font-size:15px;
-cursor:pointer;
-font-family:inherit;
-transition:.2s;
-}
-
-.btn:hover{
-background:#0b5ed7;
-transform:translateY(-2px);
-}
-
-.result-panel{
-background:#fff;
-border-radius:16px;
-padding:24px;
-box-shadow:0 10px 30px rgba(0,0,0,.06);
-display:none;
-}
-
-.result-panel h3{
-margin-bottom:14px;
-font-size:16px;
-}
-
-.stats{
-display:flex;
-gap:20px;
-margin-bottom:16px;
-flex-wrap:wrap;
-}
-
-.stat{
-font-size:13px;
-font-weight:600;
-padding:6px 14px;
-border-radius:20px;
-}
-
-.stat.added{
-background:#eafaf0;
-color:#198754;
-}
-
-.stat.removed{
-background:#fff0f0;
-color:#dc3545;
-}
-
-.diff-output{
-font-family:'Courier New',monospace;
-font-size:14px;
-line-height:1.9;
-white-space:pre-wrap;
-word-break:break-word;
-padding:16px;
-background:#f8f9fa;
-border-radius:10px;
-max-height:500px;
-overflow-y:auto;
-}
-
-.diff-output ins{
-background:#d4f8dc;
-color:#0a5c26;
-text-decoration:none;
-border-radius:3px;
-padding:1px 2px;
-}
-
-.diff-output del{
-background:#ffd9d9;
-color:#8c1717;
-text-decoration:line-through;
-border-radius:3px;
-padding:1px 2px;
-}
-
-.back-link{
-display:inline-block;
-margin-top:20px;
-color:#6c757d;
-font-weight:500;
-text-decoration:none;
-}
-
-</style>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body { background:#f4f6fb; color:#222; padding:30px 16px 60px; }
+        .wrapper { max-width:1100px; margin:0 auto; }
+        .page-header { text-align:center; margin-bottom:26px; }
+        .page-header h1 { font-size:32px; font-weight:700; color:#212529; margin-bottom:8px; }
+        .page-header h1 i { color:#0d6efd; }
+        .page-header p { color:#6c757d; font-size:15px; }
+        .controls-row { display:flex; justify-content:center; align-items:center; gap:14px; margin-bottom:20px; flex-wrap:wrap; }
+        .mode-toggle { display:flex; gap:8px; background:#fff; padding:6px; border-radius:50px; box-shadow:0 4px 15px rgba(0,0,0,.06); }
+        .mode-toggle button { padding:9px 20px; border:none; background:transparent; border-radius:50px; font-weight:600; cursor:pointer; color:#495057; font-family:inherit; transition:.2s; }
+        .mode-toggle button.active { background:#0d6efd; color:#fff; }
+        .input-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px; }
+        @media(max-width:800px){ .input-grid{ grid-template-columns:1fr; } }
+        .panel { background:#fff; border-radius:16px; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.06); }
+        .panel h3 { font-size:14px; margin-bottom:10px; color:#495057; display:flex; justify-content:space-between; align-items:center; }
+        .panel h3 .badge { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:600; }
+        .badge.original { background:#fff0f0; color:#dc3545; }
+        .badge.changed { background:#eafaf0; color:#198754; }
+        textarea { width:100%; min-height:220px; padding:14px; border:1px solid #dee2e6; border-radius:10px; font-family:'Courier New',monospace; font-size:14px; resize:vertical; line-height:1.6; }
+        .action-row { text-align:center; margin:20px 0; }
+        .btn { padding:14px 36px; border-radius:50px; border:none; background:#0d6efd; color:#fff; font-weight:700; font-size:15px; cursor:pointer; font-family:inherit; transition:.2s; }
+        .btn:hover { background:#0b5ed7; transform:translateY(-2px); }
+        .result-panel { background:#fff; border-radius:16px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,.06); display:none; }
+        .result-panel h3 { margin-bottom:14px; font-size:16px; }
+        .stats { display:flex; gap:20px; margin-bottom:16px; flex-wrap:wrap; }
+        .stat { font-size:13px; font-weight:600; padding:6px 14px; border-radius:20px; }
+        .stat.added { background:#eafaf0; color:#198754; }
+        .stat.removed { background:#fff0f0; color:#dc3545; }
+        .diff-output { font-family:'Courier New',monospace; font-size:14px; line-height:1.9; white-space:pre-wrap; word-break:break-word; padding:16px; background:#f8f9fa; border-radius:10px; max-height:500px; overflow-y:auto; }
+        .diff-output ins { background:#d4f8dc; color:#0a5c26; text-decoration:none; border-radius:3px; padding:1px 2px; }
+        .diff-output del { background:#ffd9d9; color:#8c1717; text-decoration:line-through; border-radius:3px; padding:1px 2px; }
+        .back-link { display:inline-block; margin-top:20px; color:#6c757d; font-weight:500; text-decoration:none; }
+    </style>
 </head>
-
 <body>
-
 <div class="wrapper">
-
-<div class="page-header">
-    <h1><i class="fa-solid fa-code-compare"></i> Text Diff Checker</h1>
-    <p>Compare two blocks of text and instantly see what changed.</p>
-</div>
-
-<div class="controls-row">
-    <div class="mode-toggle">
-        <button id="modeWords" class="active">Words</button>
-        <button id="modeChars">Characters</button>
-        <button id="modeLines">Lines</button>
+    <div class="page-header">
+        <h1><i class="fa-solid fa-code-compare"></i> Text Diff Checker</h1>
+        <p>Compare two blocks of text and instantly see what changed.</p>
     </div>
-</div>
 
-<div class="input-grid">
-    <div class="panel">
-        <h3>Original Text <span class="badge original">Before</span></h3>
-        <textarea id="textA" placeholder="Paste the original text here..."></textarea>
+    <div class="controls-row">
+        <div class="mode-toggle">
+            <button id="modeWords" class="active">Words</button>
+            <button id="modeChars">Characters</button>
+            <button id="modeLines">Lines</button>
+        </div>
     </div>
-    <div class="panel">
-        <h3>Changed Text <span class="badge changed">After</span></h3>
-        <textarea id="textB" placeholder="Paste the modified text here..."></textarea>
+
+    <div class="input-grid">
+        <div class="panel">
+            <h3>Original Text <span class="badge original">Before</span></h3>
+            <textarea id="textA" placeholder="Paste the original text here..."></textarea>
+        </div>
+        <div class="panel">
+            <h3>Changed Text <span class="badge changed">After</span></h3>
+            <textarea id="textB" placeholder="Paste the modified text here..."></textarea>
+        </div>
     </div>
-</div>
 
-<div class="action-row">
-    <button class="btn" id="compareBtn"><i class="fa-solid fa-magnifying-glass"></i> Compare Text</button>
-</div>
-
-<div class="result-panel" id="resultPanel">
-    <h3>Differences</h3>
-    <div class="stats">
-        <span class="stat added" id="addedStat">+0 added</span>
-        <span class="stat removed" id="removedStat">-0 removed</span>
+    <div class="action-row">
+        <button class="btn" id="compareBtn"><i class="fa-solid fa-magnifying-glass"></i> Compare Text</button>
     </div>
-    <div class="diff-output" id="diffOutput"></div>
-</div>
 
-<a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+    <div class="result-panel" id="resultPanel">
+        <h3>Differences</h3>
+        <div class="stats">
+            <span class="stat added" id="addedStat">+0 added</span>
+            <span class="stat removed" id="removedStat">-0 removed</span>
+        </div>
+        <div class="diff-output" id="diffOutput"></div>
+    </div>
 
+    <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
 </div>
 
 <script>
+    const textA = document.getElementById("textA");
+    const textB = document.getElementById("textB");
+    const compareBtn = document.getElementById("compareBtn");
+    const resultPanel = document.getElementById("resultPanel");
+    const diffOutput = document.getElementById("diffOutput");
+    const addedStat = document.getElementById("addedStat");
+    const removedStat = document.getElementById("removedStat");
 
-const textA = document.getElementById("textA");
-const textB = document.getElementById("textB");
-const compareBtn = document.getElementById("compareBtn");
-const resultPanel = document.getElementById("resultPanel");
-const diffOutput = document.getElementById("diffOutput");
-const addedStat = document.getElementById("addedStat");
-const removedStat = document.getElementById("removedStat");
+    const modeWordsBtn = document.getElementById("modeWords");
+    const modeCharsBtn = document.getElementById("modeChars");
+    const modeLinesBtn = document.getElementById("modeLines");
 
-const modeWordsBtn = document.getElementById("modeWords");
-const modeCharsBtn = document.getElementById("modeChars");
-const modeLinesBtn = document.getElementById("modeLines");
+    let mode = "words";
 
-let mode = "words";
-
-function setMode(newMode, activeBtn){
-    mode = newMode;
-    [modeWordsBtn, modeCharsBtn, modeLinesBtn].forEach(b => b.classList.remove("active"));
-    activeBtn.classList.add("active");
-}
-
-modeWordsBtn.addEventListener("click", () => setMode("words", modeWordsBtn));
-modeCharsBtn.addEventListener("click", () => setMode("chars", modeCharsBtn));
-modeLinesBtn.addEventListener("click", () => setMode("lines", modeLinesBtn));
-
-function escapeHTML(str){
-    return str
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-}
-
-function runDiff(){
-
-    const a = textA.value;
-    const b = textB.value;
-
-    if(!a.trim() && !b.trim()){
-        return;
+    function setMode(newMode, activeBtn){
+        mode = newMode;
+        [modeWordsBtn, modeCharsBtn, modeLinesBtn].forEach(b => b.classList.remove("active"));
+        activeBtn.classList.add("active");
     }
 
-    let parts;
+    modeWordsBtn.addEventListener("click", () => setMode("words", modeWordsBtn));
+    modeCharsBtn.addEventListener("click", () => setMode("chars", modeCharsBtn));
+    modeLinesBtn.addEventListener("click", () => setMode("lines", modeLinesBtn));
 
-    if(mode === "words"){
-        parts = Diff.diffWords(a, b);
-    } else if(mode === "chars"){
-        parts = Diff.diffChars(a, b);
-    } else {
-        parts = Diff.diffLines(a, b);
+    function escapeHTML(str){
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
-    let html = "";
-    let addedCount = 0;
-    let removedCount = 0;
+    function runDiff(){
+        const a = textA.value;
+        const b = textB.value;
+        if(!a.trim() && !b.trim()) return;
 
-    parts.forEach(part => {
-
-        const safeValue = escapeHTML(part.value);
-
-        if(part.added){
-            html += `<ins>${safeValue}</ins>`;
-            addedCount += mode === "chars" ? part.value.length : part.value.trim().split(/\s+/).filter(Boolean).length;
-        } else if(part.removed){
-            html += `<del>${safeValue}</del>`;
-            removedCount += mode === "chars" ? part.value.length : part.value.trim().split(/\s+/).filter(Boolean).length;
+        let parts;
+        if(mode === "words"){
+            parts = Diff.diffWords(a, b);
+        } else if(mode === "chars"){
+            parts = Diff.diffChars(a, b);
         } else {
-            html += safeValue;
+            parts = Diff.diffLines(a, b);
         }
 
-    });
+        let html = "";
+        let addedCount = 0;
+        let removedCount = 0;
 
-    diffOutput.innerHTML = html;
-    addedStat.innerText = `+${addedCount} added`;
-    removedStat.innerText = `-${removedCount} removed`;
+        parts.forEach(part => {
+            const safeValue = escapeHTML(part.value);
+            if(part.added){
+                html += `<ins>${safeValue}</ins>`;
+                addedCount += mode === "chars" ? part.value.length : part.value.trim().split(/\s+/).filter(Boolean).length;
+            } else if(part.removed){
+                html += `<del>${safeValue}</del>`;
+                removedCount += mode === "chars" ? part.value.length : part.value.trim().split(/\s+/).filter(Boolean).length;
+            } else {
+                html += safeValue;
+            }
+        });
 
-    resultPanel.style.display = "block";
+        diffOutput.innerHTML = html;
+        addedStat.innerText = `+${addedCount} added`;
+        removedStat.innerText = `-${removedCount} removed`;
+        resultPanel.style.display = "block";
+    }
 
-}
-
-compareBtn.addEventListener("click", runDiff);
-
+    compareBtn.addEventListener("click", runDiff);
 </script>
-
 </body>
 </html>

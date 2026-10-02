@@ -1,74 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rotate PDF - Bharat24Tools</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-body { min-height:100vh; background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); padding:30px 16px 60px; color:#e0e7ff; }
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-header { background:rgba(15,15,30,0.95); padding:16px 24px; display:flex; align-items:center; gap:20px; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; margin:-30px -16px 30px; }
-header a { color:#cbd5e1; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:6px; transition:all 0.3s; }
-header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
-.brand { font-weight:800; font-size:1.3rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; flex:1; }
+    <title>Rotate PDF - Rotate PDF Pages Online Free | Bharat24Tools</title>
+    <meta name="description" content="Rotate PDF pages 90°, 180° or 270° online with live preview. Free PDF rotator, works in browser, no signup, no watermark.">
+    <meta name="keywords" content="rotate pdf, rotate pdf pages, pdf rotator, turn pdf, rotate pdf online, free pdf rotator">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/rotate-pdf.html">
 
-main { max-width:750px; margin:0 auto; }
-h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
-.subtitle { text-align:center; color:#a5b4fc; margin-bottom:30px; font-size:0.95rem; }
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/rotate-pdf.html">
+    <meta property="og:title" content="Rotate PDF - Rotate PDF Pages Online Free | Bharat24Tools">
+    <meta property="og:description" content="Rotate PDF pages 90°, 180° or 270° online with live preview. Free, no signup.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
 
-.card { background:rgba(30,27,75,0.9); border-radius:20px; padding:36px; border:1px solid rgba(168,85,247,0.3); box-shadow:0 20px 60px rgba(0,0,0,0.4); }
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rotate PDF - Rotate PDF Pages Online Free | Bharat24Tools">
+    <meta name="twitter:description" content="Rotate PDF pages 90°, 180° or 270° online with live preview. Free, no signup.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-.upload-zone { border:3px dashed rgba(168,85,247,0.6); border-radius:16px; padding:50px 25px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); }
-.upload-zone:hover, .upload-zone.active { border-color:#a855f7; background:rgba(168,85,247,0.15); transform:translateY(-2px); }
-.upload-icon { font-size:3rem; margin-bottom:14px; }
-.upload-zone p { color:#cbd5e1; margin:6px 0; }
-.highlight { color:#e0e7ff; font-weight:700; }
-input[type="file"] { display:none; }
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Rotate PDF",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/rotate-pdf.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
 
-.badge-row { display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
-.badge { background:rgba(34,197,94,0.15); color:#86efac; padding:5px 12px; border-radius:20px; font-size:0.72rem; font-weight:600; }
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body { min-height:100vh; background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); padding:30px 16px 60px; color:#e0e7ff; }
 
-.controls { display:none; margin-top:24px; padding:22px; background:rgba(20,20,40,0.8); border-radius:14px; border:1px solid rgba(168,85,247,0.2); }
+        header { background:rgba(15,15,30,0.95); padding:16px 24px; display:flex; align-items:center; gap:20px; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; margin:-30px -16px 30px; }
+        header a { color:#cbd5e1; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:6px; transition:all 0.3s; }
+        header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
+        .brand { font-weight:800; font-size:1.3rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; flex:1; }
 
-.file-info { display:flex; justify-content:space-between; align-items:center; padding:14px; background:rgba(99,102,241,0.1); border-radius:10px; margin-bottom:18px; font-size:0.9rem; gap:10px; }
-.file-info .name { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.file-info .size { color:#a855f7; font-weight:700; white-space:nowrap; }
+        main { max-width:750px; margin:0 auto; }
+        h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
+        .subtitle { text-align:center; color:#a5b4fc; margin-bottom:30px; font-size:0.95rem; }
 
-.control-group { margin-bottom:18px; }
-.control-group label { display:block; font-weight:700; font-size:0.9rem; color:#cbd5e1; margin-bottom:10px; }
+        .card { background:rgba(30,27,75,0.9); border-radius:20px; padding:36px; border:1px solid rgba(168,85,247,0.3); box-shadow:0 20px 60px rgba(0,0,0,0.4); }
 
-.angle-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; }
-.angle-btn { padding:18px 12px; background:rgba(15,15,30,0.6); border:2px solid rgba(168,85,247,0.3); border-radius:12px; cursor:pointer; transition:all 0.3s; text-align:center; font-family:inherit; color:#e0e7ff; }
-.angle-btn:hover { border-color:#a855f7; background:rgba(168,85,247,0.1); }
-.angle-btn.active { background:linear-gradient(135deg,#a855f7,#ec4899); border-color:transparent; color:#fff; }
-.angle-btn .angle-icon { font-size:1.8rem; margin-bottom:8px; }
-.angle-btn .angle-title { font-weight:700; font-size:0.9rem; }
-.angle-btn .angle-desc { font-size:0.72rem; color:#a5b4fc; margin-top:2px; }
-.angle-btn.active .angle-desc { color:rgba(255,255,255,0.85); }
+        .upload-zone { border:3px dashed rgba(168,85,247,0.6); border-radius:16px; padding:50px 25px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); }
+        .upload-zone:hover, .upload-zone.active { border-color:#a855f7; background:rgba(168,85,247,0.15); transform:translateY(-2px); }
+        .upload-icon { font-size:3rem; margin-bottom:14px; }
+        .upload-zone p { color:#cbd5e1; margin:6px 0; }
+        .highlight { color:#e0e7ff; font-weight:700; }
+        input[type="file"] { display:none; }
 
-.preview-box { display:none; margin-top:18px; padding:16px; background:rgba(99,102,241,0.1); border-radius:12px; text-align:center; }
-.preview-box .preview-label { font-size:0.78rem; color:#a5b4fc; margin-bottom:10px; font-weight:600; }
-.preview-box canvas { max-width:100%; max-height:280px; border-radius:8px; background:#fff; transition:transform 0.3s ease; }
+        .badge-row { display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
+        .badge { background:rgba(34,197,94,0.15); color:#86efac; padding:5px 12px; border-radius:20px; font-size:0.72rem; font-weight:600; }
 
-button.primary-btn { width:100%; padding:16px; background:linear-gradient(135deg,#a855f7,#ec4899); border:none; border-radius:12px; color:#fff; font-weight:700; font-size:1.05rem; cursor:pointer; font-family:inherit; transition:all 0.3s; margin-top:12px; }
-button.primary-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 30px rgba(168,85,247,0.4); }
-button.primary-btn:disabled { opacity:0.6; cursor:not-allowed; }
+        .controls { display:none; margin-top:24px; padding:22px; background:rgba(20,20,40,0.8); border-radius:14px; border:1px solid rgba(168,85,247,0.2); }
 
-.progress-bar { display:none; width:100%; height:10px; background:rgba(15,15,30,0.8); border-radius:20px; margin-top:16px; overflow:hidden; }
-.progress-bar .fill { height:100%; width:0%; background:linear-gradient(90deg,#a855f7,#ec4899); transition:width 0.3s; }
+        .file-info { display:flex; justify-content:space-between; align-items:center; padding:14px; background:rgba(99,102,241,0.1); border-radius:10px; margin-bottom:18px; font-size:0.9rem; gap:10px; }
+        .file-info .name { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        .file-info .size { color:#a855f7; font-weight:700; white-space:nowrap; }
 
-.status { display:none; margin-top:20px; padding:16px; border-radius:12px; text-align:center; font-weight:600; font-size:0.9rem; line-height:1.5; }
-.status.loading { background:rgba(99,102,241,0.2); color:#a5b4fc; display:block; }
-.status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
-.status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
+        .control-group { margin-bottom:18px; }
+        .control-group label { display:block; font-weight:700; font-size:0.9rem; color:#cbd5e1; margin-bottom:10px; }
 
-.info-box { background:rgba(99,102,241,0.1); border-left:4px solid #a855f7; padding:16px; border-radius:10px; margin-top:22px; font-size:0.85rem; color:#a5b4fc; line-height:1.7; }
-.info-box strong { color:#e0e7ff; }
+        .angle-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; }
+        .angle-btn { padding:18px 12px; background:rgba(15,15,30,0.6); border:2px solid rgba(168,85,247,0.3); border-radius:12px; cursor:pointer; transition:all 0.3s; text-align:center; font-family:inherit; color:#e0e7ff; }
+        .angle-btn:hover { border-color:#a855f7; background:rgba(168,85,247,0.1); }
+        .angle-btn.active { background:linear-gradient(135deg,#a855f7,#ec4899); border-color:transparent; color:#fff; }
+        .angle-btn .angle-icon { font-size:1.8rem; margin-bottom:8px; }
+        .angle-btn .angle-title { font-weight:700; font-size:0.9rem; }
+        .angle-btn .angle-desc { font-size:0.72rem; color:#a5b4fc; margin-top:2px; }
+        .angle-btn.active .angle-desc { color:rgba(255,255,255,0.85); }
 
-@media(max-width:600px) { .card { padding:22px; } h1 { font-size:1.6rem; } .upload-zone { padding:38px 18px; } }
-</style>
+        .preview-box { display:none; margin-top:18px; padding:16px; background:rgba(99,102,241,0.1); border-radius:12px; text-align:center; }
+        .preview-box .preview-label { font-size:0.78rem; color:#a5b4fc; margin-bottom:10px; font-weight:600; }
+        .preview-box canvas { max-width:100%; max-height:280px; border-radius:8px; background:#fff; transition:transform 0.3s ease; }
+
+        button.primary-btn { width:100%; padding:16px; background:linear-gradient(135deg,#a855f7,#ec4899); border:none; border-radius:12px; color:#fff; font-weight:700; font-size:1.05rem; cursor:pointer; font-family:inherit; transition:all 0.3s; margin-top:12px; }
+        button.primary-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 30px rgba(168,85,247,0.4); }
+        button.primary-btn:disabled { opacity:0.6; cursor:not-allowed; }
+
+        .progress-bar { display:none; width:100%; height:10px; background:rgba(15,15,30,0.8); border-radius:20px; margin-top:16px; overflow:hidden; }
+        .progress-bar .fill { height:100%; width:0%; background:linear-gradient(90deg,#a855f7,#ec4899); transition:width 0.3s; }
+
+        .status { display:none; margin-top:20px; padding:16px; border-radius:12px; text-align:center; font-weight:600; font-size:0.9rem; line-height:1.5; }
+        .status.loading { background:rgba(99,102,241,0.2); color:#a5b4fc; display:block; }
+        .status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
+        .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
+
+        .info-box { background:rgba(99,102,241,0.1); border-left:4px solid #a855f7; padding:16px; border-radius:10px; margin-top:22px; font-size:0.85rem; color:#a5b4fc; line-height:1.7; }
+        .info-box strong { color:#e0e7ff; }
+
+        @media(max-width:600px) { .card { padding:22px; } h1 { font-size:1.6rem; } .upload-zone { padding:38px 18px; } }
+    </style>
 </head>
 <body>
 
@@ -167,7 +204,6 @@ let selectedAngle = 90;
 let pdfDoc = null;
 let firstPageImage = null;
 
-// Angle button click
 document.querySelectorAll('.angle-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelectorAll('.angle-btn').forEach(b => b.classList.remove('active'));
@@ -205,7 +241,6 @@ async function handleFile(file) {
     controls.style.display = 'block';
     showStatus(`✅ File ready: ${(file.size / 1024 / 1024).toFixed(2)} MB`, 'success');
 
-    // Load preview
     try {
         const arrayBuffer = await file.arrayBuffer();
         pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer.slice(0) }).promise;

@@ -1,71 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Color Palette Generator - BharatOS-Tools</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-body { background: linear-gradient(135deg, #f4f6fb 0%, #e8f1f9 100%); color:#222; padding:30px 16px 60px; min-height:100vh; }
-.wrapper { max-width:1000px; margin:0 auto; }
-.page-header { text-align:center; margin-bottom:26px; }
-.page-header h1 { font-size:32px; font-weight:800; color:#1a2b45; margin-bottom:8px; }
-.page-header h1 i { color:#0d6efd; }
-.page-header p { color:#6c757d; font-size:15px; }
-.controls {
-    background:#fff; border-radius:20px; padding:24px;
-    box-shadow:0 10px 40px rgba(13, 110, 253, 0.06);
-    margin-bottom:24px; display:flex; align-items:center; gap:20px; flex-wrap:wrap;
-}
-.controls label { font-size:13px; font-weight:600; color:#495057; }
-.controls input[type="color"] {
-    width:60px; height:50px; border:none; border-radius:12px;
-    cursor:pointer; padding:3px; border:2px solid #e9ecef;
-}
-.controls input[type="text"] {
-    padding:12px 14px; border:2px solid #e9ecef; border-radius:12px;
-    font-family:'Courier New',monospace; font-size:14px;
-    width:130px; text-transform:uppercase; background:#f8fafc;
-}
-.controls input[type="text"]:focus {
-    outline:none; border-color:#0d6efd; background:#fff;
-    box-shadow:0 0 0 4px rgba(13, 110, 253, 0.1);
-}
-.btn {
-    padding:12px 24px; border-radius:50px; border:none;
-    background:linear-gradient(135deg, #0d6efd, #0b5ed7); color:#fff;
-    font-weight:700; cursor:pointer; font-family:inherit; font-size:14px;
-    transition:.2s; display:flex; align-items:center; gap:8px;
-}
-.btn:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(13, 110, 253, 0.3); }
-.section { margin-bottom:28px; }
-.section h3 { font-size:16px; margin-bottom:12px; color:#1a2b45; font-weight:700; display:flex; align-items:center; gap:8px; }
-.section h3 i { color:#0d6efd; }
-.palette-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:12px; }
-.swatch {
-    border-radius:14px; overflow:hidden;
-    box-shadow:0 6px 18px rgba(0,0,0,.08);
-    cursor:pointer; position:relative; transition:.2s;
-    border:2px solid #fff;
-}
-.swatch:hover { transform:translateY(-4px); box-shadow:0 12px 28px rgba(0,0,0,.15); }
-.swatch-color { height:80px; }
-.swatch-label {
-    background:#fff; padding:10px; font-size:12px;
-    font-weight:700; font-family:'Courier New',monospace;
-    text-align:center; color:#212529;
-}
-.swatch .copied-badge {
-    position:absolute; top:8px; right:8px;
-    background:rgba(0,0,0,.7); color:#fff;
-    font-size:10px; padding:4px 10px; border-radius:20px;
-    display:none; font-weight:600;
-}
-.back-link { display:inline-block; margin-top:15px; color:#6c757d; font-weight:500; text-decoration:none; }
-.back-link:hover { color:#0d6efd; }
-</style>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <title>Color Palette Generator - Create Color Schemes Free | Bharat24Tools</title>
+    <meta name="description" content="Generate complementary, analogous, triadic and tetradic color palettes instantly. Free color palette generator with hex codes and copy feature.">
+    <meta name="keywords" content="color palette generator, color scheme generator, complementary colors, analogous colors, triadic colors, hex color picker">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/color-palette-generator.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/color-palette-generator.html">
+    <meta property="og:title" content="Color Palette Generator - Create Color Schemes Free | Bharat24Tools">
+    <meta property="og:description" content="Generate complementary, analogous, triadic and tetradic color palettes instantly. Free, with hex codes.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Color Palette Generator - Create Color Schemes Free | Bharat24Tools">
+    <meta name="twitter:description" content="Generate complementary, analogous, triadic and tetradic color palettes instantly. Free, with hex codes.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Color Palette Generator",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/color-palette-generator.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body { background: linear-gradient(135deg, #f4f6fb 0%, #e8f1f9 100%); color:#222; padding:30px 16px 60px; min-height:100vh; }
+        .wrapper { max-width:1000px; margin:0 auto; }
+        .page-header { text-align:center; margin-bottom:26px; }
+        .page-header h1 { font-size:32px; font-weight:800; color:#1a2b45; margin-bottom:8px; }
+        .page-header h1 i { color:#0d6efd; }
+        .page-header p { color:#6c757d; font-size:15px; }
+        .controls {
+            background:#fff; border-radius:20px; padding:24px;
+            box-shadow:0 10px 40px rgba(13, 110, 253, 0.06);
+            margin-bottom:24px; display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+        }
+        .controls label { font-size:13px; font-weight:600; color:#495057; }
+        .controls input[type="color"] {
+            width:60px; height:50px; border:none; border-radius:12px;
+            cursor:pointer; padding:3px; border:2px solid #e9ecef;
+        }
+        .controls input[type="text"] {
+            padding:12px 14px; border:2px solid #e9ecef; border-radius:12px;
+            font-family:'Courier New',monospace; font-size:14px;
+            width:130px; text-transform:uppercase; background:#f8fafc;
+        }
+        .controls input[type="text"]:focus {
+            outline:none; border-color:#0d6efd; background:#fff;
+            box-shadow:0 0 0 4px rgba(13, 110, 253, 0.1);
+        }
+        .btn {
+            padding:12px 24px; border-radius:50px; border:none;
+            background:linear-gradient(135deg, #0d6efd, #0b5ed7); color:#fff;
+            font-weight:700; cursor:pointer; font-family:inherit; font-size:14px;
+            transition:.2s; display:flex; align-items:center; gap:8px;
+        }
+        .btn:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(13, 110, 253, 0.3); }
+        .section { margin-bottom:28px; }
+        .section h3 { font-size:16px; margin-bottom:12px; color:#1a2b45; font-weight:700; display:flex; align-items:center; gap:8px; }
+        .section h3 i { color:#0d6efd; }
+        .palette-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:12px; }
+        .swatch {
+            border-radius:14px; overflow:hidden;
+            box-shadow:0 6px 18px rgba(0,0,0,.08);
+            cursor:pointer; position:relative; transition:.2s;
+            border:2px solid #fff;
+        }
+        .swatch:hover { transform:translateY(-4px); box-shadow:0 12px 28px rgba(0,0,0,.15); }
+        .swatch-color { height:80px; }
+        .swatch-label {
+            background:#fff; padding:10px; font-size:12px;
+            font-weight:700; font-family:'Courier New',monospace;
+            text-align:center; color:#212529;
+        }
+        .swatch .copied-badge {
+            position:absolute; top:8px; right:8px;
+            background:rgba(0,0,0,.7); color:#fff;
+            font-size:10px; padding:4px 10px; border-radius:20px;
+            display:none; font-weight:600;
+        }
+        .back-link { display:inline-block; margin-top:15px; color:#6c757d; font-weight:500; text-decoration:none; }
+        .back-link:hover { color:#0d6efd; }
+    </style>
 </head>
 <body>
 <div class="wrapper">
@@ -188,24 +225,14 @@ body { background: linear-gradient(135deg, #f4f6fb 0%, #e8f1f9 100%); color:#222
         if(!isValidHex(hex)) return;
         const [h, s, l] = hexToHsl(hex);
 
-        // Shades
         const shades = [90, 75, 60, 45, l, 30, 15].map(lightness =>
             hslToHex(h, s, Math.max(5, Math.min(95, lightness)))
         );
 
-        // Complementary
         const complementary = [hslToHex(h, s, l), hslToHex(h + 180, s, l)];
-
-        // Analogous
         const analogous = [hslToHex(h - 30, s, l), hslToHex(h, s, l), hslToHex(h + 30, s, l)];
-
-        // Triadic
         const triadic = [hslToHex(h, s, l), hslToHex(h + 120, s, l), hslToHex(h + 240, s, l)];
-
-        // Split Complementary
         const splitComp = [hslToHex(h, s, l), hslToHex(h + 150, s, l), hslToHex(h + 210, s, l)];
-
-        // Tetradic
         const tetradic = [hslToHex(h, s, l), hslToHex(h + 90, s, l), hslToHex(h + 180, s, l), hslToHex(h + 270, s, l)];
 
         renderRow("shadesRow", shades);
