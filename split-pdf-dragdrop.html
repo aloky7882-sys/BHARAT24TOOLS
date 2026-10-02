@@ -1,460 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Split PDF - Bharat Tools</title>
-
-<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-<script>
-if (!window.PDFLib) {
-    document.write('<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"><\/script>');
-}
-</script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
+<title>Split PDF - Bharat24Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+body { min-height:100vh; background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); padding:30px 16px 60px; color:#e0e7ff; }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
+header { background:rgba(15,15,30,0.95); padding:16px 24px; display:flex; align-items:center; gap:20px; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; margin:-30px -16px 30px; }
+header a { color:#cbd5e1; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:6px; transition:all 0.3s; }
+header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
+.brand { font-weight:800; font-size:1.3rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; flex:1; }
 
-body{
-background:#f4f6fb;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
-padding:20px;
-}
+main { max-width:750px; margin:0 auto; }
+h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
+.subtitle { text-align:center; color:#a5b4fc; margin-bottom:30px; font-size:0.95rem; }
 
-.container{
-background:#fff;
-padding:30px;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,.1);
-width:100%;
-max-width:700px;
-text-align:center;
-}
+.card { background:rgba(30,27,75,0.9); border-radius:20px; padding:36px; border:1px solid rgba(168,85,247,0.3); box-shadow:0 20px 60px rgba(0,0,0,0.4); }
 
-h1{
-margin-bottom:20px;
-}
+.upload-zone { border:3px dashed rgba(168,85,247,0.6); border-radius:16px; padding:50px 25px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); }
+.upload-zone:hover, .upload-zone.active { border-color:#a855f7; background:rgba(168,85,247,0.15); transform:translateY(-2px); }
+.upload-icon { font-size:3rem; margin-bottom:14px; }
+.upload-zone p { color:#cbd5e1; margin:6px 0; }
+.highlight { color:#e0e7ff; font-weight:700; }
+input[type="file"] { display:none; }
 
-input{
-width:100%;
-margin:15px 0;
-padding:10px;
-}
+.badge-row { display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
+.badge { background:rgba(34,197,94,0.15); color:#86efac; padding:5px 12px; border-radius:20px; font-size:0.72rem; font-weight:600; }
 
-.upload-zone{
-position:relative;
-border:2px dashed #0d6efd;
-border-radius:12px;
-padding:32px 20px;
-margin:20px 0;
-background:#f8f9fa;
-cursor:pointer;
-transition:all .2s ease;
-overflow:hidden;
-}
+.controls { display:none; margin-top:24px; padding:22px; background:rgba(20,20,40,0.8); border-radius:14px; border:1px solid rgba(168,85,247,0.2); }
 
-.upload-zone:hover,
-.upload-zone.dragover{
-background:#eef5ff;
-border-color:#0b5ed7;
-}
+.file-info { display:flex; justify-content:space-between; align-items:center; padding:14px; background:rgba(99,102,241,0.1); border-radius:10px; margin-bottom:18px; font-size:0.9rem; gap:10px; }
+.file-info .name { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.file-info .size { color:#a855f7; font-weight:700; white-space:nowrap; }
 
-.upload-zone input{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-opacity:0;
-cursor:pointer;
-margin:0;
-padding:0;
-}
+.control-group { margin-bottom:18px; }
+.control-group label { display:block; font-weight:700; font-size:0.9rem; color:#cbd5e1; margin-bottom:10px; }
 
-.upload-icon{
-width:76px;
-height:76px;
-margin:0 auto 14px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#e7f0ff;
-color:#0d6efd;
-font-size:34px;
-}
+.radio-group { display:flex; gap:10px; flex-wrap:wrap; }
+.radio-option { flex:1; min-width:140px; padding:14px; background:rgba(15,15,30,0.6); border:2px solid rgba(168,85,247,0.3); border-radius:10px; cursor:pointer; transition:all 0.3s; text-align:center; }
+.radio-option:hover { border-color:#a855f7; }
+.radio-option.active { background:linear-gradient(135deg,#a855f7,#ec4899); border-color:transparent; }
+.radio-option input { display:none; }
+.radio-option .title { font-weight:700; font-size:0.9rem; margin-bottom:4px; }
+.radio-option .desc { font-size:0.72rem; color:#a5b4fc; }
+.radio-option.active .desc { color:rgba(255,255,255,0.85); }
 
-.upload-title{
-font-size:18px;
-font-weight:700;
-color:#212529;
-margin-bottom:6px;
-}
+.range-input { width:100%; padding:12px; background:rgba(15,15,30,0.8); border:2px solid rgba(168,85,247,0.4); border-radius:10px; color:#e0e7ff; font-family:inherit; font-weight:600; font-size:0.9rem; margin-top:8px; display:none; }
+.range-input.visible { display:block; }
 
-.upload-subtitle{
-font-size:14px;
-color:#6c757d;
-margin-bottom:10px;
-}
+button.primary-btn { width:100%; padding:16px; background:linear-gradient(135deg,#a855f7,#ec4899); border:none; border-radius:12px; color:#fff; font-weight:700; font-size:1.05rem; cursor:pointer; font-family:inherit; transition:all 0.3s; margin-top:12px; }
+button.primary-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 30px rgba(168,85,247,0.4); }
+button.primary-btn:disabled { opacity:0.6; cursor:not-allowed; }
 
-.upload-formats{
-display:inline-block;
-padding:5px 10px;
-border-radius:20px;
-background:#fff;
-border:1px solid #dee2e6;
-color:#6c757d;
-font-size:12px;
-font-weight:600;
-}
+.progress-bar { display:none; width:100%; height:10px; background:rgba(15,15,30,0.8); border-radius:20px; margin-top:16px; overflow:hidden; }
+.progress-bar .fill { height:100%; width:0%; background:linear-gradient(90deg,#a855f7,#ec4899); transition:width 0.3s; }
 
-#file-name{
-margin-top:10px;
-font-weight:600;
-color:#198754;
-font-size:14px;
-word-break:break-word;
-}
+.status { display:none; margin-top:20px; padding:16px; border-radius:12px; text-align:center; font-weight:600; font-size:0.9rem; line-height:1.5; }
+.status.loading { background:rgba(99,102,241,0.2); color:#a5b4fc; display:block; }
+.status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
+.status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
 
-#page-info{
-margin-top:8px;
-font-size:14px;
-color:#6c757d;
-}
+.info-box { background:rgba(99,102,241,0.1); border-left:4px solid #a855f7; padding:16px; border-radius:10px; margin-top:22px; font-size:0.85rem; color:#a5b4fc; line-height:1.7; }
+.info-box strong { color:#e0e7ff; }
 
-.page-input-wrap{
-text-align:left;
-margin-top:18px;
-}
-
-.page-input-wrap label{
-display:block;
-font-size:14px;
-font-weight:600;
-color:#495057;
-margin-bottom:6px;
-}
-
-#page{
-margin:0;
-}
-
-#status{
-margin-top:15px;
-font-weight:600;
-font-size:14px;
-}
-
-button{
-padding:15px 25px;
-background:#0d6efd;
-color:#fff;
-border:none;
-border-radius:8px;
-cursor:pointer;
-font-size:18px;
-margin-top:20px;
-}
-
-button:hover{
-background:#084298;
-}
-
+@media(max-width:600px) { .card { padding:22px; } h1 { font-size:1.6rem; } .upload-zone { padding:38px 18px; } }
 </style>
-
 </head>
-
 <body>
 
-<div class="container">
+<header>
+    <a href="index.html">← Back</a>
+    <div class="brand">⚡ Bharat24Tools</div>
+</header>
 
-<h1>
-<i class="fa-solid fa-scissors" style="color:#0d6efd;"></i>
-Split PDF
-</h1>
+<main>
+    <h1>✂️ Split PDF</h1>
+    <p class="subtitle">PDF को अलग pages में तोड़ो — Server-powered</p>
 
-<div class="upload-zone" id="dropZone">
-    <div class="upload-icon">
-        <i class="fa-solid fa-cloud-arrow-up"></i>
+    <div class="card">
+        <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon">✂️</div>
+            <p><span class="highlight">Click करो या Drag करो</span></p>
+            <p>PDF file (max 15MB)</p>
+            <div class="badge-row">
+                <span class="badge">⚡ Fast</span>
+                <span class="badge">🔒 Private</span>
+                <span class="badge">📦 ZIP Output</span>
+            </div>
+        </div>
+        <input type="file" id="fileInput" accept=".pdf,application/pdf">
+
+        <div class="controls" id="controls">
+            <div class="file-info">
+                <span class="name" id="fileName">-</span>
+                <span class="size" id="fileSize">-</span>
+            </div>
+
+            <div class="control-group">
+                <label>🎯 Split Mode:</label>
+                <div class="radio-group">
+                    <div class="radio-option active" data-mode="all">
+                        <input type="radio" name="splitmode" value="all" checked>
+                        <div class="title">📄 Split All Pages</div>
+                        <div class="desc">हर page अलग PDF</div>
+                    </div>
+                    <div class="radio-option" data-mode="range">
+                        <input type="radio" name="splitmode" value="range">
+                        <div class="title">🎯 Custom Range</div>
+                        <div class="desc">Page range specify करो</div>
+                    </div>
+                </div>
+            </div>
+
+            <input type="text" id="rangeInput" class="range-input" placeholder="उदा: 1-3,5,7-9 (e.g. 1-3,5,7-9)">
+
+            <button class="primary-btn" id="splitBtn">✂️ Split PDF</button>
+            <div class="progress-bar" id="progressBar"><div class="fill" id="progressFill"></div></div>
+        </div>
+
+        <div class="status" id="status"></div>
+
+        <div class="info-box">
+            <strong>💡 कैसे काम करता है:</strong> तुम्हारी PDF हमारे server पर Ghostscript से split होती है। सारे pages एक ZIP file में download होंगे।
+        </div>
     </div>
-
-    <div class="upload-title">
-        Drag & Drop your PDF here
-    </div>
-
-    <div class="upload-subtitle">
-        or click to choose a PDF file
-    </div>
-
-    <div class="upload-formats">
-        PDF
-    </div>
-
-    <input type="file" id="upload" accept=".pdf,application/pdf">
-</div>
-
-<div id="file-name"></div>
-<div id="page-info"></div>
-
-<div class="page-input-wrap">
-    <label for="page">Page number to extract</label>
-    <input type="number" id="page" placeholder="Enter Page Number" min="1">
-</div>
-
-<button id="splitBtn">
-<i class="fa-solid fa-scissors"></i>
-Split & Download
-</button>
-
-<div id="status"></div>
-
-</div>
+</main>
 
 <script>
+const API_URL = 'https://bharat24tools-api.onrender.com';
 
-const upload = document.getElementById("upload");
-const dropZone = document.getElementById("dropZone");
-const pageInput = document.getElementById("page");
-const splitBtn = document.getElementById("splitBtn");
-const fileName = document.getElementById("file-name");
-const pageInfo = document.getElementById("page-info");
-const status = document.getElementById("status");
+const uploadZone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+const controls = document.getElementById('controls');
+const splitBtn = document.getElementById('splitBtn');
+const fileNameEl = document.getElementById('fileName');
+const fileSizeEl = document.getElementById('fileSize');
+const progressBar = document.getElementById('progressBar');
+const progressFill = document.getElementById('progressFill');
+const status = document.getElementById('status');
+const rangeInput = document.getElementById('rangeInput');
 
 let selectedFile = null;
-let totalPages = 0;
+let splitMode = 'all';
 
-function setStatus(message, color){
-    status.innerText = message;
-    status.style.color = color;
-}
+// Radio option click
+document.querySelectorAll('.radio-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+        document.querySelectorAll('.radio-option').forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        opt.querySelector('input').checked = true;
+        splitMode = opt.dataset.mode;
 
-async function loadPDF(file){
-
-    if(!file) return;
-
-    if(
-        file.type !== "application/pdf" &&
-        !file.name.toLowerCase().endsWith(".pdf")
-    ){
-        selectedFile = null;
-        totalPages = 0;
-        fileName.innerText = "";
-        pageInfo.innerText = "";
-        setStatus("❌ Please select a PDF file.", "#dc3545");
-        return;
-    }
-
-    selectedFile = file;
-
-    fileName.innerHTML =
-        '<i class="fa-solid fa-circle-check"></i> Selected: ' +
-        file.name;
-
-    fileName.style.color = "#198754";
-
-    setStatus("Reading PDF...", "#0d6efd");
-
-    try{
-
-        if(!window.PDFLib){
-            throw new Error("PDF library failed to load");
+        if (splitMode === 'range') {
+            rangeInput.classList.add('visible');
+        } else {
+            rangeInput.classList.remove('visible');
         }
+    });
+});
 
-        const bytes = await file.arrayBuffer();
+uploadZone.addEventListener('click', () => fileInput.click());
+uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
+uploadZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadZone.classList.remove('active');
+    if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) handleFile(e.target.files[0]);
+});
 
-        const pdf =
-            await PDFLib.PDFDocument.load(bytes);
-
-        totalPages = pdf.getPageCount();
-
-        pageInput.max = totalPages;
-
-        pageInput.value = "";
-
-        pageInfo.innerText =
-            "This PDF contains " +
-            totalPages +
-            " page" +
-            (totalPages === 1 ? "" : "s") +
-            ".";
-
-        setStatus(
-            "✅ PDF ready. Enter the page number you want to extract.",
-            "#198754"
-        );
-
-    }catch(error){
-
-        console.error("PDF loading error:", error);
-
-        selectedFile = null;
-        totalPages = 0;
-
-        setStatus(
-            "❌ Could not read this PDF file.",
-            "#dc3545"
-        );
+function handleFile(file) {
+    if (!file.name.toLowerCase().endsWith('.pdf')) {
+        showStatus('❌ कृपया PDF file चुनें', 'error');
+        return;
     }
+    if (file.size > 15 * 1024 * 1024) {
+        showStatus('❌ File 15MB से बड़ी है', 'error');
+        return;
+    }
+    selectedFile = file;
+    fileNameEl.textContent = file.name.length > 30 ? file.name.substring(0, 30) + '...' : file.name;
+    fileSizeEl.textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+    controls.style.display = 'block';
+    showStatus(`✅ File ready: ${(file.size / 1024 / 1024).toFixed(2)} MB`, 'success');
 }
 
-upload.addEventListener("change", function(){
-    loadPDF(this.files[0]);
-});
-
-dropZone.addEventListener("dragover", function(e){
-    e.preventDefault();
-    dropZone.classList.add("dragover");
-});
-
-dropZone.addEventListener("dragleave", function(){
-    dropZone.classList.remove("dragover");
-});
-
-dropZone.addEventListener("drop", function(e){
-    e.preventDefault();
-    dropZone.classList.remove("dragover");
-    loadPDF(e.dataTransfer.files[0]);
-});
-
-splitBtn.addEventListener("click", async function(){
-
-    if(!selectedFile){
-
-        setStatus(
-            "❌ Please select a PDF first.",
-            "#dc3545"
-        );
-
-        return;
-    }
-
-    const pageNo =
-        parseInt(pageInput.value, 10);
-
-    if(
-        !Number.isInteger(pageNo) ||
-        pageNo < 1 ||
-        pageNo > totalPages
-    ){
-
-        setStatus(
-            "❌ Enter a valid page number between 1 and " +
-            totalPages + ".",
-            "#dc3545"
-        );
-
-        return;
-    }
-
-    if(!window.PDFLib){
-
-        setStatus(
-            "❌ PDF library failed to load. Please refresh the page.",
-            "#dc3545"
-        );
-
-        return;
-    }
+splitBtn.addEventListener('click', async () => {
+    if (!selectedFile) return;
 
     splitBtn.disabled = true;
+    progressBar.style.display = 'block';
+    progressFill.style.width = '20%';
+    showStatus('⏳ Uploading to server... (if server was sleeping, wait 30s)', 'loading');
 
-    setStatus(
-        "Splitting PDF... Please wait.",
-        "#0d6efd"
-    );
+    setTimeout(() => {
+        if (splitBtn.disabled) {
+            progressFill.style.width = '60%';
+            showStatus('⏳ Splitting PDF on server...', 'loading');
+        }
+    }, 5000);
 
-    try{
+    try {
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        formData.append('pages', splitMode === 'range' ? rangeInput.value.trim() : '');
 
-        const bytes =
-            await selectedFile.arrayBuffer();
+        const res = await fetch(API_URL + '/split-pdf', {
+            method: 'POST',
+            body: formData
+        });
 
-        const pdf =
-            await PDFLib.PDFDocument.load(bytes);
+        progressFill.style.width = '90%';
 
-        const newPdf =
-            await PDFLib.PDFDocument.create();
+        if (!res.ok) {
+            const errText = await res.text();
+            throw new Error(errText || 'Server error ' + res.status);
+        }
 
-        const copiedPages =
-            await newPdf.copyPages(
-                pdf,
-                [pageNo - 1]
-            );
+        const blob = await res.blob();
+        progressFill.style.width = '100%';
 
-        newPdf.addPage(copiedPages[0]);
+        const contentType = res.headers.get('Content-Type') || '';
+        let downloadName = 'split-pages.zip';
+        if (contentType.includes('application/pdf')) {
+            downloadName = selectedFile.name.replace(/\.pdf$/i, '') + '-page.pdf';
+        } else if (contentType.includes('zip')) {
+            downloadName = selectedFile.name.replace(/\.pdf$/i, '') + '-split.zip';
+        }
 
-        const pdfBytes =
-            await newPdf.save();
-
-        const blob =
-            new Blob(
-                [pdfBytes],
-                {type:"application/pdf"}
-            );
-
-        const url =
-            URL.createObjectURL(blob);
-
-        const link =
-            document.createElement("a");
-
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
         link.href = url;
-
-        const baseName =
-            selectedFile.name
-                .replace(/\.pdf$/i, "");
-
-        link.download =
-            baseName +
-            "-page-" +
-            pageNo +
-            ".pdf";
-
-        document.body.appendChild(link);
-
+        link.download = downloadName;
         link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
 
-        link.remove();
-
-        setTimeout(function(){
-            URL.revokeObjectURL(url);
-        },1000);
-
-        setStatus(
-            "🎉 Page " +
-            pageNo +
-            " downloaded successfully!",
-            "#28a745"
-        );
-
-    }catch(error){
-
-        console.error("PDF split error:", error);
-
-        setStatus(
-            "❌ Split failed. Please check that the PDF is valid and not password protected.",
-            "#dc3545"
-        );
-
-    }finally{
-
-        splitBtn.disabled = false;
-
+        showStatus(`🎉 PDF split successfully! Downloaded as ${downloadName}`, 'success');
+    } catch (err) {
+        console.error(err);
+        showStatus('❌ Error: ' + err.message, 'error');
     }
 
+    splitBtn.disabled = false;
+    setTimeout(() => {
+        progressBar.style.display = 'none';
+        progressFill.style.width = '0%';
+    }, 4000);
 });
 
+function showStatus(msg, type) {
+    status.textContent = msg;
+    status.className = 'status ' + type;
+}
 </script>
-
 </body>
 </html>
