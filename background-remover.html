@@ -7,8 +7,8 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <title>Background Remover AI - Remove Photo Background Free | Bharat24Tools</title>
-    <meta name="description" content="Remove photo background instantly using AI. Free background remover with brush tool for fine-tuning. Works in browser, no upload, transparent PNG output.">
-    <meta name="keywords" content="background remover, remove background, ai background remover, transparent png, photo background eraser, free background remover">
+    <meta name="description" content="Remove photo background instantly using AI. Free background remover with transparent PNG output. Works worldwide, no signup, 100% private.">
+    <meta name="keywords" content="background remover, remove background, ai background remover, transparent png, photo background eraser, free background remover, remove bg">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#0d6efd">
@@ -18,14 +18,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/background-remover.html">
     <meta property="og:title" content="Background Remover AI - Remove Photo Background Free | Bharat24Tools">
-    <meta property="og:description" content="Remove photo background instantly using AI. Free, brush tool for fine-tuning.">
+    <meta property="og:description" content="Remove photo background instantly using AI. Free, transparent PNG output.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
     <meta property="og:site_name" content="Bharat24Tools">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Background Remover AI - Remove Photo Background Free | Bharat24Tools">
-    <meta name="twitter:description" content="Remove photo background instantly using AI. Free, brush tool for fine-tuning.">
+    <meta name="twitter:description" content="Remove photo background instantly using AI. Free, transparent PNG output.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
     <!-- Structured Data -->
@@ -43,6 +43,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -50,7 +51,9 @@
             min-height: 100vh;
             background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%);
             background-attachment: fixed;
+            color: #e0e7ff;
         }
+
         header {
             background: rgba(15, 15, 30, 0.95);
             backdrop-filter: blur(10px);
@@ -74,7 +77,6 @@
         }
         header a:hover { color: #a855f7; background: rgba(168, 85, 247, 0.1); }
         .brand {
-            color: #fff;
             font-weight: 800;
             font-size: 1.3rem;
             background: linear-gradient(135deg, #a855f7, #ec4899);
@@ -82,9 +84,22 @@
             -webkit-text-fill-color: transparent;
             flex: 1;
         }
+        .lang-select {
+            background: rgba(15, 15, 30, 0.9);
+            border: 2px solid rgba(168, 85, 247, 0.4);
+            color: #e0e7ff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
         main { max-width: 1000px; margin: 0 auto; padding: 40px 20px 60px; }
-        h1 { font-size: 2rem; color: #e0e7ff; text-align: center; margin-bottom: 8px; font-weight: 800; }
+        h1 { font-size: 2rem; text-align: center; margin-bottom: 8px; font-weight: 800; }
         .subtitle { text-align: center; color: #a5b4fc; margin-bottom: 40px; }
+
         .card {
             background: rgba(30, 27, 75, 0.9);
             backdrop-filter: blur(10px);
@@ -93,6 +108,7 @@
             border: 1px solid rgba(168, 85, 247, 0.3);
             margin-bottom: 24px;
         }
+
         .upload-zone {
             border: 3px dashed rgba(168, 85, 247, 0.6);
             border-radius: 16px;
@@ -108,92 +124,66 @@
         }
         .upload-icon { font-size: 3rem; color: #a855f7; margin-bottom: 16px; }
         .upload-zone p { color: #cbd5e1; margin: 8px 0; }
-        .upload-zone .highlight { color: #e0e7ff; font-weight: 700; }
+        .highlight { color: #e0e7ff; font-weight: 700; }
         input[type="file"] { display: none; }
+
         .preview-section {
             display: none;
             margin-top: 30px;
-            padding: 20px;
-            background: rgba(20, 20, 40, 0.8);
-            border-radius: 12px;
-            border: 1px solid rgba(168, 85, 247, 0.2);
             text-align: center;
         }
-        .canvas-container {
-            position: relative;
-            display: inline-block;
-            margin: 20px 0;
-            cursor: crosshair;
-        }
-        canvas {
+        .preview-section img {
             max-width: 100%;
-            height: auto;
-            border-radius: 8px;
+            max-height: 400px;
+            border-radius: 12px;
             border: 2px solid rgba(168, 85, 247, 0.3);
-            display: block;
+            background: repeating-conic-gradient(#2a2a4a 0% 25%, #1a1a3e 0% 50%) 50% / 20px 20px;
         }
+
         .controls {
             display: none;
-            margin-top: 30px;
+            margin-top: 24px;
             padding: 24px;
             background: rgba(20, 20, 40, 0.8);
             border-radius: 12px;
             border: 1px solid rgba(168, 85, 247, 0.2);
         }
-        .control-group { margin-bottom: 16px; }
-        .control-group label { display: block; color: #e0e7ff; font-weight: 700; margin-bottom: 8px; }
-        .control-group select, .control-group input[type="range"] {
-            width: 100%;
-            padding: 12px;
-            background: rgba(15, 15, 30, 0.8);
-            border: 1px solid rgba(168, 85, 247, 0.4);
-            border-radius: 8px;
-            color: #e0e7ff;
-            font-family: inherit;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .brush-controls {
-            display: flex;
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-top: 10px;
+            margin-top: 16px;
         }
-        .brush-controls button {
-            flex: 1;
-            padding: 12px;
-            border-radius: 8px;
-            border: 2px solid rgba(168, 85, 247, 0.4);
-            background: rgba(15, 15, 30, 0.8);
-            color: #e0e7ff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: inherit;
+        @media (max-width: 600px) {
+            .button-group { grid-template-columns: 1fr; }
         }
-        .brush-controls button.active {
-            background: #a855f7;
-            border-color: #a855f7;
-            color: #fff;
-        }
+
         button.action-btn {
             width: 100%;
-            padding: 14px;
-            margin-top: 16px;
-            background: linear-gradient(135deg, #a855f7, #ec4899);
+            padding: 16px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             color: #fff;
             font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
             font-size: 1rem;
+            cursor: pointer;
             font-family: inherit;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         button.action-btn:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
         }
         button.action-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        #removeBtn { background: linear-gradient(135deg, #a855f7, #ec4899); }
+        #downloadBtn { background: linear-gradient(135deg, #198754, #22c55e); display: none; }
+        #resetBtn { background: rgba(220, 53, 69, 0.8); display: none; }
+
         .status {
             display: none;
             margin-top: 20px;
@@ -202,294 +192,332 @@
             text-align: center;
             font-weight: 600;
         }
-        .status.loading { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; }
-        .status.success { background: rgba(34, 197, 94, 0.2); color: #86efac; }
-        .status.error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
-        .button-group { display: flex; gap: 12px; flex-wrap: wrap; }
-        .button-group button { flex: 1; min-width: 150px; }
+        .status.loading { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; display: block; }
+        .status.success { background: rgba(34, 197, 94, 0.2); color: #86efac; display: block; }
+        .status.error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; display: block; }
+
+        .info-box {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid #a855f7;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #a5b4fc;
+            line-height: 1.7;
+        }
+        .info-box strong { color: #e0e7ff; }
+
         @media (max-width: 768px) {
             .card { padding: 24px; }
             h1 { font-size: 1.5rem; }
             .upload-zone { padding: 40px 20px; }
-            .button-group { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <a href="index.html"><i class="fas fa-arrow-left"></i> Back</a>
-        <div class="brand"><i class="fas fa-microchip"></i> Bharat24Tools</div>
-    </header>
-    <main>
-        <h1>🎭 Background Remover AI</h1>
-        <p class="subtitle">Touch करके background remove करो — Advanced AI with Brush Tool!</p>
-        <div class="card">
-            <div class="upload-zone" id="uploadZone">
-                <div class="upload-icon"><i class="fas fa-image"></i></div>
-                <p><span class="highlight">Click करो या Drag करो</span></p>
-                <p>Image file (.jpg, .png, .webp)</p>
-            </div>
-            <input type="file" id="fileInput" accept="image/*">
 
-            <div class="preview-section" id="previewSection">
-                <div class="canvas-container" id="canvasContainer">
-                    <canvas id="outputCanvas"></canvas>
-                </div>
-            </div>
+<header>
+    <a href="index.html"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Back</span></a>
+    <div class="brand"><i class="fas fa-microchip"></i> Bharat24Tools</div>
+    <select class="lang-select" id="languageSelect" onchange="setLanguage(this.value)">
+        <option value="en">🇬🇧 English</option>
+        <option value="hi">🇮🇳 हिंदी</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="pt">🇧🇷 Português</option>
+        <option value="fr">🇫🇷 Français</option>
+        <option value="de">🇩🇪 Deutsch</option>
+        <option value="ar">🇸🇦 العربية</option>
+        <option value="ru">🇷🇺 Русский</option>
+        <option value="id">🇮🇩 Indonesia</option>
+        <option value="zh-CN">🇨🇳 中文</option>
+    </select>
+</header>
 
-            <div class="controls" id="controls">
-                <div class="control-group">
-                    <label>Brush Mode:</label>
-                    <div class="brush-controls">
-                        <button class="active" id="eraseBtn"><i class="fas fa-eraser"></i> Erase</button>
-                        <button id="restoreBtn"><i class="fas fa-paint-brush"></i> Restore</button>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label>Brush Size: <span id="brushSizeLabel">30px</span></label>
-                    <input type="range" id="brushSize" min="5" max="100" value="30">
-                </div>
-                <div class="control-group">
-                    <label>Output Format:</label>
-                    <select id="formatSelect">
-                        <option value="png">📸 PNG (Transparent)</option>
-                        <option value="jpg">📷 JPG (White Background)</option>
-                    </select>
-                </div>
-                <div class="button-group">
-                    <button class="action-btn" id="removeBtn"><i class="fas fa-magic"></i> Auto Remove Background</button>
-                    <button class="action-btn" id="downloadBtn" style="display:none;"><i class="fas fa-download"></i> Download Image</button>
-                </div>
-            </div>
+<main>
+    <h1 data-i18n="title">🎭 Background Remover AI</h1>
+    <p class="subtitle" data-i18n="subtitle">AI se photo ka background hatao — transparent PNG output</p>
 
-            <div class="status" id="status"></div>
+    <div class="card">
+        <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon"><i class="fas fa-image"></i></div>
+            <p><span class="highlight" data-i18n="clickOrDrag">Click करो या Drag करो</span></p>
+            <p data-i18n="formatInfo">Image file (JPG, PNG, WebP — max 15MB)</p>
         </div>
-    </main>
+        <input type="file" id="fileInput" accept="image/*">
 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2"></script>
+        <div class="preview-section" id="previewSection">
+            <img id="previewImg" alt="Preview">
+        </div>
 
-    <script>
-        const uploadZone = document.getElementById('uploadZone');
-        const fileInput = document.getElementById('fileInput');
-        const previewSection = document.getElementById('previewSection');
-        const outputCanvas = document.getElementById('outputCanvas');
-        const controls = document.getElementById('controls');
-        const removeBtn = document.getElementById('removeBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const formatSelect = document.getElementById('formatSelect');
-        const status = document.getElementById('status');
-        const eraseBtn = document.getElementById('eraseBtn');
-        const restoreBtn = document.getElementById('restoreBtn');
-        const brushSize = document.getElementById('brushSize');
-        const brushSizeLabel = document.getElementById('brushSizeLabel');
-        const canvasContainer = document.getElementById('canvasContainer');
+        <div class="controls" id="controls">
+            <div class="button-group">
+                <button class="action-btn" id="removeBtn">
+                    <i class="fas fa-magic"></i> <span data-i18n="removeBtn">Remove Background</span>
+                </button>
+                <button class="action-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i> <span data-i18n="downloadBtn">Download PNG</span>
+                </button>
+            </div>
+            <button class="action-btn" id="resetBtn" style="margin-top:12px;">
+                <i class="fas fa-redo"></i> <span data-i18n="resetBtn">Try Another Image</span>
+            </button>
+        </div>
 
-        let net = null;
-        let originalImage = null;
-        let isDrawing = false;
-        let brushMode = 'erase';
-        let lastX = 0;
-        let lastY = 0;
-        let scaleX = 1;
-        let scaleY = 1;
+        <div class="status" id="status"></div>
 
-        async function loadModel() {
-            try {
-                net = await bodyPix.load({
-                    architecture: 'MobileNetV1',
-                    outputStride: 16,
-                    multiplier: 0.75,
-                    quantBytes: 2
-                });
-                showStatus('✅ AI Model loaded. Upload an image to start.', 'success');
-            } catch (error) {
-                showStatus('❌ Cannot load AI model. Check internet connection.', 'error');
-                console.error(error);
-            }
+        <div class="info-box">
+            <strong>💡 <span data-i18n="infoTitle">How it works:</span></strong>
+            <span data-i18n="infoText">AI server par tumhari image ka background remove karta hai aur transparent PNG deta hai. 100% private, no upload to third parties.</span>
+        </div>
+    </div>
+</main>
+
+<script>
+    const API_URL = 'https://bharat24tools-api.onrender.com';
+
+    // ============ MULTI-LANGUAGE ============
+    const translations = {
+        en: {
+            back: "Back", title: "🎭 Background Remover AI",
+            subtitle: "Remove photo background using AI — transparent PNG output",
+            clickOrDrag: "Click or Drag", formatInfo: "Image file (JPG, PNG, WebP — max 15MB)",
+            removeBtn: "Remove Background", downloadBtn: "Download PNG", resetBtn: "Try Another Image",
+            infoTitle: "How it works:", infoText: "AI server removes background and gives transparent PNG. 100% private.",
+            loading: "Processing... First time may take 60-90 sec (AI model loading)",
+            success: "Background removed successfully! Click Download.", error: "Error: ",
+            selectImage: "Please select a valid image", tooBig: "File too large (max 15MB)"
+        },
+        hi: {
+            back: "वापस", title: "🎭 बैकग्राउंड रिमूवर AI",
+            subtitle: "AI से फोटो का बैकग्राउंड हटाओ — transparent PNG",
+            clickOrDrag: "Click करो या Drag करो", formatInfo: "Image file (JPG, PNG, WebP — max 15MB)",
+            removeBtn: "बैकग्राउंड हटाओ", downloadBtn: "PNG डाउनलोड करो", resetBtn: "दूसरी इमेज try करो",
+            infoTitle: "कैसे काम करता है:", infoText: "AI server बैकग्राउंड हटाकर transparent PNG देता है। 100% private।",
+            loading: "प्रोसेस हो रहा है... पहली बार 60-90 सेकंड लग सकते हैं (AI model loading)",
+            success: "बैकग्राउंड हट गया! Download दबाओ।", error: "एरर: ",
+            selectImage: "कृपया valid image चुनें", tooBig: "File 15MB से बड़ी है"
+        },
+        es: {
+            back: "Atrás", title: "🎭 Eliminador de Fondo AI",
+            subtitle: "Elimina el fondo con IA — salida PNG transparente",
+            clickOrDrag: "Haz clic o arrastra", formatInfo: "Archivo (JPG, PNG, WebP — máx 15MB)",
+            removeBtn: "Eliminar Fondo", downloadBtn: "Descargar PNG", resetBtn: "Otra Imagen",
+            infoTitle: "Cómo funciona:", infoText: "IA elimina el fondo y devuelve PNG transparente. 100% privado.",
+            loading: "Procesando... Primera vez 60-90 seg",
+            success: "¡Fondo eliminado! Descarga.", error: "Error: ",
+            selectImage: "Selecciona una imagen válida", tooBig: "Archivo muy grande"
+        },
+        pt: {
+            back: "Voltar", title: "🎭 Removedor de Fundo AI",
+            subtitle: "Remova o fundo com IA — PNG transparente",
+            clickOrDrag: "Clique ou arraste", formatInfo: "Arquivo (JPG, PNG, WebP — máx 15MB)",
+            removeBtn: "Remover Fundo", downloadBtn: "Baixar PNG", resetBtn: "Outra Imagem",
+            infoTitle: "Como funciona:", infoText: "IA remove o fundo e retorna PNG transparente. 100% privado.",
+            loading: "Processando... Primeira vez 60-90 seg",
+            success: "Fundo removido! Baixe.", error: "Erro: ",
+            selectImage: "Selecione uma imagem válida", tooBig: "Arquivo muito grande"
+        },
+        fr: {
+            back: "Retour", title: "🎭 Suppresseur de Fond AI",
+            subtitle: "Supprimez le fond avec IA — PNG transparent",
+            clickOrDrag: "Cliquez ou glissez", formatInfo: "Fichier (JPG, PNG, WebP — max 15MB)",
+            removeBtn: "Supprimer le Fond", downloadBtn: "Télécharger PNG", resetBtn: "Autre Image",
+            infoTitle: "Comment ça marche:", infoText: "IA supprime le fond et renvoie PNG transparent. 100% privé.",
+            loading: "Traitement... Première fois 60-90 sec",
+            success: "Fond supprimé! Téléchargez.", error: "Erreur: ",
+            selectImage: "Sélectionnez une image valide", tooBig: "Fichier trop volumineux"
+        },
+        de: {
+            back: "Zurück", title: "🎭 Hintergrund-Entferner AI",
+            subtitle: "Entferne Hintergrund mit KI — transparentes PNG",
+            clickOrDrag: "Klick oder ziehe", formatInfo: "Datei (JPG, PNG, WebP — max 15MB)",
+            removeBtn: "Hintergrund entfernen", downloadBtn: "PNG herunterladen", resetBtn: "Anderes Bild",
+            infoTitle: "Wie es funktioniert:", infoText: "KI entfernt Hintergrund und gibt transparentes PNG. 100% privat.",
+            loading: "Verarbeitung... Erste Mal 60-90 Sek",
+            success: "Hintergrund entfernt! Herunterladen.", error: "Fehler: ",
+            selectImage: "Bitte gültiges Bild wählen", tooBig: "Datei zu groß"
+        },
+        ar: {
+            back: "رجوع", title: "🎭 مزيل الخلفية AI",
+            subtitle: "أزل الخلفية بالذكاء الاصطناعي — PNG شفاف",
+            clickOrDrag: "انقر أو اسحب", formatInfo: "ملف (JPG, PNG, WebP — حد أقصى 15MB)",
+            removeBtn: "إزالة الخلفية", downloadBtn: "تحميل PNG", resetBtn: "صورة أخرى",
+            infoTitle: "كيف يعمل:", infoText: "الذكاء الاصطناعي يزيل الخلفية ويعيد PNG شفاف. 100% خاص.",
+            loading: "جاري المعالجة... أول مرة 60-90 ثانية",
+            success: "تم إزالة الخلفية!", error: "خطأ: ",
+            selectImage: "الرجاء اختيار صورة صالحة", tooBig: "الملف كبير جدًا"
+        },
+        ru: {
+            back: "Назад", title: "🎭 Удаление Фона AI",
+            subtitle: "Удалите фон с помощью ИИ — прозрачный PNG",
+            clickOrDrag: "Нажмите или перетащите", formatInfo: "Файл (JPG, PNG, WebP — макс 15MB)",
+            removeBtn: "Удалить Фон", downloadBtn: "Скачать PNG", resetBtn: "Другое Изображение",
+            infoTitle: "Как работает:", infoText: "ИИ удаляет фон и возвращает прозрачный PNG. 100% приватно.",
+            loading: "Обработка... Первый раз 60-90 сек",
+            success: "Фон удалён! Скачайте.", error: "Ошибка: ",
+            selectImage: "Выберите корректное изображение", tooBig: "Файл слишком большой"
+        },
+        id: {
+            back: "Kembali", title: "🎭 Penghapus Latar AI",
+            subtitle: "Hapus latar dengan AI — PNG transparan",
+            clickOrDrag: "Klik atau seret", formatInfo: "File (JPG, PNG, WebP — maks 15MB)",
+            removeBtn: "Hapus Latar", downloadBtn: "Unduh PNG", resetBtn: "Gambar Lain",
+            infoTitle: "Cara kerja:", infoText: "AI menghapus latar dan mengembalikan PNG transparan. 100% pribadi.",
+            loading: "Memproses... Pertama kali 60-90 detik",
+            success: "Latar dihapus! Unduh.", error: "Kesalahan: ",
+            selectImage: "Pilih gambar yang valid", tooBig: "File terlalu besar"
+        },
+        "zh-CN": {
+            back: "返回", title: "🎭 AI 背景移除",
+            subtitle: "使用 AI 移除背景 — 透明 PNG 输出",
+            clickOrDrag: "点击或拖拽", formatInfo: "文件 (JPG, PNG, WebP — 最大 15MB)",
+            removeBtn: "移除背景", downloadBtn: "下载 PNG", resetBtn: "换一张",
+            infoTitle: "工作原理:", infoText: "AI 移除背景并返回透明 PNG。100% 私密。",
+            loading: "处理中... 首次需 60-90 秒",
+            success: "背景已移除！下载。", error: "错误: ",
+            selectImage: "请选择有效的图片", tooBig: "文件太大"
         }
-        loadModel();
+    };
 
-        uploadZone.addEventListener('click', () => fileInput.click());
-        uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
-        uploadZone.addEventListener('dragleave', () => { uploadZone.classList.remove('active'); });
-        uploadZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadZone.classList.remove('active');
-            if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
-        });
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) handleFile(e.target.files[0]);
-        });
+    let currentLang = localStorage.getItem('lang') || 'en';
 
-        function handleFile(file) {
-            if (!file || !file.type.startsWith('image/')) {
-                showStatus('❌ Please upload an image file', 'error');
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = new Image();
-                img.onload = () => {
-                    originalImage = img;
-                    outputCanvas.width = img.width;
-                    outputCanvas.height = img.height;
-                    const ctx = outputCanvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0);
-                    previewSection.style.display = 'block';
-                    controls.style.display = 'block';
-                    downloadBtn.style.display = 'none';
-                    setupCanvasScaling();
-                    showStatus(`✅ Image loaded: ${file.name}`, 'success');
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+    function setLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('lang', lang);
+        applyTranslations();
+    }
+
+    function applyTranslations() {
+        const t = translations[currentLang] || translations.en;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key]) el.textContent = t[key];
+        });
+        document.getElementById('languageSelect').value = currentLang;
+    }
+
+    function t(key) {
+        const t = translations[currentLang] || translations.en;
+        return t[key] || key;
+    }
+
+    // ============ APP LOGIC ============
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const previewSection = document.getElementById('previewSection');
+    const previewImg = document.getElementById('previewImg');
+    const controls = document.getElementById('controls');
+    const removeBtn = document.getElementById('removeBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const status = document.getElementById('status');
+
+    let selectedFile = null;
+    let resultBlob = null;
+
+    uploadZone.addEventListener('click', () => fileInput.click());
+    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('active');
+        if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) handleFile(e.target.files[0]);
+    });
+
+    function handleFile(file) {
+        if (!file.type.startsWith('image/')) {
+            showStatus('❌ ' + t('selectImage'), 'error');
+            return;
+        }
+        if (file.size > 15 * 1024 * 1024) {
+            showStatus('❌ ' + t('tooBig'), 'error');
+            return;
         }
 
-        function setupCanvasScaling() {
-            const rect = outputCanvas.getBoundingClientRect();
-            scaleX = outputCanvas.width / rect.width;
-            scaleY = outputCanvas.height / rect.height;
+        selectedFile = file;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            previewImg.src = e.target.result;
+            previewSection.style.display = 'block';
+            controls.style.display = 'block';
+            removeBtn.style.display = 'flex';
+            downloadBtn.style.display = 'none';
+            resetBtn.style.display = 'none';
+            status.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    removeBtn.addEventListener('click', async () => {
+        if (!selectedFile) return;
+
+        removeBtn.disabled = true;
+        removeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + t('loading');
+        showStatus('⏳ ' + t('loading'), 'loading');
+
+        try {
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            const res = await fetch(API_URL + '/background-remover', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!res.ok) {
+                const errText = await res.text();
+                throw new Error(errText || 'Server error');
+            }
+
+            resultBlob = await res.blob();
+            const url = URL.createObjectURL(resultBlob);
+            previewImg.src = url;
+
+            showStatus('🎉 ' + t('success'), 'success');
+            downloadBtn.style.display = 'flex';
+            resetBtn.style.display = 'flex';
+            removeBtn.style.display = 'none';
+        } catch (err) {
+            console.error(err);
+            showStatus('❌ ' + t('error') + err.message, 'error');
         }
 
-        window.addEventListener('resize', setupCanvasScaling);
+        removeBtn.disabled = false;
+        removeBtn.innerHTML = '<i class="fas fa-magic"></i> ' + t('removeBtn');
+    });
 
-        eraseBtn.addEventListener('click', () => {
-            brushMode = 'erase';
-            eraseBtn.classList.add('active');
-            restoreBtn.classList.remove('active');
-        });
-        restoreBtn.addEventListener('click', () => {
-            brushMode = 'restore';
-            restoreBtn.classList.add('active');
-            eraseBtn.classList.remove('active');
-        });
-        brushSize.addEventListener('input', () => {
-            brushSizeLabel.innerText = brushSize.value + 'px';
-        });
+    downloadBtn.addEventListener('click', () => {
+        if (!resultBlob) return;
+        const url = URL.createObjectURL(resultBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'background-removed-' + Date.now() + '.png';
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
+    });
 
-        removeBtn.addEventListener('click', async () => {
-            if (!originalImage || !net) {
-                showStatus('❌ Image or model not ready', 'error');
-                return;
-            }
-            removeBtn.disabled = true;
-            showStatus('⏳ Processing with AI... Please wait', 'loading');
-            try {
-                const segmentation = await net.segmentPerson(originalImage, {
-                    flipHorizontal: false,
-                    internalResolution: 'medium',
-                    segmentationThreshold: 0.5
-                });
-                const ctx = outputCanvas.getContext('2d');
-                const imageData = ctx.getImageData(0, 0, outputCanvas.width, outputCanvas.height);
-                const data = imageData.data;
-                for (let i = 0; i < segmentation.data.length; i++) {
-                    if (segmentation.data[i] === 0) {
-                        data[i * 4 + 3] = 0;
-                    }
-                }
-                ctx.putImageData(imageData, 0, 0);
-                downloadBtn.style.display = 'block';
-                showStatus('🎉 Background removed! Now touch/click on the image to fine-tune.', 'success');
-            } catch (error) {
-                showStatus('❌ Error processing image', 'error');
-                console.error(error);
-            }
-            removeBtn.disabled = false;
-        });
+    resetBtn.addEventListener('click', () => {
+        selectedFile = null;
+        resultBlob = null;
+        fileInput.value = '';
+        previewSection.style.display = 'none';
+        controls.style.display = 'none';
+        status.style.display = 'none';
+    });
 
-        function getCanvasCoords(e) {
-            const rect = outputCanvas.getBoundingClientRect();
-            let clientX, clientY;
-            if (e.touches) {
-                clientX = e.touches[0].clientX;
-                clientY = e.touches[0].clientY;
-            } else {
-                clientX = e.clientX;
-                clientY = e.clientY;
-            }
-            return {
-                x: (clientX - rect.left) * (outputCanvas.width / rect.width),
-                y: (clientY - rect.top) * (outputCanvas.height / rect.height)
-            };
-        }
+    function showStatus(msg, type) {
+        status.textContent = msg;
+        status.className = 'status ' + type;
+        status.style.display = 'block';
+    }
 
-        function drawOnCanvas(e) {
-            if (!originalImage) return;
-            const coords = getCanvasCoords(e);
-            const ctx = outputCanvas.getContext('2d');
-            const size = parseInt(brushSize.value);
-            ctx.beginPath();
-            if (brushMode === 'erase') {
-                ctx.globalCompositeOperation = 'destination-out';
-                ctx.arc(coords.x, coords.y, size / 2, 0, Math.PI * 2);
-                ctx.fill();
-            } else {
-                ctx.globalCompositeOperation = 'source-over';
-                ctx.save();
-                ctx.beginPath();
-                ctx.arc(coords.x, coords.y, size / 2, 0, Math.PI * 2);
-                ctx.clip();
-                ctx.drawImage(originalImage, 0, 0, outputCanvas.width, outputCanvas.height);
-                ctx.restore();
-            }
-        }
+    // Load saved language
+    applyTranslations();
+</script>
 
-        canvasContainer.addEventListener('mousedown', (e) => {
-            isDrawing = true;
-            drawOnCanvas(e);
-        });
-        canvasContainer.addEventListener('mousemove', (e) => {
-            if (isDrawing) drawOnCanvas(e);
-        });
-        canvasContainer.addEventListener('mouseup', () => { isDrawing = false; });
-        canvasContainer.addEventListener('mouseleave', () => { isDrawing = false; });
-
-        canvasContainer.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            isDrawing = true;
-            drawOnCanvas(e);
-        }, { passive: false });
-        canvasContainer.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            if (isDrawing) drawOnCanvas(e);
-        }, { passive: false });
-        canvasContainer.addEventListener('touchend', () => { isDrawing = false; });
-
-        downloadBtn.addEventListener('click', () => {
-            if (!outputCanvas || outputCanvas.width === 0) {
-                showStatus('❌ No processed image', 'error');
-                return;
-            }
-            const format = formatSelect.value;
-            const link = document.createElement('a');
-            if (format === 'png') {
-                link.href = outputCanvas.toDataURL('image/png');
-                link.download = `background-removed-${Date.now()}.png`;
-            } else {
-                const jpgCanvas = document.createElement('canvas');
-                jpgCanvas.width = outputCanvas.width;
-                jpgCanvas.height = outputCanvas.height;
-                const jpgCtx = jpgCanvas.getContext('2d');
-                jpgCtx.fillStyle = '#ffffff';
-                jpgCtx.fillRect(0, 0, jpgCanvas.width, jpgCanvas.height);
-                jpgCtx.drawImage(outputCanvas, 0, 0);
-                link.href = jpgCanvas.toDataURL('image/jpeg', 0.95);
-                link.download = `background-removed-${Date.now()}.jpg`;
-            }
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showStatus('✅ Image downloaded!', 'success');
-        });
-
-        function showStatus(message, type) {
-            status.textContent = message;
-            status.className = `status ${type}`;
-            status.style.display = 'block';
-        }
-    </script>
 </body>
 </html>

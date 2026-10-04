@@ -5,32 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <title>HEIC to JPG Converter - Convert iPhone Photos Free | Bharat24Tools</title>
-    <meta name="description" content="Convert HEIC images from iPhone to JPG format online. Free, batch conversion, no upload to third parties. Works worldwide.">
-    <meta name="keywords" content="heic to jpg, convert heic to jpg, iphone photo converter, heif to jpg, free heic converter, apple photo converter">
+    <title>WebP to JPG Converter - Convert WebP Images Free | Bharat24Tools</title>
+    <meta name="description" content="Convert WebP images to JPG format online. Free WebP to JPG converter with batch support. Works worldwide, no signup, no watermark.">
+    <meta name="keywords" content="webp to jpg, convert webp to jpg, webp converter, webp to jpeg, free webp to jpg, batch webp converter">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#0d6efd">
-    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/heic-to-jpg.html">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/webp-to-jpg.html">
 
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/heic-to-jpg.html">
-    <meta property="og:title" content="HEIC to JPG Converter - Convert iPhone Photos Free | Bharat24Tools">
-    <meta property="og:description" content="Convert HEIC images from iPhone to JPG format online. Free, batch conversion.">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/webp-to-jpg.html">
+    <meta property="og:title" content="WebP to JPG Converter - Convert WebP Images Free | Bharat24Tools">
+    <meta property="og:description" content="Convert WebP images to JPG format online. Free, batch support.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
     <meta property="og:site_name" content="Bharat24Tools">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="HEIC to JPG Converter - Convert iPhone Photos Free | Bharat24Tools">
-    <meta name="twitter:description" content="Convert HEIC images from iPhone to JPG format online. Free, batch conversion.">
+    <meta name="twitter:title" content="WebP to JPG Converter - Convert WebP Images Free | Bharat24Tools">
+    <meta name="twitter:description" content="Convert WebP images to JPG format online. Free, batch support.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "HEIC to JPG Converter",
-        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/heic-to-jpg.html",
+        "name": "WebP to JPG Converter",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/webp-to-jpg.html",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Web Browser",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
@@ -39,6 +39,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -142,16 +143,16 @@
 </header>
 
 <main>
-    <h1 data-i18n="title">🍎 HEIC to JPG</h1>
-    <p class="subtitle" data-i18n="subtitle">iPhone की HEIC images को JPG में बदलो — batch conversion</p>
+    <h1 data-i18n="title">🌐 WebP to JPG</h1>
+    <p class="subtitle" data-i18n="subtitle">WebP images को JPG में बदलो — batch conversion</p>
 
     <div class="card">
         <div class="upload-zone" id="uploadZone">
             <div class="upload-icon"><i class="fas fa-file-image"></i></div>
             <p><span class="highlight" data-i18n="clickOrDrag">Click करो या Drag करो</span></p>
-            <p data-i18n="formatInfo">HEIC / HEIF files — max 20MB each</p>
+            <p data-i18n="formatInfo">WebP files — max 15MB each</p>
         </div>
-        <input type="file" id="fileInput" accept=".heic,.heif,image/heic,image/heif" multiple>
+        <input type="file" id="fileInput" accept=".webp,image/webp" multiple>
 
         <div class="controls" id="controls">
             <div class="button-group">
@@ -171,7 +172,7 @@
 
         <div class="info-box">
             <strong>💡 <span data-i18n="infoTitle">How it works:</span></strong>
-            <span data-i18n="infoText">Server HEIC file ko JPG mein convert karta hai. Quality 90% — perfect balance.</span>
+            <span data-i18n="infoText">Server WebP file ko JPG mein 92% quality par convert karta hai.</span>
         </div>
     </div>
 </main>
@@ -180,16 +181,16 @@
     const API_URL = 'https://bharat24tools-api.onrender.com';
 
     const translations = {
-        en: { back: "Back", title: "🍎 HEIC to JPG", subtitle: "Convert iPhone HEIC images to JPG — batch", clickOrDrag: "Click or Drag", formatInfo: "HEIC / HEIF files — max 20MB each", convertBtn: "Convert to JPG", downloadBtn: "Download", resetBtn: "Try Another File", infoTitle: "How it works:", infoText: "Server converts HEIC to JPG at 90% quality.", loading: "Converting...", success: "Converted successfully!", error: "Error: ", noFiles: "Please select HEIC files", tooBig: "File too large (max 20MB)" },
-        hi: { back: "वापस", title: "🍎 HEIC से JPG", subtitle: "iPhone की HEIC images को JPG में बदलो", clickOrDrag: "Click करो या Drag करो", formatInfo: "HEIC / HEIF files — max 20MB", convertBtn: "JPG में बदलो", downloadBtn: "डाउनलोड", resetBtn: "दूसरी file try करो", infoTitle: "कैसे काम करता है:", infoText: "Server HEIC को JPG में 90% quality पर convert करता है।", loading: "कन्वर्ट हो रहा है...", success: "कन्वर्ट हो गया!", error: "एरर: ", noFiles: "कृपया HEIC files चुनें", tooBig: "File 20MB से बड़ी है" },
-        es: { back: "Atrás", title: "🍎 HEIC a JPG", subtitle: "Convierte HEIC a JPG — lote", clickOrDrag: "Clic o arrastra", formatInfo: "HEIC / HEIF — máx 20MB", convertBtn: "Convertir a JPG", downloadBtn: "Descargar", resetBtn: "Otra Imagen", infoTitle: "Cómo:", infoText: "Servidor convierte HEIC a JPG al 90%.", loading: "Convirtiendo...", success: "¡Convertido!", error: "Error: ", noFiles: "Selecciona HEIC", tooBig: "Archivo muy grande" },
-        pt: { back: "Voltar", title: "🍎 HEIC para JPG", subtitle: "Converta HEIC para JPG — lote", clickOrDrag: "Clique ou arraste", formatInfo: "HEIC / HEIF — máx 20MB", convertBtn: "Converter para JPG", downloadBtn: "Baixar", resetBtn: "Outra Imagem", infoTitle: "Como:", infoText: "Servidor converte HEIC para JPG a 90%.", loading: "Convertendo...", success: "Convertido!", error: "Erro: ", noFiles: "Selecione HEIC", tooBig: "Arquivo muito grande" },
-        fr: { back: "Retour", title: "🍎 HEIC vers JPG", subtitle: "Convertissez HEIC en JPG — lot", clickOrDrag: "Cliquez ou glissez", formatInfo: "HEIC / HEIF — max 20MB", convertBtn: "Convertir en JPG", downloadBtn: "Télécharger", resetBtn: "Autre Fichier", infoTitle: "Comment:", infoText: "Serveur convertit HEIC en JPG à 90%.", loading: "Conversion...", success: "Converti!", error: "Erreur: ", noFiles: "Sélectionnez HEIC", tooBig: "Fichier trop grand" },
-        de: { back: "Zurück", title: "🍎 HEIC zu JPG", subtitle: "HEIC in JPG umwandeln", clickOrDrag: "Klick oder ziehe", formatInfo: "HEIC / HEIF — max 20MB", convertBtn: "In JPG umwandeln", downloadBtn: "Herunterladen", resetBtn: "Andere Datei", infoTitle: "Wie:", infoText: "Server konvertiert HEIC in JPG bei 90%.", loading: "Konvertierung...", success: "Konvertiert!", error: "Fehler: ", noFiles: "HEIC wählen", tooBig: "Datei zu groß" },
-        ar: { back: "رجوع", title: "🍎 HEIC إلى JPG", subtitle: "تحويل HEIC إلى JPG", clickOrDrag: "انقر أو اسحب", formatInfo: "HEIC / HEIF — 20MB", convertBtn: "تحويل إلى JPG", downloadBtn: "تحميل", resetBtn: "ملف آخر", infoTitle: "كيف:", infoText: "السيرفر يحول HEIC إلى JPG بجودة 90%.", loading: "جاري التحويل...", success: "تم التحويل!", error: "خطأ: ", noFiles: "اختر ملفات HEIC", tooBig: "الملف كبير" },
-        ru: { back: "Назад", title: "🍎 HEIC в JPG", subtitle: "Преобразуйте HEIC в JPG", clickOrDrag: "Нажмите или перетащите", formatInfo: "HEIC / HEIF — макс 20MB", convertBtn: "В JPG", downloadBtn: "Скачать", resetBtn: "Другой файл", infoTitle: "Как:", infoText: "Сервер конвертирует HEIC в JPG на 90%.", loading: "Конвертация...", success: "Готово!", error: "Ошибка: ", noFiles: "Выберите HEIC", tooBig: "Файл слишком большой" },
-        id: { back: "Kembali", title: "🍎 HEIC ke JPG", subtitle: "Konversi HEIC ke JPG", clickOrDrag: "Klik atau seret", formatInfo: "HEIC / HEIF — maks 20MB", convertBtn: "Konversi ke JPG", downloadBtn: "Unduh", resetBtn: "File Lain", infoTitle: "Cara:", infoText: "Server konversi HEIC ke JPG 90%.", loading: "Mengkonversi...", success: "Berhasil!", error: "Kesalahan: ", noFiles: "Pilih file HEIC", tooBig: "File terlalu besar" },
-        "zh-CN": { back: "返回", title: "🍎 HEIC 转 JPG", subtitle: "将 HEIC 转换为 JPG", clickOrDrag: "点击或拖拽", formatInfo: "HEIC / HEIF — 最大 20MB", convertBtn: "转换为 JPG", downloadBtn: "下载", resetBtn: "换一张", infoTitle: "原理:", infoText: "服务器以 90% 质量将 HEIC 转为 JPG。", loading: "转换中...", success: "转换成功!", error: "错误: ", noFiles: "请选择 HEIC 文件", tooBig: "文件太大" }
+        en: { back: "Back", title: "🌐 WebP to JPG", subtitle: "Convert WebP images to JPG — batch", clickOrDrag: "Click or Drag", formatInfo: "WebP files — max 15MB each", convertBtn: "Convert to JPG", downloadBtn: "Download", resetBtn: "Try Another File", infoTitle: "How it works:", infoText: "Server converts WebP to JPG at 92% quality.", loading: "Converting...", success: "Converted successfully!", error: "Error: ", noFiles: "Please select WebP files", tooBig: "File too large (max 15MB)" },
+        hi: { back: "वापस", title: "🌐 WebP से JPG", subtitle: "WebP images को JPG में बदलो", clickOrDrag: "Click करो या Drag करो", formatInfo: "WebP files — max 15MB", convertBtn: "JPG में बदलो", downloadBtn: "डाउनलोड", resetBtn: "दूसरी file try करो", infoTitle: "कैसे काम करता है:", infoText: "Server WebP को JPG में 92% quality पर convert करता है।", loading: "कन्वर्ट हो रहा है...", success: "कन्वर्ट हो गया!", error: "एरर: ", noFiles: "कृपया WebP files चुनें", tooBig: "File 15MB से बड़ी है" },
+        es: { back: "Atrás", title: "🌐 WebP a JPG", subtitle: "Convierte WebP a JPG — lote", clickOrDrag: "Clic o arrastra", formatInfo: "WebP — máx 15MB", convertBtn: "Convertir a JPG", downloadBtn: "Descargar", resetBtn: "Otra Imagen", infoTitle: "Cómo:", infoText: "Servidor convierte WebP a JPG al 92%.", loading: "Convirtiendo...", success: "¡Convertido!", error: "Error: ", noFiles: "Selecciona WebP", tooBig: "Archivo muy grande" },
+        pt: { back: "Voltar", title: "🌐 WebP para JPG", subtitle: "Converta WebP para JPG — lote", clickOrDrag: "Clique ou arraste", formatInfo: "WebP — máx 15MB", convertBtn: "Converter para JPG", downloadBtn: "Baixar", resetBtn: "Outra Imagem", infoTitle: "Como:", infoText: "Servidor converte WebP para JPG a 92%.", loading: "Convertendo...", success: "Convertido!", error: "Erro: ", noFiles: "Selecione WebP", tooBig: "Arquivo muito grande" },
+        fr: { back: "Retour", title: "🌐 WebP vers JPG", subtitle: "Convertissez WebP en JPG — lot", clickOrDrag: "Cliquez ou glissez", formatInfo: "WebP — max 15MB", convertBtn: "Convertir en JPG", downloadBtn: "Télécharger", resetBtn: "Autre Fichier", infoTitle: "Comment:", infoText: "Serveur convertit WebP en JPG à 92%.", loading: "Conversion...", success: "Converti!", error: "Erreur: ", noFiles: "Sélectionnez WebP", tooBig: "Fichier trop grand" },
+        de: { back: "Zurück", title: "🌐 WebP zu JPG", subtitle: "WebP in JPG umwandeln", clickOrDrag: "Klick oder ziehe", formatInfo: "WebP — max 15MB", convertBtn: "In JPG umwandeln", downloadBtn: "Herunterladen", resetBtn: "Andere Datei", infoTitle: "Wie:", infoText: "Server konvertiert WebP in JPG bei 92%.", loading: "Konvertierung...", success: "Konvertiert!", error: "Fehler: ", noFiles: "WebP wählen", tooBig: "Datei zu groß" },
+        ar: { back: "رجوع", title: "🌐 WebP إلى JPG", subtitle: "تحويل WebP إلى JPG", clickOrDrag: "انقر أو اسحب", formatInfo: "WebP — 15MB", convertBtn: "تحويل إلى JPG", downloadBtn: "تحميل", resetBtn: "ملف آخر", infoTitle: "كيف:", infoText: "السيرفر يحول WebP إلى JPG بجودة 92%.", loading: "جاري التحويل...", success: "تم!", error: "خطأ: ", noFiles: "اختر WebP", tooBig: "الملف كبير" },
+        ru: { back: "Назад", title: "🌐 WebP в JPG", subtitle: "Преобразуйте WebP в JPG", clickOrDrag: "Нажмите или перетащите", formatInfo: "WebP — макс 15MB", convertBtn: "В JPG", downloadBtn: "Скачать", resetBtn: "Другой файл", infoTitle: "Как:", infoText: "Сервер конвертирует WebP в JPG на 92%.", loading: "Конвертация...", success: "Готово!", error: "Ошибка: ", noFiles: "Выберите WebP", tooBig: "Файл слишком большой" },
+        id: { back: "Kembali", title: "🌐 WebP ke JPG", subtitle: "Konversi WebP ke JPG", clickOrDrag: "Klik atau seret", formatInfo: "WebP — maks 15MB", convertBtn: "Konversi ke JPG", downloadBtn: "Unduh", resetBtn: "File Lain", infoTitle: "Cara:", infoText: "Server konversi WebP ke JPG 92%.", loading: "Mengkonversi...", success: "Berhasil!", error: "Kesalahan: ", noFiles: "Pilih WebP", tooBig: "File terlalu besar" },
+        "zh-CN": { back: "返回", title: "🌐 WebP 转 JPG", subtitle: "将 WebP 转换为 JPG", clickOrDrag: "点击或拖拽", formatInfo: "WebP — 最大 15MB", convertBtn: "转换为 JPG", downloadBtn: "下载", resetBtn: "换一张", infoTitle: "原理:", infoText: "服务器以 92% 质量将 WebP 转为 JPG。", loading: "转换中...", success: "转换成功!", error: "错误: ", noFiles: "请选择 WebP 文件", tooBig: "文件太大" }
     };
 
     let currentLang = localStorage.getItem('lang') || 'en';
@@ -212,7 +213,6 @@
         return tr[key] || key;
     }
 
-    // App Logic
     const uploadZone = document.getElementById('uploadZone');
     const fileInput = document.getElementById('fileInput');
     const controls = document.getElementById('controls');
@@ -240,13 +240,13 @@
     function handleFiles(files) {
         const valid = Array.from(files).filter(f => {
             const name = f.name.toLowerCase();
-            return name.endsWith('.heic') || name.endsWith('.heif') || f.type.includes('heic') || f.type.includes('heif');
+            return name.endsWith('.webp') || f.type.includes('webp');
         });
         if (valid.length === 0) {
             showStatus('❌ ' + t('noFiles'), 'error');
             return;
         }
-        const tooBig = valid.filter(f => f.size > 20 * 1024 * 1024);
+        const tooBig = valid.filter(f => f.size > 15 * 1024 * 1024);
         if (tooBig.length > 0) {
             showStatus('❌ ' + t('tooBig'), 'error');
             return;
@@ -276,10 +276,10 @@
         try {
             const formData = new FormData();
             formData.append('file', file);
-            const res = await fetch(API_URL + '/heic-to-jpg', { method: 'POST', body: formData });
+            const res = await fetch(API_URL + '/webp-to-jpg', { method: 'POST', body: formData });
             if (!res.ok) throw new Error(await res.text() || 'Server error');
             resultBlob = await res.blob();
-            resultFileName = file.name.replace(/\.(heic|heif)$/i, '') + '.jpg';
+            resultFileName = file.name.replace(/\.webp$/i, '') + '.jpg';
             showStatus('🎉 ' + t('success'), 'success');
             downloadBtn.style.display = 'flex';
             resetBtn.style.display = 'flex';
@@ -303,15 +303,15 @@
                 showStatus(`⏳ ${i + 1}/${selectedFiles.length}`, 'loading');
                 const formData = new FormData();
                 formData.append('file', file);
-                const res = await fetch(API_URL + '/heic-to-jpg', { method: 'POST', body: formData });
+                const res = await fetch(API_URL + '/webp-to-jpg', { method: 'POST', body: formData });
                 if (res.ok) {
                     const blob = await res.blob();
-                    const name = file.name.replace(/\.(heic|heif)$/i, '') + '.jpg';
+                    const name = file.name.replace(/\.webp$/i, '') + '.jpg';
                     zip.file(name, blob);
                 }
             }
             resultBlob = await zip.generateAsync({ type: 'blob' });
-            resultFileName = 'converted-heic.zip';
+            resultFileName = 'converted-webp.zip';
             showStatus('🎉 ' + t('success'), 'success');
             downloadBtn.style.display = 'flex';
             resetBtn.style.display = 'flex';
@@ -349,7 +349,6 @@
 
     applyTranslations();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 </body>
 </html>

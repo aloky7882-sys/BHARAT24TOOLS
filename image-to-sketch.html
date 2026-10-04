@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <title>Image to Sketch - Convert Photo to Pencil Sketch Free | Bharat24Tools</title>
+    <meta name="description" content="Convert photos to pencil sketch using AI. Free online image to sketch converter, no signup, works worldwide.">
+    <meta name="keywords" content="image to sketch, photo to sketch, pencil sketch, sketch generator, photo to drawing, free sketch converter">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-sketch.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-sketch.html">
+    <meta property="og:title" content="Image to Sketch - Convert Photo to Pencil Sketch Free | Bharat24Tools">
+    <meta property="og:description" content="Convert photos to pencil sketch using AI. Free, works worldwide.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Image to Sketch - Convert Photo to Pencil Sketch Free | Bharat24Tools">
+    <meta name="twitter:description" content="Convert photos to pencil sketch using AI. Free, works worldwide.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Image to Sketch",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-sketch.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%);
+            background-attachment: fixed;
+            color: #e0e7ff;
+        }
+        header {
+            background: rgba(15, 15, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 2px solid rgba(168, 85, 247, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        header a { color: #cbd5e1; text-decoration: none; font-weight: 600; padding: 8px 12px; border-radius: 6px; transition: all 0.3s; }
+        header a:hover { color: #a855f7; background: rgba(168, 85, 247, 0.1); }
+        .brand {
+            font-weight: 800; font-size: 1.3rem;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            flex: 1;
+        }
+        .lang-select {
+            background: rgba(15, 15, 30, 0.9);
+            border: 2px solid rgba(168, 85, 247, 0.4);
+            color: #e0e7ff; padding: 8px 12px; border-radius: 8px;
+            font-family: inherit; font-weight: 600; font-size: 0.85rem; cursor: pointer;
+        }
+        main { max-width: 1000px; margin: 0 auto; padding: 40px 20px 60px; }
+        h1 { font-size: 2rem; text-align: center; margin-bottom: 8px; font-weight: 800; }
+        .subtitle { text-align: center; color: #a5b4fc; margin-bottom: 40px; }
+        .card {
+            background: rgba(30, 27, 75, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 16px; padding: 40px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            margin-bottom: 24px;
+        }
+        .upload-zone {
+            border: 3px dashed rgba(168, 85, 247, 0.6);
+            border-radius: 16px; padding: 60px 30px; text-align: center;
+            cursor: pointer; transition: all 0.3s;
+            background: rgba(99, 102, 241, 0.05);
+        }
+        .upload-zone:hover, .upload-zone.active {
+            border-color: #a855f7;
+            background: rgba(168, 85, 247, 0.15);
+        }
+        .upload-icon { font-size: 3rem; color: #a855f7; margin-bottom: 16px; }
+        .upload-zone p { color: #cbd5e1; margin: 8px 0; }
+        .highlight { color: #e0e7ff; font-weight: 700; }
+        input[type="file"] { display: none; }
+        .preview-section {
+            display: none;
+            margin-top: 24px;
+            text-align: center;
+        }
+        .preview-section img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 12px;
+            border: 2px solid rgba(168, 85, 247, 0.3);
+        }
+        .controls { display: none; margin-top: 24px; padding: 24px; background: rgba(20, 20, 40, 0.8); border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.2); }
+        .button-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+        @media (max-width: 600px) { .button-group { grid-template-columns: 1fr; } }
+        button.action-btn {
+            width: 100%; padding: 16px; border: none; border-radius: 12px;
+            color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer;
+            font-family: inherit; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        button.action-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4); }
+        button.action-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        #sketchBtn { background: linear-gradient(135deg, #a855f7, #ec4899); }
+        #downloadBtn { background: linear-gradient(135deg, #198754, #22c55e); display: none; }
+        #resetBtn { background: rgba(220, 53, 69, 0.8); display: none; }
+        .status { display: none; margin-top: 20px; padding: 16px; border-radius: 10px; text-align: center; font-weight: 600; }
+        .status.loading { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; display: block; }
+        .status.success { background: rgba(34, 197, 94, 0.2); color: #86efac; display: block; }
+        .status.error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; display: block; }
+        .info-box { background: rgba(99, 102, 241, 0.1); border-left: 4px solid #a855f7; padding: 16px; border-radius: 8px; margin-top: 20px; font-size: 0.85rem; color: #a5b4fc; line-height: 1.7; }
+        .info-box strong { color: #e0e7ff; }
+        @media (max-width: 768px) { .card { padding: 24px; } h1 { font-size: 1.5rem; } .upload-zone { padding: 40px 20px; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Back</span></a>
+    <div class="brand"><i class="fas fa-microchip"></i> Bharat24Tools</div>
+    <select class="lang-select" id="languageSelect" onchange="setLanguage(this.value)">
+        <option value="en">🇬🇧 English</option>
+        <option value="hi">🇮🇳 हिंदी</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="pt">🇧🇷 Português</option>
+        <option value="fr">🇫🇷 Français</option>
+        <option value="de">🇩🇪 Deutsch</option>
+        <option value="ar">🇸🇦 العربية</option>
+        <option value="ru">🇷🇺 Русский</option>
+        <option value="id">🇮🇩 Indonesia</option>
+        <option value="zh-CN">🇨🇳 中文</option>
+    </select>
+</header>
+
+<main>
+    <h1 data-i18n="title">✏️ Image to Sketch</h1>
+    <p class="subtitle" data-i18n="subtitle">Photo को pencil sketch में बदलो — AI effect</p>
+
+    <div class="card">
+        <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon"><i class="fas fa-paint-brush"></i></div>
+            <p><span class="highlight" data-i18n="clickOrDrag">Click करो या Drag करो</span></p>
+            <p data-i18n="formatInfo">Image file (JPG, PNG, WebP — max 15MB)</p>
+        </div>
+        <input type="file" id="fileInput" accept="image/*">
+
+        <div class="preview-section" id="previewSection">
+            <img id="previewImg" alt="Preview">
+        </div>
+
+        <div class="controls" id="controls">
+            <div class="button-group">
+                <button class="action-btn" id="sketchBtn">
+                    <i class="fas fa-magic"></i> <span data-i18n="sketchBtn">Convert to Sketch</span>
+                </button>
+                <button class="action-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i> <span data-i18n="downloadBtn">Download</span>
+                </button>
+            </div>
+            <button class="action-btn" id="resetBtn" style="margin-top:12px;">
+                <i class="fas fa-redo"></i> <span data-i18n="resetBtn">Try Another Image</span>
+            </button>
+        </div>
+
+        <div class="status" id="status"></div>
+
+        <div class="info-box">
+            <strong>💡 <span data-i18n="infoTitle">How it works:</span></strong>
+            <span data-i18n="infoText">OpenCV se photo ko pencil sketch effect diya jaata hai. 100% free.</span>
+        </div>
+    </div>
+</main>
+
+<script>
+    const API_URL = 'https://bharat24tools-api.onrender.com';
+
+    const translations = {
+        en: { back: "Back", title: "✏️ Image to Sketch", subtitle: "Convert photo to pencil sketch — AI effect", clickOrDrag: "Click or Drag", formatInfo: "Image file (JPG, PNG, WebP — max 15MB)", sketchBtn: "Convert to Sketch", downloadBtn: "Download", resetBtn: "Try Another Image", infoTitle: "How it works:", infoText: "OpenCV creates pencil sketch effect. 100% free.", loading: "Creating sketch...", success: "Sketch created successfully!", error: "Error: ", selectImage: "Please select an image", tooBig: "File too large (max 15MB)" },
+        hi: { back: "वापस", title: "✏️ Image से Sketch", subtitle: "Photo को pencil sketch में बदलो", clickOrDrag: "Click करो या Drag करो", formatInfo: "Image (JPG, PNG, WebP — max 15MB)", sketchBtn: "Sketch बनाओ", downloadBtn: "डाउनलोड", resetBtn: "दूसरी try करो", infoTitle: "कैसे:", infoText: "OpenCV pencil sketch effect बनाता है।", loading: "Sketch बन रहा है...", success: "Sketch बन गया!", error: "एरर: ", selectImage: "कृपया image चुनें", tooBig: "File 15MB से बड़ी" },
+        es: { back: "Atrás", title: "✏️ Imagen a Boceto", subtitle: "Convierte foto a boceto", clickOrDrag: "Clic o arrastra", formatInfo: "Imagen (JPG, PNG, WebP — máx 15MB)", sketchBtn: "Convertir a Boceto", downloadBtn: "Descargar", resetBtn: "Otra Imagen", infoTitle: "Cómo:", infoText: "OpenCV crea efecto boceto.", loading: "Creando...", success: "¡Creado!", error: "Error: ", selectImage: "Selecciona imagen", tooBig: "Archivo grande" },
+        pt: { back: "Voltar", title: "✏️ Imagem para Esboço", subtitle: "Converta foto em esboço", clickOrDrag: "Clique ou arraste", formatInfo: "Imagem (JPG, PNG, WebP — máx 15MB)", sketchBtn: "Converter em Esboço", downloadBtn: "Baixar", resetBtn: "Outra Imagem", infoTitle: "Como:", infoText: "OpenCV cria efeito esboço.", loading: "Criando...", success: "Criado!", error: "Erro: ", selectImage: "Selecione imagem", tooBig: "Arquivo grande" },
+        fr: { back: "Retour", title: "✏️ Image en Croquis", subtitle: "Convertissez photo en croquis", clickOrDrag: "Cliquez ou glissez", formatInfo: "Image (JPG, PNG, WebP — max 15MB)", sketchBtn: "Convertir en Croquis", downloadBtn: "Télécharger", resetBtn: "Autre Image", infoTitle: "Comment:", infoText: "OpenCV crée effet croquis.", loading: "Création...", success: "Créé!", error: "Erreur: ", selectImage: "Sélectionnez image", tooBig: "Fichier trop grand" },
+        de: { back: "Zurück", title: "✏️ Bild zu Skizze", subtitle: "Foto in Skizze umwandeln", clickOrDrag: "Klick oder ziehe", formatInfo: "Bild (JPG, PNG, WebP — max 15MB)", sketchBtn: "In Skizze", downloadBtn: "Herunterladen", resetBtn: "Anderes Bild", infoTitle: "Wie:", infoText: "OpenCV erstellt Skizzeneffekt.", loading: "Erstellung...", success: "Erstellt!", error: "Fehler: ", selectImage: "Bild wählen", tooBig: "Datei zu groß" },
+        ar: { back: "رجوع", title: "✏️ صورة إلى رسم", subtitle: "حول الصورة إلى رسم بالقلم", clickOrDrag: "انقر أو اسحب", formatInfo: "صورة (JPG, PNG, WebP — 15MB)", sketchBtn: "تحويل إلى رسم", downloadBtn: "تحميل", resetBtn: "صورة أخرى", infoTitle: "كيف:", infoText: "OpenCV ينشئ تأثير الرسم.", loading: "جاري الإنشاء...", success: "تم!", error: "خطأ: ", selectImage: "اختر صورة", tooBig: "الملف كبير" },
+        ru: { back: "Назад", title: "✏️ Изображение в Эскиз", subtitle: "Преобразуйте фото в эскиз", clickOrDrag: "Нажмите или перетащите", formatInfo: "Изображение (JPG, PNG, WebP — макс 15MB)", sketchBtn: "В Эскиз", downloadBtn: "Скачать", resetBtn: "Другое изображение", infoTitle: "Как:", infoText: "OpenCV создаёт эффект эскиза.", loading: "Создание...", success: "Готово!", error: "Ошибка: ", selectImage: "Выберите изображение", tooBig: "Файл слишком большой" },
+        id: { back: "Kembali", title: "✏️ Gambar ke Sketsa", subtitle: "Konversi foto ke sketsa", clickOrDrag: "Klik atau seret", formatInfo: "Gambar (JPG, PNG, WebP — maks 15MB)", sketchBtn: "Konversi ke Sketsa", downloadBtn: "Unduh", resetBtn: "Gambar Lain", infoTitle: "Cara:", infoText: "OpenCV buat efek sketsa.", loading: "Membuat...", success: "Berhasil!", error: "Kesalahan: ", selectImage: "Pilih gambar", tooBig: "File besar" },
+        "zh-CN": { back: "返回", title: "✏️ 图片转素描", subtitle: "将照片转换为素描", clickOrDrag: "点击或拖拽", formatInfo: "图片 (JPG, PNG, WebP — 最大 15MB)", sketchBtn: "转换为素描", downloadBtn: "下载", resetBtn: "换一张", infoTitle: "原理:", infoText: "OpenCV 创建素描效果。", loading: "创建中...", success: "成功!", error: "错误: ", selectImage: "请选择图片", tooBig: "文件太大" }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'en';
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('lang', lang);
+        applyTranslations();
+    }
+    function applyTranslations() {
+        const t = translations[currentLang] || translations.en;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key]) el.textContent = t[key];
+        });
+        document.getElementById('languageSelect').value = currentLang;
+    }
+    function t(key) {
+        const tr = translations[currentLang] || translations.en;
+        return tr[key] || key;
+    }
+
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const previewSection = document.getElementById('previewSection');
+    const previewImg = document.getElementById('previewImg');
+    const controls = document.getElementById('controls');
+    const sketchBtn = document.getElementById('sketchBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const status = document.getElementById('status');
+
+    let selectedFile = null;
+    let resultBlob = null;
+
+    uploadZone.addEventListener('click', () => fileInput.click());
+    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('active');
+        if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) handleFile(e.target.files[0]);
+    });
+
+    function handleFile(file) {
+        if (!file.type.startsWith('image/')) {
+            showStatus('❌ ' + t('selectImage'), 'error');
+            return;
+        }
+        if (file.size > 15 * 1024 * 1024) {
+            showStatus('❌ ' + t('tooBig'), 'error');
+            return;
+        }
+        selectedFile = file;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            previewImg.src = e.target.result;
+            previewSection.style.display = 'block';
+            controls.style.display = 'block';
+            sketchBtn.style.display = 'flex';
+            downloadBtn.style.display = 'none';
+            resetBtn.style.display = 'none';
+            status.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    sketchBtn.addEventListener('click', async () => {
+        if (!selectedFile) return;
+
+        sketchBtn.disabled = true;
+        sketchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + t('loading');
+        showStatus('⏳ ' + t('loading'), 'loading');
+
+        try {
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            const res = await fetch(API_URL + '/image-to-sketch', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!res.ok) {
+                const errText = await res.text();
+                throw new Error(errText || 'Server error');
+            }
+
+            resultBlob = await res.blob();
+            const url = URL.createObjectURL(resultBlob);
+            previewImg.src = url;
+
+            showStatus('🎉 ' + t('success'), 'success');
+            downloadBtn.style.display = 'flex';
+            resetBtn.style.display = 'flex';
+            sketchBtn.style.display = 'none';
+        } catch (err) {
+            console.error(err);
+            showStatus('❌ ' + t('error') + err.message, 'error');
+        }
+
+        sketchBtn.disabled = false;
+        sketchBtn.innerHTML = '<i class="fas fa-magic"></i> ' + t('sketchBtn');
+    });
+
+    downloadBtn.addEventListener('click', () => {
+        if (!resultBlob) return;
+        const url = URL.createObjectURL(resultBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'sketch-' + Date.now() + '.png';
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
+    });
+
+    resetBtn.addEventListener('click', () => {
+        selectedFile = null;
+        resultBlob = null;
+        fileInput.value = '';
+        previewSection.style.display = 'none';
+        controls.style.display = 'none';
+        status.style.display = 'none';
+    });
+
+    function showStatus(msg, type) {
+        status.textContent = msg;
+        status.className = 'status ' + type;
+        status.style.display = 'block';
+    }
+
+    applyTranslations();
+</script>
+
+</body>
+</html>
