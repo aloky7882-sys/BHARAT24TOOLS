@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <title>Excel to PDF Converter - Convert XLSX to PDF Free | Bharat24Tools</title>
+    <meta name="description" content="Convert Excel spreadsheets (XLSX, XLS) to clean PDF documents instantly. Free online Excel to PDF converter, supports up to 15MB, works in browser, no signup.">
+    <meta name="keywords" content="excel to pdf, convert excel to pdf, xlsx to pdf, xls to pdf, spreadsheet to pdf, free excel to pdf converter">
+    <meta name="author" content="Alok">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/excel-to-pdf-dragdrop.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/excel-to-pdf-dragdrop.html">
+    <meta property="og:title" content="Excel to PDF Converter - Convert XLSX to PDF Free | Bharat24Tools">
+    <meta property="og:description" content="Convert Excel spreadsheets to clean PDF documents instantly. Free, supports up to 15MB.">
+    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:site_name" content="Bharat24Tools">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Excel to PDF Converter - Convert XLSX to PDF Free | Bharat24Tools">
+    <meta name="twitter:description" content="Convert Excel spreadsheets to clean PDF documents instantly. Free, supports up to 15MB.">
+    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Excel to PDF Converter",
+        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/excel-to-pdf-dragdrop.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web Browser",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- ✅ XLSX Library (Excel reading) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- ✅ jsPDF Library (PDF generation) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body {
+            background:linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            padding:20px;
+        }
+        .container {
+            background:rgba(30,27,75,0.95);
+            padding:40px;
+            border-radius:20px;
+            box-shadow:0 20px 60px rgba(0,0,0,.4);
+            max-width:700px;
+            width:100%;
+            text-align:center;
+            border:1px solid rgba(168,85,247,0.3);
+            color:#e0e7ff;
+        }
+        h1 { color:#a855f7; margin-bottom:10px; font-weight:800; }
+        .subtitle { font-size:14px; color:#a5b4fc; margin-bottom:25px; }
+        .upload-zone {
+            position:relative;
+            border:3px dashed rgba(168,85,247,0.6);
+            padding:40px 20px;
+            border-radius:12px;
+            background:rgba(99,102,241,0.05);
+            cursor:pointer;
+            margin:20px 0;
+            transition:all .3s ease;
+            overflow:hidden;
+        }
+        .upload-zone:hover, .upload-zone.dragover {
+            background:rgba(168,85,247,0.15);
+            border-color:#a855f7;
+            transform:translateY(-2px);
+        }
+        .upload-zone input {
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            opacity:0;
+            cursor:pointer;
+        }
+        .upload-icon {
+            width:76px;
+            height:76px;
+            margin:0 auto 14px;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:rgba(168,85,247,0.2);
+            color:#a855f7;
+            font-size:34px;
+        }
+        .upload-title { font-size:18px; font-weight:700; margin-bottom:6px; }
+        .upload-subtitle { font-size:14px; color:#a5b4fc; margin-bottom:10px; }
+        .upload-formats {
+            display:inline-block;
+            padding:5px 10px;
+            border-radius:20px;
+            background:rgba(168,85,247,0.15);
+            color:#a855f7;
+            font-size:12px;
+            font-weight:600;
+        }
+        #file-name {
+            margin-top:12px;
+            font-weight:600;
+            color:#86efac;
+            font-size:14px;
+            display:none;
+        }
+        button {
+            width:100%;
+            padding:14px;
+            background:linear-gradient(135deg, #a855f7, #ec4899);
+            color:#fff;
+            border:none;
+            border-radius:8px;
+            font-size:16px;
+            font-weight:700;
+            cursor:pointer;
+            margin-top:15px;
+            font-family:inherit;
+            transition:all 0.3s;
+        }
+        button:hover:not(:disabled) {
+            transform:translateY(-2px);
+            box-shadow:0 10px 30px rgba(168,85,247,0.4);
+        }
+        button:disabled { opacity:0.6; cursor:not-allowed; }
+        #status {
+            margin-top:15px;
+            font-size:14px;
+            font-weight:600;
+            padding:12px;
+            border-radius:8px;
+            display:none;
+        }
+        #status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
+        #status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
+        #status.info { background:rgba(99,102,241,0.2); color:#a5b4fc; display:block; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📊 Excel to PDF</h1>
+    <p class="subtitle">Convert Excel spreadsheets to clean PDFs (max 15MB)</p>
+    <div class="upload-zone" id="drop-zone">
+        <div class="upload-icon">📤</div>
+        <div class="upload-title">Drag & Drop Excel here</div>
+        <div class="upload-subtitle">or click to choose</div>
+        <div class="upload-formats">XLS / XLSX — max 15MB</div>
+        <input type="file" id="excel-file" accept=".xlsx,.xls" />
+    </div>
+    <div id="file-name"></div>
+    <button id="convert-btn">Convert & Download PDF</button>
+    <div id="status"></div>
+</div>
+
+<script>
+let outputFileName = "converted-document.pdf";
+let selectedFile = null;
+let excelData = null;
+
+const fileInput = document.getElementById("excel-file");
+const fileNameBox = document.getElementById("file-name");
+const convertBtn = document.getElementById("convert-btn");
+const statusBox = document.getElementById("status");
+const dropZone = document.getElementById("drop-zone");
+
+const MAX_FILE_SIZE = 15 * 1024 * 1024; // 15MB
+
+function showStatus(message, type) {
+    statusBox.className = type;
+    statusBox.innerHTML = message;
+    statusBox.style.display = "block";
+}
+
+function processExcelFile(file) {
+    if (!file) return;
+
+    // File type check
+    const name = file.name.toLowerCase();
+    if (!name.endsWith(".xlsx") && !name.endsWith(".xls")) {
+        showStatus("❌ Please select a valid Excel file (.xlsx or .xls).", "error");
+        return;
+    }
+
+    // File size check (15MB)
+    if (file.size > MAX_FILE_SIZE) {
+        showStatus("❌ File too large. Max 15MB allowed. Yours: " + (file.size / 1024 / 1024).toFixed(1) + "MB", "error");
+        return;
+    }
+
+    selectedFile = file;
+    outputFileName = file.name.replace(/\.[^/.]+$/, "") + ".pdf";
+    fileNameBox.innerHTML = '✅ ' + file.name + ' (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)';
+    fileNameBox.style.display = "block";
+    showStatus("📂 Reading Excel file...", "info");
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            // Check if XLSX library is loaded
+            if (typeof XLSX === 'undefined') {
+                showStatus("❌ Excel library not loaded. Please refresh the page.", "error");
+                return;
+            }
+
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: "array" });
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+            excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+            if (!excelData || excelData.length === 0) {
+                showStatus("❌ Excel file appears empty.", "error");
+                return;
+            }
+
+            showStatus("✅ Excel loaded! Click Convert to PDF.", "success");
+        } catch(err) {
+            showStatus("❌ Could not read Excel: " + err.message, "error");
+        }
+    };
+    reader.onerror = function() {
+        showStatus("❌ Could not read the file. Please try again.", "error");
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+function convertToPDF() {
+    if (!excelData || excelData.length === 0 || !selectedFile) {
+        showStatus("❌ No Excel file selected.", "error");
+        return;
+    }
+
+    // Check if jsPDF library is loaded
+    if (typeof window.jspdf === 'undefined') {
+        showStatus("❌ PDF library not loaded. Please refresh the page.", "error");
+        return;
+    }
+
+    showStatus("⏳ Converting to PDF...", "info");
+    convertBtn.disabled = true;
+
+    // Use setTimeout to allow UI to update before heavy processing
+    setTimeout(function() {
+        try {
+            const { jsPDF } = window.jspdf;
+
+            // Determine orientation based on column count
+            const columnCount = excelData[0] ? excelData[0].length : 0;
+            const orientation = columnCount > 6 ? "landscape" : "portrait";
+
+            const doc = new jsPDF({ orientation: orientation, unit: "mm", format: "a4" });
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const margin = 10;
+            const usableWidth = pageWidth - (margin * 2);
+            const columnWidth = columnCount > 0 ? usableWidth / columnCount : usableWidth;
+            const rowHeight = 8;
+
+            // ===== Header Row =====
+            doc.setFont("helvetica", "bold");
+            doc.setFillColor(168, 85, 247);
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(9);
+
+            let y = margin;
+            for (let c = 0; c < columnCount; c++) {
+                const x = margin + (c * columnWidth);
+                const text = (excelData[0][c] || "").toString().substring(0, 25);
+                doc.rect(x, y, columnWidth, rowHeight, "F");
+                doc.text(text, x + 2, y + 5.5);
+            }
+            y += rowHeight;
+
+            // ===== Data Rows =====
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(51, 51, 51);
+            doc.setFontSize(8);
+
+            for (let r = 1; r < excelData.length; r++) {
+                // New page if needed
+                if (y + rowHeight > pageHeight - margin) {
+                    doc.addPage();
+                    y = margin;
+
+                    // Repeat header on new page
+                    doc.setFont("helvetica", "bold");
+                    doc.setFillColor(168, 85, 247);
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFontSize(9);
+                    for (let c = 0; c < columnCount; c++) {
+                        const x = margin + (c * columnWidth);
+                        const text = (excelData[0][c] || "").toString().substring(0, 25);
+                        doc.rect(x, y, columnWidth, rowHeight, "F");
+                        doc.text(text, x + 2, y + 5.5);
+                    }
+                    y += rowHeight;
+                    doc.setFont("helvetica", "normal");
+                    doc.setTextColor(51, 51, 51);
+                    doc.setFontSize(8);
+                }
+
+                // Alternate row background
+                if (r % 2 === 0) doc.setFillColor(248, 249, 250);
+                else doc.setFillColor(255, 255, 255);
+
+                const rowData = excelData[r] || [];
+                for (let c = 0; c < columnCount; c++) {
+                    const x = margin + (c * columnWidth);
+                    const cellValue = rowData[c];
+                    const text = (cellValue !== undefined && cellValue !== null) ? cellValue.toString().substring(0, 25) : "";
+                    doc.rect(x, y, columnWidth, rowHeight, "F");
+                    doc.setDrawColor(222, 226, 230);
+                    doc.rect(x, y, columnWidth, rowHeight);
+                    doc.text(text, x + 2, y + 5.5);
+                }
+                y += rowHeight;
+            }
+
+            // ===== Save PDF =====
+            doc.save(outputFileName);
+            showStatus("🎉 PDF downloaded successfully!", "success");
+        } catch(err) {
+            console.error(err);
+            showStatus("❌ PDF conversion failed: " + err.message, "error");
+        }
+
+        convertBtn.disabled = false;
+    }, 100);
+}
+
+fileInput.addEventListener("change", function() { processExcelFile(this.files[0]); });
+dropZone.addEventListener("dragover", function(e) { e.preventDefault(); dropZone.classList.add("dragover"); });
+dropZone.addEventListener("dragleave", function() { dropZone.classList.remove("dragover"); });
+dropZone.addEventListener("drop", function(e) { e.preventDefault(); dropZone.classList.remove("dragover"); processExcelFile(e.dataTransfer.files[0]); });
+convertBtn.addEventListener("click", convertToPDF);
+</script>
+</body>
+</html>
