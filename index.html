@@ -87,6 +87,17 @@
         }
         body { background: var(--bg-primary); color: var(--text-primary); transition: background 0.3s, color 0.3s; }
 
+        /* ===== ICON SIZE (CHHOTA) ===== */
+        .tool-icon {
+            font-size: 2rem !important;
+            width: 56px !important;
+            height: 56px !important;
+            line-height: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
         /* ===== Rating + Usage Counter ===== */
         .card .rating-row {
             display: flex;
@@ -166,7 +177,7 @@
             box-shadow: var(--shadow-hover);
             border-color: var(--primary);
         }
-        .popular-card .p-icon { font-size: 2rem; margin-bottom: 8px; }
+        .popular-card .p-icon { font-size: 1.6rem; margin-bottom: 8px; }
         .popular-card .p-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
         .popular-card .p-desc { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4; }
         .popular-card .p-stat { font-size: 0.68rem; color: #10b981; font-weight: 600; }
@@ -324,6 +335,7 @@
             .whatsapp-float { bottom: 80px !important; }
             .popular-grid, .testi-grid { grid-template-columns: 1fr 1fr; }
             .popular-card, .testi-card { padding: 14px; }
+            .tool-icon { font-size: 1.7rem !important; width: 48px !important; height: 48px !important; }
         }
         @media (max-width: 480px) {
             .popular-grid { grid-template-columns: 1fr; }
@@ -343,7 +355,6 @@
     <div class="custom-cursor" id="customCursor"></div>
     <div id="toast" class="toast"></div>
 
-    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="menu-btn"><i class="fa-solid fa-bars"></i></div>
         <div class="logo"><i class="fa-solid fa-bolt"></i><span>Bharat24Tools</span></div>
@@ -362,7 +373,6 @@
         </div>
     </nav>
 
-    <!-- HERO -->
     <section class="hero">
         <div class="floating-icons">
             <i class="fa-solid fa-image float-icon" style="top:15%;left:8%;animation-delay:0s;"></i>
@@ -399,7 +409,6 @@
         </div>
     </section>
 
-    <!-- TRUST STATS BAR -->
     <section class="trust-stats">
         <div class="trust-stats-inner">
             <div class="trust-stat"><div class="num">15 Lakh+</div><div class="label">Files Converted</div></div>
@@ -409,7 +418,6 @@
         </div>
     </section>
 
-    <!-- POPULAR TOOLS -->
     <section class="popular-tools">
         <h2>🔥 Most Popular Tools</h2>
         <p class="sub">Sabse zyada use hone wale tools — 1 click mein try karo</p>
@@ -459,19 +467,16 @@
         </div>
     </section>
 
-    <!-- RECENTLY USED -->
     <section class="recently-used" id="recentlyUsed">
         <h3><i class="fa-solid fa-clock-rotate-left"></i> Recently Used</h3>
         <div class="recent-chips" id="recentChips"></div>
     </section>
 
-    <!-- MY FAVORITES -->
     <section class="my-favorites" id="myFavorites">
         <h3><i class="fa-solid fa-star" style="color:#fbbf24;"></i> My Favorites</h3>
         <div class="recent-chips" id="favoriteChips"></div>
     </section>
 
-    <!-- CATEGORY -->
     <section class="categories">
         <div class="category-box"><i class="fa-solid fa-image"></i><span>Image Tools</span><small class="cat-count">17 Tools</small></div>
         <div class="category-box"><i class="fa-solid fa-file-pdf"></i><span>PDF Tools</span><small class="cat-count">19 Tools</small></div>
@@ -481,7 +486,6 @@
         <div class="category-box"><i class="fa-solid fa-palette"></i><span>Design Tools</span><small class="cat-count">12 Tools</small></div>
     </section>
 
-    <!-- TOOLS -->
     <main class="tool-wrapper">
 
         <div id="category-filter-tabs" style="display:flex;gap:8px;overflow-x:auto;padding:4px 0 18px;margin-bottom:10px;">
@@ -1112,7 +1116,6 @@
         </div>
     </main>
 
-    <!-- TESTIMONIALS -->
     <section class="testimonials">
         <h2>💬 What Our Users Say</h2>
         <p class="sub">2.5 Lakh+ users trust Bharat24Tools every month</p>
@@ -1122,10 +1125,7 @@
                 <div class="t-text">"PDF to Excel tool ne meri CA practice bahut easy bana di. Bank statements extract karna 5 minute ka kaam ho gaya!"</div>
                 <div class="t-user">
                     <div class="t-avatar">RK</div>
-                    <div>
-                        <div class="t-name">Rohit Kumar</div>
-                        <div class="t-loc">Chartered Accountant, Delhi</div>
-                    </div>
+                    <div><div class="t-name">Rohit Kumar</div><div class="t-loc">Chartered Accountant, Delhi</div></div>
                 </div>
             </div>
             <div class="testi-card">
@@ -1133,10 +1133,7 @@
                 <div class="t-text">"Image Compressor ne meri e-commerce product photos ko 70% chhota kar diya without quality loss. Website loading 3x fast ho gayi!"</div>
                 <div class="t-user">
                     <div class="t-avatar">PS</div>
-                    <div>
-                        <div class="t-name">Priya Sharma</div>
-                        <div class="t-loc">Online Seller, Mumbai</div>
-                    </div>
+                    <div><div class="t-name">Priya Sharma</div><div class="t-loc">Online Seller, Mumbai</div></div>
                 </div>
             </div>
             <div class="testi-card">
@@ -1144,16 +1141,12 @@
                 <div class="t-text">"Background Remover AI bahut impressive hai — hair edges bhi perfect cut karta hai. Freelancing mein bahut help mil rahi hai."</div>
                 <div class="t-user">
                     <div class="t-avatar">AM</div>
-                    <div>
-                        <div class="t-name">Amit Mehta</div>
-                        <div class="t-loc">Graphic Designer, Bangalore</div>
-                    </div>
+                    <div><div class="t-name">Amit Mehta</div><div class="t-loc">Graphic Designer, Bangalore</div></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FEATURES -->
     <section class="features">
         <div class="feature-box"><h3>⚡ Fast Processing</h3><p>All tools work instantly in your browser.</p></div>
         <div class="feature-box"><h3>🔒 Secure</h3><p>Your files are never stored on our servers.</p></div>
@@ -1161,7 +1154,6 @@
         <div class="feature-box"><h3>💯 Free Forever</h3><p>No signup, no watermark and no hidden charges.</p></div>
     </section>
 
-    <!-- ABOUT -->
     <section id="about" style="max-width:900px;margin:0 auto;padding:40px 20px;">
         <h2>About Bharat24Tools</h2>
         <p>Bharat24Tools is a free collection of everyday online utilities built for students, professionals and small business owners across India. Instead of downloading heavy software or signing up for paid subscriptions, you can compress an image, convert a file to PDF, generate a QR code or calculate your loan EMI directly inside your web browser.</p>
@@ -1179,7 +1171,6 @@
         <details style="margin-bottom:12px;"><summary style="cursor:pointer;font-weight:600;">Do I need to install any software?</summary><p>No installation required. Works in any modern browser on desktop, laptop and mobile.</p></details>
     </section>
 
-    <!-- MOUNTAIN -->
     <div style="width:100%; overflow:hidden; line-height:0; background:#eaf3ff;">
         <svg viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; display:block;">
             <rect x="0" y="0" width="1200" height="260" fill="#eaf3ff"/>
@@ -1195,7 +1186,6 @@
         </svg>
     </div>
 
-    <!-- FOOTER -->
     <footer id="contact" style="background: #0b1a2e; color: #f0f4fa; padding: 50px 20px 20px;">
         <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:30px;">
             <div style="flex:1 1 220px;">
@@ -1242,7 +1232,6 @@
         </div>
     </footer>
 
-    <!-- MOBILE BOTTOM NAV -->
     <nav class="mobile-bottom-nav">
         <a href="index.html" class="active"><i class="fa-solid fa-house"></i> Home</a>
         <a href="#image-tools"><i class="fa-solid fa-image"></i> Image</a>
@@ -1271,7 +1260,6 @@
 
     <script>
         (function () {
-            // FILTER TABS
             var tabs = document.querySelectorAll('.filter-tab');
             var categories = document.querySelectorAll('.tool-category');
             tabs.forEach(function (tab) {
@@ -1291,7 +1279,6 @@
                 });
             });
 
-            // SEARCH
             const searchInput = document.getElementById('search');
             const searchDropdown = document.getElementById('searchDropdown');
             const cards = document.querySelectorAll('.card');
@@ -1323,7 +1310,6 @@
                 });
             }
 
-            // FAVORITES
             const FAV_KEY = 'bharat24_favorites';
             const RECENT_KEY = 'bharat24_recent';
             function getFavs() { try { return JSON.parse(localStorage.getItem(FAV_KEY) || '[]'); } catch { return []; } }
@@ -1375,7 +1361,6 @@
                 setTimeout(() => t.classList.remove('show'), 2000);
             }
 
-            // RECENTLY USED
             function getRecent() { try { return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch { return []; } }
             function trackRecent(name, href) {
                 let recent = getRecent();
@@ -1402,7 +1387,6 @@
             renderFavorites();
             renderRecent();
 
-            // DARK MODE
             const themeToggle = document.getElementById('themeToggle');
             const savedTheme = localStorage.getItem('bharat24_theme');
             if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
