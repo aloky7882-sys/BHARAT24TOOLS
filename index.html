@@ -87,56 +87,170 @@
         }
         body { background: var(--bg-primary); color: var(--text-primary); transition: background 0.3s, color 0.3s; }
 
-        /* ===== ICON SIZE (iLovePDF jaisa) ===== */
+        /* ===== GRID (iLovePDF Compact) ===== */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 14px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== CARD (iLovePDF Compact) ===== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px;
+            position: relative;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            min-height: 170px;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+        }
+        .tool-category[data-category="image"] .card::before { background: linear-gradient(90deg, #a855f7, #ec4899); }
+        .tool-category[data-category="pdf"] .card::before { background: linear-gradient(90deg, #ef4444, #f97316); }
+        .tool-category[data-category="design"] .card::before { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+        .tool-category[data-category="calculator"] .card::before { background: linear-gradient(90deg, #22c55e, #10b981); }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        /* ===== ICON SIZE (iLovePDF Match) ===== */
         .tool-icon {
-            font-size: 1.75rem !important;
-            width: 52px !important;
-            height: 52px !important;
+            font-size: 1.5rem !important;
+            width: 44px !important;
+            height: 44px !important;
             line-height: 1 !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background: rgba(13,110,253,0.08);
+        }
+        .tool-category[data-category="image"] .tool-icon { background: rgba(168,85,247,0.1); }
+        .tool-category[data-category="pdf"] .tool-icon { background: rgba(239,68,68,0.1); }
+        .tool-category[data-category="design"] .tool-icon { background: rgba(59,130,246,0.1); }
+        .tool-category[data-category="calculator"] .tool-icon { background: rgba(34,197,94,0.1); }
+
+        /* ===== CARD TEXT (Compact) ===== */
+        .card h2 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            line-height: 1.3;
         }
 
-        /* ===== Rating + Usage Counter ===== */
+        .card p {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+            margin-bottom: 6px;
+        }
+
         .card .rating-row {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            margin: 4px 0 6px;
-        }
-        .card .rating-row .stars { color: #fbbf24; font-size: 0.72rem; letter-spacing: -1px; }
-        .card .rating-row .rating-count { opacity: 0.75; }
-        .card .usage-counter {
+            gap: 5px;
             font-size: 0.65rem;
+            color: var(--text-muted);
+            margin: 3px 0 4px;
+        }
+        .card .rating-row .stars { color: #fbbf24; font-size: 0.68rem; letter-spacing: -1px; }
+        .card .rating-row .rating-count { opacity: 0.75; }
+
+        .card .usage-counter {
+            font-size: 0.6rem;
             color: #10b981;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
         }
 
         .card .how-it-works {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
             font-style: italic;
-            line-height: 1.4;
-            margin: 8px 0 10px;
-            padding-top: 8px;
+            line-height: 1.35;
+            margin: 6px 0 8px;
+            padding-top: 6px;
             border-top: 1px dashed var(--border-color);
             opacity: 0.85;
         }
-        .card .card-badges { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
-        .card .card-badge { font-size: 0.6rem; padding: 2px 7px; border-radius: 10px; font-weight: 600; }
+
+        .card .card-badges { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
+        .card .card-badge { font-size: 0.55rem; padding: 2px 6px; border-radius: 10px; font-weight: 600; }
         .badge-popular { background: rgba(251,191,36,0.15); color: #d97706; }
         .badge-new { background: rgba(34,197,94,0.15); color: #16a34a; }
         .badge-ai { background: rgba(168,85,247,0.15); color: #a855f7; }
         .badge-offline { background: rgba(59,130,246,0.15); color: #3b82f6; }
-        .fav-btn.active { color: #fbbf24 !important; }
-        .fav-btn.active i::before { content: "\f005"; font-weight: 900; }
+
+        .card .tool-btn {
+            display: block;
+            background: var(--primary);
+            color: #fff;
+            text-decoration: none;
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.2s;
+            margin-top: auto;
+        }
+        .card .tool-btn:hover {
+            background: #0b5ed7;
+            transform: translateY(-1px);
+        }
+
+        .card .fav-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 4px;
+            transition: all 0.2s;
+            z-index: 2;
+        }
+        .card .fav-btn:hover { color: #fbbf24; transform: scale(1.15); }
+        .card .fav-btn.active { color: #fbbf24; }
+        .card .fav-btn.active i::before { content: "\f005"; font-weight: 900; }
+
+        /* ===== SECTION ===== */
+        .tool-category { margin-bottom: 32px; }
+        .tool-category h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 26px 0 16px;
+            color: var(--text-primary);
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+        }
 
         /* ===== POPULAR TOOLS SECTION ===== */
         .popular-tools {
@@ -189,95 +303,31 @@
         }
 
         /* ===== TESTIMONIALS ===== */
-        .testimonials {
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 0 20px;
-        }
-        .testimonials h2 {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .testimonials .sub {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-        }
-        .testi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .testi-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 22px;
-            transition: all 0.25s;
-        }
+        .testimonials { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
+        .testimonials h2 { text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+        .testimonials .sub { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 30px; }
+        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .testi-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; transition: all 0.25s; }
         .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
         .testi-card .t-stars { color: #fbbf24; margin-bottom: 10px; font-size: 0.9rem; }
-        .testi-card .t-text {
-            font-size: 0.85rem;
-            color: var(--text-primary);
-            line-height: 1.6;
-            margin-bottom: 16px;
-            font-style: italic;
-        }
+        .testi-card .t-text { font-size: 0.85rem; color: var(--text-primary); line-height: 1.6; margin-bottom: 16px; font-style: italic; }
         .testi-card .t-user { display: flex; align-items: center; gap: 12px; }
-        .testi-card .t-avatar {
-            width: 42px; height: 42px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #a855f7, #0d6efd);
-            display: flex; align-items: center; justify-content: center;
-            color: #fff; font-weight: 700; font-size: 1rem;
-        }
+        .testi-card .t-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #a855f7, #0d6efd); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1rem; }
         .testi-card .t-name { font-size: 0.85rem; font-weight: 600; }
         .testi-card .t-loc { font-size: 0.72rem; color: var(--text-muted); }
 
         /* ===== TRUST STATS BAR ===== */
-        .trust-stats {
-            background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(13,110,253,0.08));
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            padding: 22px 20px;
-            margin: 30px 0;
-        }
-        .trust-stats-inner {
-            max-width: 1200px; margin: 0 auto;
-            display: flex; flex-wrap: wrap; justify-content: space-around;
-            gap: 20px;
-        }
+        .trust-stats { background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(13,110,253,0.08)); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 22px 20px; margin: 30px 0; }
+        .trust-stats-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px; }
         .trust-stat { text-align: center; }
-        .trust-stat .num {
-            font-size: 1.6rem; font-weight: 800;
-            background: linear-gradient(135deg, #a855f7, #0d6efd);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+        .trust-stat .num { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, #a855f7, #0d6efd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .trust-stat .label { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
 
         /* ===== SEARCH DROPDOWN ===== */
         .search-wrapper { position: relative; }
-        .search-dropdown {
-            position: absolute; top: 100%; left: 0; right: 0;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            max-height: 400px; overflow-y: auto;
-            z-index: 1000; display: none; margin-top: 8px;
-        }
+        .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-height: 400px; overflow-y: auto; z-index: 1000; display: none; margin-top: 8px; }
         .search-dropdown.active { display: block; }
-        .search-item {
-            padding: 12px 16px; cursor: pointer;
-            border-bottom: 1px solid var(--border-color);
-            display: flex; align-items: center; gap: 12px;
-            color: var(--text-primary); text-decoration: none;
-        }
+        .search-item { padding: 12px 16px; cursor: pointer; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; color: var(--text-primary); text-decoration: none; }
         .search-item:hover { background: rgba(13,110,253,0.08); }
         .search-item:last-child { border-bottom: none; }
         .search-item-icon { font-size: 1.5rem; }
@@ -286,46 +336,16 @@
         .search-empty { padding: 20px; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
 
         /* Recently Used + Favorites */
-        .recently-used, .my-favorites {
-            max-width: 1200px; margin: 0 auto; padding: 12px 20px; display: none;
-        }
+        .recently-used, .my-favorites { max-width: 1200px; margin: 0 auto; padding: 12px 20px; display: none; }
         .recently-used.active, .my-favorites.active { display: block; }
-        .recently-used h3, .my-favorites h3 {
-            font-size: 1rem; margin-bottom: 10px;
-            display: flex; align-items: center; gap: 8px;
-        }
+        .recently-used h3, .my-favorites h3 { font-size: 1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         .recent-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-        .recent-chip {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px; padding: 6px 14px;
-            font-size: 0.78rem; color: var(--text-primary);
-            text-decoration: none; transition: all 0.2s;
-        }
+        .recent-chip { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 6px 14px; font-size: 0.78rem; color: var(--text-primary); text-decoration: none; transition: all 0.2s; }
         .recent-chip:hover { background: var(--primary); color: white; transform: translateY(-2px); }
 
         /* ===== MOBILE BOTTOM NAV ===== */
-        .mobile-bottom-nav {
-            display: none;
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: var(--bg-card);
-            border-top: 1px solid var(--border-color);
-            padding: 8px 0;
-            z-index: 998;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
-        }
-        .mobile-bottom-nav a {
-            flex: 1;
-            text-align: center;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.65rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            padding: 4px 0;
-        }
+        .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-card); border-top: 1px solid var(--border-color); padding: 8px 0; z-index: 998; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); }
+        .mobile-bottom-nav a { flex: 1; text-align: center; color: var(--text-muted); text-decoration: none; font-size: 0.65rem; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 0; }
         .mobile-bottom-nav a i { font-size: 1.1rem; }
         .mobile-bottom-nav a.active { color: var(--primary); }
 
@@ -333,9 +353,13 @@
             .mobile-bottom-nav { display: flex; }
             body { padding-bottom: 70px; }
             .whatsapp-float { bottom: 80px !important; }
+            .container { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 12px; }
+            .card { padding: 12px; min-height: 165px; }
+            .card h2 { font-size: 0.78rem; }
+            .card p { font-size: 0.68rem; }
             .popular-grid, .testi-grid { grid-template-columns: 1fr 1fr; }
             .popular-card, .testi-card { padding: 14px; }
-            .tool-icon { font-size: 1.5rem !important; width: 46px !important; height: 46px !important; }
+            .tool-icon { font-size: 1.35rem !important; width: 40px !important; height: 40px !important; margin-bottom: 8px; }
         }
         @media (max-width: 480px) {
             .popular-grid { grid-template-columns: 1fr; }
@@ -505,7 +529,7 @@
                 <h2>Image Compressor</h2>
                 <p>Compress JPG, PNG & WEBP Images without losing quality.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(4,520)</span></div>
-                <div class="usage-counter">📊 45,200+ uses this week</div>
+                <div class="usage-counter">📊 45,200+ uses</div>
                 <div class="how-it-works">⚡ Browser-based, images never leave your device</div>
                 <div class="card-badges"><span class="card-badge badge-popular">🔥 Popular</span><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="image-compressor.html" class="tool-btn">Open Tool</a>
@@ -516,7 +540,7 @@
                 <h2>Image Resizer</h2>
                 <p>Resize images in custom dimensions instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,100)</span></div>
-                <div class="usage-counter">📊 21,500+ uses this week</div>
+                <div class="usage-counter">📊 21,500+ uses</div>
                 <div class="how-it-works">⚡ Instant resize with aspect ratio lock</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="image-resizer.html" class="tool-btn">Open Tool</a>
@@ -527,7 +551,7 @@
                 <h2>Image Cropper</h2>
                 <p>Crop your images with live preview.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,800)</span></div>
-                <div class="usage-counter">📊 18,300+ uses this week</div>
+                <div class="usage-counter">📊 18,300+ uses</div>
                 <div class="how-it-works">⚡ Drag to select, real-time preview</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="image-cropper.html" class="tool-btn">Open Tool</a>
@@ -538,7 +562,7 @@
                 <h2>JPG to PNG</h2>
                 <p>Convert JPG images into PNG format.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(3,200)</span></div>
-                <div class="usage-counter">📊 32,100+ uses this week</div>
+                <div class="usage-counter">📊 32,100+ uses</div>
                 <div class="how-it-works">⚡ 100% lossless, alpha channel supported</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="jpg-to-png.html" class="tool-btn">Open Tool</a>
@@ -549,7 +573,7 @@
                 <h2>PNG to JPG</h2>
                 <p>Convert PNG images into JPG format.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,900)</span></div>
-                <div class="usage-counter">📊 29,400+ uses this week</div>
+                <div class="usage-counter">📊 29,400+ uses</div>
                 <div class="how-it-works">⚡ Reduces file size up to 80%</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="png-to-jpg.html" class="tool-btn">Open Tool</a>
@@ -560,7 +584,7 @@
                 <h2>Image to Excel</h2>
                 <p>Embed images in Excel spreadsheets professionally.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(980)</span></div>
-                <div class="usage-counter">📊 9,800+ uses this week</div>
+                <div class="usage-counter">📊 9,800+ uses</div>
                 <div class="how-it-works">⚡ Perfect for product catalogs and reports</div>
                 <div class="card-badges"><span class="card-badge badge-new">✨ New</span></div>
                 <a href="image-to-excel.html" class="tool-btn">Open Tool</a>
@@ -571,7 +595,7 @@
                 <h2>Image to Word</h2>
                 <p>Create Word documents with images embedded.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,500)</span></div>
-                <div class="usage-counter">📊 15,200+ uses this week</div>
+                <div class="usage-counter">📊 15,200+ uses</div>
                 <div class="how-it-works">⚡ Supports captions and page breaks</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="image-to-word.html" class="tool-btn">Open Tool</a>
@@ -582,7 +606,7 @@
                 <h2>Batch Image Compress</h2>
                 <p>Compress 50+ images at once with quality control.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(2,400)</span></div>
-                <div class="usage-counter">📊 24,100+ uses this week</div>
+                <div class="usage-counter">📊 24,100+ uses</div>
                 <div class="how-it-works">⚡ Download all results as ZIP</div>
                 <div class="card-badges"><span class="card-badge badge-popular">🔥 Popular</span></div>
                 <a href="batch-image-compress.html" class="tool-btn">Open Tool</a>
@@ -593,7 +617,7 @@
                 <h2>Image Watermark</h2>
                 <p>Add text or logo watermark on your images.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,200)</span></div>
-                <div class="usage-counter">📊 12,300+ uses this week</div>
+                <div class="usage-counter">📊 12,300+ uses</div>
                 <div class="how-it-works">⚡ Supports tiled and rotated watermarks</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="image-watermark.html" class="tool-btn">Open Tool</a>
@@ -604,7 +628,7 @@
                 <h2>HEIC to JPG</h2>
                 <p>Convert iPhone HEIC images to JPG format.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(2,800)</span></div>
-                <div class="usage-counter">📊 22,400+ uses this week</div>
+                <div class="usage-counter">📊 22,400+ uses</div>
                 <div class="how-it-works">⚡ Perfect for iPhone photos on Android/PC</div>
                 <div class="card-badges"><span class="card-badge badge-popular">🔥 Popular</span></div>
                 <a href="heic-to-jpg.html" class="tool-btn">Open Tool</a>
@@ -615,7 +639,7 @@
                 <h2>Image to PDF (Quality)</h2>
                 <p>Convert images to PDF with quality & page controls.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,900)</span></div>
-                <div class="usage-counter">📊 19,500+ uses this week</div>
+                <div class="usage-counter">📊 19,500+ uses</div>
                 <div class="how-it-works">⚡ Supports A4, Letter, custom sizes</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="image-to-pdf-quality.html" class="tool-btn">Open Tool</a>
@@ -626,7 +650,7 @@
                 <h2>Image Filter & Editor</h2>
                 <p>Edit images with filters, brightness & effects.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(1,400)</span></div>
-                <div class="usage-counter">📊 14,100+ uses this week</div>
+                <div class="usage-counter">📊 14,100+ uses</div>
                 <div class="how-it-works">⚡ 20+ Instagram-style filters built in</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="image-filter-editor.html" class="tool-btn">Open Tool</a>
@@ -637,7 +661,7 @@
                 <h2>Background Remover</h2>
                 <p>Remove photo background using AI — transparent PNG.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(3,900)</span></div>
-                <div class="usage-counter">📊 32,100+ uses this week</div>
+                <div class="usage-counter">📊 32,100+ uses</div>
                 <div class="how-it-works">🤖 On-device AI, photos never leave your browser</div>
                 <div class="card-badges"><span class="card-badge badge-ai">🤖 AI</span></div>
                 <a href="background-remover.html" class="tool-btn">Open Tool</a>
@@ -648,7 +672,7 @@
                 <h2>WebP to JPG</h2>
                 <p>Convert WebP images to JPG — batch conversion.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,700)</span></div>
-                <div class="usage-counter">📊 17,200+ uses this week</div>
+                <div class="usage-counter">📊 17,200+ uses</div>
                 <div class="how-it-works">⚡ Handles animated WebP too</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="webp-to-jpg.html" class="tool-btn">Open Tool</a>
@@ -659,7 +683,7 @@
                 <h2>AI Image Upscaler</h2>
                 <p>Upscale images 2x, 3x, 4x with AI sharpening.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,600)</span></div>
-                <div class="usage-counter">📊 26,500+ uses this week</div>
+                <div class="usage-counter">📊 26,500+ uses</div>
                 <div class="how-it-works">🤖 Enhances blurry photos without artifacts</div>
                 <div class="card-badges"><span class="card-badge badge-ai">🤖 AI</span></div>
                 <a href="image-upscaler.html" class="tool-btn">Open Tool</a>
@@ -670,7 +694,7 @@
                 <h2>AVIF to JPG</h2>
                 <p>Convert AVIF images to JPG — batch conversion.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,100)</span></div>
-                <div class="usage-counter">📊 11,200+ uses this week</div>
+                <div class="usage-counter">📊 11,200+ uses</div>
                 <div class="how-it-works">⚡ Works on Chrome, Edge, Firefox</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="avif-to-jpg.html" class="tool-btn">Open Tool</a>
@@ -681,7 +705,7 @@
                 <h2>Image to Sketch</h2>
                 <p>Convert photos to pencil sketch using AI.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,600)</span></div>
-                <div class="usage-counter">📊 16,300+ uses this week</div>
+                <div class="usage-counter">📊 16,300+ uses</div>
                 <div class="how-it-works">⚡ Turns any photo into pencil drawing</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="image-to-sketch.html" class="tool-btn">Open Tool</a>
@@ -699,7 +723,7 @@
                 <h2>JPG to PDF</h2>
                 <p>Convert JPG images into PDF documents.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(3,100)</span></div>
-                <div class="usage-counter">📊 30,200+ uses this week</div>
+                <div class="usage-counter">📊 30,200+ uses</div>
                 <div class="how-it-works">⚡ Drag to reorder, auto page sizing</div>
                 <div class="card-badges"><span class="card-badge badge-popular">🔥 Popular</span></div>
                 <a href="jpg-to-pdf-dragdrop.html" class="tool-btn">Open Tool</a>
@@ -710,7 +734,7 @@
                 <h2>PDF to JPG</h2>
                 <p>Convert PDF pages into high-quality JPG images.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,400)</span></div>
-                <div class="usage-counter">📊 23,500+ uses this week</div>
+                <div class="usage-counter">📊 23,500+ uses</div>
                 <div class="how-it-works">⚡ Single page or all as ZIP</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="pdf-to-jpg-dragdrop.html" class="tool-btn">Open Tool</a>
@@ -721,7 +745,7 @@
                 <h2>Excel to PDF</h2>
                 <p>Convert Excel spreadsheets into PDF documents instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(2,700)</span></div>
-                <div class="usage-counter">📊 26,100+ uses this week</div>
+                <div class="usage-counter">📊 26,100+ uses</div>
                 <div class="how-it-works">🤖 AI detects column types and auto-formats</div>
                 <div class="card-badges"><span class="card-badge badge-ai">🤖 AI</span><span class="card-badge badge-popular">🔥 Popular</span></div>
                 <a href="excel-to-pdf-dragdrop.html" class="tool-btn">Open Tool</a>
@@ -732,7 +756,7 @@
                 <h2>Merge PDF</h2>
                 <p>Combine multiple PDF files into one.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,900)</span></div>
-                <div class="usage-counter">📊 28,300+ uses this week</div>
+                <div class="usage-counter">📊 28,300+ uses</div>
                 <div class="how-it-works">⚡ Preserves bookmarks and orientation</div>
                 <div class="card-badges"><span class="card-badge badge-popular">🔥 Popular</span></div>
                 <a href="merge-pdf-dragdrop.html" class="tool-btn">Open Tool</a>
@@ -743,7 +767,7 @@
                 <h2>Split PDF</h2>
                 <p>Extract or split pages from any PDF file.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,900)</span></div>
-                <div class="usage-counter">📊 19,100+ uses this week</div>
+                <div class="usage-counter">📊 19,100+ uses</div>
                 <div class="how-it-works">⚡ Select page ranges visually</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="split-pdf-dragdrop.html" class="tool-btn">Open Tool</a>
@@ -754,7 +778,7 @@
                 <h2>Word to PDF</h2>
                 <p>Convert Word (.docx) documents into PDF instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,500)</span></div>
-                <div class="usage-counter">📊 24,800+ uses this week</div>
+                <div class="usage-counter">📊 24,800+ uses</div>
                 <div class="how-it-works">⚡ Preserves headings and paragraphs</div>
                 <div class="card-badges"><span class="card-badge badge-ai">🤖 AI</span></div>
                 <a href="word-to-pdf.html" class="tool-btn">Open Tool</a>
@@ -765,7 +789,7 @@
                 <h2>Images to PDF</h2>
                 <p>Combine multiple images into a single PDF document.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,200)</span></div>
-                <div class="usage-counter">📊 21,900+ uses this week</div>
+                <div class="usage-counter">📊 21,900+ uses</div>
                 <div class="how-it-works">⚡ Drag to reorder, set page orientation</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="images-to-pdf.html" class="tool-btn">Open Tool</a>
@@ -776,7 +800,7 @@
                 <h2>Excel to Image</h2>
                 <p>Convert Excel spreadsheets to PNG, JPG, or WebP images.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,300)</span></div>
-                <div class="usage-counter">📊 12,500+ uses this week</div>
+                <div class="usage-counter">📊 12,500+ uses</div>
                 <div class="how-it-works">⚡ Share data snapshots on social media</div>
                 <div class="card-badges"><span class="card-badge badge-ai">🤖 AI</span></div>
                 <a href="excel-to-image.html" class="tool-btn">Open Tool</a>
@@ -787,7 +811,7 @@
                 <h2>Word to Image</h2>
                 <p>Convert Word documents to high-quality images.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(900)</span></div>
-                <div class="usage-counter">📊 8,900+ uses this week</div>
+                <div class="usage-counter">📊 8,900+ uses</div>
                 <div class="how-it-works">⚡ Great for previews and social posts</div>
                 <div class="card-badges"><span class="card-badge badge-new">✨ New</span></div>
                 <a href="word-to-image.html" class="tool-btn">Open Tool</a>
@@ -798,7 +822,7 @@
                 <h2>Compress PDF</h2>
                 <p>Reduce PDF file size without losing quality.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,600)</span></div>
-                <div class="usage-counter">📊 25,400+ uses this week</div>
+                <div class="usage-counter">📊 25,400+ uses</div>
                 <div class="how-it-works">⚡ Typical 60-80% size reduction</div>
                 <div class="card-badges"><span class="card-badge badge-popular">🔥 Popular</span></div>
                 <a href="compress-pdf.html" class="tool-btn">Open Tool</a>
@@ -809,7 +833,7 @@
                 <h2>Protect PDF</h2>
                 <p>Add password protection to your PDF files.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,400)</span></div>
-                <div class="usage-counter">📊 13,700+ uses this week</div>
+                <div class="usage-counter">📊 13,700+ uses</div>
                 <div class="how-it-works">⚡ AES-256 encryption</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="protect-pdf.html" class="tool-btn">Open Tool</a>
@@ -820,7 +844,7 @@
                 <h2>Rotate PDF</h2>
                 <p>Rotate PDF pages to 90°, 180° or 270°.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,200)</span></div>
-                <div class="usage-counter">📊 11,900+ uses this week</div>
+                <div class="usage-counter">📊 11,900+ uses</div>
                 <div class="how-it-works">⚡ Fix scanned docs with wrong orientation</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="rotate-pdf.html" class="tool-btn">Open Tool</a>
@@ -831,7 +855,7 @@
                 <h2>Unlock PDF</h2>
                 <p>Remove password from your protected PDF.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,800)</span></div>
-                <div class="usage-counter">📊 17,800+ uses this week</div>
+                <div class="usage-counter">📊 17,800+ uses</div>
                 <div class="how-it-works">⚡ Save unlocked copy for easier sharing</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="unlock-pdf.html" class="tool-btn">Open Tool</a>
@@ -842,7 +866,7 @@
                 <h2>PDF to Word</h2>
                 <p>Convert PDF text into editable Word document.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(4,100)</span></div>
-                <div class="usage-counter">📊 38,600+ uses this week</div>
+                <div class="usage-counter">📊 38,600+ uses</div>
                 <div class="how-it-works">⚡ Preserves paragraphs and formatting</div>
                 <div class="card-badges"><span class="card-badge badge-popular">🔥 Popular</span></div>
                 <a href="pdf-to-word.html" class="tool-btn">Open Tool</a>
@@ -853,7 +877,7 @@
                 <h2>PDF to Excel</h2>
                 <p>Convert PDF text into editable Excel file.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(3,500)</span></div>
-                <div class="usage-counter">📊 33,200+ uses this week</div>
+                <div class="usage-counter">📊 33,200+ uses</div>
                 <div class="how-it-works">🤖 pdfplumber detects tables automatically</div>
                 <div class="card-badges"><span class="card-badge badge-ai">🤖 AI</span><span class="card-badge badge-popular">🔥 Popular</span></div>
                 <a href="pdf-to-excel.html" class="tool-btn">Open Tool</a>
@@ -864,7 +888,7 @@
                 <h2>PDF Watermark</h2>
                 <p>Add text watermark to PDF — opacity control.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,100)</span></div>
-                <div class="usage-counter">📊 10,800+ uses this week</div>
+                <div class="usage-counter">📊 10,800+ uses</div>
                 <div class="how-it-works">⚡ Control text, opacity and rotation</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="pdf-watermark.html" class="tool-btn">Open Tool</a>
@@ -875,7 +899,7 @@
                 <h2>PDF Page Delete</h2>
                 <p>Delete specific pages from your PDF file.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,300)</span></div>
-                <div class="usage-counter">📊 12,700+ uses this week</div>
+                <div class="usage-counter">📊 12,700+ uses</div>
                 <div class="how-it-works">⚡ Enter pages like 1,3,5-7 to remove</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <a href="pdf-page-delete.html" class="tool-btn">Open Tool</a>
@@ -886,7 +910,7 @@
                 <h2>OCR (Image to Text)</h2>
                 <p>Extract text from image — 100+ languages.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,100)</span></div>
-                <div class="usage-counter">📊 20,300+ uses this week</div>
+                <div class="usage-counter">📊 20,300+ uses</div>
                 <div class="how-it-works">🤖 Tesseract OCR, Hindi & English supported</div>
                 <div class="card-badges"><span class="card-badge badge-ai">🤖 AI</span></div>
                 <a href="ocr.html" class="tool-btn">Open Tool</a>
@@ -897,7 +921,7 @@
                 <h2>GIF Maker</h2>
                 <p>Create animated GIF from multiple images.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(1,000)</span></div>
-                <div class="usage-counter">📊 9,900+ uses this week</div>
+                <div class="usage-counter">📊 9,900+ uses</div>
                 <div class="how-it-works">⚡ Adjustable frame duration and loop</div>
                 <div class="card-badges"><span class="card-badge badge-new">✨ New</span></div>
                 <a href="gif-maker.html" class="tool-btn">Open Tool</a>
@@ -915,7 +939,7 @@
                 <h2>CSS Gradient Generator</h2>
                 <p>Build multi-color gradients visually and copy ready-to-use CSS.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,100)</span></div>
-                <div class="usage-counter">📊 10,500+ uses this week</div>
+                <div class="usage-counter">📊 10,500+ uses</div>
                 <div class="how-it-works">⚡ Copy-paste ready CSS code</div>
                 <a href="css-gradient-generator.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
@@ -925,7 +949,7 @@
                 <h2>QR Code with Logo</h2>
                 <p>Create a custom QR code with your logo embedded in the center.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,500)</span></div>
-                <div class="usage-counter">📊 14,700+ uses this week</div>
+                <div class="usage-counter">📊 14,700+ uses</div>
                 <div class="how-it-works">⚡ High error correction — still scannable</div>
                 <a href="qr-code-logo.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
@@ -935,7 +959,7 @@
                 <h2>Text Diff Checker</h2>
                 <p>Compare two texts and instantly see what changed.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(800)</span></div>
-                <div class="usage-counter">📊 7,900+ uses this week</div>
+                <div class="usage-counter">📊 7,900+ uses</div>
                 <div class="how-it-works">⚡ Green additions, red deletions</div>
                 <a href="text-diff-checker.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
@@ -945,7 +969,7 @@
                 <h2>Unit Converter</h2>
                 <p>Convert length, weight, temperature, speed and data storage.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,200)</span></div>
-                <div class="usage-counter">📊 11,800+ uses this week</div>
+                <div class="usage-counter">📊 11,800+ uses</div>
                 <div class="how-it-works">⚡ 100+ units, instant results</div>
                 <a href="unit-converter.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
@@ -955,7 +979,7 @@
                 <h2>JSON Formatter</h2>
                 <p>Format, validate and minify JSON with syntax highlighting.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,000)</span></div>
-                <div class="usage-counter">📊 9,600+ uses this week</div>
+                <div class="usage-counter">📊 9,600+ uses</div>
                 <div class="how-it-works">⚡ Detect syntax errors with line numbers</div>
                 <a href="json-formatter.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
@@ -965,7 +989,7 @@
                 <h2>Color Palette Generator</h2>
                 <p>Generate complementary, analogous and triadic color palettes.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,400)</span></div>
-                <div class="usage-counter">📊 13,900+ uses this week</div>
+                <div class="usage-counter">📊 13,900+ uses</div>
                 <div class="how-it-works">⚡ Color theory based palettes</div>
                 <a href="color-palette-generator.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
@@ -975,7 +999,7 @@
                 <h2>Favicon Generator</h2>
                 <p>Turn one image into every favicon size you need, as a ZIP.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,300)</span></div>
-                <div class="usage-counter">📊 12,800+ uses this week</div>
+                <div class="usage-counter">📊 12,800+ uses</div>
                 <div class="how-it-works">⚡ Ready to drop into any website</div>
                 <a href="favicon-generator.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
@@ -985,7 +1009,7 @@
                 <h2>Base64 Encoder/Decoder</h2>
                 <p>Convert text or files to Base64, or decode Base64 back.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(900)</span></div>
-                <div class="usage-counter">📊 8,800+ uses this week</div>
+                <div class="usage-counter">📊 8,800+ uses</div>
                 <div class="how-it-works">⚡ UTF-8 safe encoding</div>
                 <a href="base64-tool.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
@@ -995,7 +1019,7 @@
                 <h2>Meme Generator</h2>
                 <p>Add top and bottom text to any image and download your meme.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(1,600)</span></div>
-                <div class="usage-counter">📊 15,300+ uses this week</div>
+                <div class="usage-counter">📊 15,300+ uses</div>
                 <div class="how-it-works">⚡ Classic Impact font with stroke</div>
                 <a href="meme-generator.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
@@ -1005,7 +1029,7 @@
                 <h2>Voice to Text</h2>
                 <p>Speak and get instant text, supports Hindi and English.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,800)</span></div>
-                <div class="usage-counter">📊 17,500+ uses this week</div>
+                <div class="usage-counter">📊 17,500+ uses</div>
                 <div class="how-it-works">🤖 Web Speech API, 50+ languages</div>
                 <div class="card-badges"><span class="card-badge badge-ai">🤖 AI</span></div>
                 <a href="voice-to-text.html" class="tool-btn">Open Tool</a>
@@ -1016,7 +1040,7 @@
                 <h2>Text to Voice</h2>
                 <p>Convert any text into natural sounding speech instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(1,100)</span></div>
-                <div class="usage-counter">📊 10,700+ uses this week</div>
+                <div class="usage-counter">📊 10,700+ uses</div>
                 <div class="how-it-works">⚡ 20+ voices, adjustable speed</div>
                 <a href="text-to-voice.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
@@ -1026,7 +1050,7 @@
                 <h2>Text Tone Checker</h2>
                 <p>Check if your message sounds rude before you post it.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(700)</span></div>
-                <div class="usage-counter">📊 6,800+ uses this week</div>
+                <div class="usage-counter">📊 6,800+ uses</div>
                 <div class="how-it-works">🤖 Sentiment analysis detects harsh tone</div>
                 <div class="card-badges"><span class="card-badge badge-ai">🤖 AI</span></div>
                 <a href="text-tone-checker.html" class="tool-btn">Open Tool</a>
@@ -1044,7 +1068,7 @@
                 <h2>QR Code Generator</h2>
                 <p>Create QR codes instantly for links, text and more.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,400)</span></div>
-                <div class="usage-counter">📊 23,900+ uses this week</div>
+                <div class="usage-counter">📊 23,900+ uses</div>
                 <div class="how-it-works">⚡ For links, text, email, phone, WiFi, vCard</div>
                 <div class="card-badges"><span class="card-badge badge-popular">🔥 Popular</span></div>
                 <a href="qr-generator.html" class="tool-btn">Open Tool</a>
@@ -1055,7 +1079,7 @@
                 <h2>Password Generator</h2>
                 <p>Create strong and secure passwords instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(3,100)</span></div>
-                <div class="usage-counter">📊 30,600+ uses this week</div>
+                <div class="usage-counter">📊 30,600+ uses</div>
                 <div class="how-it-works">⚡ crypto.getRandomValues for true randomness</div>
                 <div class="card-badges"><span class="card-badge badge-popular">🔥 Popular</span></div>
                 <a href="password-generator.html" class="tool-btn">Open Tool</a>
@@ -1066,7 +1090,7 @@
                 <h2>Word Counter</h2>
                 <p>Count words, characters and paragraphs easily.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,500)</span></div>
-                <div class="usage-counter">📊 14,800+ uses this week</div>
+                <div class="usage-counter">📊 14,800+ uses</div>
                 <div class="how-it-works">⚡ Real-time counting as you type</div>
                 <a href="word-counter.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
@@ -1076,7 +1100,7 @@
                 <h2>Age Calculator</h2>
                 <p>Calculate your exact age in seconds.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(1,300)</span></div>
-                <div class="usage-counter">📊 12,600+ uses this week</div>
+                <div class="usage-counter">📊 12,600+ uses</div>
                 <div class="how-it-works">⚡ Includes leap years and next birthday</div>
                 <a href="age-calculator.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
@@ -1086,7 +1110,7 @@
                 <h2>EMI Calculator</h2>
                 <p>Calculate your monthly loan EMI instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,100)</span></div>
-                <div class="usage-counter">📊 20,700+ uses this week</div>
+                <div class="usage-counter">📊 20,700+ uses</div>
                 <div class="how-it-works">⚡ Shows amortization schedule</div>
                 <div class="card-badges"><span class="card-badge badge-popular">🔥 Popular</span></div>
                 <a href="emi-calculator.html" class="tool-btn">Open Tool</a>
@@ -1097,7 +1121,7 @@
                 <h2>Scientific Calculator</h2>
                 <p>Perform advanced mathematical calculations.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,400)</span></div>
-                <div class="usage-counter">📊 13,700+ uses this week</div>
+                <div class="usage-counter">📊 13,700+ uses</div>
                 <div class="how-it-works">⚡ Full scientific functions with memory</div>
                 <a href="scientific-calculator.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
@@ -1107,7 +1131,7 @@
                 <h2>GST Calculator</h2>
                 <p>Add or remove GST from any amount instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,800)</span></div>
-                <div class="usage-counter">📊 17,900+ uses this week</div>
+                <div class="usage-counter">📊 17,900+ uses</div>
                 <div class="how-it-works">⚡ All GST slabs — 5%, 12%, 18%, 28%</div>
                 <a href="gst-calculator.html" class="tool-btn">Open Tool</a>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
