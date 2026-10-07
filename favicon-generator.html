@@ -1,34 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <title>Favicon Generator - Create All Favicon Sizes Free | Bharat24Tools</title>
-    <meta name="description" content="Turn one image into every favicon size you need. Free favicon generator creates 16x16, 32x32, 180x180, 192x192, 512x512 PNGs + ZIP download.">
-    <meta name="keywords" content="favicon generator, favicon maker, website icon, apple touch icon, android chrome icon, free favicon">
+    <title>Favicon Generator - Create All Favicon Sizes + .ICO Free | Bharat24Tools</title>
+    <meta name="description" content="Turn one image into every favicon size — including .ico for Google Search. Free favicon generator creates 16x16, 32x32, 48x48, 180x180, 192x192, 512x512 + favicon.ico in one ZIP.">
+    <meta name="keywords" content="favicon generator, favicon maker, favicon ico, website icon, apple touch icon, android chrome icon, google favicon, free favicon">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#0d6efd">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/favicon-generator.html">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/favicon-generator.html">
-    <meta property="og:title" content="Favicon Generator - Create All Favicon Sizes Free | Bharat24Tools">
-    <meta property="og:description" content="Turn one image into every favicon size you need. Free, ZIP download.">
+    <meta property="og:title" content="Favicon Generator - Create All Favicon Sizes + .ICO Free">
+    <meta property="og:description" content="Turn one image into every favicon size + .ico for Google. ZIP download.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
     <meta property="og:site_name" content="Bharat24Tools">
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Favicon Generator - Create All Favicon Sizes Free | Bharat24Tools">
-    <meta name="twitter:description" content="Turn one image into every favicon size you need. Free, ZIP download.">
+    <meta name="twitter:title" content="Favicon Generator - All Sizes + .ICO Free">
+    <meta name="twitter:description" content="Turn one image into every favicon size + .ico for Google. Free, ZIP download.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-    <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -41,9 +37,9 @@
     }
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
@@ -97,7 +93,7 @@
         .code-box {
             background:#1e1e2e; color:#e6e6e6; border-radius:12px;
             padding:18px 20px; font-family:'Courier New',monospace;
-            font-size:13px; line-height:1.8; white-space:pre-wrap;
+            font-size:12px; line-height:1.7; white-space:pre-wrap;
             word-break:break-word; position:relative; margin-top:10px;
         }
         .copy-btn {
@@ -108,6 +104,7 @@
         }
         #status { margin-top:12px; font-size:14px; font-weight:600; }
         .back-link { display:inline-block; margin-top:10px; color:#6c757d; font-weight:500; text-decoration:none; }
+        .info-note { background:#fff3cd; border-left:4px solid #ffc107; padding:12px 16px; border-radius:8px; font-size:13px; color:#664d03; margin-top:12px; }
     </style>
 </head>
 
@@ -115,14 +112,14 @@
 <div class="wrapper">
     <div class="page-header">
         <h1><i class="fa-solid fa-star"></i> Favicon Generator</h1>
-        <p>Upload one image and get every favicon size you need — ready to download.</p>
+        <p>Upload one image → get all favicon sizes + <b>favicon.ico</b> for Google Search.</p>
     </div>
 
     <div class="panel">
         <div class="upload-zone" id="dropZone">
             <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
             <div class="upload-title">Drag & Drop your image here</div>
-            <div class="upload-subtitle">Square images work best (e.g. 512x512)</div>
+            <div class="upload-subtitle">Square images work best (512x512 or larger)</div>
             <div class="upload-formats">JPG / PNG / WEBP</div>
             <input type="file" id="upload" accept="image/*">
         </div>
@@ -136,10 +133,21 @@
     </div>
 
     <div class="panel" id="codePanel" style="display:none;">
-        <h3>HTML Code (paste into your &lt;head&gt;)</h3>
+        <h3>Step 1: Upload these files to your website's root folder</h3>
+        <div class="info-note">
+            <b>Important for Google Search:</b> Upload <b>favicon.ico</b> to your website's root folder. Google takes 2-4 weeks to show it in search results.
+        </div>
+
+        <h3 style="margin-top:20px;">Step 2: Paste this code into &lt;head&gt;</h3>
         <div class="code-box">
             <button class="copy-btn" id="copyCodeBtn">Copy</button>
             <span id="codeOutput"></span>
+        </div>
+
+        <h3 style="margin-top:20px;">Step 3: Create site.webmanifest file</h3>
+        <div class="code-box">
+            <button class="copy-btn" id="copyManifestBtn">Copy</button>
+            <span id="manifestOutput"></span>
         </div>
     </div>
 
@@ -154,9 +162,12 @@
     const sizesGrid = document.getElementById("sizesGrid");
     const codePanel = document.getElementById("codePanel");
     const codeOutput = document.getElementById("codeOutput");
+    const manifestOutput = document.getElementById("manifestOutput");
     const downloadZipBtn = document.getElementById("downloadZipBtn");
     const copyCodeBtn = document.getElementById("copyCodeBtn");
+    const copyManifestBtn = document.getElementById("copyManifestBtn");
 
+    // Sizes for individual PNGs
     const sizes = [
         { size: 16, name: "favicon-16x16.png" },
         { size: 32, name: "favicon-32x32.png" },
@@ -167,7 +178,12 @@
         { size: 512, name: "android-chrome-512x512.png" }
     ];
 
+    // Sizes for ICO (multi-resolution)
+    const icoSizes = [16, 32, 48];
+
     let generatedFiles = [];
+    let icoBlob = null;
+    let currentImg = null;
 
     function processFile(file){
         if(!file || !file.type.startsWith("image/")){
@@ -176,15 +192,16 @@
             return;
         }
 
-        status.innerText = "Generating favicon sizes...";
+        status.innerText = "⏳ Generating favicon sizes...";
         status.style.color = "#0d6efd";
 
         const reader = new FileReader();
 
         reader.onload = function(e){
             const img = new Image();
-            img.onload = function(){
-                generateSizes(img);
+            img.onload = async function(){
+                currentImg = img;
+                await generateSizes(img);
             };
             img.onerror = function(){
                 status.innerText = "❌ Could not process the image.";
@@ -196,19 +213,71 @@
         reader.readAsDataURL(file);
     }
 
-    function generateSizes(img){
+    // Create PNG data URL for a given size
+    function makePNG(img, size) {
+        const canvas = document.createElement("canvas");
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, size, size);
+        return canvas.toDataURL("image/png");
+    }
+
+    // Generate ICO file from multiple PNG data URLs
+    async function createICO(pngDataURLs, sizes) {
+        const images = [];
+        for (let i = 0; i < pngDataURLs.length; i++) {
+            const resp = await fetch(pngDataURLs[i]);
+            const buf = await resp.arrayBuffer();
+            images.push({ size: sizes[i], data: new Uint8Array(buf) });
+        }
+
+        // ICO header (6 bytes) + directory entries (16 bytes each) + image data
+        const headerSize = 6;
+        const dirEntrySize = 16;
+        let imageDataOffset = headerSize + dirEntrySize * images.length;
+
+        let totalSize = imageDataOffset;
+        images.forEach(img => totalSize += img.data.length);
+
+        const ico = new Uint8Array(totalSize);
+        const view = new DataView(ico.buffer);
+
+        // ICONDIR header
+        view.setUint16(0, 0, true);  // Reserved
+        view.setUint16(2, 1, true);  // Type: 1 = ICO
+        view.setUint16(4, images.length, true);  // Number of images
+
+        let entryOffset = 6;
+
+        images.forEach(img => {
+            // ICONDIRENTRY (16 bytes)
+            ico[entryOffset + 0] = img.size >= 256 ? 0 : img.size; // Width
+            ico[entryOffset + 1] = img.size >= 256 ? 0 : img.size; // Height
+            ico[entryOffset + 2] = 0; // Color palette
+            ico[entryOffset + 3] = 0; // Reserved
+            view.setUint16(entryOffset + 4, 1, true);  // Color planes
+            view.setUint16(entryOffset + 6, 32, true); // Bits per pixel
+            view.setUint32(entryOffset + 8, img.data.length, true);  // Size of image data
+            view.setUint32(entryOffset + 12, imageDataOffset, true); // Offset
+
+            // Copy image data
+            ico.set(img.data, imageDataOffset);
+
+            entryOffset += 16;
+            imageDataOffset += img.data.length;
+        });
+
+        return new Blob([ico], { type: 'image/x-icon' });
+    }
+
+    async function generateSizes(img){
         sizesGrid.innerHTML = "";
         generatedFiles = [];
 
+        // Generate all PNG sizes
         sizes.forEach(spec => {
-            const canvas = document.createElement("canvas");
-            canvas.width = spec.size;
-            canvas.height = spec.size;
-
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, spec.size, spec.size);
-
-            const dataURL = canvas.toDataURL("image/png");
+            const dataURL = makePNG(img, spec.size);
             generatedFiles.push({ name: spec.name, dataURL: dataURL });
 
             const card = document.createElement("div");
@@ -231,17 +300,73 @@
             sizesGrid.appendChild(card);
         });
 
+        // Generate favicon.ico
+        try {
+            status.innerText = "⏳ Generating favicon.ico (for Google Search)...";
+            const icoPNGs = icoSizes.map(s => makePNG(img, s));
+            icoBlob = await createICO(icoPNGs, icoSizes);
+
+            // Add ICO card
+            const icoCard = document.createElement("div");
+            icoCard.className = "size-card";
+            icoCard.style.gridColumn = "span 2";
+            icoCard.style.background = "#d4edda";
+
+            icoCard.innerHTML = `
+                <img src="${makePNG(img, 32)}" width="48" height="48" alt="favicon.ico">
+                <div class="label">⭐ favicon.ico</div>
+                <div class="dims">Multi-size (16+32+48) — Google needs this</div>
+                <button class="dl-ico">Download favicon.ico</button>
+            `;
+
+            icoCard.querySelector(".dl-ico").addEventListener("click", function(){
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(icoBlob);
+                a.download = "favicon.ico";
+                a.click();
+            });
+
+            sizesGrid.appendChild(icoCard);
+        } catch(err) {
+            console.error("ICO generation failed:", err);
+        }
+
         resultsPanel.style.display = "block";
         codePanel.style.display = "block";
 
         codeOutput.innerText =
-`<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">`;
+`<!-- Favicon — Bharat24Tools -->
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0d6efd">`;
 
-        status.innerText = "✅ All sizes generated! Download individually or as ZIP.";
+        manifestOutput.innerText =
+`{
+  "name": "Bharat24Tools",
+  "short_name": "Bharat24Tools",
+  "description": "100+ Free Online Tools — Image, PDF, Excel, QR & Calculators",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#0d6efd",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/"
+}`;
+
+        status.innerText = "✅ All sizes + favicon.ico generated! Download individually or as ZIP.";
         status.style.color = "#198754";
     }
 
@@ -273,17 +398,53 @@
             return;
         }
 
-        status.innerText = "Preparing ZIP file...";
+        status.innerText = "⏳ Preparing ZIP file...";
         status.style.color = "#0d6efd";
 
         const zip = new JSZip();
 
+        // Add PNG files
         generatedFiles.forEach(file => {
             const base64Data = file.dataURL.split(",")[1];
             zip.file(file.name, base64Data, { base64: true });
         });
 
+        // Add favicon.ico
+        if (icoBlob) {
+            zip.file("favicon.ico", icoBlob);
+        }
+
+        // Add site.webmanifest
+        zip.file("site.webmanifest", manifestOutput.innerText);
+
+        // Add HTML code
         zip.file("favicon-code.html", codeOutput.innerText);
+
+        // Add README
+        zip.file("README.txt",
+`Bharat24Tools Favicon Package
+=============================
+
+FILES INCLUDED:
+- favicon.ico              ← Upload to ROOT folder (Google needs this!)
+- favicon-16x16.png
+- favicon-32x32.png
+- favicon-48x48.png
+- favicon-96x96.png
+- apple-touch-icon.png
+- android-chrome-192x192.png
+- android-chrome-512x512.png
+- site.webmanifest         ← Upload to ROOT folder
+- favicon-code.html        ← HTML code to paste in <head>
+
+STEPS:
+1. Upload all files to your website's ROOT folder
+2. Paste the HTML code from favicon-code.html into <head>
+3. Test: https://yourwebsite.com/favicon.ico should work
+4. Google will show the icon in search results within 2-4 weeks
+
+MADE WITH: Bharat24Tools.com
+`);
 
         const blob = await zip.generateAsync({ type: "blob" });
 
@@ -292,7 +453,7 @@
         a.download = "favicons.zip";
         a.click();
 
-        status.innerText = "🎉 ZIP downloaded!";
+        status.innerText = "🎉 ZIP downloaded! Extract and upload to your website root folder.";
         status.style.color = "#198754";
     });
 
@@ -300,6 +461,13 @@
         navigator.clipboard.writeText(codeOutput.innerText).then(() => {
             copyCodeBtn.innerText = "Copied!";
             setTimeout(() => { copyCodeBtn.innerText = "Copy"; }, 1500);
+        });
+    });
+
+    copyManifestBtn.addEventListener("click", function(){
+        navigator.clipboard.writeText(manifestOutput.innerText).then(() => {
+            copyManifestBtn.innerText = "Copied!";
+            setTimeout(() => { copyManifestBtn.innerText = "Copy"; }, 1500);
         });
     });
 </script>
