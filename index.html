@@ -87,27 +87,27 @@
         }
         body { background: var(--bg-primary); color: var(--text-primary); transition: background 0.3s, color 0.3s; }
 
-        /* ===== GRID (iLovePDF Compact) ===== */
+        /* ===== DESKTOP GRID (4-5 columns) ===== */
         .container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* ===== CARD (iLovePDF Compact) ===== */
+        /* ===== CARD ===== */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 14px;
+            padding: 16px;
             position: relative;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
-            min-height: 170px;
+            min-height: 190px;
             overflow: hidden;
         }
 
@@ -131,7 +131,7 @@
             border-color: var(--primary);
         }
 
-        /* ===== ICON SIZE (iLovePDF Match) ===== */
+        /* ===== ICON ===== */
         .tool-icon {
             font-size: 1.5rem !important;
             width: 44px !important;
@@ -149,9 +149,9 @@
         .tool-category[data-category="design"] .tool-icon { background: rgba(59,130,246,0.1); }
         .tool-category[data-category="calculator"] .tool-icon { background: rgba(34,197,94,0.1); }
 
-        /* ===== CARD TEXT (Compact) ===== */
+        /* ===== CARD TEXT ===== */
         .card h2 {
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 4px;
@@ -159,7 +159,7 @@
         }
 
         .card p {
-            font-size: 0.72rem;
+            font-size: 0.74rem;
             color: var(--text-muted);
             line-height: 1.45;
             margin-bottom: 6px;
@@ -187,7 +187,7 @@
         }
 
         .card .how-it-works {
-            font-size: 0.65rem;
+            font-size: 0.68rem;
             color: var(--text-muted);
             font-style: italic;
             line-height: 1.35;
@@ -209,9 +209,9 @@
             background: var(--primary);
             color: #fff;
             text-decoration: none;
-            padding: 7px 12px;
+            padding: 8px 14px;
             border-radius: 8px;
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             font-weight: 600;
             text-align: center;
             transition: all 0.2s;
@@ -252,30 +252,11 @@
             padding: 0 20px;
         }
 
-        /* ===== POPULAR TOOLS SECTION ===== */
-        .popular-tools {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .popular-tools h2 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .popular-tools .sub {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 18px;
-        }
-        .popular-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 14px;
-        }
+        /* ===== POPULAR TOOLS ===== */
+        .popular-tools { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .popular-tools h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+        .popular-tools .sub { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 18px; }
+        .popular-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
         .popular-card {
             background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(13,110,253,0.08));
             border: 1px solid var(--border-color);
@@ -286,11 +267,7 @@
             text-decoration: none;
             color: var(--text-primary);
         }
-        .popular-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--primary);
-        }
+        .popular-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--primary); }
         .popular-card .p-icon { font-size: 1.6rem; margin-bottom: 8px; }
         .popular-card .p-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
         .popular-card .p-desc { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4; }
@@ -316,7 +293,7 @@
         .testi-card .t-name { font-size: 0.85rem; font-weight: 600; }
         .testi-card .t-loc { font-size: 0.72rem; color: var(--text-muted); }
 
-        /* ===== TRUST STATS BAR ===== */
+        /* ===== TRUST STATS ===== */
         .trust-stats { background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(13,110,253,0.08)); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 22px 20px; margin: 30px 0; }
         .trust-stats-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px; }
         .trust-stat { text-align: center; }
@@ -349,19 +326,78 @@
         .mobile-bottom-nav a i { font-size: 1.1rem; }
         .mobile-bottom-nav a.active { color: var(--primary); }
 
+        /* ===== TABLET (768px - 1024px) — 3-4 columns ===== */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 14px;
+            }
+        }
+
+        /* ===== MOBILE (max 768px) — 2 columns ===== */
         @media (max-width: 768px) {
             .mobile-bottom-nav { display: flex; }
             body { padding-bottom: 70px; }
             .whatsapp-float { bottom: 80px !important; }
-            .container { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 12px; }
-            .card { padding: 12px; min-height: 165px; }
-            .card h2 { font-size: 0.78rem; }
-            .card p { font-size: 0.68rem; }
+
+            .container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 0 12px;
+            }
+
+            .card {
+                padding: 12px;
+                min-height: 165px;
+                border-radius: 8px;
+            }
+
+            .card h2 {
+                font-size: 0.78rem;
+                margin-bottom: 3px;
+            }
+
+            .card p {
+                font-size: 0.66rem;
+                line-height: 1.4;
+                margin-bottom: 5px;
+            }
+
+            .tool-icon {
+                font-size: 1.3rem !important;
+                width: 38px !important;
+                height: 38px !important;
+                margin-bottom: 8px;
+                border-radius: 8px;
+            }
+
+            .card .rating-row { font-size: 0.6rem; margin: 2px 0 4px; }
+            .card .rating-row .stars { font-size: 0.62rem; }
+            .card .usage-counter { font-size: 0.55rem; margin-bottom: 5px; }
+            .card .how-it-works { font-size: 0.6rem; margin: 5px 0 6px; padding-top: 5px; }
+            .card .card-badges { margin-bottom: 6px; }
+            .card .card-badge { font-size: 0.52rem; padding: 2px 6px; }
+            .card .tool-btn { padding: 6px 10px; font-size: 0.68rem; border-radius: 6px; }
+            .card .fav-btn { top: 8px; right: 8px; font-size: 0.78rem; }
+
+            .tool-category h2 { font-size: 1.1rem; margin: 20px 0 12px; }
+
             .popular-grid, .testi-grid { grid-template-columns: 1fr 1fr; }
             .popular-card, .testi-card { padding: 14px; }
-            .tool-icon { font-size: 1.35rem !important; width: 40px !important; height: 40px !important; margin-bottom: 8px; }
+            .popular-card .p-icon { font-size: 1.4rem; }
+            .popular-card .p-title { font-size: 0.85rem; }
+            .popular-card .p-desc { font-size: 0.68rem; }
+            .popular-card .p-stat { font-size: 0.62rem; }
         }
+
+        /* ===== SMALL PHONE (max 480px) ===== */
         @media (max-width: 480px) {
+            .container { gap: 8px; padding: 0 10px; }
+            .card { padding: 10px; min-height: 155px; }
+            .card h2 { font-size: 0.72rem; }
+            .card p { font-size: 0.62rem; }
+            .tool-icon { font-size: 1.2rem !important; width: 34px !important; height: 34px !important; }
+            .card .how-it-works { display: none; }
             .popular-grid { grid-template-columns: 1fr; }
             .testi-grid { grid-template-columns: 1fr; }
         }
