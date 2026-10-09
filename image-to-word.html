@@ -1,39 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#0d6efd">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Bharat24Tools">
 
-    <title>Image to Word (OCR) - Extract Text from Image to DOCX | Bharat24Tools</title>
-    <meta name="description" content="Extract text from any image using AI OCR and create an editable Word document. Free image to Word converter, supports Hindi and English, no upload.">
-    <meta name="keywords" content="image to word, ocr image to word, image to docx, extract text from image, hindi ocr, free image to word converter">
+    <title>Image to Word - Convert Images to DOCX Free (Server) | Bharat24Tools</title>
+    <meta name="description" content="Convert multiple images into a professional Word document with captions, layouts and auto-resize. Free server-powered image to DOCX converter, up to 30 images.">
+    <meta name="keywords" content="image to word, images to word, jpg to word, png to word, image to docx, photos to word, free image to word converter">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#0d6efd">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-word.html">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-word.html">
-    <meta property="og:title" content="Image to Word (OCR) - Extract Text from Image to DOCX | Bharat24Tools">
-    <meta property="og:description" content="Extract text from any image using AI OCR and create an editable Word document. Free, supports Hindi and English.">
+    <meta property="og:title" content="Image to Word - Convert Images to DOCX Free | Bharat24Tools">
+    <meta property="og:description" content="Convert multiple images into professional Word document. Free, supports up to 30 images with captions and layouts.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
     <meta property="og:site_name" content="Bharat24Tools">
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Image to Word (OCR) - Extract Text from Image to DOCX | Bharat24Tools">
-    <meta name="twitter:description" content="Extract text from any image using AI OCR and create an editable Word document. Free, supports Hindi and English.">
+    <meta name="twitter:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-word.html">
+    <meta name="twitter:title" content="Image to Word - Convert Images to DOCX Free | Bharat24Tools">
+    <meta name="twitter:description" content="Convert multiple images into professional Word document. Free, up to 30 images.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-    <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "Image to Word (OCR)",
+        "name": "Image to Word Converter",
         "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-word.html",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Web Browser",
@@ -42,232 +46,213 @@
     </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
+
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%);
-            background-attachment: fixed;
-        }
-        header {
-            background: rgba(15, 15, 30, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            border-bottom: 2px solid rgba(168, 85, 247, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        header a { color: #cbd5e1; text-decoration: none; font-weight: 600; padding: 8px 12px; border-radius: 6px; }
-        header a:hover { color: #a855f7; background: rgba(168, 85, 247, 0.1); }
-        .brand {
-            color: #fff; font-weight: 800; font-size: 1.3rem;
-            background: linear-gradient(135deg, #a855f7, #ec4899);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; flex: 1;
-        }
-        main { max-width: 900px; margin: 0 auto; padding: 40px 20px 60px; }
-        h1 { font-size: 2rem; color: #e0e7ff; text-align: center; margin-bottom: 8px; font-weight: 800; }
-        .subtitle { text-align: center; color: #a5b4fc; margin-bottom: 40px; }
-        .card { background: rgba(30, 27, 75, 0.9); backdrop-filter: blur(10px); border-radius: 16px; padding: 40px; border: 1px solid rgba(168, 85, 247, 0.3); }
-        .upload-zone { border: 3px dashed rgba(168, 85, 247, 0.6); border-radius: 16px; padding: 60px 30px; text-align: center; cursor: pointer; transition: all 0.3s; background: rgba(99, 102, 241, 0.05); }
-        .upload-zone:hover, .upload-zone.active { border-color: #a855f7; background: rgba(168, 85, 247, 0.15); }
-        .upload-icon { font-size: 3rem; color: #a855f7; margin-bottom: 16px; }
-        .upload-zone p { color: #cbd5e1; margin: 8px 0; }
-        .highlight { color: #e0e7ff; font-weight: 700; }
-        input[type="file"] { display: none; }
-        .preview-img { display: none; max-width: 100%; margin: 20px 0; border-radius: 12px; }
-        .controls { display: none; margin-top: 30px; padding: 24px; background: rgba(20, 20, 40, 0.8); border-radius: 12px; }
-        .control-group { margin-bottom: 16px; }
-        .control-group label { display: block; color: #e0e7ff; font-weight: 700; margin-bottom: 8px; }
-        .control-group input, .control-group select { width: 100%; padding: 12px; background: rgba(15, 15, 30, 0.8); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 8px; color: #e0e7ff; font-family: inherit; font-weight: 600; }
-        button { width: 100%; padding: 14px; margin-top: 16px; background: linear-gradient(135deg, #a855f7, #ec4899); border: none; border-radius: 10px; color: #fff; font-weight: 700; cursor: pointer; transition: all 0.3s; font-size: 1rem; }
-        button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4); }
-        button:disabled { opacity: 0.6; cursor: not-allowed; }
-        .status { display: none; margin-top: 20px; padding: 16px; border-radius: 10px; text-align: center; font-weight: 600; }
-        .status.loading { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; }
-        .status.success { background: rgba(34, 197, 94, 0.2); color: #86efac; }
-        .status.error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
-        .progress-bar { display: none; width: 100%; height: 10px; background: rgba(255,255,255,0.1); border-radius: 20px; margin-top: 15px; overflow: hidden; }
-        .progress-bar .fill { height: 100%; width: 0%; background: linear-gradient(90deg, #a855f7, #ec4899); transition: width 0.3s; }
-        .preview-text { display: none; margin-top: 20px; padding: 16px; background: #fff; color: #1a1a1a; border-radius: 10px; max-height: 250px; overflow-y: auto; font-size: 0.9rem; line-height: 1.6; white-space: pre-wrap; }
-        @media (max-width: 768px) { .card { padding: 24px; } h1 { font-size: 1.5rem; } .upload-zone { padding: 40px 20px; } }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        body { min-height:100vh; background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); padding:30px 16px 60px; color:#e0e7ff; }
+        header { background:rgba(15,15,30,0.95); padding:16px 24px; display:flex; align-items:center; gap:20px; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; margin:-30px -16px 30px; }
+        header a { color:#cbd5e1; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:6px; transition:all 0.3s; }
+        header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
+        .brand { font-weight:800; font-size:1.3rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; flex:1; }
+        main { max-width:800px; margin:0 auto; }
+        h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
+        .subtitle { text-align:center; color:#a5b4fc; margin-bottom:30px; font-size:0.95rem; }
+        .card { background:rgba(30,27,75,0.9); border-radius:20px; padding:32px; border:1px solid rgba(168,85,247,0.3); box-shadow:0 20px 60px rgba(0,0,0,0.4); }
+        .upload-zone { border:3px dashed rgba(168,85,247,0.6); border-radius:16px; padding:40px 25px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); }
+        .upload-zone:hover, .upload-zone.active { border-color:#a855f7; background:rgba(168,85,247,0.15); transform:translateY(-2px); }
+        .upload-icon { font-size:2.5rem; margin-bottom:14px; }
+        .upload-zone p { color:#cbd5e1; margin:6px 0; }
+        .highlight { color:#e0e7ff; font-weight:700; }
+        input[type="file"] { display:none; }
+        .options { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:14px; margin-top:20px; }
+        .option-group label { display:block; font-size:0.8rem; font-weight:600; color:#cbd5e1; margin-bottom:6px; }
+        .option-group select, .option-group input { width:100%; padding:10px 12px; background:rgba(15,15,30,0.6); border:1px solid rgba(168,85,247,0.3); border-radius:8px; color:#e0e7ff; font-family:inherit; font-size:0.85rem; }
+        .option-group select:focus, .option-group input:focus { outline:none; border-color:#a855f7; }
+        .file-list { margin-top:16px; max-height:200px; overflow-y:auto; }
+        .file-item { display:flex; align-items:center; justify-content:space-between; padding:8px 12px; background:rgba(99,102,241,0.1); border-radius:8px; margin-bottom:6px; font-size:0.8rem; }
+        .file-item button { background:transparent; border:none; color:#fca5a5; cursor:pointer; font-size:1rem; }
+        button.primary-btn { width:100%; padding:16px; background:linear-gradient(135deg,#a855f7,#ec4899); border:none; border-radius:12px; color:#fff; font-weight:700; font-size:1.05rem; cursor:pointer; font-family:inherit; transition:all 0.3s; margin-top:16px; }
+        button.primary-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 30px rgba(168,85,247,0.4); }
+        button.primary-btn:disabled { opacity:0.6; cursor:not-allowed; }
+        .status { display:none; margin-top:20px; padding:16px; border-radius:12px; text-align:center; font-weight:600; font-size:0.9rem; }
+        .status.loading { background:rgba(99,102,241,0.2); color:#a5b4fc; display:block; }
+        .status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
+        .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
+        .info-box { background:rgba(99,102,241,0.1); border-left:4px solid #a855f7; padding:14px; border-radius:10px; margin-top:20px; font-size:0.8rem; color:#a5b4fc; line-height:1.6; }
+        .features-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; margin-top:20px; }
+        .feature-item { background:rgba(99,102,241,0.08); border-left:3px solid #a855f7; padding:10px 12px; border-radius:8px; font-size:0.78rem; color:#a5b4fc; }
+        .feature-item strong { color:#e0e7ff; display:block; margin-bottom:3px; font-size:0.82rem; }
+        @media(max-width:600px) { .card { padding:22px; } h1 { font-size:1.6rem; } .upload-zone { padding:38px 18px; } .features-grid { grid-template-columns:1fr; } }
     </style>
 </head>
 <body>
-    <header>
-        <a href="index.html">← Back</a>
-        <div class="brand">⚡ Bharat24Tools</div>
-    </header>
-    <main>
-        <h1>🖼️ Image to Word (OCR)</h1>
-        <p class="subtitle">Image के अंदर के टेक्स्ट को पढ़कर Word में टाइप करो!</p>
-        <div class="card">
-            <div class="upload-zone" id="uploadZone">
-                <div class="upload-icon">📄</div>
-                <p><span class="highlight">Click करो या Drag करो</span></p>
-                <p>Image file (JPG, PNG, WebP)</p>
+
+<header>
+    <a href="index.html">← Back</a>
+    <div class="brand">⚡ Bharat24Tools</div>
+</header>
+
+<main>
+    <h1>📝 Image to Word</h1>
+    <p class="subtitle">Multiple images को professional Word document में convert करो — Server-powered</p>
+
+    <div class="card">
+        <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon">📤</div>
+            <p><span class="highlight">Click करो या Drag करो</span></p>
+            <p>JPG, PNG, WEBP, GIF — multiple images (max 30)</p>
+            <div class="badge-row" style="margin-top:12px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+                <span style="background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;">⚡ Fast</span>
+                <span style="background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;">🎨 4 Layouts</span>
+                <span style="background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;">🧹 Auto-Cleanup</span>
             </div>
-            <input type="file" id="fileInput" accept="image/*">
-            <img id="previewImg" class="preview-img">
-            <div class="controls" id="controls">
-                <div class="control-group">
-                    <label>Document Title:</label>
-                    <input type="text" id="docTitle" value="My Document">
-                </div>
-                <div class="control-group">
-                    <label>File Name:</label>
-                    <input type="text" id="fileName" value="image-to-word">
-                </div>
-                <div class="control-group">
-                    <label>Language (OCR):</label>
-                    <select id="ocrLang">
-                        <option value="eng">English</option>
-                        <option value="hin">Hindi</option>
-                        <option value="eng+hin">English + Hindi</option>
-                    </select>
-                </div>
-                <button id="convertBtn">📝 Word Document बनाओ</button>
-                <div class="progress-bar" id="progressBar"><div class="fill" id="progressFill"></div></div>
-            </div>
-            <div class="status" id="status"></div>
-            <div class="preview-text" id="previewText"></div>
         </div>
-    </main>
+        <input type="file" id="fileInput" accept="image/*" multiple>
 
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-    <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <div id="fileList" class="file-list"></div>
 
-    <script>
-        const uploadZone = document.getElementById('uploadZone');
-        const fileInput = document.getElementById('fileInput');
-        const previewImg = document.getElementById('previewImg');
-        const controls = document.getElementById('controls');
-        const convertBtn = document.getElementById('convertBtn');
-        const docTitleInput = document.getElementById('docTitle');
-        const fileNameInput = document.getElementById('fileName');
-        const ocrLang = document.getElementById('ocrLang');
-        const status = document.getElementById('status');
-        const progressBar = document.getElementById('progressBar');
-        const progressFill = document.getElementById('progressFill');
-        const previewText = document.getElementById('previewText');
+        <div class="options">
+            <div class="option-group">
+                <label>Layout</label>
+                <select id="layoutSelect">
+                    <option value="one-per-page">One image per page</option>
+                    <option value="grid-2">Grid — 2 per row</option>
+                    <option value="grid-3">Grid — 3 per row</option>
+                    <option value="inline">Inline — flowing</option>
+                </select>
+            </div>
+            <div class="option-group">
+                <label>Captions</label>
+                <select id="captionsSelect">
+                    <option value="yes">Add captions</option>
+                    <option value="no">No captions</option>
+                </select>
+            </div>
+            <div class="option-group">
+                <label>Auto-resize</label>
+                <select id="resizeSelect">
+                    <option value="yes">Auto-fit to page</option>
+                    <option value="no">Original size</option>
+                </select>
+            </div>
+            <div class="option-group">
+                <label>Document Title</label>
+                <input type="text" id="titleInput" value="My Images" maxlength="60">
+            </div>
+        </div>
 
-        let imageData = null;
+        <button class="primary-btn" id="convertBtn" disabled>📝 Convert to Word Document</button>
+        <div class="status" id="status"></div>
 
-        uploadZone.addEventListener('click', () => fileInput.click());
-        uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
-        uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
-        uploadZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadZone.classList.remove('active');
-            if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+        <div class="features-grid">
+            <div class="feature-item">
+                <strong>🎨 4 Layout Options</strong>
+                One per page, Grid 2, Grid 3, Inline
+            </div>
+            <div class="feature-item">
+                <strong>📷 Up to 30 Images</strong>
+                Multiple images ek document mein
+            </div>
+            <div class="feature-item">
+                <strong>💬 Auto Captions</strong>
+                Figure 1, Figure 2 — automatic
+            </div>
+            <div class="feature-item">
+                <strong>🧹 Auto-Cleanup</strong>
+                Files 30 sec baad delete
+            </div>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 Server-Based Advanced:</strong> Multiple images, 4 layouts, auto-resize, captions, custom title. Server par DOCX generate hoti hai — professional output. Aapki files auto-delete ho jaati hain 30 sec mein.
+        </div>
+    </div>
+</main>
+
+<script>
+const API_URL = 'https://bharat24tools-api.onrender.com';
+let selectedFiles = [];
+
+const uploadZone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+const fileList = document.getElementById('fileList');
+const convertBtn = document.getElementById('convertBtn');
+const status = document.getElementById('status');
+
+uploadZone.addEventListener('click', () => fileInput.click());
+uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
+uploadZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadZone.classList.remove('active');
+    addFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', (e) => addFiles(e.target.files));
+
+function addFiles(files) {
+    for (const f of files) {
+        if (f.type.startsWith('image/') && selectedFiles.length < 30) {
+            selectedFiles.push(f);
+        }
+    }
+    renderFileList();
+}
+
+function renderFileList() {
+    fileList.innerHTML = selectedFiles.map((f, i) =>
+        `<div class="file-item"><span>📷 ${f.name} (${(f.size/1024).toFixed(0)} KB)</span><button data-index="${i}">✕</button></div>`
+    ).join('');
+    fileList.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            selectedFiles.splice(parseInt(e.target.dataset.index), 1);
+            renderFileList();
         });
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) handleFile(e.target.files[0]);
-        });
+    });
+    convertBtn.disabled = selectedFiles.length === 0;
+}
 
-        function handleFile(file) {
-            if (!file.type.startsWith('image/')) {
-                showStatus('❌ कृपया एक image file चुनें', 'error');
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                imageData = e.target.result;
-                previewImg.src = imageData;
-                previewImg.style.display = 'block';
-                controls.style.display = 'block';
-                showStatus(`✅ Image loaded: ${file.name}`, 'success');
-            };
-            reader.readAsDataURL(file);
+convertBtn.addEventListener('click', async () => {
+    if (selectedFiles.length === 0) return;
+
+    convertBtn.disabled = true;
+    showStatus(`⏳ Uploading ${selectedFiles.length} images...`, 'loading');
+
+    try {
+        const formData = new FormData();
+        selectedFiles.forEach(f => formData.append('files', f));
+        formData.append('layout', document.getElementById('layoutSelect').value);
+        formData.append('captions', document.getElementById('captionsSelect').value);
+        formData.append('resize', document.getElementById('resizeSelect').value);
+        formData.append('title', document.getElementById('titleInput').value || 'My Images');
+
+        const res = await fetch(API_URL + '/image-to-word', { method: 'POST', body: formData });
+
+        if (!res.ok) {
+            const errText = await res.text();
+            throw new Error(errText || 'Server error ' + res.status);
         }
 
-        convertBtn.addEventListener('click', async () => {
-            if (!imageData) {
-                showStatus('❌ पहले image चुनें', 'error');
-                return;
-            }
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Bharat24Tools_images.docx';
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 5000);
 
-            convertBtn.disabled = true;
-            progressBar.style.display = 'block';
-            progressFill.style.width = '0%';
-            showStatus('⏳ Reading text from image (OCR)...', 'loading');
+        showStatus('🎉 Word document created successfully!', 'success');
+    } catch (err) {
+        showStatus('❌ Error: ' + err.message, 'error');
+    }
 
-            try {
-                const worker = await Tesseract.createWorker(ocrLang.value);
-                const { data: { text } } = await worker.recognize(imageData);
-                await worker.terminate();
+    convertBtn.disabled = false;
+});
 
-                progressFill.style.width = '70%';
-
-                if (!text || text.trim().length === 0) {
-                    throw new Error("Image में कोई टेक्स्ट नहीं मिला। कृपया साफ इमेज डालें।");
-                }
-
-                previewText.textContent = text;
-                previewText.style.display = 'block';
-
-                showStatus('⏳ Creating Word document...', 'loading');
-
-                if (typeof window.docx === 'undefined' || !window.docx.Document) {
-                    throw new Error("Docx library load नहीं हुई। Page refresh करें।");
-                }
-
-                const { Document, Packer, Paragraph, TextRun, AlignmentType } = window.docx;
-
-                const lines = text.split('\n');
-                const paragraphs = lines.map(line => 
-                    new Paragraph({
-                        children: [new TextRun({ text: line, size: 22, font: "Calibri" })],
-                        spacing: { after: 120 }
-                    })
-                );
-
-                const doc = new Document({
-                    sections: [{
-                        children: [
-                            new Paragraph({
-                                alignment: AlignmentType.CENTER,
-                                children: [new TextRun({ text: docTitleInput.value, bold: true, size: 32, color: '2f6fed' })],
-                                spacing: { after: 200 }
-                            }),
-                            new Paragraph({
-                                alignment: AlignmentType.CENTER,
-                                children: [new TextRun({ text: new Date().toLocaleDateString('en-IN'), italics: true, size: 22, color: '666666' })],
-                                spacing: { after: 300 }
-                            }),
-                            ...paragraphs,
-                            new Paragraph({
-                                alignment: AlignmentType.CENTER,
-                                children: [new TextRun({ text: 'Created with Bharat24Tools', italics: true, size: 18, color: '808080' })],
-                                spacing: { before: 400 }
-                            })
-                        ]
-                    }]
-                });
-
-                const blob = await Packer.toBlob(doc);
-                saveAs(blob, fileNameInput.value + '.docx');
-
-                progressFill.style.width = '100%';
-                showStatus('🎉 Word document download successful!', 'success');
-
-            } catch (error) {
-                showStatus('❌ Error: ' + error.message, 'error');
-            }
-
-            convertBtn.disabled = false;
-        });
-
-        function showStatus(message, type) {
-            status.textContent = message;
-            status.className = `status ${type}`;
-            status.style.display = 'block';
-        }
-    </script>
+function showStatus(msg, type) {
+    status.textContent = msg;
+    status.className = 'status ' + type;
+}
+</script>
 </body>
 </html>
