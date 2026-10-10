@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#0d6efd">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Bharat24Tools">
 
     <title>Batch Image Compressor - Compress 50+ Images Free | Bharat24Tools</title>
-    <meta name="description" content="Compress 50+ images at once with quality control. Free batch image compressor for JPG, PNG, WebP. Download all as ZIP. No upload, no watermark.">
+    <meta name="description" content="Compress 50+ images at once with quality control. Free batch image compressor for JPG, PNG, WebP. Download all as ZIP. No upload, no watermark, 100% private.">
     <meta name="keywords" content="batch image compressor, compress multiple images, bulk image compressor, compress 50 images, free batch compressor">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#0d6efd">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/batch-image-compress.html">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/batch-image-compress.html">
     <meta property="og:title" content="Batch Image Compressor - Compress 50+ Images Free | Bharat24Tools">
@@ -22,13 +26,11 @@
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
     <meta property="og:site_name" content="Bharat24Tools">
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Batch Image Compressor - Compress 50+ Images Free | Bharat24Tools">
     <meta name="twitter:description" content="Compress 50+ images at once with quality control. Free, no upload.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-    <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -41,332 +43,85 @@
     }
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://aloky7882-sys.github.io/BHARAT24TOOLS/" },
+            { "@type": "ListItem", "position": 2, "name": "Image Tools", "item": "https://aloky7882-sys.github.io/BHARAT24TOOLS/#image-tools" },
+            { "@type": "ListItem", "position": 3, "name": "Batch Image Compressor" }
+        ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-        body {
-            min-height:100vh;
-            background:linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%);
-            background-attachment:fixed;
-            color:#e0e7ff;
-        }
-        header {
-            background:rgba(15,15,30,0.95);
-            backdrop-filter:blur(10px);
-            padding:16px 24px;
-            display:flex;
-            align-items:center;
-            gap:20px;
-            border-bottom:2px solid rgba(168,85,247,0.3);
-            position:sticky;
-            top:0;
-            z-index:100;
-        }
-        header a {
-            color:#cbd5e1;
-            text-decoration:none;
-            font-weight:600;
-            font-size:1rem;
-            transition:all 0.3s;
-            padding:8px 12px;
-            border-radius:6px;
-        }
+        body { min-height:100vh; background:linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); background-attachment:fixed; color:#e0e7ff; }
+        header { background:rgba(15,15,30,0.95); backdrop-filter:blur(10px); padding:16px 24px; display:flex; align-items:center; gap:20px; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; }
+        header a { color:#cbd5e1; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:6px; transition:all 0.3s; }
         header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
-        .brand {
-            font-weight:800;
-            font-size:1.3rem;
-            background:linear-gradient(135deg, #a855f7, #ec4899);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-            flex:1;
-        }
+        .brand { font-weight:800; font-size:1.3rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; flex:1; }
         main { max-width:1100px; margin:0 auto; padding:40px 20px 60px; }
         h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
         .subtitle { text-align:center; color:#a5b4fc; margin-bottom:40px; }
-        .card {
-            background:rgba(30,27,75,0.9);
-            backdrop-filter:blur(10px);
-            border-radius:16px;
-            padding:40px;
-            border:1px solid rgba(168,85,247,0.3);
-            margin-bottom:24px;
-        }
-        .upload-zone {
-            border:3px dashed rgba(168,85,247,0.6);
-            border-radius:16px;
-            padding:50px 30px;
-            text-align:center;
-            cursor:pointer;
-            transition:all 0.3s;
-            background:rgba(99,102,241,0.05);
-        }
-        .upload-zone:hover, .upload-zone.active {
-            border-color:#a855f7;
-            background:rgba(168,85,247,0.15);
-        }
+        .card { background:rgba(30,27,75,0.9); backdrop-filter:blur(10px); border-radius:16px; padding:40px; border:1px solid rgba(168,85,247,0.3); margin-bottom:24px; }
+        .upload-zone { border:3px dashed rgba(168,85,247,0.6); border-radius:16px; padding:50px 30px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); position:relative; overflow:hidden; }
+        .upload-zone:hover, .upload-zone.active { border-color:#a855f7; background:rgba(168,85,247,0.15); }
+        .upload-zone input { position:absolute; inset:0; opacity:0; cursor:pointer; }
         .upload-icon { font-size:3rem; color:#a855f7; margin-bottom:16px; }
         .upload-zone p { color:#cbd5e1; margin:8px 0; }
         .highlight { color:#e0e7ff; font-weight:700; }
-        input[type="file"] { display:none; }
-
-        .controls {
-            display:none;
-            margin-top:24px;
-            padding:24px;
-            background:rgba(20,20,40,0.8);
-            border-radius:12px;
-            border:1px solid rgba(168,85,247,0.2);
-        }
-        .controls-grid {
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:18px;
-            margin-bottom:18px;
-        }
-        .control-group label {
-            display:block;
-            font-weight:700;
-            margin-bottom:8px;
-            font-size:0.9rem;
-        }
-        .control-group select,
-        .control-group input[type="number"] {
-            width:100%;
-            padding:12px;
-            background:rgba(15,15,30,0.8);
-            border:2px solid rgba(168,85,247,0.4);
-            border-radius:10px;
-            color:#e0e7ff;
-            font-family:inherit;
-            font-weight:600;
-            font-size:0.9rem;
-            transition:all 0.3s;
-        }
-        .control-group select:focus,
-        .control-group input:focus {
-            outline:none;
-            border-color:#a855f7;
-            box-shadow:0 0 0 4px rgba(168,85,247,0.15);
-        }
-
-        .range-wrapper {
-            display:flex;
-            align-items:center;
-            gap:12px;
-        }
-        .range-wrapper input[type="range"] {
-            flex:1;
-            accent-color:#a855f7;
-            height:6px;
-        }
-        .range-value {
-            min-width:60px;
-            text-align:center;
-            font-weight:700;
-            color:#a855f7;
-            background:rgba(168,85,247,0.15);
-            padding:6px 10px;
-            border-radius:8px;
-            font-size:0.85rem;
-        }
-
-        .image-grid {
-            display:none;
-            margin-top:20px;
-            max-height:500px;
-            overflow-y:auto;
-            padding:14px;
-            background:rgba(15,15,30,0.6);
-            border-radius:12px;
-        }
-        .grid-inner {
-            display:grid;
-            grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));
-            gap:12px;
-        }
-        .image-item {
-            background:rgba(99,102,241,0.1);
-            border-radius:10px;
-            padding:10px;
-            text-align:center;
-            position:relative;
-            transition:all 0.3s;
-        }
-        .image-item:hover {
-            background:rgba(99,102,241,0.2);
-        }
-        .image-item img {
-            width:100%;
-            height:90px;
-            object-fit:cover;
-            border-radius:8px;
-            background:#fff;
-            margin-bottom:8px;
-        }
-        .image-item .name {
-            font-size:0.7rem;
-            color:#cbd5e1;
-            overflow:hidden;
-            text-overflow:ellipsis;
-            white-space:nowrap;
-            margin-bottom:4px;
-        }
-        .image-item .size {
-            font-size:0.7rem;
-            color:#a5b4fc;
-            font-weight:600;
-        }
-        .image-item .status {
-            font-size:0.65rem;
-            margin-top:4px;
-            font-weight:700;
-            min-height:12px;
-        }
+        .privacy-badge { display:inline-block; background:rgba(34,197,94,0.15); color:#86efac; padding:6px 14px; border-radius:20px; font-size:0.78rem; font-weight:700; margin-bottom:12px; }
+        .controls { display:none; margin-top:24px; padding:24px; background:rgba(20,20,40,0.8); border-radius:12px; border:1px solid rgba(168,85,247,0.2); }
+        .controls-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px; }
+        .control-group label { display:block; font-weight:700; margin-bottom:8px; font-size:0.9rem; }
+        .control-group select, .control-group input[type="number"] { width:100%; padding:12px; background:rgba(15,15,30,0.8); border:2px solid rgba(168,85,247,0.4); border-radius:10px; color:#e0e7ff; font-family:inherit; font-weight:600; font-size:0.9rem; }
+        .control-group select:focus, .control-group input:focus { outline:none; border-color:#a855f7; box-shadow:0 0 0 4px rgba(168,85,247,0.15); }
+        .range-wrapper { display:flex; align-items:center; gap:12px; }
+        .range-wrapper input[type="range"] { flex:1; accent-color:#a855f7; height:6px; }
+        .range-value { min-width:60px; text-align:center; font-weight:700; color:#a855f7; background:rgba(168,85,247,0.15); padding:6px 10px; border-radius:8px; font-size:0.85rem; }
+        .image-grid { display:none; margin-top:20px; max-height:500px; overflow-y:auto; padding:14px; background:rgba(15,15,30,0.6); border-radius:12px; }
+        .grid-inner { display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:12px; }
+        .image-item { background:rgba(99,102,241,0.1); border-radius:10px; padding:10px; text-align:center; position:relative; transition:all 0.3s; }
+        .image-item:hover { background:rgba(99,102,241,0.2); }
+        .image-item img { width:100%; height:90px; object-fit:cover; border-radius:8px; background:#fff; margin-bottom:8px; }
+        .image-item .name { font-size:0.7rem; color:#cbd5e1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-bottom:4px; }
+        .image-item .size { font-size:0.7rem; color:#a5b4fc; font-weight:600; }
+        .image-item .status { font-size:0.65rem; margin-top:4px; font-weight:700; min-height:12px; }
         .image-item .status.ok { color:#86efac; }
         .image-item .status.fail { color:#fca5a5; }
-        .image-item .remove {
-            position:absolute;
-            top:6px;
-            right:6px;
-            background:rgba(220,53,69,0.9);
-            color:#fff;
-            border:none;
-            width:22px;
-            height:22px;
-            border-radius:50%;
-            cursor:pointer;
-            font-size:0.7rem;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-        }
-
-        .action-btn {
-            width:100%;
-            padding:16px;
-            background:linear-gradient(135deg, #a855f7, #ec4899);
-            border:none;
-            border-radius:12px;
-            color:#fff;
-            font-weight:700;
-            font-size:1.05rem;
-            cursor:pointer;
-            transition:all 0.3s;
-            font-family:inherit;
-            margin-top:16px;
-        }
-        .action-btn:hover:not(:disabled) {
-            transform:translateY(-2px);
-            box-shadow:0 10px 30px rgba(168,85,247,0.4);
-        }
+        .image-item .remove { position:absolute; top:6px; right:6px; background:rgba(220,53,69,0.9); color:#fff; border:none; width:22px; height:22px; border-radius:50%; cursor:pointer; font-size:0.7rem; display:flex; align-items:center; justify-content:center; }
+        .action-btn { width:100%; padding:16px; background:linear-gradient(135deg, #a855f7, #ec4899); border:none; border-radius:12px; color:#fff; font-weight:700; font-size:1.05rem; cursor:pointer; font-family:inherit; margin-top:16px; transition:all 0.3s; }
+        .action-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 30px rgba(168,85,247,0.4); }
         .action-btn:disabled { opacity:0.6; cursor:not-allowed; }
-
-        .progress-bar {
-            display:none;
-            width:100%;
-            height:12px;
-            background:rgba(15,15,30,0.8);
-            border-radius:20px;
-            margin-top:16px;
-            overflow:hidden;
-        }
-        .progress-bar .fill {
-            height:100%;
-            width:0%;
-            background:linear-gradient(90deg, #a855f7, #ec4899);
-            transition:width 0.3s;
-        }
-        .progress-text {
-            display:none;
-            text-align:center;
-            margin-top:10px;
-            font-size:0.85rem;
-            color:#a5b4fc;
-        }
-
-        .status {
-            display:none;
-            margin-top:20px;
-            padding:16px;
-            border-radius:10px;
-            text-align:center;
-            font-weight:600;
-        }
-        .status.loading { background:rgba(99,102,241,0.2); color:#a5b4fc; }
-        .status.success { background:rgba(34,197,94,0.2); color:#86efac; }
-        .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; }
-
-        .stats-grid {
-            display:none;
-            grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
-            gap:12px;
-            margin-top:20px;
-            margin-bottom:16px;
-        }
-        .stat-box {
-            background:rgba(99,102,241,0.15);
-            padding:14px;
-            border-radius:10px;
-            text-align:center;
-        }
-        .stat-box .label {
-            font-size:0.72rem;
-            color:#a5b4fc;
-            margin-bottom:4px;
-            text-transform:uppercase;
-            letter-spacing:0.5px;
-        }
-        .stat-box .value {
-            font-size:1.15rem;
-            font-weight:800;
-            color:#e0e7ff;
-        }
+        .progress-bar { display:none; width:100%; height:12px; background:rgba(15,15,30,0.8); border-radius:20px; margin-top:16px; overflow:hidden; }
+        .progress-bar .fill { height:100%; width:0%; background:linear-gradient(90deg, #a855f7, #ec4899); transition:width 0.3s; }
+        .progress-text { display:none; text-align:center; margin-top:10px; font-size:0.85rem; color:#a5b4fc; }
+        .status { display:none; margin-top:20px; padding:16px; border-radius:10px; text-align:center; font-weight:600; }
+        .status.loading { background:rgba(99,102,241,0.2); color:#a5b4fc; display:block; }
+        .status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
+        .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
+        .stats-grid { display:none; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:12px; margin-top:20px; margin-bottom:16px; }
+        .stat-box { background:rgba(99,102,241,0.15); padding:14px; border-radius:10px; text-align:center; }
+        .stat-box .label { font-size:0.72rem; color:#a5b4fc; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
+        .stat-box .value { font-size:1.15rem; font-weight:800; color:#e0e7ff; }
         .stat-box .value.green { color:#86efac; }
         .stat-box .value.pink { color:#f9a8d4; }
-
-        .download-all-btn {
-            display:none;
-            width:100%;
-            padding:14px;
-            background:linear-gradient(135deg, #198754, #22c55e);
-            color:#fff;
-            border:none;
-            border-radius:10px;
-            font-weight:700;
-            font-size:1rem;
-            cursor:pointer;
-            margin-top:12px;
-            font-family:inherit;
-            transition:all 0.3s;
-        }
-        .download-all-btn:hover {
-            transform:translateY(-2px);
-            box-shadow:0 10px 30px rgba(25,135,84,0.4);
-        }
-
-        .info-box {
-            background:rgba(99,102,241,0.1);
-            border-left:4px solid #a855f7;
-            padding:16px;
-            border-radius:8px;
-            margin-top:20px;
-            font-size:0.85rem;
-            color:#a5b4fc;
-            line-height:1.7;
-        }
+        .download-all-btn { display:none; width:100%; padding:14px; background:linear-gradient(135deg, #198754, #22c55e); color:#fff; border:none; border-radius:10px; font-weight:700; font-size:1rem; cursor:pointer; margin-top:12px; font-family:inherit; transition:all 0.3s; }
+        .download-all-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 30px rgba(25,135,84,0.4); }
+        .download-all-btn:disabled { opacity:0.6; cursor:not-allowed; }
+        .reset-btn { display:none; width:100%; padding:14px; background:rgba(220,53,69,0.8); color:#fff; border:none; border-radius:10px; font-weight:700; font-size:1rem; cursor:pointer; margin-top:12px; font-family:inherit; transition:all 0.3s; }
+        .reset-btn:hover { background:rgba(220,53,69,1); }
+        .info-box { background:rgba(99,102,241,0.1); border-left:4px solid #a855f7; padding:16px; border-radius:8px; margin-top:20px; font-size:0.85rem; color:#a5b4fc; line-height:1.7; }
         .info-box strong { color:#e0e7ff; }
-
-        @media(max-width:768px){
-            .card { padding:24px; }
-            h1 { font-size:1.5rem; }
-            .upload-zone { padding:40px 20px; }
-            .controls-grid { grid-template-columns:1fr; }
-            .grid-inner { grid-template-columns:repeat(auto-fill, minmax(110px, 1fr)); }
-        }
+        .auto-cleanup-note { background:rgba(34,197,94,0.08); border-left:4px solid #22c55e; padding:12px 16px; border-radius:10px; margin-top:12px; font-size:0.78rem; color:#86efac; line-height:1.6; }
+        @media(max-width:768px){ .card { padding:24px; } h1 { font-size:1.5rem; } .upload-zone { padding:40px 20px; } .controls-grid { grid-template-columns:1fr; } .grid-inner { grid-template-columns:repeat(auto-fill, minmax(110px, 1fr)); } }
     </style>
 </head>
 <body>
@@ -381,13 +136,17 @@
     <p class="subtitle">एक साथ 50+ इमेज कंप्रेस करो — क्वालिटी कंट्रोल के साथ</p>
 
     <div class="card">
+        <div style="text-align:center;">
+            <span class="privacy-badge">🔒 100% Client-Side — No Upload</span>
+        </div>
+
         <div class="upload-zone" id="uploadZone">
             <div class="upload-icon"><i class="fas fa-images"></i></div>
             <p><span class="highlight">Click करो या Drag करो</span></p>
             <p>एक साथ कई इमेज चुन सकते हो (JPG, PNG, WebP)</p>
             <p style="font-size:0.8rem; opacity:0.8;">Max size: 20MB per image</p>
+            <input type="file" id="fileInput" accept="image/*" multiple>
         </div>
-        <input type="file" id="fileInput" accept="image/*" multiple>
 
         <div class="controls" id="controls">
             <div class="controls-grid">
@@ -455,8 +214,16 @@
             <i class="fas fa-download"></i> Download All as ZIP
         </button>
 
+        <button class="reset-btn" id="resetBtn">
+            <i class="fas fa-redo"></i> Reset / Compress More
+        </button>
+
         <div class="info-box">
             <strong>💡 कैसे काम करता है:</strong> हर इमेज को canvas पर draw किया जाता है, quality सेट की जाती है, और नए format में export किया जाता है। सारी प्रोसेसिंग ब्राउज़र में — कोई इमेज सर्वर पर नहीं जाती।
+        </div>
+
+        <div class="auto-cleanup-note">
+            <strong>🧹 Auto-Cleanup:</strong> Download के 60 second बाद memory automatically clear हो जाती है। Reset button dabao ya page band karo — sab temporary data delete ho jaata hai।
         </div>
     </div>
 </main>
@@ -483,10 +250,45 @@
     const statSaved = document.getElementById('statSaved');
     const statPercent = document.getElementById('statPercent');
     const downloadAllBtn = document.getElementById('downloadAllBtn');
+    const resetBtn = document.getElementById('resetBtn');
 
     let imageFiles = [];
     let compressedResults = [];
+    let previewUrls = [];
+    let autoCleanupTimer = null;
 
+    // ===== AUTO CLEANUP =====
+    function scheduleAutoCleanup() {
+        if (autoCleanupTimer) clearTimeout(autoCleanupTimer);
+        autoCleanupTimer = setTimeout(() => {
+            cleanupPreviewUrls();
+            console.log('🧹 Auto-cleanup: preview URLs revoked');
+        }, 60000); // 60 seconds after last action
+    }
+
+    function cleanupPreviewUrls() {
+        previewUrls.forEach(url => { try { URL.revokeObjectURL(url); } catch(e) {} });
+        previewUrls = [];
+    }
+
+    function fullReset() {
+        cleanupPreviewUrls();
+        compressedResults = [];
+        imageFiles = [];
+        fileInput.value = '';
+        gridInner.innerHTML = '';
+        imageGrid.style.display = 'none';
+        controls.style.display = 'none';
+        statsGrid.style.display = 'none';
+        downloadAllBtn.style.display = 'none';
+        resetBtn.style.display = 'none';
+        progressBar.style.display = 'none';
+        progressText.style.display = 'none';
+        status.style.display = 'none';
+        if (autoCleanupTimer) { clearTimeout(autoCleanupTimer); autoCleanupTimer = null; }
+    }
+
+    // ===== UPLOAD HANDLERS =====
     uploadZone.addEventListener('click', () => fileInput.click());
     uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
     uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
@@ -513,8 +315,10 @@
         controls.style.display = 'block';
         statsGrid.style.display = 'none';
         downloadAllBtn.style.display = 'none';
+        resetBtn.style.display = 'none';
         totalInfo.value = imageFiles.length + ' images';
         showStatus(`✅ ${newFiles.length} इमेज add हुईं (Total: ${imageFiles.length})`, 'success');
+        scheduleAutoCleanup();
     }
 
     function renderImageGrid() {
@@ -527,6 +331,8 @@
         gridInner.innerHTML = '';
 
         imageFiles.forEach((file, index) => {
+            const url = URL.createObjectURL(file);
+            previewUrls.push(url);
             const item = document.createElement('div');
             item.className = 'image-item';
             item.dataset.index = index;
@@ -534,7 +340,7 @@
                 <button class="remove" data-index="${index}" title="Remove">
                     <i class="fas fa-times"></i>
                 </button>
-                <img src="${URL.createObjectURL(file)}" alt="${file.name}">
+                <img src="${url}" alt="${file.name}">
                 <div class="name" title="${file.name}">${file.name}</div>
                 <div class="size">${formatSize(file.size)}</div>
                 <div class="status"></div>
@@ -549,9 +355,7 @@
                 imageFiles.splice(idx, 1);
                 renderImageGrid();
                 totalInfo.value = imageFiles.length + ' images';
-                if (imageFiles.length === 0) {
-                    controls.style.display = 'none';
-                }
+                if (imageFiles.length === 0) controls.style.display = 'none';
             });
         });
     }
@@ -566,6 +370,7 @@
         qualityValue.textContent = qualityRange.value + '%';
     });
 
+    // ===== COMPRESS =====
     compressBtn.addEventListener('click', async () => {
         if (imageFiles.length === 0) {
             showStatus('❌ पहले इमेज चुनें', 'error');
@@ -579,6 +384,7 @@
         compressedResults = [];
         statsGrid.style.display = 'none';
         downloadAllBtn.style.display = 'none';
+        resetBtn.style.display = 'none';
 
         const quality = parseInt(qualityRange.value) / 100;
         const maxW = parseInt(maxWidth.value) || 1920;
@@ -604,16 +410,13 @@
 
                 try {
                     const result = await compressImage(file, quality, maxW, format);
-                    
                     if (card) {
                         const st = card.querySelector('.status');
                         st.className = 'status ok';
                         st.textContent = '✅ Done';
                     }
-
                     totalOriginal += file.size;
                     totalCompressed += result.blob.size;
-
                     compressedResults.push({
                         name: file.name.replace(/\.[^/.]+$/, '') + '-compressed.' + ext,
                         blob: result.blob,
@@ -628,21 +431,18 @@
                         st.textContent = '❌ Failed';
                     }
                 }
-
                 progressFill.style.width = ((i + 1) / imageFiles.length) * 100 + '%';
             }
 
             const saved = totalOriginal - totalCompressed;
             const percent = totalOriginal > 0 ? ((saved / totalOriginal) * 100).toFixed(1) : 0;
-
             statOriginal.textContent = formatSize(totalOriginal);
             statCompressed.textContent = formatSize(totalCompressed);
             statSaved.textContent = formatSize(saved);
             statPercent.textContent = percent + '%';
-
             statsGrid.style.display = 'grid';
             downloadAllBtn.style.display = 'block';
-
+            resetBtn.style.display = 'block';
             showStatus(`🎉 ${compressedResults.length} इमेज कंप्रेस हो गईं!`, 'success');
         } catch (error) {
             console.error(error);
@@ -665,17 +465,14 @@
                     const canvas = document.createElement('canvas');
                     let w = img.width;
                     let h = img.height;
-
                     if (w > maxW) {
                         h = Math.round((h * maxW) / w);
                         w = maxW;
                     }
-
                     canvas.width = w;
                     canvas.height = h;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, w, h);
-
                     canvas.toBlob(
                         (blob) => {
                             if (blob) resolve({ blob });
@@ -707,6 +504,7 @@
             const zipBlob = await zip.generateAsync({ type: 'blob' });
             saveAs(zipBlob, 'compressed-images.zip');
             downloadAllBtn.innerHTML = '<i class="fas fa-check"></i> Downloaded!';
+            scheduleAutoCleanup();
         } catch (err) {
             downloadAllBtn.innerHTML = '<i class="fas fa-times"></i> Failed';
         }
@@ -714,6 +512,17 @@
             downloadAllBtn.disabled = false;
             downloadAllBtn.innerHTML = '<i class="fas fa-download"></i> Download All as ZIP';
         }, 2000);
+    });
+
+    resetBtn.addEventListener('click', () => {
+        fullReset();
+        showStatus('✅ Ready for new batch!', 'success');
+        setTimeout(() => { status.style.display = 'none'; }, 2000);
+    });
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+        cleanupPreviewUrls();
     });
 
     function showStatus(message, type) {

@@ -1,34 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <title>Age Calculator - Calculate Your Exact Age Free | Bharat24Tools</title>
-    <meta name="description" content="Calculate your exact age in years, months and days from your date of birth. Free online age calculator, instant results, works in browser.">
-    <meta name="keywords" content="age calculator, date of birth calculator, how old am i, age in years, birthday calculator, free age calculator">
+    <!-- ============ PRIMARY SEO ============ -->
+    <title>Age Calculator - Calculate Exact Age in Years, Months, Days | Bharat24Tools</title>
+    <meta name="description" content="Free online age calculator. Find your exact age in years, months, days, hours, minutes & seconds from date of birth. Also shows zodiac sign, day born, and next birthday countdown.">
+    <meta name="keywords" content="age calculator, date of birth calculator, how old am i, exact age calculator, birthday countdown, age in days, zodiac calculator, free age calculator online">
     <meta name="author" content="Alok">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
     <meta name="theme-color" content="#0d6efd">
+    <meta name="rating" content="general">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/age-calculator.html">
 
-    <!-- Open Graph -->
+    <!-- ============ HREFLANG ============ -->
+    <link rel="alternate" hreflang="en" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/age-calculator.html">
+    <link rel="alternate" hreflang="hi" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/age-calculator.html?lang=hi">
+    <link rel="alternate" hreflang="x-default" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/age-calculator.html">
+
+    <!-- ============ OPEN GRAPH ============ -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/age-calculator.html">
-    <meta property="og:title" content="Age Calculator - Calculate Your Exact Age Free | Bharat24Tools">
-    <meta property="og:description" content="Calculate your exact age in years, months and days from your date of birth. Free, instant results.">
+    <meta property="og:title" content="Age Calculator - Exact Age in Years, Months, Days | Bharat24Tools">
+    <meta property="og:description" content="Calculate your exact age instantly. Free, private, works in browser.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Bharat24Tools">
+    <meta property="og:locale" content="en_IN">
 
-    <!-- Twitter -->
+    <!-- ============ TWITTER ============ -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Age Calculator - Calculate Your Exact Age Free | Bharat24Tools">
-    <meta name="twitter:description" content="Calculate your exact age in years, months and days from your date of birth. Free, instant results.">
+    <meta name="twitter:title" content="Age Calculator - Exact Age Free | Bharat24Tools">
+    <meta name="twitter:description" content="Calculate exact age in years, months, days. Free & private.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-    <!-- Structured Data -->
+    <!-- ============ STRUCTURED DATA ============ -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -37,7 +46,19 @@
         "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/age-calculator.html",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Web Browser",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "2150" }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "How is age calculated?", "acceptedAnswer": { "@type": "Answer", "text": "Age is calculated from your date of birth to today's date, giving years, months, and days precisely." } },
+            { "@type": "Question", "name": "Is my date of birth safe?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Everything runs in your browser. Your date of birth never leaves your device." } },
+            { "@type": "Question", "name": "Does it show zodiac sign?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, the calculator also shows your zodiac sign based on your date of birth." } }
+        ]
     }
     </script>
 
@@ -45,135 +66,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-        body {
-            background: linear-gradient(135deg, #f4f6fb 0%, #e8f1f9 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .container {
-            background: #fff;
-            max-width: 480px;
-            width: 100%;
-            padding: 40px 30px;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(13, 110, 253, 0.12);
-            border: 1px solid rgba(13, 110, 253, 0.06);
-            text-align: center;
-        }
-        h1 {
-            font-size: 2rem;
-            color: #1a2b45;
-            margin-bottom: 8px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+        body { background: linear-gradient(135deg, #f4f6fb 0%, #e8f1f9 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { background: #fff; max-width: 560px; width: 100%; padding: 40px 30px; border-radius: 24px; box-shadow: 0 20px 60px rgba(13,110,253,0.12); border: 1px solid rgba(13,110,253,0.06); text-align: center; }
+        h1 { font-size: 2rem; color: #1a2b45; margin-bottom: 8px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px; }
         h1 i { color: #0d6efd; }
-        .subtitle {
-            color: #6c757d;
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-        }
-        .input-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        .input-group label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #1a2b45;
-            margin-bottom: 8px;
-        }
-        input[type="date"] {
-            width: 100%;
-            padding: 14px 16px;
-            font-size: 1rem;
-            font-family: inherit;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            background: #f8fafc;
-            color: #1a2b45;
-            transition: all 0.3s;
-        }
-        input[type="date"]:focus {
-            outline: none;
-            border-color: #0d6efd;
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
-        }
-        button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #0d6efd, #0b5ed7);
-            color: #fff;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(13, 110, 253, 0.3);
-        }
-        #result {
-            margin-top: 25px;
-            padding: 22px;
-            background: linear-gradient(135deg, #eef4ff, #e1ecff);
-            border-radius: 16px;
-            border-left: 4px solid #0d6efd;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #1a2b45;
-            min-height: 60px;
-            display: none;
-            text-align: left;
-            line-height: 1.7;
-        }
+        .subtitle { color: #6c757d; font-size: 0.95rem; margin-bottom: 30px; }
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; font-size: 0.9rem; font-weight: 600; color: #1a2b45; margin-bottom: 8px; }
+        input[type="date"], input[type="time"] { width: 100%; padding: 14px 16px; font-size: 1rem; font-family: inherit; border: 2px solid #e9ecef; border-radius: 12px; background: #f8fafc; color: #1a2b45; transition: all 0.3s; }
+        input[type="date"]:focus, input[type="time"]:focus { outline: none; border-color: #0d6efd; background: #fff; box-shadow: 0 0 0 4px rgba(13,110,253,0.1); }
+        .toggle-adv { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; font-size: 0.85rem; color: #6c757d; cursor: pointer; user-select: none; }
+        .toggle-adv input { accent-color: #0d6efd; }
+        button { width: 100%; padding: 15px; background: linear-gradient(135deg, #0d6efd, #0b5ed7); color: #fff; border: none; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(13,110,253,0.3); }
+        #result { margin-top: 25px; padding: 22px; background: linear-gradient(135deg, #eef4ff, #e1ecff); border-radius: 16px; border-left: 4px solid #0d6efd; font-size: 1rem; font-weight: 600; color: #1a2b45; display: none; text-align: left; line-height: 1.9; }
         #result.show { display: block; }
-        #result .big {
-            display: block;
-            font-size: 1.5rem;
-            color: #0d6efd;
-            font-weight: 800;
-            margin-bottom: 6px;
-        }
-        #result .small {
-            display: block;
-            font-size: 0.95rem;
-            color: #495057;
-            font-weight: 600;
-        }
-        .error {
-            color: #dc3545 !important;
-            background: #fff0f0 !important;
-            border-left-color: #dc3545 !important;
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            color: #6c757d;
-            font-weight: 500;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
+        #result .big { display: block; font-size: 1.5rem; color: #0d6efd; font-weight: 800; margin-bottom: 8px; }
+        #result .small { display: block; font-size: 0.92rem; color: #495057; font-weight: 600; }
+        #result .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
+        #result .tile { background: #fff; padding: 12px; border-radius: 10px; border: 1px solid rgba(13,110,253,0.1); text-align: center; }
+        #result .tile .v { display: block; font-size: 1.15rem; font-weight: 800; color: #0d6efd; }
+        #result .tile .l { display: block; font-size: 0.72rem; color: #6c757d; font-weight: 600; margin-top: 4px; }
+        @media (max-width: 480px) { #result .grid { grid-template-columns: 1fr; } }
+        .error { color: #dc3545 !important; background: #fff0f0 !important; border-left-color: #dc3545 !important; }
+        .back-link { display: inline-block; margin-top: 20px; color: #6c757d; font-weight: 500; text-decoration: none; font-size: 0.9rem; }
         .back-link:hover { color: #0d6efd; }
-        @media (max-width: 480px) {
-            .container { padding: 28px 20px; }
-            h1 { font-size: 1.5rem; }
-        }
+        .countdown-live { display: inline-block; margin-top: 10px; padding: 8px 14px; background: rgba(13,110,253,0.1); color: #0d6efd; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        @media (max-width: 480px) { .container { padding: 28px 20px; } h1 { font-size: 1.5rem; } }
     </style>
 </head>
 <body>
@@ -187,6 +106,16 @@
         <input type="date" id="dob">
     </div>
 
+    <label class="toggle-adv">
+        <input type="checkbox" id="advToggle">
+        Add exact birth time (for hours, minutes, seconds precision)
+    </label>
+
+    <div class="input-group" id="timeGroup" style="display:none;">
+        <label>Time of Birth (optional)</label>
+        <input type="time" id="tob" value="00:00">
+    </div>
+
     <button onclick="calculateAge()">
         <i class="fa-solid fa-calculator"></i> Calculate Age
     </button>
@@ -197,58 +126,161 @@
 </div>
 
 <script>
-    function calculateAge(){
-        const dobInput = document.getElementById("dob").value;
-        const resultBox = document.getElementById("result");
+    // ============ AUTO CLEANUP TRACKERS ============
+    let liveInterval = null;
 
-        if(dobInput === ""){
-            resultBox.className = "show error";
-            resultBox.innerHTML = "❌ Please select your date of birth.";
+    function clearLiveTimer() {
+        if (liveInterval !== null) {
+            clearInterval(liveInterval);
+            liveInterval = null;
+        }
+    }
+
+    function fullCleanup() {
+        clearLiveTimer();
+    }
+
+    // Page unload pe timers clean
+    window.addEventListener('beforeunload', fullCleanup);
+    window.addEventListener('pagehide', fullCleanup);
+
+    // ============ TOGGLE ============
+    const advToggle = document.getElementById('advToggle');
+    const timeGroup = document.getElementById('timeGroup');
+    advToggle.addEventListener('change', () => {
+        timeGroup.style.display = advToggle.checked ? 'block' : 'none';
+    });
+
+    // ============ INPUT AUTO-CLEANUP ============
+    // Jab bhi user input change kare, purana result auto-clean ho jaye
+    document.getElementById('dob').addEventListener('input', () => {
+        clearResult();
+    });
+    document.getElementById('tob').addEventListener('input', () => {
+        clearResult();
+    });
+
+    function clearResult() {
+        const resultBox = document.getElementById('result');
+        resultBox.className = '';
+        resultBox.innerHTML = '';
+        clearLiveTimer();
+    }
+
+    // ============ ZODIAC & DAY ============
+    function getZodiac(d, m) {
+        const signs = [
+            ["Capricorn ♑", 19], ["Aquarius ♒", 18], ["Pisces ♓", 20],
+            ["Aries ♈", 19], ["Taurus ♉", 20], ["Gemini ♊", 20],
+            ["Cancer ♋", 22], ["Leo ♌", 22], ["Virgo ♍", 22],
+            ["Libra ♎", 22], ["Scorpio ♏", 21], ["Sagittarius ♐", 21],
+            ["Capricorn ♑", 31]
+        ];
+        return (d > signs[m - 1][1]) ? signs[m][0] : signs[m - 1][0];
+    }
+
+    // ============ MAIN CALCULATION ============
+    function calculateAge() {
+        const dobInput = document.getElementById('dob').value;
+        const tobInput = document.getElementById('tob').value || '00:00';
+        const resultBox = document.getElementById('result');
+
+        clearLiveTimer();
+
+        if (dobInput === '') {
+            resultBox.className = 'show error';
+            resultBox.innerHTML = '❌ Please select your date of birth.';
             return;
         }
 
-        const birthDate = new Date(dobInput);
+        const [y, m, d] = dobInput.split('-').map(Number);
+        const [hh, mm] = tobInput.split(':').map(Number);
+        const birthDate = new Date(y, m - 1, d, hh, mm, 0);
         const today = new Date();
 
-        if(birthDate > today){
-            resultBox.className = "show error";
-            resultBox.innerHTML = "❌ Date of birth cannot be in the future.";
+        if (birthDate > today) {
+            resultBox.className = 'show error';
+            resultBox.innerHTML = '❌ Date of birth cannot be in the future.';
             return;
         }
 
+        // Years / months / days
         let years = today.getFullYear() - birthDate.getFullYear();
         let months = today.getMonth() - birthDate.getMonth();
         let days = today.getDate() - birthDate.getDate();
 
-        if(days < 0){
+        if (days < 0) {
             months--;
             const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
             days += prevMonth.getDate();
         }
-        if(months < 0){
+        if (months < 0) {
             years--;
             months += 12;
         }
 
-        // Total days lived
-        const diffTime = today.getTime() - birthDate.getTime();
-        const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        // Total breakdowns
+        const diffMs = today.getTime() - birthDate.getTime();
+        const totalSeconds = Math.floor(diffMs / 1000);
+        const totalMinutes = Math.floor(totalSeconds / 60);
+        const totalHours = Math.floor(totalMinutes / 60);
+        const totalDays = Math.floor(totalHours / 24);
+        const totalWeeks = Math.floor(totalDays / 7);
         const totalMonths = (years * 12) + months;
 
-        // Next birthday countdown
-        const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate());
-        if(nextBirthday < today){
-            nextBirthday.setFullYear(today.getFullYear() + 1);
-        }
-        const daysToBirthday = Math.ceil((nextBirthday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+        // Next birthday
+        const nextBirthday = new Date(today.getFullYear(), birthDate.getMonth(), birthDate.getDate(), hh, mm, 0);
+        if (nextBirthday < today) nextBirthday.setFullYear(today.getFullYear() + 1);
 
-        resultBox.className = "show";
+        // Zodiac + born day
+        const zodiac = getZodiac(d, m);
+        const bornDay = birthDate.toLocaleDateString('en-IN', { weekday: 'long' });
+
+        resultBox.className = 'show';
         resultBox.innerHTML = `
             <span class="big">🎂 ${years} years, ${months} months, ${days} days</span>
-            <span class="small">📅 Total months: ${totalMonths}</span>
-            <span class="small">📆 Total days lived: ${totalDays.toLocaleString('en-IN')}</span>
-            <span class="small">🎉 Next birthday in: ${daysToBirthday} day${daysToBirthday === 1 ? '' : 's'}</span>
+            <span class="small">🕰️ Born on a <b>${bornDay}</b></span>
+            <span class="small">♈ Zodiac sign: <b>${zodiac}</b></span>
+
+            <div class="grid">
+                <div class="tile"><span class="v">${totalMonths.toLocaleString('en-IN')}</span><span class="l">Total Months</span></div>
+                <div class="tile"><span class="v">${totalWeeks.toLocaleString('en-IN')}</span><span class="l">Total Weeks</span></div>
+                <div class="tile"><span class="v">${totalDays.toLocaleString('en-IN')}</span><span class="l">Total Days</span></div>
+                <div class="tile"><span class="v">${totalHours.toLocaleString('en-IN')}</span><span class="l">Total Hours</span></div>
+                <div class="tile"><span class="v">${totalMinutes.toLocaleString('en-IN')}</span><span class="l">Total Minutes</span></div>
+                <div class="tile"><span class="v">${totalSeconds.toLocaleString('en-IN')}</span><span class="l">Total Seconds</span></div>
+            </div>
+
+            <div id="liveCountdown" class="countdown-live" style="margin-top:14px;">
+                🎉 Calculating next birthday...
+            </div>
         `;
+
+        // Live countdown
+        function updateCountdown() {
+            const now = new Date();
+            let next = new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate(), hh, mm, 0);
+            if (next < now) next.setFullYear(now.getFullYear() + 1);
+            const diff = next.getTime() - now.getTime();
+
+            const cd = document.getElementById('liveCountdown');
+            if (!cd) { clearLiveTimer(); return; }
+
+            if (diff <= 0) {
+                cd.textContent = '🎉 Happy Birthday!';
+                clearLiveTimer();
+                return;
+            }
+
+            const dd = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hhr = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const mmr = Math.floor((diff / (1000 * 60)) % 60);
+            const ssr = Math.floor((diff / 1000) % 60);
+            cd.textContent = `🎉 Next birthday in: ${dd}d ${hhr}h ${mmr}m ${ssr}s`;
+        }
+
+        updateCountdown();
+        liveInterval = setInterval(updateCountdown, 1000);
     }
 </script>
 

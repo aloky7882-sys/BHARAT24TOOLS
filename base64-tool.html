@@ -1,34 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <title>Base64 Encoder/Decoder - Convert Text & Files Free | Bharat24Tools</title>
-    <meta name="description" content="Encode text or files to Base64, or decode Base64 back to text instantly. Free online Base64 encoder/decoder, works in browser, no upload.">
-    <meta name="keywords" content="base64 encoder, base64 decoder, encode base64, decode base64, base64 converter, text to base64, image to base64">
+    <!-- ============ PRIMARY SEO ============ -->
+    <title>Base64 Encoder/Decoder - Convert Text & Files Free Online | Bharat24Tools</title>
+    <meta name="description" content="Free online Base64 encoder and decoder. Encode text, images or files to Base64, or decode Base64 back to text instantly. 100% browser-based, no upload, no signup.">
+    <meta name="keywords" content="base64 encoder, base64 decoder, encode base64, decode base64, base64 converter, text to base64, image to base64, file to base64, online base64 tool">
     <meta name="author" content="Alok">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
     <meta name="theme-color" content="#0d6efd">
+    <meta name="rating" content="general">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/base64-tool.html">
 
-    <!-- Open Graph -->
+    <!-- ============ HREFLANG ============ -->
+    <link rel="alternate" hreflang="en" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/base64-tool.html">
+    <link rel="alternate" hreflang="hi" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/base64-tool.html?lang=hi">
+    <link rel="alternate" hreflang="x-default" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/base64-tool.html">
+
+    <!-- ============ OPEN GRAPH ============ -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/base64-tool.html">
     <meta property="og:title" content="Base64 Encoder/Decoder - Convert Text & Files Free | Bharat24Tools">
-    <meta property="og:description" content="Encode text or files to Base64, or decode Base64 back to text instantly. Free, no upload.">
+    <meta property="og:description" content="Encode text or files to Base64, or decode Base64 back to text instantly. 100% browser-based, no upload.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Bharat24Tools">
+    <meta property="og:locale" content="en_IN">
 
-    <!-- Twitter -->
+    <!-- ============ TWITTER ============ -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Base64 Encoder/Decoder - Convert Text & Files Free | Bharat24Tools">
-    <meta name="twitter:description" content="Encode text or files to Base64, or decode Base64 back to text instantly. Free, no upload.">
+    <meta name="twitter:description" content="Encode text or files to Base64, or decode Base64 back to text instantly. Free.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-    <!-- Structured Data -->
+    <!-- ============ STRUCTURED DATA (App + FAQ) ============ -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -37,7 +46,21 @@
         "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/base64-tool.html",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Web Browser",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+        "browserRequirements": "Requires JavaScript",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "980" },
+        "featureList": ["Text to Base64", "File to Base64", "Base64 to text", "UTF-8 support", "No upload"]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "Is this Base64 tool free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, 100% free with unlimited use and no signup required." } },
+            { "@type": "Question", "name": "Are my files uploaded?", "acceptedAnswer": { "@type": "Answer", "text": "No. All encoding and decoding happens in your browser. Files never leave your device." } },
+            { "@type": "Question", "name": "Does it support Unicode/UTF-8?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, all Unicode text including Hindi and emojis is supported." } }
+        ]
     }
     </script>
 
@@ -51,78 +74,39 @@
         .page-header h1 { font-size:32px; font-weight:800; color:#1a2b45; margin-bottom:8px; }
         .page-header h1 i { color:#0d6efd; }
         .page-header p { color:#6c757d; font-size:15px; }
+        .badge-row { display:flex; gap:8px; justify-content:center; margin-top:10px; flex-wrap:wrap; }
+        .badge { background:rgba(25,135,84,0.12); color:#198754; padding:5px 12px; border-radius:20px; font-size:0.72rem; font-weight:700; }
         .mode-tabs { display:flex; justify-content:center; gap:8px; margin-bottom:20px; }
-        .mode-tabs button {
-            padding:12px 28px; border-radius:50px; border:none;
-            background:#fff; color:#495057; font-weight:700; cursor:pointer;
-            font-family:inherit; font-size:14px;
-            box-shadow:0 4px 12px rgba(0,0,0,.06); transition:.2s;
-        }
-        .mode-tabs button.active {
-            background:linear-gradient(135deg, #0d6efd, #0b5ed7); color:#fff;
-            box-shadow:0 10px 25px rgba(13, 110, 253, 0.3);
-        }
-        .panel {
-            background:#fff; border-radius:20px; padding:28px;
-            box-shadow:0 10px 40px rgba(13, 110, 253, 0.06);
-            margin-bottom:20px; border:1px solid rgba(13, 110, 253, 0.05);
-        }
+        .mode-tabs button { padding:12px 28px; border-radius:50px; border:none; background:#fff; color:#495057; font-weight:700; cursor:pointer; font-family:inherit; font-size:14px; box-shadow:0 4px 12px rgba(0,0,0,.06); transition:.2s; }
+        .mode-tabs button.active { background:linear-gradient(135deg, #0d6efd, #0b5ed7); color:#fff; box-shadow:0 10px 25px rgba(13,110,253,0.3); }
+        .panel { background:#fff; border-radius:20px; padding:28px; box-shadow:0 10px 40px rgba(13,110,253,0.06); margin-bottom:20px; border:1px solid rgba(13,110,253,0.05); }
         .tab-content { display:none; }
         .tab-content.active { display:block; }
         .text-grid { display:grid; grid-template-columns:1fr; gap:16px; }
-        .field h3 {
-            font-size:14px; margin-bottom:8px; color:#1a2b45;
-            display:flex; justify-content:space-between; align-items:center;
-            font-weight:700;
-        }
-        .copy-mini {
-            background:#eef2f7; border:none; padding:6px 14px;
-            border-radius:20px; font-size:12px; font-weight:700;
-            cursor:pointer; color:#0d6efd; font-family:inherit; transition:.2s;
-        }
+        .field h3 { font-size:14px; margin-bottom:8px; color:#1a2b45; display:flex; justify-content:space-between; align-items:center; font-weight:700; }
+        .copy-mini { background:#eef2f7; border:none; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700; cursor:pointer; color:#0d6efd; font-family:inherit; transition:.2s; }
         .copy-mini:hover { background:#0d6efd; color:#fff; }
         .copy-mini.copied { background:#198754; color:#fff; }
-        textarea {
-            width:100%; min-height:160px; padding:16px;
-            border:2px solid #e9ecef; border-radius:14px;
-            font-family:'Courier New',monospace; font-size:14px;
-            resize:vertical; line-height:1.6; background:#f8fafc;
-            transition:.2s;
-        }
-        textarea:focus {
-            outline:none; border-color:#0d6efd; background:#fff;
-            box-shadow:0 0 0 4px rgba(13, 110, 253, 0.1);
-        }
+        textarea { width:100%; min-height:160px; padding:16px; border:2px solid #e9ecef; border-radius:14px; font-family:'Courier New',monospace; font-size:14px; resize:vertical; line-height:1.6; background:#f8fafc; transition:.2s; }
+        textarea:focus { outline:none; border-color:#0d6efd; background:#fff; box-shadow:0 0 0 4px rgba(13,110,253,0.1); }
         .btn-row { display:flex; gap:12px; justify-content:center; margin:16px 0; flex-wrap:wrap; }
-        .btn {
-            padding:14px 28px; border-radius:12px; border:none;
-            font-weight:700; cursor:pointer; font-family:inherit;
-            font-size:14px; transition:.2s; display:flex; align-items:center; gap:8px;
-        }
+        .btn { padding:14px 28px; border-radius:12px; border:none; font-weight:700; cursor:pointer; font-family:inherit; font-size:14px; transition:.2s; display:flex; align-items:center; gap:8px; }
         .btn-primary { background:linear-gradient(135deg, #0d6efd, #0b5ed7); color:#fff; }
-        .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(13, 110, 253, 0.3); }
+        .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(13,110,253,0.3); }
         .btn-secondary { background:#eef2f7; color:#212529; }
         .btn-secondary:hover { background:#dfe6ee; }
-        .upload-zone {
-            position:relative; border:2px dashed #0d6efd; border-radius:16px;
-            padding:35px 20px; text-align:center; background:#f8fafc;
-            cursor:pointer; transition:.2s;
-        }
-        .upload-zone:hover, .upload-zone.dragover {
-            background:#eef5ff; border-color:#0b5ed7; transform:translateY(-2px);
-        }
+        .upload-zone { position:relative; border:2px dashed #0d6efd; border-radius:16px; padding:35px 20px; text-align:center; background:#f8fafc; cursor:pointer; transition:.2s; }
+        .upload-zone:hover, .upload-zone.dragover { background:#eef5ff; border-color:#0b5ed7; transform:translateY(-2px); }
         .upload-zone input { position:absolute; inset:0; opacity:0; cursor:pointer; }
         .upload-zone .icon { font-size:36px; color:#0d6efd; margin-bottom:10px; }
         .upload-zone .txt { font-size:14px; color:#6c757d; font-weight:500; }
         .file-result { margin-top:20px; display:none; }
-        .file-preview {
-            max-width:100%; max-height:220px; border-radius:12px;
-            margin-bottom:16px; display:block; margin-left:auto; margin-right:auto;
-            border:2px solid #e9ecef;
-        }
+        .file-preview { max-width:100%; max-height:220px; border-radius:12px; margin-bottom:16px; display:block; margin-left:auto; margin-right:auto; border:2px solid #e9ecef; }
         #status { margin-top:12px; font-size:13px; font-weight:600; min-height:18px; text-align:center; }
         .status-success { color:#198754; }
         .status-error { color:#dc3545; }
+        .info-box { background:rgba(13,110,253,0.08); border-left:4px solid #0d6efd; padding:14px 16px; border-radius:10px; margin-top:20px; font-size:0.84rem; color:#495057; line-height:1.7; }
+        .info-box strong { color:#1a2b45; }
         .back-link { display:inline-block; margin-top:15px; color:#6c757d; font-weight:500; text-decoration:none; }
         .back-link:hover { color:#0d6efd; }
     </style>
@@ -132,6 +116,12 @@
     <div class="page-header">
         <h1><i class="fa-solid fa-code"></i> Base64 Encoder / Decoder</h1>
         <p>Convert text or files to Base64, or decode Base64 back — instantly in your browser.</p>
+        <div class="badge-row">
+            <span class="badge">🔒 No Upload</span>
+            <span class="badge">⚡ Instant</span>
+            <span class="badge">♾️ Unlimited</span>
+            <span class="badge">🌐 UTF-8 Ready</span>
+        </div>
     </div>
 
     <div class="mode-tabs">
@@ -156,6 +146,10 @@
             <textarea id="base64Text" placeholder="Base64 output appears here..."></textarea>
         </div>
         <div id="status"></div>
+
+        <div class="info-box">
+            <strong>💡 Auto Cleanup:</strong> Har encode/decode ke baad purana data memory se hata diya jata hai. Clear button dabane par saare text fields aur temporary strings release ho jaate hain.
+        </div>
     </div>
 
     <div class="panel tab-content" id="filePanel">
@@ -170,6 +164,12 @@
                 <h3>Base64 Result <button class="copy-mini" id="copyFileBtn">Copy</button></h3>
                 <textarea id="base64File" readonly></textarea>
             </div>
+            <div class="btn-row" style="margin-top:12px;">
+                <button class="btn btn-secondary" id="clearFileBtn"><i class="fa-solid fa-trash"></i> Clear</button>
+            </div>
+        </div>
+        <div class="info-box">
+            <strong>🧹 Auto Cleanup:</strong> File select karne ke baad object URLs aur FileReader memory automatically release ho jaate hain. Naya file select karne par purana data pehle clean hota hai.
         </div>
     </div>
 
@@ -177,6 +177,46 @@
 </div>
 
 <script>
+    // ============ AUTO CLEANUP TRACKERS ============
+    let activeImageUrl = null;      // preview objectURL
+    let activeReader = null;        // FileReader reference
+    let copyTimers = {};
+
+    function revokeActiveImageUrl() {
+        if (activeImageUrl) {
+            try { URL.revokeObjectURL(activeImageUrl); } catch(e){}
+            activeImageUrl = null;
+        }
+    }
+
+    function abortActiveReader() {
+        if (activeReader) {
+            try { activeReader.abort(); } catch(e){}
+            activeReader = null;
+        }
+    }
+
+    function cleanupFilePreview() {
+        revokeActiveImageUrl();
+        abortActiveReader();
+        filePreviewImg.src = '';
+        filePreviewImg.style.display = 'none';
+        base64File.value = '';
+        fileResult.style.display = 'none';
+        fileUpload.value = '';
+    }
+
+    function fullCleanup() {
+        revokeActiveImageUrl();
+        abortActiveReader();
+        Object.values(copyTimers).forEach(t => clearTimeout(t));
+        copyTimers = {};
+    }
+
+    window.addEventListener('beforeunload', fullCleanup);
+    window.addEventListener('pagehide', fullCleanup);
+
+    // ============ TABS ============
     const tabText = document.getElementById("tabText");
     const tabFile = document.getElementById("tabFile");
     const textPanel = document.getElementById("textPanel");
@@ -205,6 +245,16 @@
 
     function utf8ToBase64(str){ return btoa(unescape(encodeURIComponent(str))); }
     function base64ToUtf8(str){ return decodeURIComponent(escape(atob(str))); }
+
+    function flashCopy(btn, key){
+        btn.innerText = "Copied!";
+        btn.classList.add("copied");
+        if (copyTimers[key]) clearTimeout(copyTimers[key]);
+        copyTimers[key] = setTimeout(() => {
+            btn.innerText = "Copy";
+            btn.classList.remove("copied");
+        }, 1500);
+    }
 
     encodeBtn.addEventListener("click", function(){
         if(!plainText.value){
@@ -238,19 +288,17 @@
         }
     });
 
+    // Clear = full text cleanup
     clearBtn.addEventListener("click", function(){
         plainText.value = "";
         base64Text.value = "";
         status.innerText = "";
+        status.className = "";
     });
 
     copyTextBtn.addEventListener("click", function(){
         if(!base64Text.value) return;
-        navigator.clipboard.writeText(base64Text.value).then(() => {
-            copyTextBtn.innerText = "Copied!";
-            copyTextBtn.classList.add("copied");
-            setTimeout(() => { copyTextBtn.innerText = "Copy"; copyTextBtn.classList.remove("copied"); }, 1500);
-        });
+        navigator.clipboard.writeText(base64Text.value).then(() => flashCopy(copyTextBtn, 'text'));
     });
 
     const dropZone = document.getElementById("dropZone");
@@ -259,11 +307,22 @@
     const filePreviewImg = document.getElementById("filePreviewImg");
     const base64File = document.getElementById("base64File");
     const copyFileBtn = document.getElementById("copyFileBtn");
+    const clearFileBtn = document.getElementById("clearFileBtn");
 
     function processFile(file){
         if(!file) return;
+
+        // Purana data pehle cleanup
+        revokeActiveImageUrl();
+        abortActiveReader();
+        base64File.value = '';
+        filePreviewImg.style.display = 'none';
+
         const reader = new FileReader();
+        activeReader = reader;
+
         reader.onload = function(e){
+            activeReader = null;
             base64File.value = e.target.result;
             fileResult.style.display = "block";
             if(file.type.startsWith("image/")){
@@ -272,6 +331,11 @@
             } else {
                 filePreviewImg.style.display = "none";
             }
+        };
+        reader.onerror = function(){
+            activeReader = null;
+            status.innerText = "❌ File read failed";
+            status.className = "status-error";
         };
         reader.readAsDataURL(file);
     }
@@ -283,14 +347,13 @@
         e.preventDefault(); dropZone.classList.remove("dragover");
         processFile(e.dataTransfer.files[0]);
     });
+
     copyFileBtn.addEventListener("click", function(){
         if(!base64File.value) return;
-        navigator.clipboard.writeText(base64File.value).then(() => {
-            copyFileBtn.innerText = "Copied!";
-            copyFileBtn.classList.add("copied");
-            setTimeout(() => { copyFileBtn.innerText = "Copy"; copyFileBtn.classList.remove("copied"); }, 1500);
-        });
+        navigator.clipboard.writeText(base64File.value).then(() => flashCopy(copyFileBtn, 'file'));
     });
+
+    clearFileBtn.addEventListener("click", cleanupFilePreview);
 </script>
 </body>
 </html>

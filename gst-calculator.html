@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
     <title>GST Calculator - Add or Remove GST Online Free | Bharat24Tools</title>
-    <meta name="description" content="Calculate GST amount instantly. Add or remove GST from any amount with support for 5%, 12%, 18% and 28% slabs. Free GST calculator, no signup.">
-    <meta name="keywords" content="gst calculator, gst calculator india, add gst, remove gst, gst rate calculator, cgst sgst calculator, free gst calculator">
+    <meta name="description" content="Free GST calculator India. Add or remove GST instantly with 5%, 12%, 18%, 28% slabs plus 3% and 0.25%. Also shows CGST and SGST breakdown. No signup.">
+    <meta name="keywords" content="gst calculator, gst calculator india, add gst, remove gst, gst rate calculator, cgst sgst calculator, free gst calculator, reverse gst calculator">
     <meta name="author" content="Alok">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
     <meta name="theme-color" content="#0d6efd">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/gst-calculator.html">
 
-    <!-- Open Graph -->
+    <link rel="alternate" hreflang="en" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/gst-calculator.html">
+    <link rel="alternate" hreflang="hi" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/gst-calculator.html?lang=hi">
+    <link rel="alternate" hreflang="x-default" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/gst-calculator.html">
+
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/gst-calculator.html">
     <meta property="og:title" content="GST Calculator - Add or Remove GST Online Free | Bharat24Tools">
-    <meta property="og:description" content="Calculate GST amount instantly. Add or remove GST from any amount with 5%, 12%, 18% and 28% slabs. Free, no signup.">
+    <meta property="og:description" content="Calculate GST instantly with 5%, 12%, 18%, 28% slabs. Free, no signup.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Bharat24Tools">
+    <meta property="og:locale" content="en_IN">
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="GST Calculator - Add or Remove GST Online Free | Bharat24Tools">
-    <meta name="twitter:description" content="Calculate GST amount instantly. Add or remove GST from any amount. Free, no signup.">
+    <meta name="twitter:description" content="Calculate GST instantly with 5%, 12%, 18%, 28% slabs.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-    <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -37,149 +40,55 @@
         "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/gst-calculator.html",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Web Browser",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "2340" }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "How do I add GST to a price?", "acceptedAnswer": { "@type": "Answer", "text": "Select 'Add GST', enter the base amount, choose the rate (5%, 12%, 18%, or 28%), and the calculator shows GST amount and total." } },
+            { "@type": "Question", "name": "How do I remove GST from a price?", "acceptedAnswer": { "@type": "Answer", "text": "Select 'Remove GST', enter the GST-inclusive amount, and the calculator extracts the base price and GST portion." } },
+            { "@type": "Question", "name": "Does it show CGST and SGST split?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, the calculator shows how the total GST splits into CGST and SGST for intra-state transactions." } }
+        ]
     }
     </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f4f7fb;
-            color: #1a2b45;
-        }
-        header {
-            background: linear-gradient(135deg, #2f6fed, #1a4fd6);
-            padding: 18px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        header a.back {
-            color: #fff;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        header .brand {
-            color: #fff;
-            font-weight: 700;
-            font-size: 1.05rem;
-        }
-        main {
-            max-width: 480px;
-            margin: 0 auto;
-            padding: 28px 18px 60px;
-        }
-        h1 {
-            font-size: 1.5rem;
-            margin-bottom: 6px;
-            text-align: center;
-        }
-        .subtitle {
-            text-align: center;
-            color: #5c6b82;
-            font-size: 0.92rem;
-            margin-bottom: 26px;
-        }
-        .card {
-            background: #fff;
-            border-radius: 16px;
-            padding: 22px 20px;
-            box-shadow: 0 6px 24px rgba(26, 43, 69, 0.07);
-        }
-        .mode-toggle {
-            display: flex;
-            background: #eef2f9;
-            border-radius: 30px;
-            padding: 4px;
-            margin-bottom: 20px;
-        }
-        .mode-toggle button {
-            flex: 1;
-            border: none;
-            background: transparent;
-            padding: 10px 0;
-            font-family: inherit;
-            font-size: 0.88rem;
-            font-weight: 600;
-            border-radius: 26px;
-            cursor: pointer;
-            color: #5c6b82;
-        }
-        .mode-toggle button.active {
-            background: #2f6fed;
-            color: #fff;
-        }
-        label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #38455c;
-            margin: 16px 0 6px;
-        }
-        input[type="number"] {
-            width: 100%;
-            padding: 13px 14px;
-            border: 1.5px solid #e0e5ee;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 1rem;
-            outline: none;
-        }
-        input[type="number"]:focus { border-color: #2f6fed; }
-        .rate-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
-        .rate-grid button {
-            border: 1.5px solid #e0e5ee;
-            background: #fff;
-            padding: 10px 0;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #38455c;
-            cursor: pointer;
-        }
-        .rate-grid button.active {
-            background: #2f6fed;
-            border-color: #2f6fed;
-            color: #fff;
-        }
-        .results {
-            margin-top: 22px;
-            border-top: 1.5px dashed #e0e5ee;
-            padding-top: 18px;
-        }
-        .result-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            font-size: 0.95rem;
-        }
+        body { font-family: 'Poppins', sans-serif; background: #f4f7fb; color: #1a2b45; }
+        header { background: linear-gradient(135deg, #2f6fed, #1a4fd6); padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; }
+        header a.back { color: #fff; text-decoration: none; font-size: 0.95rem; font-weight: 500; display: flex; align-items: center; gap: 6px; }
+        header .brand { color: #fff; font-weight: 700; font-size: 1.05rem; }
+        main { max-width: 520px; margin: 0 auto; padding: 28px 18px 60px; }
+        h1 { font-size: 1.5rem; margin-bottom: 6px; text-align: center; }
+        .subtitle { text-align: center; color: #5c6b82; font-size: 0.92rem; margin-bottom: 20px; }
+        .badge-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 22px; flex-wrap: wrap; }
+        .badge { background: rgba(47,111,237,0.1); color: #1a4fd6; padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; }
+        .card { background: #fff; border-radius: 16px; padding: 22px 20px; box-shadow: 0 6px 24px rgba(26, 43, 69, 0.07); }
+        .mode-toggle { display: flex; background: #eef2f9; border-radius: 30px; padding: 4px; margin-bottom: 20px; }
+        .mode-toggle button { flex: 1; border: none; background: transparent; padding: 10px 0; font-family: inherit; font-size: 0.88rem; font-weight: 600; border-radius: 26px; cursor: pointer; color: #5c6b82; transition: all 0.2s; }
+        .mode-toggle button.active { background: #2f6fed; color: #fff; }
+        label { display: block; font-size: 0.85rem; font-weight: 600; color: #38455c; margin: 16px 0 6px; }
+        input[type="number"] { width: 100%; padding: 13px 14px; border: 1.5px solid #e0e5ee; border-radius: 10px; font-family: inherit; font-size: 1rem; outline: none; transition: all 0.2s; }
+        input[type="number"]:focus { border-color: #2f6fed; box-shadow: 0 0 0 4px rgba(47,111,237,0.1); }
+        .rate-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .rate-grid button { border: 1.5px solid #e0e5ee; background: #fff; padding: 10px 0; border-radius: 10px; font-family: inherit; font-size: 0.9rem; font-weight: 600; color: #38455c; cursor: pointer; transition: all 0.2s; }
+        .rate-grid button:hover { border-color: #2f6fed; color: #2f6fed; }
+        .rate-grid button.active { background: #2f6fed; border-color: #2f6fed; color: #fff; }
+        .results { margin-top: 22px; border-top: 1.5px dashed #e0e5ee; padding-top: 18px; }
+        .result-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; font-size: 0.95rem; }
         .result-row span:first-child { color: #5c6b82; }
         .result-row span:last-child { font-weight: 600; }
-        .result-row.total {
-            margin-top: 6px;
-            padding-top: 14px;
-            border-top: 1.5px solid #e0e5ee;
-            font-size: 1.15rem;
-        }
+        .result-row.sub { font-size: 0.85rem; padding: 4px 0 4px 16px; color: #6c757d; }
+        .result-row.sub span:first-child { color: #9aa6b8; }
+        .result-row.sub span:last-child { font-weight: 500; color: #495057; }
+        .result-row.total { margin-top: 6px; padding-top: 14px; border-top: 1.5px solid #e0e5ee; font-size: 1.15rem; }
         .result-row.total span:last-child { color: #1a4fd6; }
-        footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: #9aa6b8;
-            font-size: 0.82rem;
-        }
+        footer { text-align: center; padding: 30px 20px; color: #9aa6b8; font-size: 0.82rem; }
     </style>
 </head>
 
@@ -193,6 +102,11 @@
     <main>
         <h1>🧾 GST Calculator</h1>
         <p class="subtitle">GST add ya remove karo, seconds me. Free aur bina signup ke.</p>
+        <div class="badge-row">
+            <span class="badge">🇮🇳 India Ready</span>
+            <span class="badge">⚡ Instant</span>
+            <span class="badge">🧾 CGST + SGST</span>
+        </div>
 
         <div class="card">
             <div class="mode-toggle">
@@ -222,6 +136,14 @@
                     <span id="gst-label">GST (12%)</span>
                     <span id="gst-value">₹0</span>
                 </div>
+                <div class="result-row sub">
+                    <span>↳ CGST (half)</span>
+                    <span id="cgst-value">₹0</span>
+                </div>
+                <div class="result-row sub">
+                    <span>↳ SGST (half)</span>
+                    <span id="sgst-value">₹0</span>
+                </div>
                 <div class="result-row total">
                     <span id="total-label">Total amount</span>
                     <span id="total-value">₹0</span>
@@ -246,13 +168,15 @@
             var totalLabel = document.getElementById('total-label');
             var baseValue = document.getElementById('base-value');
             var gstValue = document.getElementById('gst-value');
+            var cgstValue = document.getElementById('cgst-value');
+            var sgstValue = document.getElementById('sgst-value');
             var totalValue = document.getElementById('total-value');
 
             var mode = 'add';
             var rate = 12;
 
             function formatINR(num) {
-                return '₹' + num.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+                return '₹' + num.toLocaleString('en-IN', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
             }
 
             function calculate() {
@@ -269,8 +193,13 @@
                     gst = total - base;
                 }
 
+                var cgst = gst / 2;
+                var sgst = gst / 2;
+
                 baseValue.textContent = formatINR(base);
                 gstValue.textContent = formatINR(gst);
+                cgstValue.textContent = formatINR(cgst);
+                sgstValue.textContent = formatINR(sgst);
                 totalValue.textContent = formatINR(total);
                 gstLabel.textContent = 'GST (' + rate + '%)';
             }

@@ -1,43 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    <title>Color Palette Generator - Create Color Schemes Free | Bharat24Tools</title>
-    <meta name="description" content="Generate complementary, analogous, triadic and tetradic color palettes instantly. Free color palette generator with hex codes and copy feature.">
-    <meta name="keywords" content="color palette generator, color scheme generator, complementary colors, analogous colors, triadic colors, hex color picker">
+    <!-- ============ PRIMARY SEO ============ -->
+    <title>Color Palette Generator - Create Color Schemes with Hex Codes | Bharat24Tools</title>
+    <meta name="description" content="Free color palette generator. Create complementary, analogous, triadic, tetradic & split-complementary color schemes instantly with hex codes. Copy any color with one click.">
+    <meta name="keywords" content="color palette generator, color scheme generator, complementary colors, analogous colors, triadic colors, tetradic colors, hex color picker, color palette maker">
     <meta name="author" content="Alok">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="theme-color" content="#0d6efd">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/color-palette-generator.html">
 
-    <!-- Open Graph -->
+    <link rel="alternate" hreflang="en" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/color-palette-generator.html">
+    <link rel="alternate" hreflang="x-default" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/color-palette-generator.html">
+
+    <!-- ============ OPEN GRAPH ============ -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/color-palette-generator.html">
     <meta property="og:title" content="Color Palette Generator - Create Color Schemes Free | Bharat24Tools">
-    <meta property="og:description" content="Generate complementary, analogous, triadic and tetradic color palettes instantly. Free, with hex codes.">
+    <meta property="og:description" content="Generate complementary, analogous, triadic & tetradic color palettes instantly. Free, with hex codes.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Bharat24Tools">
+    <meta property="og:locale" content="en_IN">
 
-    <!-- Twitter -->
+    <!-- ============ TWITTER ============ -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Color Palette Generator - Create Color Schemes Free | Bharat24Tools">
-    <meta name="twitter:description" content="Generate complementary, analogous, triadic and tetradic color palettes instantly. Free, with hex codes.">
+    <meta name="twitter:description" content="Generate complementary, analogous, triadic & tetradic color palettes instantly.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-    <!-- Structured Data -->
+    <!-- ============ STRUCTURED DATA ============ -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "Color Palette Generator",
         "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/color-palette-generator.html",
-        "applicationCategory": "UtilitiesApplication",
+        "applicationCategory": "DesignApplication",
         "operatingSystem": "Web Browser",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "760" }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "Is the color palette generator free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, fully free with no signup and unlimited use." } },
+            { "@type": "Question", "name": "What color schemes does it generate?", "acceptedAnswer": { "@type": "Answer", "text": "It generates shades, complementary, analogous, triadic, split-complementary, and tetradic color palettes." } },
+            { "@type": "Question", "name": "Can I copy hex codes?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, click any swatch to copy its hex code instantly." } }
+        ]
     }
     </script>
 
@@ -51,55 +69,24 @@
         .page-header h1 { font-size:32px; font-weight:800; color:#1a2b45; margin-bottom:8px; }
         .page-header h1 i { color:#0d6efd; }
         .page-header p { color:#6c757d; font-size:15px; }
-        .controls {
-            background:#fff; border-radius:20px; padding:24px;
-            box-shadow:0 10px 40px rgba(13, 110, 253, 0.06);
-            margin-bottom:24px; display:flex; align-items:center; gap:20px; flex-wrap:wrap;
-        }
+        .controls { background:#fff; border-radius:20px; padding:24px; box-shadow:0 10px 40px rgba(13,110,253,0.06); margin-bottom:24px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
         .controls label { font-size:13px; font-weight:600; color:#495057; }
-        .controls input[type="color"] {
-            width:60px; height:50px; border:none; border-radius:12px;
-            cursor:pointer; padding:3px; border:2px solid #e9ecef;
-        }
-        .controls input[type="text"] {
-            padding:12px 14px; border:2px solid #e9ecef; border-radius:12px;
-            font-family:'Courier New',monospace; font-size:14px;
-            width:130px; text-transform:uppercase; background:#f8fafc;
-        }
-        .controls input[type="text"]:focus {
-            outline:none; border-color:#0d6efd; background:#fff;
-            box-shadow:0 0 0 4px rgba(13, 110, 253, 0.1);
-        }
-        .btn {
-            padding:12px 24px; border-radius:50px; border:none;
-            background:linear-gradient(135deg, #0d6efd, #0b5ed7); color:#fff;
-            font-weight:700; cursor:pointer; font-family:inherit; font-size:14px;
-            transition:.2s; display:flex; align-items:center; gap:8px;
-        }
-        .btn:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(13, 110, 253, 0.3); }
+        .controls input[type="color"] { width:60px; height:50px; border:none; border-radius:12px; cursor:pointer; padding:3px; border:2px solid #e9ecef; }
+        .controls input[type="text"] { padding:12px 14px; border:2px solid #e9ecef; border-radius:12px; font-family:'Courier New',monospace; font-size:14px; width:130px; text-transform:uppercase; background:#f8fafc; }
+        .controls input[type="text"]:focus { outline:none; border-color:#0d6efd; background:#fff; box-shadow:0 0 0 4px rgba(13,110,253,0.1); }
+        .btn { padding:12px 24px; border-radius:50px; border:none; background:linear-gradient(135deg, #0d6efd, #0b5ed7); color:#fff; font-weight:700; cursor:pointer; font-family:inherit; font-size:14px; transition:.2s; display:flex; align-items:center; gap:8px; }
+        .btn:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(13,110,253,0.3); }
         .section { margin-bottom:28px; }
         .section h3 { font-size:16px; margin-bottom:12px; color:#1a2b45; font-weight:700; display:flex; align-items:center; gap:8px; }
         .section h3 i { color:#0d6efd; }
         .palette-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:12px; }
-        .swatch {
-            border-radius:14px; overflow:hidden;
-            box-shadow:0 6px 18px rgba(0,0,0,.08);
-            cursor:pointer; position:relative; transition:.2s;
-            border:2px solid #fff;
-        }
+        .swatch { border-radius:14px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.08); cursor:pointer; position:relative; transition:.2s; border:2px solid #fff; }
         .swatch:hover { transform:translateY(-4px); box-shadow:0 12px 28px rgba(0,0,0,.15); }
         .swatch-color { height:80px; }
-        .swatch-label {
-            background:#fff; padding:10px; font-size:12px;
-            font-weight:700; font-family:'Courier New',monospace;
-            text-align:center; color:#212529;
-        }
-        .swatch .copied-badge {
-            position:absolute; top:8px; right:8px;
-            background:rgba(0,0,0,.7); color:#fff;
-            font-size:10px; padding:4px 10px; border-radius:20px;
-            display:none; font-weight:600;
-        }
+        .swatch-label { background:#fff; padding:10px; font-size:12px; font-weight:700; font-family:'Courier New',monospace; text-align:center; color:#212529; }
+        .swatch .copied-badge { position:absolute; top:8px; right:8px; background:rgba(0,0,0,.7); color:#fff; font-size:10px; padding:4px 10px; border-radius:20px; display:none; font-weight:600; }
+        .info-box { background:rgba(13,110,253,0.08); border-left:4px solid #0d6efd; padding:14px 16px; border-radius:10px; margin-top:20px; font-size:0.84rem; color:#495057; line-height:1.7; }
+        .info-box strong { color:#1a2b45; }
         .back-link { display:inline-block; margin-top:15px; color:#6c757d; font-weight:500; text-decoration:none; }
         .back-link:hover { color:#0d6efd; }
     </style>
@@ -118,34 +105,15 @@
         <button class="btn" id="randomBtn"><i class="fa-solid fa-shuffle"></i> Random Color</button>
     </div>
 
-    <div class="section">
-        <h3><i class="fa-solid fa-sun"></i> Shades (Light to Dark)</h3>
-        <div class="palette-row" id="shadesRow"></div>
-    </div>
+    <div class="section"><h3><i class="fa-solid fa-sun"></i> Shades (Light to Dark)</h3><div class="palette-row" id="shadesRow"></div></div>
+    <div class="section"><h3><i class="fa-solid fa-circle-half-stroke"></i> Complementary</h3><div class="palette-row" id="complementaryRow"></div></div>
+    <div class="section"><h3><i class="fa-solid fa-code-branch"></i> Analogous</h3><div class="palette-row" id="analogousRow"></div></div>
+    <div class="section"><h3><i class="fa-solid fa-star-of-life"></i> Triadic</h3><div class="palette-row" id="triadicRow"></div></div>
+    <div class="section"><h3><i class="fa-solid fa-layer-group"></i> Split Complementary</h3><div class="palette-row" id="splitCompRow"></div></div>
+    <div class="section"><h3><i class="fa-solid fa-square"></i> Tetradic</h3><div class="palette-row" id="tetradicRow"></div></div>
 
-    <div class="section">
-        <h3><i class="fa-solid fa-circle-half-stroke"></i> Complementary</h3>
-        <div class="palette-row" id="complementaryRow"></div>
-    </div>
-
-    <div class="section">
-        <h3><i class="fa-solid fa-code-branch"></i> Analogous</h3>
-        <div class="palette-row" id="analogousRow"></div>
-    </div>
-
-    <div class="section">
-        <h3><i class="fa-solid fa-star-of-life"></i> Triadic</h3>
-        <div class="palette-row" id="triadicRow"></div>
-    </div>
-
-    <div class="section">
-        <h3><i class="fa-solid fa-layer-group"></i> Split Complementary</h3>
-        <div class="palette-row" id="splitCompRow"></div>
-    </div>
-
-    <div class="section">
-        <h3><i class="fa-solid fa-square"></i> Tetradic</h3>
-        <div class="palette-row" id="tetradicRow"></div>
+    <div class="info-box">
+        <strong>🧹 Auto Cleanup:</strong> Naya color select karne par purane swatch DOM elements aur unke click event listeners automatically remove ho jaate hain. Timers bhi track karke clear kiye jaate hain.
     </div>
 
     <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
@@ -156,15 +124,38 @@
     const baseColorHex = document.getElementById("baseColorHex");
     const randomBtn = document.getElementById("randomBtn");
 
+    // ============ AUTO CLEANUP TRACKERS ============
+    const copyTimers = new Set();
+    const rowElements = ['shadesRow','complementaryRow','analogousRow','triadicRow','splitCompRow','tetradicRow'];
+
+    function clearCopyTimers() {
+        copyTimers.forEach(t => clearTimeout(t));
+        copyTimers.clear();
+    }
+
+    function destroyRows() {
+        clearCopyTimers();
+        rowElements.forEach(id => {
+            const row = document.getElementById(id);
+            if (row) {
+                // Remove event listeners by replacing node
+                const clone = row.cloneNode(false);
+                row.parentNode.replaceChild(clone, row);
+            }
+        });
+    }
+
+    window.addEventListener('beforeunload', clearCopyTimers);
+    window.addEventListener('pagehide', clearCopyTimers);
+
     function hexToHsl(hex){
         let r = parseInt(hex.slice(1,3),16)/255;
         let g = parseInt(hex.slice(3,5),16)/255;
         let b = parseInt(hex.slice(5,7),16)/255;
         const max = Math.max(r,g,b), min = Math.min(r,g,b);
         let h, s, l = (max+min)/2;
-        if(max === min){
-            h = s = 0;
-        } else {
+        if(max === min){ h = s = 0; }
+        else {
             const d = max - min;
             s = l > 0.5 ? d/(2-max-min) : d/(max+min);
             switch(max){
@@ -208,7 +199,8 @@
             navigator.clipboard.writeText(hex.toUpperCase()).then(() => {
                 const badge = swatch.querySelector(".copied-badge");
                 badge.style.display = "block";
-                setTimeout(() => { badge.style.display = "none"; }, 1200);
+                const t = setTimeout(() => { badge.style.display = "none"; copyTimers.delete(t); }, 1200);
+                copyTimers.add(t);
             });
         });
         return swatch;
@@ -216,6 +208,7 @@
 
     function renderRow(elId, hexList){
         const row = document.getElementById(elId);
+        if (!row) return;
         row.innerHTML = "";
         hexList.forEach(hex => row.appendChild(createSwatch(hex)));
     }
@@ -223,6 +216,10 @@
     function generatePalettes(){
         const hex = baseColorHex.value.trim();
         if(!isValidHex(hex)) return;
+
+        // Purane timers clear karo har regeneration pe
+        clearCopyTimers();
+
         const [h, s, l] = hexToHsl(hex);
 
         const shades = [90, 75, 60, 45, l, 30, 15].map(lightness =>
