@@ -67,7 +67,6 @@
         .file-list { margin-top:16px; max-height:280px; overflow-y:auto; }
         .file-item { display:flex; align-items:center; gap:10px; padding:10px 12px; background:rgba(99,102,241,0.1); border-radius:8px; margin-bottom:6px; font-size:0.8rem; }
         .file-item img { width:40px; height:40px; object-fit:cover; border-radius:6px; flex-shrink:0; }
-        .file-item .placeholder { width:40px; height:40px; background:rgba(168,85,247,0.2); border-radius:6px; flex-shrink:0; }
         .file-item .info { flex:1; min-width:0; }
         .file-item .info .fname { color:#e0e7ff; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
         .file-item .info .fsize { color:#a5b4fc; font-size:0.7rem; }
@@ -128,8 +127,8 @@
             <div class="option-group">
                 <label>Language (OCR)</label>
                 <select id="langSelect">
-                    <option value="eng+hin" selected>English + हिंदी (Recommended)</option>
-                    <option value="eng">English only</option>
+                    <option value="eng" selected>English only (Fast ⚡)</option>
+                    <option value="eng+hin">English + हिंदी (Slow but accurate)</option>
                     <option value="hin">हिंदी only</option>
                 </select>
             </div>
@@ -150,8 +149,8 @@
                 Ek hi clean sheet mein data
             </div>
             <div class="feature-item">
-                <strong>🌐 Hindi + English</strong>
-                Dono languages support
+                <strong>⚡ Auto-Resize</strong>
+                Image 1500px tak auto-compress
             </div>
             <div class="feature-item">
                 <strong>🧹 Auto-Cleanup</strong>
@@ -160,7 +159,7 @@
         </div>
 
         <div class="info-box">
-            <strong>💡 Kaise Kaam Karta Hai:</strong> Bordered tables (invoice, statement) ke liye OpenCV se exact cells detect hote hain aur OCR se har cell padha jata hai. Isliye <strong>proper rows aur columns</strong> milte hain Excel mein. Borderless images ke liye line-based fallback. Output: <strong>1 clean sheet</strong> with rows × columns.
+            <strong>💡 Tip:</strong> <b>English only</b> select karo (fast ⚡). Hindi OCR slow hota hai. Image 1500px tak auto-compress ho jayegi taaki server jaldi response de.
         </div>
     </div>
 </main>
@@ -168,7 +167,8 @@
 <script>
 const API_URL = 'https://bharat24tools-api.onrender.com';
 const MAX_SIZE = 15 * 1024 * 1024;
-const TIMEOUT_MS = 120000;
+const TIMEOUT_MS = 180000; // 3 minutes
+const MAX_DIM = 1500; // Image auto-resize
 
 let selectedFiles = [];
 let previewUrl = null;
@@ -185,7 +185,6 @@ const progressBar = document.getElementById('progressBar');
 const progressFill = document.getElementById('progressFill');
 const progressText = document.getElementById('progressText');
 
-// ============ AUTO CLEANUP ============
 function revokePreview() {
     if (previewUrl) { try { URL.revokeObjectURL(previewUrl); } catch(e){} previewUrl = null; }
 }
@@ -200,7 +199,6 @@ function fullCleanup() {
 window.addEventListener('beforeunload', fullCleanup);
 window.addEventListener('pagehide', fullCleanup);
 
-// ============ FILE HANDLING ============
 uploadZone.addEventListener('click', () => fileInput.click());
 uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
 uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
@@ -219,27 +217,65 @@ function formatSize(bytes) {
     return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
 }
 
-function addFiles(files) {
-    // Sirf 1 image allow
-    const f = files[0];
-    if (!f || !f.type.startsWith('image/')) {
+function resizeImageIfNeeded(file, maxDim) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+            URL.revokeObjectURL(url);
+            if (img.width <= maxDim && img.height <= maxDim) {
+                resolve(file);
+                return;
+            }
+            const scale = maxDim / Math.max(img.width, img.height);
+            const w = Math.round(img.width * scale);
+            const h = Math.round(img.height * scale);
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            canvas.toBlob((blob) => {
+                try { canvas.width = 0; canvas.height = 0; } catch(e){}
+                if (!blob) { resolve(file); return; }
+                const newFile = new File([blob], file.name, { type: 'image/jpeg' });
+                resolve(newFile);
+            }, 'image/jpeg', 0.88);
+        };
+        img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+        img.src = url;
+    });
+}
+
+async function addFiles(files) {
+    const originalFile = files[0];
+    if (!originalFile || !originalFile.type.startsWith('image/')) {
         showStatus('❌ कृपया valid image चुनें (JPG, PNG, WebP)', 'error');
         return;
     }
-    if (f.size > MAX_SIZE) {
+    if (originalFile.size > MAX_SIZE) {
         showStatus('❌ File 15MB से बड़ी है', 'error');
         return;
     }
 
-    // Purana cleanup
     revokePreview();
     clearProgressTimer();
 
-    selectedFiles = [f];
-    previewUrl = URL.createObjectURL(f);
+    showStatus('⚙️ Image तैयार हो रही है...', 'loading');
 
-    renderFileList();
-    showStatus(`✅ Ready: ${f.name}`, 'success');
+    try {
+        const resizedFile = await resizeImageIfNeeded(originalFile, MAX_DIM);
+        selectedFiles = [resizedFile];
+        previewUrl = URL.createObjectURL(resizedFile);
+        renderFileList();
+        showStatus(`✅ Ready: ${formatSize(resizedFile.size)}`, 'success');
+    } catch (e) {
+        console.error(e);
+        selectedFiles = [originalFile];
+        previewUrl = URL.createObjectURL(originalFile);
+        renderFileList();
+        showStatus(`✅ Ready: ${originalFile.name}`, 'success');
+    }
 }
 
 function renderFileList() {
@@ -271,7 +307,6 @@ function renderFileList() {
         selectedFiles = [];
         fileInput.value = '';
         renderFileList();
-        showStatus('', '');
         status.className = 'status';
         status.style.display = 'none';
     });
@@ -281,7 +316,6 @@ function renderFileList() {
     convertBtn.style.display = 'block';
 }
 
-// ============ CONVERT ============
 convertBtn.addEventListener('click', async () => {
     if (selectedFiles.length === 0) return;
 
@@ -290,17 +324,17 @@ convertBtn.addEventListener('click', async () => {
     progressText.style.display = 'block';
     progressFill.style.width = '10%';
     progressText.textContent = '10%';
-    showStatus('⏳ Uploading image... (pehli request 30-60s)', 'loading');
+    showStatus('⏳ Uploading... (pehli request 30-60s)', 'loading');
 
     let pct = 10;
     progressTimer = setInterval(() => {
-        pct = Math.min(pct + 3, 90);
+        pct = Math.min(pct + 2, 90);
         progressFill.style.width = pct + '%';
         progressText.textContent = pct + '%';
         if (pct > 30 && pct < 60) {
-            showStatus('🔍 Detecting table & running OCR...', 'loading');
+            showStatus('🔍 OCR चल रहा है...', 'loading');
         } else if (pct >= 60) {
-            showStatus('📊 Building Excel sheet...', 'loading');
+            showStatus('📊 Excel sheet बन रही है...', 'loading');
         }
     }, 2000);
 
@@ -339,13 +373,13 @@ convertBtn.addEventListener('click', async () => {
         a.click();
         setTimeout(() => URL.revokeObjectURL(url), 5000);
 
-        showStatus('🎉 Excel file downloaded!', 'success');
+        showStatus('🎉 Excel downloaded!', 'success');
     } catch (err) {
         clearTimeout(timeoutId);
         clearProgressTimer();
         console.error(err);
         if (err.name === 'AbortError') {
-            showStatus('⏱️ Server timeout — chhoti image ya dobara try karo', 'error');
+            showStatus('⏱️ Server timeout — "English only" try karo ya chhoti image bhejo', 'error');
         } else {
             showStatus('❌ Error: ' + err.message, 'error');
         }

@@ -127,8 +127,8 @@
             <div class="option-group">
                 <label>Language (OCR)</label>
                 <select id="langSelect">
-                    <option value="eng+hin" selected>English + हिंदी (Recommended)</option>
-                    <option value="eng">English only</option>
+                    <option value="eng" selected>English only (Fast ⚡)</option>
+                    <option value="eng+hin">English + हिंदी (Slow but accurate)</option>
                     <option value="hin">हिंदी only</option>
                 </select>
             </div>
@@ -146,7 +146,7 @@
         <div class="features-grid">
             <div class="feature-item">
                 <strong>🤖 AI OCR</strong>
-                Hindi + English text extraction
+                Text extraction accurate
             </div>
             <div class="feature-item">
                 <strong>📊 Table Detection</strong>
@@ -154,16 +154,16 @@
             </div>
             <div class="feature-item">
                 <strong>📄 Editable DOCX</strong>
-                Word mein edit kar sakte ho
+                Word में edit कर सकते हो
             </div>
             <div class="feature-item">
                 <strong>🧹 Auto-Cleanup</strong>
-                Files 30 sec baad delete
+                Files 30 sec बाद delete
             </div>
         </div>
 
         <div class="info-box">
-            <strong>💡 Kaise Kaam Karta Hai:</strong> Image se OCR se text extract hoti hai. Agar image mein table hai (bordered), toh OpenCV se proper Word table banega (rows × columns). Borderless images ke liye plain text. Notes, book pages, invoices, tables — sab ke liye perfect.
+            <strong>💡 Tip:</strong> <b>English only</b> select karo (fast ⚡). Image 1500px तक auto-compress हो जाएगी ताकि server जल्दी response दे.
         </div>
     </div>
 </main>
@@ -171,7 +171,8 @@
 <script>
 const API_URL = 'https://bharat24tools-api.onrender.com';
 const MAX_SIZE = 15 * 1024 * 1024;
-const TIMEOUT_MS = 120000;
+const TIMEOUT_MS = 180000; // 3 minutes
+const MAX_DIM = 1500;
 
 let selectedFiles = [];
 let previewUrl = null;
@@ -220,23 +221,65 @@ function formatSize(bytes) {
     return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
 }
 
-function addFiles(files) {
-    const f = files[0];
-    if (!f || !f.type.startsWith('image/')) {
+function resizeImageIfNeeded(file, maxDim) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+            URL.revokeObjectURL(url);
+            if (img.width <= maxDim && img.height <= maxDim) {
+                resolve(file);
+                return;
+            }
+            const scale = maxDim / Math.max(img.width, img.height);
+            const w = Math.round(img.width * scale);
+            const h = Math.round(img.height * scale);
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            canvas.toBlob((blob) => {
+                try { canvas.width = 0; canvas.height = 0; } catch(e){}
+                if (!blob) { resolve(file); return; }
+                const newFile = new File([blob], file.name, { type: 'image/jpeg' });
+                resolve(newFile);
+            }, 'image/jpeg', 0.88);
+        };
+        img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+        img.src = url;
+    });
+}
+
+async function addFiles(files) {
+    const originalFile = files[0];
+    if (!originalFile || !originalFile.type.startsWith('image/')) {
         showStatus('❌ कृपया valid image चुनें (JPG, PNG, WebP)', 'error');
         return;
     }
-    if (f.size > MAX_SIZE) {
+    if (originalFile.size > MAX_SIZE) {
         showStatus('❌ File 15MB से बड़ी है', 'error');
         return;
     }
 
     revokePreview();
     clearProgressTimer();
-    selectedFiles = [f];
-    previewUrl = URL.createObjectURL(f);
-    renderFileList();
-    showStatus(`✅ Ready: ${f.name}`, 'success');
+
+    showStatus('⚙️ Image तैयार हो रही है...', 'loading');
+
+    try {
+        const resizedFile = await resizeImageIfNeeded(originalFile, MAX_DIM);
+        selectedFiles = [resizedFile];
+        previewUrl = URL.createObjectURL(resizedFile);
+        renderFileList();
+        showStatus(`✅ Ready: ${formatSize(resizedFile.size)}`, 'success');
+    } catch (e) {
+        console.error(e);
+        selectedFiles = [originalFile];
+        previewUrl = URL.createObjectURL(originalFile);
+        renderFileList();
+        showStatus(`✅ Ready: ${originalFile.name}`, 'success');
+    }
 }
 
 function renderFileList() {
@@ -285,17 +328,17 @@ convertBtn.addEventListener('click', async () => {
     progressText.style.display = 'block';
     progressFill.style.width = '10%';
     progressText.textContent = '10%';
-    showStatus('⏳ Uploading image... (pehli request 30-60s)', 'loading');
+    showStatus('⏳ Uploading... (pehli request 30-60s)', 'loading');
 
     let pct = 10;
     progressTimer = setInterval(() => {
-        pct = Math.min(pct + 3, 90);
+        pct = Math.min(pct + 2, 90);
         progressFill.style.width = pct + '%';
         progressText.textContent = pct + '%';
         if (pct > 30 && pct < 60) {
-            showStatus('🔍 Detecting table & running OCR...', 'loading');
+            showStatus('🔍 OCR चल रहा है...', 'loading');
         } else if (pct >= 60) {
-            showStatus('📝 Building Word document...', 'loading');
+            showStatus('📝 Word document बन रहा है...', 'loading');
         }
     }, 2000);
 
@@ -341,7 +384,7 @@ convertBtn.addEventListener('click', async () => {
         clearProgressTimer();
         console.error(err);
         if (err.name === 'AbortError') {
-            showStatus('⏱️ Server timeout — chhoti image ya dobara try karo', 'error');
+            showStatus('⏱️ Server timeout — "English only" try karo ya chhoti image bhejo', 'error');
         } else {
             showStatus('❌ Error: ' + err.message, 'error');
         }
