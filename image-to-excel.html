@@ -13,8 +13,8 @@
     <meta name="apple-mobile-web-app-title" content="Bharat24Tools">
 
     <title>Image to Excel - OCR Extract Table Data to XLSX Free | Bharat24Tools</title>
-    <meta name="description" content="Extract text and tables from multiple images using AI OCR with OpenCV table detection. Get proper Excel file with rows and columns. Free, up to 20MB.">
-    <meta name="keywords" content="image to excel, ocr image to excel, extract table from image, invoice to excel, bank statement to excel, table to xlsx, multiple images to excel">
+    <meta name="description" content="Extract text and tables from images using AI OCR with OpenCV table detection. Get a clean Excel file with proper rows and columns. Free, up to 15MB.">
+    <meta name="keywords" content="image to excel, ocr image to excel, extract table from image, invoice to excel, bank statement to excel, table to xlsx, hindi ocr">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-excel.html">
@@ -22,14 +22,13 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-excel.html">
     <meta property="og:title" content="Image to Excel - OCR Extract Table Data to XLSX | Bharat24Tools">
-    <meta property="og:description" content="Extract tables from multiple images using OpenCV + OCR. Free, up to 20MB.">
+    <meta property="og:description" content="Extract tables from images using OpenCV + OCR. Free, up to 15MB.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
     <meta property="og:site_name" content="Bharat24Tools">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-excel.html">
     <meta name="twitter:title" content="Image to Excel - OCR Extract Table Data | Bharat24Tools">
-    <meta name="twitter:description" content="Extract tables from images to Excel with OCR. Free, up to 20MB.">
+    <meta name="twitter:description" content="Extract tables from images to Excel with OCR. Free, up to 15MB.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
     <script type="application/ld+json">
@@ -88,6 +87,7 @@
         .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
         .progress-bar { display:none; width:100%; height:10px; background:rgba(15,15,30,0.8); border-radius:20px; margin-top:16px; overflow:hidden; }
         .progress-bar .fill { height:100%; width:0%; background:linear-gradient(90deg,#22c55e,#10b981); transition:width 0.3s; }
+        .progress-text { display:none; text-align:center; font-size:0.8rem; color:#a5b4fc; margin-top:8px; font-weight:600; }
         .info-box { background:rgba(99,102,241,0.1); border-left:4px solid #22c55e; padding:14px; border-radius:10px; margin-top:20px; font-size:0.8rem; color:#a5b4fc; line-height:1.6; }
         .info-box strong { color:#e0e7ff; }
         .features-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; margin-top:20px; }
@@ -105,21 +105,21 @@
 
 <main>
     <h1>📊 Image to Excel (OCR)</h1>
-    <p class="subtitle">Images से text और table extract करके proper Excel file बनाओ — rows और columns के साथ</p>
+    <p class="subtitle">Image से text और table extract करके proper Excel file बनाओ — rows और columns के साथ</p>
 
     <div class="card">
         <div class="upload-zone" id="uploadZone">
             <div class="upload-icon">📊</div>
             <p><span class="highlight">Click करो या Drag करो</span></p>
-            <p>Invoice, bank statement, table, marksheet — multiple images (max 20, 20MB total)</p>
+            <p>Invoice, bank statement, table, marksheet — 1 image (max 15MB)</p>
             <div style="margin-top:12px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
                 <span style="background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;">🤖 AI OCR</span>
                 <span style="background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;">📊 Table Detection</span>
-                <span style="background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;">💾 20MB</span>
+                <span style="background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;">💾 15MB</span>
                 <span style="background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;">🧹 Auto-Cleanup</span>
             </div>
         </div>
-        <input type="file" id="fileInput" accept="image/*" multiple>
+        <input type="file" id="fileInput" accept="image/*">
 
         <div id="fileList" class="file-list"></div>
         <div id="totalSize" class="total-size"></div>
@@ -128,15 +128,16 @@
             <div class="option-group">
                 <label>Language (OCR)</label>
                 <select id="langSelect">
-                    <option value="eng">English</option>
-                    <option value="hin">Hindi</option>
-                    <option value="eng+hin">English + Hindi</option>
+                    <option value="eng+hin" selected>English + हिंदी (Recommended)</option>
+                    <option value="eng">English only</option>
+                    <option value="hin">हिंदी only</option>
                 </select>
             </div>
         </div>
 
-        <button class="primary-btn" id="convertBtn" style="display:none;">📊 Extract All → Excel</button>
+        <button class="primary-btn" id="convertBtn" style="display:none;">📊 Extract → Excel</button>
         <div class="progress-bar" id="progressBar"><div class="fill" id="progressFill"></div></div>
+        <div class="progress-text" id="progressText">0%</div>
         <div class="status" id="status"></div>
 
         <div class="features-grid">
@@ -145,12 +146,12 @@
                 OpenCV se proper rows × columns
             </div>
             <div class="feature-item">
-                <strong>📑 Multi-file Support</strong>
-                Har image alag sheet mein
+                <strong>📄 Single Sheet</strong>
+                Ek hi clean sheet mein data
             </div>
             <div class="feature-item">
-                <strong>📋 Summary Sheet</strong>
-                Saari images ka overview
+                <strong>🌐 Hindi + English</strong>
+                Dono languages support
             </div>
             <div class="feature-item">
                 <strong>🧹 Auto-Cleanup</strong>
@@ -159,16 +160,19 @@
         </div>
 
         <div class="info-box">
-            <strong>💡 Kaise Kaam Karta Hai:</strong> Bordered tables (invoice, statement) ke liye OpenCV se exact cells detect hote hain aur OCR se har cell padhta hai. Isliye <strong>proper rows aur columns</strong> milte hain Excel mein. Borderless images ke liye position-based fallback. Har image ka alag sheet + Summary sheet + Raw Text sheet.
+            <strong>💡 Kaise Kaam Karta Hai:</strong> Bordered tables (invoice, statement) ke liye OpenCV se exact cells detect hote hain aur OCR se har cell padha jata hai. Isliye <strong>proper rows aur columns</strong> milte hain Excel mein. Borderless images ke liye line-based fallback. Output: <strong>1 clean sheet</strong> with rows × columns.
         </div>
     </div>
 </main>
 
 <script>
 const API_URL = 'https://bharat24tools-api.onrender.com';
+const MAX_SIZE = 15 * 1024 * 1024;
+const TIMEOUT_MS = 120000;
+
 let selectedFiles = [];
-const MAX_TOTAL_SIZE = 20 * 1024 * 1024;
-const MAX_FILES = 20;
+let previewUrl = null;
+let progressTimer = null;
 
 const uploadZone = document.getElementById('uploadZone');
 const fileInput = document.getElementById('fileInput');
@@ -179,123 +183,145 @@ const convertBtn = document.getElementById('convertBtn');
 const status = document.getElementById('status');
 const progressBar = document.getElementById('progressBar');
 const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
 
+// ============ AUTO CLEANUP ============
+function revokePreview() {
+    if (previewUrl) { try { URL.revokeObjectURL(previewUrl); } catch(e){} previewUrl = null; }
+}
+function clearProgressTimer() {
+    if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
+}
+function fullCleanup() {
+    revokePreview();
+    clearProgressTimer();
+    selectedFiles = [];
+}
+window.addEventListener('beforeunload', fullCleanup);
+window.addEventListener('pagehide', fullCleanup);
+
+// ============ FILE HANDLING ============
 uploadZone.addEventListener('click', () => fileInput.click());
 uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
 uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
 uploadZone.addEventListener('drop', (e) => {
     e.preventDefault();
     uploadZone.classList.remove('active');
-    addFiles(e.dataTransfer.files);
+    if (e.dataTransfer.files.length > 0) addFiles(e.dataTransfer.files);
 });
-fileInput.addEventListener('change', (e) => addFiles(e.target.files));
+fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) addFiles(e.target.files);
+});
+
+function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+}
 
 function addFiles(files) {
-    for (const f of files) {
-        if (!f.type.startsWith('image/')) continue;
-        if (selectedFiles.length >= MAX_FILES) {
-            showStatus(`❌ Max ${MAX_FILES} images allowed`, 'error');
-            break;
-        }
-        const currentTotal = selectedFiles.reduce((sum, file) => sum + file.size, 0);
-        if (currentTotal + f.size > MAX_TOTAL_SIZE) {
-            showStatus(`❌ Total size would exceed 20MB. Skipped: ${f.name}`, 'error');
-            continue;
-        }
-        selectedFiles.push(f);
+    // Sirf 1 image allow
+    const f = files[0];
+    if (!f || !f.type.startsWith('image/')) {
+        showStatus('❌ कृपया valid image चुनें (JPG, PNG, WebP)', 'error');
+        return;
     }
+    if (f.size > MAX_SIZE) {
+        showStatus('❌ File 15MB से बड़ी है', 'error');
+        return;
+    }
+
+    // Purana cleanup
+    revokePreview();
+    clearProgressTimer();
+
+    selectedFiles = [f];
+    previewUrl = URL.createObjectURL(f);
+
     renderFileList();
+    showStatus(`✅ Ready: ${f.name}`, 'success');
 }
 
 function renderFileList() {
     fileList.innerHTML = '';
 
-    selectedFiles.forEach((f, i) => {
-        const reader = new FileReader();
-        const item = document.createElement('div');
-        item.className = 'file-item';
-        item.innerHTML = `
-            <div class="placeholder"></div>
-            <div class="info">
-                <div class="fname">${f.name}</div>
-                <div class="fsize">${(f.size/1024).toFixed(0)} KB</div>
-            </div>
-            <button data-index="${i}" title="Remove">✕</button>
-        `;
-        fileList.appendChild(item);
-
-        reader.onload = (e) => {
-            const placeholder = item.querySelector('.placeholder');
-            if (placeholder) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                placeholder.replaceWith(img);
-            }
-        };
-        reader.readAsDataURL(f);
-    });
-
-    fileList.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            selectedFiles.splice(parseInt(e.target.dataset.index), 1);
-            renderFileList();
-        });
-    });
-
-    const totalBytes = selectedFiles.reduce((sum, f) => sum + f.size, 0);
-    const totalMB = (totalBytes / 1024 / 1024).toFixed(2);
-    if (selectedFiles.length > 0) {
-        totalSize.innerHTML = `<strong>${selectedFiles.length}</strong> image(s) — Total: <strong>${totalMB} MB</strong> / 20 MB`;
-    } else {
-        totalSize.innerHTML = '';
-    }
-
-    if (selectedFiles.length > 0) {
-        optionsPanel.style.display = 'grid';
-        convertBtn.style.display = 'block';
-    } else {
+    if (selectedFiles.length === 0) {
         optionsPanel.style.display = 'none';
         convertBtn.style.display = 'none';
+        totalSize.innerHTML = '';
+        return;
     }
+
+    const f = selectedFiles[0];
+
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    item.innerHTML = `
+        <img src="${previewUrl}" alt="preview">
+        <div class="info">
+            <div class="fname">${f.name}</div>
+            <div class="fsize">${formatSize(f.size)}</div>
+        </div>
+        <button title="Remove">✕</button>
+    `;
+    fileList.appendChild(item);
+
+    item.querySelector('button').addEventListener('click', () => {
+        revokePreview();
+        selectedFiles = [];
+        fileInput.value = '';
+        renderFileList();
+        showStatus('', '');
+        status.className = 'status';
+        status.style.display = 'none';
+    });
+
+    totalSize.innerHTML = `1 image — <strong>${formatSize(f.size)}</strong> / 15 MB`;
+    optionsPanel.style.display = 'grid';
+    convertBtn.style.display = 'block';
 }
 
+// ============ CONVERT ============
 convertBtn.addEventListener('click', async () => {
     if (selectedFiles.length === 0) return;
 
     convertBtn.disabled = true;
     progressBar.style.display = 'block';
-    progressFill.style.width = '15%';
-    showStatus(`⏳ Uploading ${selectedFiles.length} image(s)...`, 'loading');
+    progressText.style.display = 'block';
+    progressFill.style.width = '10%';
+    progressText.textContent = '10%';
+    showStatus('⏳ Uploading image... (pehli request 30-60s)', 'loading');
 
-    setTimeout(() => {
-        if (convertBtn.disabled) {
-            progressFill.style.width = '35%';
-            showStatus('🔍 Detecting tables via OpenCV + OCR...', 'loading');
+    let pct = 10;
+    progressTimer = setInterval(() => {
+        pct = Math.min(pct + 3, 90);
+        progressFill.style.width = pct + '%';
+        progressText.textContent = pct + '%';
+        if (pct > 30 && pct < 60) {
+            showStatus('🔍 Detecting table & running OCR...', 'loading');
+        } else if (pct >= 60) {
+            showStatus('📊 Building Excel sheet...', 'loading');
         }
-    }, 4000);
+    }, 2000);
 
-    setTimeout(() => {
-        if (convertBtn.disabled) {
-            progressFill.style.width = '65%';
-            showStatus('📊 Extracting cells and building Excel sheets...', 'loading');
-        }
-    }, 12000);
-
-    setTimeout(() => {
-        if (convertBtn.disabled) {
-            progressFill.style.width = '85%';
-            showStatus('📄 Finalizing Excel file with multiple sheets...', 'loading');
-        }
-    }, 25000);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
     try {
         const formData = new FormData();
-        selectedFiles.forEach(f => formData.append('files', f));
+        formData.append('file', selectedFiles[0]);
         formData.append('lang', document.getElementById('langSelect').value);
 
-        const res = await fetch(API_URL + '/image-to-excel', { method: 'POST', body: formData });
+        const res = await fetch(API_URL + '/image-to-excel', {
+            method: 'POST',
+            body: formData,
+            signal: controller.signal
+        });
 
+        clearTimeout(timeoutId);
+        clearProgressTimer();
         progressFill.style.width = '95%';
+        progressText.textContent = '95%';
 
         if (!res.ok) {
             const errText = await res.text();
@@ -304,29 +330,40 @@ convertBtn.addEventListener('click', async () => {
 
         const blob = await res.blob();
         progressFill.style.width = '100%';
+        progressText.textContent = '100%';
 
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `Bharat24Tools_OCR_${new Date().toISOString().slice(0,10)}.xlsx`;
+        a.download = `Bharat24Tools_${selectedFiles[0].name.replace(/\.[^.]+$/, '')}.xlsx`;
         a.click();
         setTimeout(() => URL.revokeObjectURL(url), 5000);
 
-        showStatus(`🎉 Excel created! ${selectedFiles.length} sheets + Summary. Check downloads.`, 'success');
+        showStatus('🎉 Excel file downloaded!', 'success');
     } catch (err) {
-        showStatus('❌ Error: ' + err.message, 'error');
+        clearTimeout(timeoutId);
+        clearProgressTimer();
+        console.error(err);
+        if (err.name === 'AbortError') {
+            showStatus('⏱️ Server timeout — chhoti image ya dobara try karo', 'error');
+        } else {
+            showStatus('❌ Error: ' + err.message, 'error');
+        }
     }
 
     convertBtn.disabled = false;
     setTimeout(() => {
         progressBar.style.display = 'none';
+        progressText.style.display = 'none';
         progressFill.style.width = '0%';
-    }, 5000);
+    }, 3000);
 });
 
 function showStatus(msg, type) {
     status.textContent = msg;
     status.className = 'status ' + type;
+    if (msg) status.style.display = 'block';
+    else status.style.display = 'none';
 }
 </script>
 </body>
