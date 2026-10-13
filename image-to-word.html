@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-title" content="Bharat24Tools">
 
     <title>Image to Word - OCR Extract Text to DOCX Free | Bharat24Tools</title>
-    <meta name="description" content="Extract text from images using AI OCR with OpenCV table detection and create an editable Word document. Free, up to 15MB, supports Hindi and English.">
+    <meta name="description" content="Extract text from up to 3 images using AI OCR and create editable Word documents. Free, up to 15MB each, supports Hindi and English.">
     <meta name="keywords" content="image to word, ocr image to word, extract text from image, image to docx, hindi ocr, table to word">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
@@ -22,13 +22,13 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-word.html">
     <meta property="og:title" content="Image to Word - OCR Extract Text to DOCX Free | Bharat24Tools">
-    <meta property="og:description" content="Extract text and tables from images using AI OCR. Free, up to 15MB.">
+    <meta property="og:description" content="Extract text from up to 3 images using AI OCR. Free, up to 15MB.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
     <meta property="og:site_name" content="Bharat24Tools">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Image to Word - OCR Extract Text to DOCX | Bharat24Tools">
-    <meta name="twitter:description" content="Extract text from images to Word with OCR. Free, up to 15MB.">
+    <meta name="twitter:description" content="Extract text from up to 3 images to Word with AI OCR. Free.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
     <script type="application/ld+json">
@@ -45,6 +45,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
@@ -75,8 +76,8 @@
         .total-size strong { color:#e0e7ff; }
         .options { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:14px; margin-top:20px; }
         .option-group label { display:block; font-size:0.8rem; font-weight:600; color:#cbd5e1; margin-bottom:6px; }
-        .option-group select, .option-group input[type="text"] { width:100%; padding:10px 12px; background:rgba(15,15,30,0.6); border:1px solid rgba(168,85,247,0.3); border-radius:8px; color:#e0e7ff; font-family:inherit; font-size:0.85rem; }
-        .option-group select:focus, .option-group input[type="text"]:focus { outline:none; border-color:#a855f7; }
+        .option-group input[type="text"] { width:100%; padding:10px 12px; background:rgba(15,15,30,0.6); border:1px solid rgba(168,85,247,0.3); border-radius:8px; color:#e0e7ff; font-family:inherit; font-size:0.85rem; }
+        .option-group input[type="text"]:focus { outline:none; border-color:#a855f7; }
         button.primary-btn { width:100%; padding:16px; background:linear-gradient(135deg,#a855f7,#ec4899); border:none; border-radius:12px; color:#fff; font-weight:700; font-size:1.05rem; cursor:pointer; font-family:inherit; transition:all 0.3s; margin-top:16px; }
         button.primary-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 30px rgba(168,85,247,0.4); }
         button.primary-btn:disabled { opacity:0.6; cursor:not-allowed; }
@@ -103,35 +104,27 @@
 </header>
 
 <main>
-    <h1>📝 Image to Word (OCR)</h1>
-    <p class="subtitle">Image से text extract करके proper editable Word document बनाओ</p>
+    <h1>📝 Image to Word (AI)</h1>
+    <p class="subtitle">1-3 images से AI OCR के साथ proper Word document बनाओ</p>
 
     <div class="card">
         <div class="upload-zone" id="uploadZone">
             <div class="upload-icon">📝</div>
             <p><span class="highlight">Click करो या Drag करो</span></p>
-            <p>Notes, book pages, documents, tables — 1 image (max 15MB)</p>
+            <p>Notes, book pages, documents, tables — 1-3 images (max 15MB each)</p>
             <div style="margin-top:12px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
                 <span style="background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;">🤖 AI OCR</span>
                 <span style="background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;">📊 Table Detection</span>
-                <span style="background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;">💾 15MB</span>
+                <span style="background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;">📁 3 Files</span>
                 <span style="background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:600;">🧹 Auto-Cleanup</span>
             </div>
         </div>
-        <input type="file" id="fileInput" accept="image/*">
+        <input type="file" id="fileInput" accept="image/*" multiple>
 
         <div id="fileList" class="file-list"></div>
         <div id="totalSize" class="total-size"></div>
 
         <div class="options" id="optionsPanel" style="display:none;">
-            <div class="option-group">
-                <label>Language (OCR)</label>
-                <select id="langSelect">
-                    <option value="eng" selected>English only (Fast ⚡)</option>
-                    <option value="eng+hin">English + हिंदी (Slow but accurate)</option>
-                    <option value="hin">हिंदी only</option>
-                </select>
-            </div>
             <div class="option-group">
                 <label>Document Title</label>
                 <input type="text" id="titleInput" value="Extracted Text" maxlength="60">
@@ -146,24 +139,24 @@
         <div class="features-grid">
             <div class="feature-item">
                 <strong>🤖 AI OCR</strong>
-                Text extraction accurate
+                Hindi + English perfect
             </div>
             <div class="feature-item">
                 <strong>📊 Table Detection</strong>
-                OpenCV se proper rows/columns
+                Exact rows/columns in Word
             </div>
             <div class="feature-item">
-                <strong>📄 Editable DOCX</strong>
-                Word में edit कर सकते हो
+                <strong>📁 Multi-File</strong>
+                1-3 images ek saath
             </div>
             <div class="feature-item">
                 <strong>🧹 Auto-Cleanup</strong>
-                Files 30 sec बाद delete
+                Files 30 sec baad delete
             </div>
         </div>
 
         <div class="info-box">
-            <strong>💡 Tip:</strong> <b>English only</b> select karo (fast ⚡). Image 1500px तक auto-compress हो जाएगी ताकि server जल्दी response दे.
+            <strong>💡 Tip:</strong> 1 file = direct Word download. 2-3 files = ZIP download. Har file ka alag DOCX milega.
         </div>
     </div>
 </main>
@@ -171,11 +164,12 @@
 <script>
 const API_URL = 'https://bharat24tools-api.onrender.com';
 const MAX_SIZE = 15 * 1024 * 1024;
-const TIMEOUT_MS = 180000;
+const MAX_FILES = 3;
+const TIMEOUT_MS = 300000;
 const MAX_DIM = 1500;
 
 let selectedFiles = [];
-let previewUrl = null;
+let previewUrls = [];
 let progressTimer = null;
 
 const uploadZone = document.getElementById('uploadZone');
@@ -189,14 +183,15 @@ const progressBar = document.getElementById('progressBar');
 const progressFill = document.getElementById('progressFill');
 const progressText = document.getElementById('progressText');
 
-function revokePreview() {
-    if (previewUrl) { try { URL.revokeObjectURL(previewUrl); } catch(e){} previewUrl = null; }
+function revokeAllPreviews() {
+    previewUrls.forEach(u => { try { URL.revokeObjectURL(u); } catch(e){} });
+    previewUrls = [];
 }
 function clearProgressTimer() {
     if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
 }
 function fullCleanup() {
-    revokePreview();
+    revokeAllPreviews();
     clearProgressTimer();
     selectedFiles = [];
 }
@@ -252,34 +247,45 @@ function resizeImageIfNeeded(file, maxDim) {
 }
 
 async function addFiles(files) {
-    const originalFile = files[0];
-    if (!originalFile || !originalFile.type.startsWith('image/')) {
+    revokeAllPreviews();
+    clearProgressTimer();
+    selectedFiles = [];
+
+    const incoming = Array.from(files);
+    const valid = incoming.filter(f => f.type.startsWith('image/'));
+
+    if (valid.length === 0) {
         showStatus('❌ कृपया valid image चुनें (JPG, PNG, WebP)', 'error');
         return;
     }
-    if (originalFile.size > MAX_SIZE) {
-        showStatus('❌ File 15MB से बड़ी है', 'error');
+
+    if (valid.length > MAX_FILES) {
+        showStatus(`❌ Max ${MAX_FILES} files allowed`, 'error');
         return;
     }
 
-    revokePreview();
-    clearProgressTimer();
-
-    showStatus('⚙️ Image तैयार हो रही है...', 'loading');
-
-    try {
-        const resizedFile = await resizeImageIfNeeded(originalFile, MAX_DIM);
-        selectedFiles = [resizedFile];
-        previewUrl = URL.createObjectURL(resizedFile);
-        renderFileList();
-        showStatus(`✅ Ready: ${formatSize(resizedFile.size)}`, 'success');
-    } catch (e) {
-        console.error(e);
-        selectedFiles = [originalFile];
-        previewUrl = URL.createObjectURL(originalFile);
-        renderFileList();
-        showStatus(`✅ Ready: ${originalFile.name}`, 'success');
+    const tooBig = valid.filter(f => f.size > MAX_SIZE);
+    if (tooBig.length > 0) {
+        showStatus(`❌ ${tooBig.length} file(s) 15MB से बड़ी हैं`, 'error');
+        return;
     }
+
+    showStatus(`⚙️ ${valid.length} image(s) तैयार हो रही हैं...`, 'loading');
+
+    const resized = [];
+    for (const f of valid) {
+        try {
+            const r = await resizeImageIfNeeded(f, MAX_DIM);
+            resized.push(r);
+        } catch (e) {
+            resized.push(f);
+        }
+    }
+
+    selectedFiles = resized;
+    previewUrls = resized.map(f => URL.createObjectURL(f));
+    renderFileList();
+    showStatus(`✅ ${resized.length} image(s) ready`, 'success');
 }
 
 function renderFileList() {
@@ -292,30 +298,33 @@ function renderFileList() {
         return;
     }
 
-    const f = selectedFiles[0];
-
-    const item = document.createElement('div');
-    item.className = 'file-item';
-    item.innerHTML = `
-        <img src="${previewUrl}" alt="preview">
-        <div class="info">
-            <div class="fname">${f.name}</div>
-            <div class="fsize">${formatSize(f.size)}</div>
-        </div>
-        <button title="Remove">✕</button>
-    `;
-    fileList.appendChild(item);
-
-    item.querySelector('button').addEventListener('click', () => {
-        revokePreview();
-        selectedFiles = [];
-        fileInput.value = '';
-        renderFileList();
-        status.className = 'status';
-        status.style.display = 'none';
+    selectedFiles.forEach((f, i) => {
+        const item = document.createElement('div');
+        item.className = 'file-item';
+        item.innerHTML = `
+            <img src="${previewUrls[i]}" alt="preview">
+            <div class="info">
+                <div class="fname">${i+1}. ${f.name}</div>
+                <div class="fsize">${formatSize(f.size)}</div>
+            </div>
+            <button data-i="${i}" title="Remove">✕</button>
+        `;
+        fileList.appendChild(item);
     });
 
-    totalSize.innerHTML = `1 image — <strong>${formatSize(f.size)}</strong> / 15 MB`;
+    fileList.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const idx = parseInt(e.target.dataset.i);
+            selectedFiles.splice(idx, 1);
+            try { URL.revokeObjectURL(previewUrls[idx]); } catch(err){}
+            previewUrls.splice(idx, 1);
+            fileInput.value = '';
+            renderFileList();
+        });
+    });
+
+    const totalBytes = selectedFiles.reduce((s, f) => s + f.size, 0);
+    totalSize.innerHTML = `<strong>${selectedFiles.length}</strong> image(s) — Total: <strong>${formatSize(totalBytes)}</strong>`;
     optionsPanel.style.display = 'grid';
     convertBtn.style.display = 'block';
 }
@@ -328,7 +337,7 @@ convertBtn.addEventListener('click', async () => {
     progressText.style.display = 'block';
     progressFill.style.width = '10%';
     progressText.textContent = '10%';
-    showStatus('⏳ Uploading... (pehli request 30-60s)', 'loading');
+    showStatus(`⏳ ${selectedFiles.length} image(s) AI OCR processing...`, 'loading');
 
     let pct = 10;
     progressTimer = setInterval(() => {
@@ -336,19 +345,18 @@ convertBtn.addEventListener('click', async () => {
         progressFill.style.width = pct + '%';
         progressText.textContent = pct + '%';
         if (pct > 30 && pct < 60) {
-            showStatus('🔍 OCR चल रहा है...', 'loading');
+            showStatus('🤖 Gemini AI reading content...', 'loading');
         } else if (pct >= 60) {
-            showStatus('📝 Word document बन रहा है...', 'loading');
+            showStatus('📝 Word documents बन रहे हैं...', 'loading');
         }
-    }, 2000);
+    }, 3000);
 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
     try {
         const formData = new FormData();
-        formData.append('file', selectedFiles[0]);
-        formData.append('lang', document.getElementById('langSelect').value);
+        selectedFiles.forEach(f => formData.append('files', f));
         formData.append('title', document.getElementById('titleInput').value || 'Extracted Text');
 
         const res = await fetch(API_URL + '/image-to-word', {
@@ -371,20 +379,23 @@ convertBtn.addEventListener('click', async () => {
         progressFill.style.width = '100%';
         progressText.textContent = '100%';
 
+        const isZip = selectedFiles.length > 1;
+        const firstName = selectedFiles[0].name.replace(/\.[^.]+$/, '');
+        const ext = isZip ? 'zip' : 'docx';
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `Bharat24Tools_${selectedFiles[0].name.replace(/\.[^.]+$/, '')}.docx`;
+        a.download = `Bharat24Tools_${firstName}.${ext}`;
         a.click();
         setTimeout(() => URL.revokeObjectURL(url), 5000);
 
-        showStatus('🎉 Word document downloaded!', 'success');
+        showStatus(`🎉 ${selectedFiles.length > 1 ? 'ZIP' : 'Word'} downloaded!`, 'success');
     } catch (err) {
         clearTimeout(timeoutId);
         clearProgressTimer();
         console.error(err);
         if (err.name === 'AbortError') {
-            showStatus('⏱️ Server timeout — "English only" try karo ya chhoti image bhejo', 'error');
+            showStatus('⏱️ Timeout — kam files try karo', 'error');
         } else {
             showStatus('❌ Error: ' + err.message, 'error');
         }

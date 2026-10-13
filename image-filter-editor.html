@@ -58,7 +58,6 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
@@ -241,7 +240,7 @@ let flipX = 1;
 let flipY = 1;
 let currentPreset = 'none';
 
-// Auto cleanup
+// ============ AUTO CLEANUP TRACKERS ============
 let activeUrls = new Set();
 let activeReader = null;
 let tempCanvases = new Set();
@@ -400,34 +399,65 @@ function resetAll() {
     showStatus('🔄 Reset हो गया', 'success');
 }
 
+// ============ DOWNLOAD (No FileSaver dependency) ============
 downloadBtn.addEventListener('click', () => {
     if (!originalImage) {
         showStatus('❌ पहले इमेज चुनें', 'error');
         return;
     }
-    const w = originalImage.width;
-    const h = originalImage.height;
-    const tempCanvas = document.createElement('canvas');
-    tempCanvases.add(tempCanvas);
-    let tw, th;
-    if (rotation % 180 !== 0) { tw = h; th = w; } else { tw = w; th = h; }
-    tempCanvas.width = tw;
-    tempCanvas.height = th;
-    const ctx = tempCanvas.getContext('2d');
-    ctx.save();
-    ctx.translate(tw / 2, th / 2);
-    ctx.rotate((rotation * Math.PI) / 180);
-    ctx.scale(flipX, flipY);
-    ctx.filter = getFilterString();
-    ctx.drawImage(originalImage, -w / 2, -h / 2, w, h);
-    ctx.restore();
-    tempCanvas.toBlob((blob) => {
-        saveAs(blob, 'edited-image-' + Date.now() + '.png');
-        showStatus('🎉 Image downloaded successfully!', 'success');
-        // Canvas memory free after blob created
-        try { tempCanvas.width = 0; tempCanvas.height = 0; } catch(e){}
-        tempCanvases.delete(tempCanvas);
-    }, 'image/png');
+
+    downloadBtn.disabled = true;
+    showStatus('⏳ Processing image...', 'loading');
+
+    setTimeout(() => {
+        try {
+            const w = originalImage.width;
+            const h = originalImage.height;
+            const tempCanvas = document.createElement('canvas');
+            tempCanvases.add(tempCanvas);
+            let tw, th;
+            if (rotation % 180 !== 0) { tw = h; th = w; } else { tw = w; th = h; }
+            tempCanvas.width = tw;
+            tempCanvas.height = th;
+            const ctx = tempCanvas.getContext('2d');
+            ctx.save();
+            ctx.translate(tw / 2, th / 2);
+            ctx.rotate((rotation * Math.PI) / 180);
+            ctx.scale(flipX, flipY);
+            ctx.filter = getFilterString();
+            ctx.drawImage(originalImage, -w / 2, -h / 2, w, h);
+            ctx.restore();
+
+            tempCanvas.toBlob((blob) => {
+                if (!blob) {
+                    showStatus('❌ Download failed. Try again.', 'error');
+                    downloadBtn.disabled = false;
+                    return;
+                }
+
+                // ✅ Custom download — koi library nahi chahiye
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'edited-image-' + Date.now() + '.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+                showStatus('🎉 Image downloaded successfully!', 'success');
+
+                // Canvas memory free
+                try { tempCanvas.width = 0; tempCanvas.height = 0; } catch(e){}
+                tempCanvases.delete(tempCanvas);
+                downloadBtn.disabled = false;
+            }, 'image/png');
+        } catch (e) {
+            console.error(e);
+            showStatus('❌ Error: ' + e.message, 'error');
+            downloadBtn.disabled = false;
+        }
+    }, 50);
 });
 
 function showStatus(message, type) {
