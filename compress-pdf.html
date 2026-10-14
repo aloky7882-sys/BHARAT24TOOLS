@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-title" content="Bharat24Tools">
 
     <title>Compress PDF - Reduce PDF to Any Size (MB/KB) Free | Bharat24Tools</title>
-    <meta name="description" content="Compress PDF to any target size — MB or KB. Smart AI-driven compression with 3 quality levels. Free, up to 80% reduction, auto-cleanup.">
+    <meta name="description" content="Compress PDF to any target size — MB or KB (min 50KB). Smart AI-driven compression with quality warning. Free, up to 90% reduction, auto-cleanup.">
     <meta name="keywords" content="compress pdf, reduce pdf size, pdf compressor, compress pdf to 500kb, compress pdf to 1mb, shrink pdf, pdf size reducer">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
@@ -22,13 +22,13 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/compress-pdf.html">
     <meta property="og:title" content="Compress PDF - Reduce PDF to Any Size (MB/KB) Free | Bharat24Tools">
-    <meta property="og:description" content="Compress PDF to any target size — MB or KB. Free, up to 80% reduction.">
+    <meta property="og:description" content="Compress PDF to any target size — MB or KB. Free, up to 90% reduction.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
     <meta property="og:site_name" content="Bharat24Tools">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Compress PDF - Reduce PDF to Any Size (MB/KB) Free | Bharat24Tools">
-    <meta name="twitter:description" content="Compress PDF to any target size — MB or KB. Free, up to 80% reduction.">
+    <meta name="twitter:description" content="Compress PDF to any target size — MB or KB. Free, up to 90% reduction.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
     <script type="application/ld+json">
@@ -40,18 +40,6 @@
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Web Browser",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://aloky7882-sys.github.io/BHARAT24TOOLS/" },
-            { "@type": "ListItem", "position": 2, "name": "PDF Tools", "item": "https://aloky7882-sys.github.io/BHARAT24TOOLS/#pdf-tools" },
-            { "@type": "ListItem", "position": 3, "name": "Compress PDF" }
-        ]
     }
     </script>
 
@@ -111,6 +99,40 @@
         .target-inputs input:focus { outline:none; border-color:#a855f7; box-shadow:0 0 0 4px rgba(168,85,247,0.15); }
         .target-inputs select { padding:12px 14px; background:rgba(15,15,30,0.8); border:2px solid rgba(168,85,247,0.3); border-radius:10px; color:#e0e7ff; font-family:inherit; font-weight:700; font-size:1rem; cursor:pointer; }
         .target-hint { font-size:0.72rem; color:#a5b4fc; margin-top:8px; line-height:1.5; }
+
+        /* ===== QUALITY WARNING BOX ===== */
+        .quality-warning {
+            display:none;
+            margin-top:14px;
+            padding:14px 16px;
+            border-radius:10px;
+            font-size:0.82rem;
+            line-height:1.6;
+            transition:all 0.3s ease;
+            animation:fadeIn 0.3s ease;
+        }
+        .quality-warning.show { display:block; }
+        @keyframes fadeIn {
+            from { opacity:0; transform:translateY(-5px); }
+            to { opacity:1; transform:translateY(0); }
+        }
+        .quality-warning strong {
+            display:block;
+            font-size:0.92rem;
+            margin-bottom:4px;
+        }
+        .quality-warning .qw-bar {
+            height:6px;
+            border-radius:3px;
+            margin-top:8px;
+            background:rgba(0,0,0,0.3);
+            overflow:hidden;
+        }
+        .quality-warning .qw-bar-fill {
+            height:100%;
+            border-radius:3px;
+            transition:width 0.4s ease, background 0.4s ease;
+        }
 
         /* ===== ADVANCED OPTIONS ===== */
         .advanced-toggle { background:transparent; border:none; color:#a855f7; cursor:pointer; font-family:inherit; font-weight:600; font-size:0.82rem; padding:8px 0; display:flex; align-items:center; gap:6px; margin-bottom:12px; }
@@ -175,7 +197,7 @@
 
 <main>
     <h1>📉 Compress PDF</h1>
-    <p class="subtitle">PDF को किसी भी size में compress करो — MB या KB</p>
+    <p class="subtitle">PDF को किसी भी size में compress करो — MB या KB (min 50KB)</p>
 
     <div class="card">
         <div class="upload-zone" id="uploadZone">
@@ -185,7 +207,7 @@
             <div class="badge-row">
                 <span class="badge">⚡ Smart Compress</span>
                 <span class="badge">🔒 Auto-Delete 30s</span>
-                <span class="badge">🎯 Any Target Size</span>
+                <span class="badge">🎯 Min 50KB</span>
             </div>
             <input type="file" id="fileInput" accept=".pdf,application/pdf">
         </div>
@@ -229,14 +251,23 @@
                     </label>
                 </div>
                 <div class="target-inputs disabled" id="targetInputs">
-                    <input type="number" id="targetValue" placeholder="e.g. 500" min="10" max="20000" value="500">
+                    <input type="number" id="targetValue" placeholder="e.g. 500" min="50" max="20000" value="500">
                     <select id="targetUnit">
                         <option value="KB">KB</option>
                         <option value="MB">MB</option>
                     </select>
                 </div>
                 <div class="target-hint">
-                    💡 Server smart-compress करेगा और target size के सबसे नज़दीक output देगा। अगर बहुत small target है तो quality थोड़ी कम हो सकती है।
+                    💡 Server smart-compress करेगा और target size के सबसे नज़दीक output देगा। Minimum <strong>50 KB</strong> allowed है।
+                </div>
+
+                <!-- ===== QUALITY WARNING BOX ===== -->
+                <div class="quality-warning" id="qualityWarning">
+                    <strong id="qwTitle">✅ Excellent Quality</strong>
+                    <span id="qwMessage">Perfect quality. Best for printing & professional use.</span>
+                    <div class="qw-bar">
+                        <div class="qw-bar-fill" id="qwBarFill" style="width:100%; background:#22c55e;"></div>
+                    </div>
                 </div>
             </div>
 
@@ -303,17 +334,18 @@
         </div>
 
         <div class="info-box">
-            <strong>💡 Kaise Kaam Karta Hai:</strong> Smart compression algorithm — target size hit करने के लिए server automatically Ghostscript के settings adjust करता है। Multiple attempts करके best output देता है।
+            <strong>💡 Kaise Kaam Karta Hai:</strong> Smart compression algorithm — target size hit करने के लिए server automatically Ghostscript के settings adjust करता है। 5 levels के progressive attempts से best output देता है।
         </div>
 
         <div class="auto-cleanup-note">
-            <strong>🧹 Auto-Cleanup:</strong> File server पर सिर्फ 30 second तक रहती है। उसके बाद automatically delete हो जाती है। Privacy 100% safe.
+            <strong>🧹 Auto-Cleanup:</strong> File server पर सिर्फ 30 second तक रहती है। उसके बाद automatically delete हो जाती है। Privacy 100% safe।
         </div>
     </div>
 </main>
 
 <script>
 const API_URL = 'https://bharat24tools-api.onrender.com';
+const MIN_TARGET_KB = 50;
 
 const uploadZone = document.getElementById('uploadZone');
 const fileInput = document.getElementById('fileInput');
@@ -335,10 +367,124 @@ const targetUnit = document.getElementById('targetUnit');
 const advancedToggle = document.getElementById('advancedToggle');
 const advancedPanel = document.getElementById('advancedPanel');
 const advIcon = document.getElementById('advIcon');
+const qualityWarning = document.getElementById('qualityWarning');
+const qwTitle = document.getElementById('qwTitle');
+const qwMessage = document.getElementById('qwMessage');
+const qwBarFill = document.getElementById('qwBarFill');
 
 let selectedFile = null;
 let currentPreset = 'recommended';
 let originalSize = 0;
+
+// ===== QUALITY LEVELS =====
+const QUALITY_LEVELS = [
+    {
+        key: 'excellent',
+        maxRatio: 2.0,        // target >= 2x "expected min" = excellent
+        title: '✅ Excellent Quality',
+        message: 'Perfect quality. Best for printing & professional use.',
+        color: '#22c55e',
+        bg: 'rgba(34,197,94,0.12)',
+        barPct: 100
+    },
+    {
+        key: 'good',
+        maxRatio: 1.0,
+        title: '👍 Good Quality',
+        message: 'Good quality. Suitable for most uses — email, WhatsApp, docs.',
+        color: '#84cc16',
+        bg: 'rgba(132,204,22,0.12)',
+        barPct: 80
+    },
+    {
+        key: 'acceptable',
+        maxRatio: 0.5,
+        title: '⚠️ Acceptable Quality',
+        message: 'Text readable, images slightly compressed. OK for sharing.',
+        color: '#fbbf24',
+        bg: 'rgba(251,191,36,0.12)',
+        barPct: 60
+    },
+    {
+        key: 'low',
+        maxRatio: 0.25,
+        title: '⚡ Low Quality',
+        message: 'Quality will drop noticeably. Images pixelated. Use only if size is critical.',
+        color: '#fb923c',
+        bg: 'rgba(251,146,60,0.12)',
+        barPct: 35
+    },
+    {
+        key: 'veryLow',
+        maxRatio: 0,
+        title: '🚨 Very Low Quality',
+        message: 'Severe quality loss! Text may be unreadable. NOT recommended unless absolutely necessary.',
+        color: '#ef4444',
+        bg: 'rgba(239,68,68,0.15)',
+        barPct: 15
+    }
+];
+
+// Minimum "safe" size — around 10% of original (varies by PDF)
+function estimateSafeMin(originalBytes) {
+    return Math.max(MIN_TARGET_KB * 1024, originalBytes * 0.10);
+}
+
+function updateQualityWarning() {
+    if (!targetToggle.checked || !originalSize) {
+        qualityWarning.classList.remove('show');
+        return;
+    }
+
+    const val = parseFloat(targetValue.value);
+    if (!val || val <= 0) {
+        qualityWarning.classList.remove('show');
+        return;
+    }
+
+    const unit = targetUnit.value;
+    let targetBytes = unit === 'KB' ? val * 1024 : val * 1024 * 1024;
+
+    // Enforce minimum 50 KB
+    if (unit === 'KB' && val < MIN_TARGET_KB) {
+        targetValue.value = MIN_TARGET_KB;
+        targetBytes = MIN_TARGET_KB * 1024;
+    }
+
+    // Safety: target must be smaller than original
+    if (targetBytes >= originalSize) {
+        qualityWarning.classList.add('show');
+        qualityWarning.style.background = 'rgba(251,191,36,0.12)';
+        qualityWarning.style.borderLeft = '4px solid #fbbf24';
+        qualityWarning.style.color = '#fde68a';
+        qwTitle.textContent = '⚠️ Target Already Bigger';
+        qwMessage.textContent = 'Aapka target size original file se bada hai. Compress karne ka koi fayda nahi hoga.';
+        qwBarFill.style.width = '100%';
+        qwBarFill.style.background = '#fbbf24';
+        return;
+    }
+
+    // Determine quality level based on ratio
+    const safeMin = estimateSafeMin(originalSize);
+    const ratio = targetBytes / safeMin;
+
+    let level = QUALITY_LEVELS[QUALITY_LEVELS.length - 1];
+    for (const lvl of QUALITY_LEVELS) {
+        if (ratio >= lvl.maxRatio) {
+            level = lvl;
+            break;
+        }
+    }
+
+    qualityWarning.classList.add('show');
+    qualityWarning.style.background = level.bg;
+    qualityWarning.style.borderLeft = `4px solid ${level.color}`;
+    qualityWarning.style.color = level.color;
+    qwTitle.textContent = level.title;
+    qwMessage.textContent = level.message;
+    qwBarFill.style.width = level.barPct + '%';
+    qwBarFill.style.background = level.color;
+}
 
 // ===== PRESET SELECTION =====
 presetBtns.forEach(btn => {
@@ -347,7 +493,6 @@ presetBtns.forEach(btn => {
         btn.classList.add('active');
         currentPreset = btn.dataset.preset;
 
-        // Auto-fill advanced panel based on preset
         const dpiSel = document.getElementById('dpiSelect');
         const qSel = document.getElementById('qualitySelect');
 
@@ -369,10 +514,16 @@ targetToggle.addEventListener('change', () => {
     if (targetToggle.checked) {
         targetInputs.classList.remove('disabled');
         targetValue.focus();
+        updateQualityWarning();
     } else {
         targetInputs.classList.add('disabled');
+        qualityWarning.classList.remove('show');
     }
 });
+
+// ===== LIVE QUALITY WARNING UPDATES =====
+targetValue.addEventListener('input', updateQualityWarning);
+targetUnit.addEventListener('change', updateQualityWarning);
 
 // ===== ADVANCED PANEL TOGGLE =====
 advancedToggle.addEventListener('click', () => {
@@ -414,6 +565,9 @@ function handleFile(file) {
     statsBox.classList.remove('show');
     resetBtn.style.display = 'none';
     showStatus(`✅ File ready: ${formatSize(file.size)}`, 'success');
+
+    // Refresh quality warning if target is enabled
+    if (targetToggle.checked) updateQualityWarning();
 }
 
 function formatSize(bytes) {
@@ -426,18 +580,26 @@ function formatSize(bytes) {
 compressBtn.addEventListener('click', async () => {
     if (!selectedFile) return;
 
-    // Validation
     let targetBytes = 0;
     let useTarget = false;
 
     if (targetToggle.checked) {
-        const val = parseFloat(targetValue.value);
+        let val = parseFloat(targetValue.value);
         if (!val || val <= 0) {
             showStatus('❌ कृपया valid target size दालें', 'error');
             return;
         }
+
         const unit = targetUnit.value;
+
+        // Enforce minimum 50 KB
+        if (unit === 'KB' && val < MIN_TARGET_KB) {
+            val = MIN_TARGET_KB;
+            targetValue.value = MIN_TARGET_KB;
+        }
+
         targetBytes = unit === 'KB' ? val * 1024 : val * 1024 * 1024;
+
         if (targetBytes >= originalSize) {
             showStatus('⚠️ Target size already original से बड़ा है। कृपया छोटा target चुनें।', 'info');
             return;
@@ -552,8 +714,10 @@ resetBtn.addEventListener('click', () => {
     status.style.display = 'none';
     targetToggle.checked = false;
     targetInputs.classList.add('disabled');
+    qualityWarning.classList.remove('show');
     advancedPanel.classList.remove('show');
     advIcon.className = 'fas fa-chevron-down';
+    originalSize = 0;
 });
 
 function showStatus(msg, type) {
