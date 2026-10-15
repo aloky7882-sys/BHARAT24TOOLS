@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-title" content="Bharat24Tools">
 
     <title>Compress PDF - Reduce PDF to Any Size (MB/KB) Free | Bharat24Tools</title>
-    <meta name="description" content="Compress PDF to any target size — MB or KB (min 50KB). Smart AI-driven compression with quality warning. Free, up to 90% reduction, auto-cleanup.">
+    <meta name="description" content="Compress PDF to any target size — MB or KB (min 100KB). Smart AI-driven compression with quality warning. Free, up to 90% reduction, auto-cleanup.">
     <meta name="keywords" content="compress pdf, reduce pdf size, pdf compressor, compress pdf to 500kb, compress pdf to 1mb, shrink pdf, pdf size reducer">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
@@ -75,7 +75,6 @@
 
         .section-label { font-weight:700; font-size:0.85rem; color:#cbd5e1; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
 
-        /* ===== PRESET LEVELS ===== */
         .presets-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-bottom:20px; }
         .preset-btn { padding:14px 8px; background:rgba(99,102,241,0.1); border:2px solid rgba(168,85,247,0.2); border-radius:12px; color:#cbd5e1; cursor:pointer; font-family:inherit; font-size:0.75rem; font-weight:600; transition:all 0.3s; text-align:center; position:relative; }
         .preset-btn:hover { background:rgba(99,102,241,0.2); border-color:rgba(168,85,247,0.4); transform:translateY(-2px); }
@@ -84,7 +83,6 @@
         .preset-btn .p-name { font-weight:700; display:block; margin-bottom:3px; font-size:0.8rem; }
         .preset-btn .p-desc { font-size:0.65rem; opacity:0.75; display:block; }
 
-        /* ===== TARGET SIZE ===== */
         .target-box { background:rgba(168,85,247,0.08); border:2px solid rgba(168,85,247,0.3); border-radius:12px; padding:18px; margin-bottom:20px; }
         .target-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
         .toggle-switch { position:relative; display:inline-block; width:48px; height:26px; }
@@ -100,7 +98,6 @@
         .target-inputs select { padding:12px 14px; background:rgba(15,15,30,0.8); border:2px solid rgba(168,85,247,0.3); border-radius:10px; color:#e0e7ff; font-family:inherit; font-weight:700; font-size:1rem; cursor:pointer; }
         .target-hint { font-size:0.72rem; color:#a5b4fc; margin-top:8px; line-height:1.5; }
 
-        /* ===== QUALITY WARNING BOX ===== */
         .quality-warning {
             display:none;
             margin-top:14px;
@@ -134,7 +131,6 @@
             transition:width 0.4s ease, background 0.4s ease;
         }
 
-        /* ===== ADVANCED OPTIONS ===== */
         .advanced-toggle { background:transparent; border:none; color:#a855f7; cursor:pointer; font-family:inherit; font-weight:600; font-size:0.82rem; padding:8px 0; display:flex; align-items:center; gap:6px; margin-bottom:12px; }
         .advanced-toggle:hover { color:#ec4899; }
         .advanced-panel { display:none; padding:18px; background:rgba(15,15,30,0.5); border-radius:10px; margin-bottom:16px; border-left:3px solid #a855f7; }
@@ -197,7 +193,7 @@
 
 <main>
     <h1>📉 Compress PDF</h1>
-    <p class="subtitle">PDF को किसी भी size में compress करो — MB या KB (min 50KB)</p>
+    <p class="subtitle">PDF को किसी भी size में compress करो — MB या KB (min 100KB)</p>
 
     <div class="card">
         <div class="upload-zone" id="uploadZone">
@@ -207,7 +203,7 @@
             <div class="badge-row">
                 <span class="badge">⚡ Smart Compress</span>
                 <span class="badge">🔒 Auto-Delete 30s</span>
-                <span class="badge">🎯 Min 50KB</span>
+                <span class="badge">🎯 Min 100KB</span>
             </div>
             <input type="file" id="fileInput" accept=".pdf,application/pdf">
         </div>
@@ -251,17 +247,16 @@
                     </label>
                 </div>
                 <div class="target-inputs disabled" id="targetInputs">
-                    <input type="number" id="targetValue" placeholder="e.g. 500" min="50" max="20000" value="500">
+                    <input type="number" id="targetValue" placeholder="e.g. 500" min="100" max="20000" value="500">
                     <select id="targetUnit">
                         <option value="KB">KB</option>
                         <option value="MB">MB</option>
                     </select>
                 </div>
                 <div class="target-hint">
-                    💡 Server smart-compress करेगा और target size के सबसे नज़दीक output देगा। Minimum <strong>50 KB</strong> allowed है।
+                    💡 Server smart-compress करेगा और target size के सबसे नज़दीक output देगा। Minimum <strong>100 KB</strong> allowed है।
                 </div>
 
-                <!-- ===== QUALITY WARNING BOX ===== -->
                 <div class="quality-warning" id="qualityWarning">
                     <strong id="qwTitle">✅ Excellent Quality</strong>
                     <span id="qwMessage">Perfect quality. Best for printing & professional use.</span>
@@ -334,7 +329,7 @@
         </div>
 
         <div class="info-box">
-            <strong>💡 Kaise Kaam Karta Hai:</strong> Smart compression algorithm — target size hit करने के लिए server automatically Ghostscript के settings adjust करता है। 5 levels के progressive attempts से best output देता है।
+            <strong>💡 Kaise Kaam Karta Hai:</strong> Smart compression algorithm — target size hit करने के लिए server automatically Ghostscript के settings adjust करता है। Progressive attempts से best output देता है।
         </div>
 
         <div class="auto-cleanup-note">
@@ -345,7 +340,7 @@
 
 <script>
 const API_URL = 'https://bharat24tools-api.onrender.com';
-const MIN_TARGET_KB = 50;
+const MIN_TARGET_KB = 100;
 
 const uploadZone = document.getElementById('uploadZone');
 const fileInput = document.getElementById('fileInput');
@@ -376,11 +371,10 @@ let selectedFile = null;
 let currentPreset = 'recommended';
 let originalSize = 0;
 
-// ===== QUALITY LEVELS =====
 const QUALITY_LEVELS = [
     {
         key: 'excellent',
-        maxRatio: 2.0,        // target >= 2x "expected min" = excellent
+        maxRatio: 2.0,
         title: '✅ Excellent Quality',
         message: 'Perfect quality. Best for printing & professional use.',
         color: '#22c55e',
@@ -425,7 +419,6 @@ const QUALITY_LEVELS = [
     }
 ];
 
-// Minimum "safe" size — around 10% of original (varies by PDF)
 function estimateSafeMin(originalBytes) {
     return Math.max(MIN_TARGET_KB * 1024, originalBytes * 0.10);
 }
@@ -445,13 +438,11 @@ function updateQualityWarning() {
     const unit = targetUnit.value;
     let targetBytes = unit === 'KB' ? val * 1024 : val * 1024 * 1024;
 
-    // Enforce minimum 50 KB
     if (unit === 'KB' && val < MIN_TARGET_KB) {
         targetValue.value = MIN_TARGET_KB;
         targetBytes = MIN_TARGET_KB * 1024;
     }
 
-    // Safety: target must be smaller than original
     if (targetBytes >= originalSize) {
         qualityWarning.classList.add('show');
         qualityWarning.style.background = 'rgba(251,191,36,0.12)';
@@ -464,7 +455,6 @@ function updateQualityWarning() {
         return;
     }
 
-    // Determine quality level based on ratio
     const safeMin = estimateSafeMin(originalSize);
     const ratio = targetBytes / safeMin;
 
@@ -486,7 +476,6 @@ function updateQualityWarning() {
     qwBarFill.style.background = level.color;
 }
 
-// ===== PRESET SELECTION =====
 presetBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         presetBtns.forEach(b => b.classList.remove('active'));
@@ -509,7 +498,6 @@ presetBtns.forEach(btn => {
     });
 });
 
-// ===== TARGET SIZE TOGGLE =====
 targetToggle.addEventListener('change', () => {
     if (targetToggle.checked) {
         targetInputs.classList.remove('disabled');
@@ -521,11 +509,9 @@ targetToggle.addEventListener('change', () => {
     }
 });
 
-// ===== LIVE QUALITY WARNING UPDATES =====
 targetValue.addEventListener('input', updateQualityWarning);
 targetUnit.addEventListener('change', updateQualityWarning);
 
-// ===== ADVANCED PANEL TOGGLE =====
 advancedToggle.addEventListener('click', () => {
     advancedPanel.classList.toggle('show');
     if (advancedPanel.classList.contains('show')) {
@@ -535,7 +521,6 @@ advancedToggle.addEventListener('click', () => {
     }
 });
 
-// ===== UPLOAD HANDLERS =====
 uploadZone.addEventListener('click', () => fileInput.click());
 uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
 uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
@@ -566,7 +551,6 @@ function handleFile(file) {
     resetBtn.style.display = 'none';
     showStatus(`✅ File ready: ${formatSize(file.size)}`, 'success');
 
-    // Refresh quality warning if target is enabled
     if (targetToggle.checked) updateQualityWarning();
 }
 
@@ -576,7 +560,6 @@ function formatSize(bytes) {
     return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
 }
 
-// ===== COMPRESS =====
 compressBtn.addEventListener('click', async () => {
     if (!selectedFile) return;
 
@@ -592,7 +575,6 @@ compressBtn.addEventListener('click', async () => {
 
         const unit = targetUnit.value;
 
-        // Enforce minimum 50 KB
         if (unit === 'KB' && val < MIN_TARGET_KB) {
             val = MIN_TARGET_KB;
             targetValue.value = MIN_TARGET_KB;
