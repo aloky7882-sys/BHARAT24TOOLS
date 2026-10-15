@@ -216,12 +216,12 @@
 
             <div class="section-label">🎯 Preset Levels:</div>
             <div class="presets-grid" id="presetsGrid">
-                <button type="button" class="preset-btn" data-preset="extreme">
+                <button type="button" class="preset-btn active" data-preset="extreme">
                     <span class="p-icon">🔥</span>
                     <span class="p-name">Extreme</span>
                     <span class="p-desc">Smallest size</span>
                 </button>
-                <button type="button" class="preset-btn active" data-preset="recommended">
+                <button type="button" class="preset-btn" data-preset="recommended">
                     <span class="p-icon">✨</span>
                     <span class="p-name">Recommended</span>
                     <span class="p-desc">Best balance</span>
@@ -274,8 +274,8 @@
                     <div class="adv-group">
                         <label>Image DPI</label>
                         <select id="dpiSelect">
-                            <option value="60">60 DPI (Smallest)</option>
-                            <option value="72" selected>72 DPI (Recommended)</option>
+                            <option value="60" selected>60 DPI (Smallest)</option>
+                            <option value="72">72 DPI (Recommended)</option>
                             <option value="100">100 DPI (Balanced)</option>
                             <option value="150">150 DPI (Good)</option>
                             <option value="200">200 DPI (High)</option>
@@ -285,9 +285,9 @@
                     <div class="adv-group">
                         <label>Image Quality</label>
                         <select id="qualitySelect">
-                            <option value="30">30% (Very Low)</option>
+                            <option value="30" selected>30% (Very Low)</option>
                             <option value="50">50% (Low)</option>
-                            <option value="70" selected>70% (Medium)</option>
+                            <option value="70">70% (Medium)</option>
                             <option value="85">85% (High)</option>
                             <option value="95">95% (Very High)</option>
                         </select>
@@ -329,7 +329,7 @@
         </div>
 
         <div class="info-box">
-            <strong>💡 Kaise Kaam Karta Hai:</strong> Smart compression algorithm — target size hit करने के लिए server automatically Ghostscript के settings adjust करता है। Progressive attempts से best output देता है।
+            <strong>💡 Kaise Kaam Karta Hai:</strong> Smart compression algorithm — target size hit करने के लिए server automatically Ghostscript के settings adjust करता है। Fast 4-attempt progressive compression से best output देता है।
         </div>
 
         <div class="auto-cleanup-note">
@@ -368,7 +368,7 @@ const qwMessage = document.getElementById('qwMessage');
 const qwBarFill = document.getElementById('qwBarFill');
 
 let selectedFile = null;
-let currentPreset = 'recommended';
+let currentPreset = 'extreme';
 let originalSize = 0;
 
 const QUALITY_LEVELS = [
@@ -601,7 +601,7 @@ compressBtn.addEventListener('click', async () => {
             progressText.textContent = '⚙️ Analyzing PDF structure...';
             showStatus('⏳ Uploading and analyzing... (pehli baar 30s lag sakta hai)', 'loading');
         }
-    }, 4000);
+    }, 3000);
 
     setTimeout(() => {
         if (compressBtn.disabled) {
@@ -612,14 +612,14 @@ compressBtn.addEventListener('click', async () => {
                 progressText.textContent = '🎯 Compressing with smart algorithm...';
             }
         }
-    }, 8000);
+    }, 6000);
 
     setTimeout(() => {
         if (compressBtn.disabled) {
             progressFill.style.width = '90%';
             progressText.textContent = '📄 Finalizing PDF...';
         }
-    }, 15000);
+    }, 12000);
 
     try {
         const formData = new FormData();
