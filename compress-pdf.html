@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-title" content="Bharat24Tools">
 
     <title>Compress PDF - Reduce PDF to Any Size (MB/KB) Free | Bharat24Tools</title>
-    <meta name="description" content="Compress PDF to any target size — MB or KB (min 100KB). Smart AI-driven compression with quality warning. Free, up to 90% reduction, auto-cleanup.">
+    <meta name="description" content="Compress PDF to any target size — MB or KB (min 10KB). Smart AI-driven compression with quality warning. Free, up to 90% reduction, auto-cleanup.">
     <meta name="keywords" content="compress pdf, reduce pdf size, pdf compressor, compress pdf to 500kb, compress pdf to 1mb, shrink pdf, pdf size reducer">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
@@ -193,7 +193,7 @@
 
 <main>
     <h1>📉 Compress PDF</h1>
-    <p class="subtitle">PDF को किसी भी size में compress करो — MB या KB (min 100KB)</p>
+    <p class="subtitle">PDF को किसी भी size में compress करो — MB या KB (min 10KB)</p>
 
     <div class="card">
         <div class="upload-zone" id="uploadZone">
@@ -203,7 +203,7 @@
             <div class="badge-row">
                 <span class="badge">⚡ Smart Compress</span>
                 <span class="badge">🔒 Auto-Delete 30s</span>
-                <span class="badge">🎯 Min 100KB</span>
+                <span class="badge">🎯 Min 10KB</span>
             </div>
             <input type="file" id="fileInput" accept=".pdf,application/pdf">
         </div>
@@ -247,14 +247,14 @@
                     </label>
                 </div>
                 <div class="target-inputs disabled" id="targetInputs">
-                    <input type="number" id="targetValue" placeholder="e.g. 500" min="100" max="20000" value="500">
+                    <input type="number" id="targetValue" placeholder="e.g. 100" min="10" max="20000" value="100">
                     <select id="targetUnit">
                         <option value="KB">KB</option>
                         <option value="MB">MB</option>
                     </select>
                 </div>
                 <div class="target-hint">
-                    💡 Server smart-compress करेगा और target size के सबसे नज़दीक output देगा। Minimum <strong>100 KB</strong> allowed है।
+                    💡 Server smart-compress करेगा और target size के सबसे नज़दीक output देगा। Minimum <strong>10 KB</strong> allowed है।
                 </div>
 
                 <div class="quality-warning" id="qualityWarning">
@@ -329,7 +329,7 @@
         </div>
 
         <div class="info-box">
-            <strong>💡 Kaise Kaam Karta Hai:</strong> Smart compression algorithm — target size hit करने के लिए server automatically Ghostscript के settings adjust करता है। Fast 4-attempt progressive compression से best output देता है।
+            <strong>💡 Kaise Kaam Karta Hai:</strong> Advanced AI algorithm — target size hit करने के लिए server automatically Ghostscript और Scanner Mode का उपयोग करता है। Extreme compression के लिए AI PDF को scan करके size कम करता है।
         </div>
 
         <div class="auto-cleanup-note">
@@ -340,7 +340,7 @@
 
 <script>
 const API_URL = 'https://bharat24tools-api.onrender.com';
-const MIN_TARGET_KB = 100;
+const MIN_TARGET_KB = 10;
 
 const uploadZone = document.getElementById('uploadZone');
 const fileInput = document.getElementById('fileInput');
@@ -411,8 +411,8 @@ const QUALITY_LEVELS = [
     {
         key: 'veryLow',
         maxRatio: 0,
-        title: '🚨 Very Low Quality',
-        message: 'Severe quality loss! Text may be unreadable. NOT recommended unless absolutely necessary.',
+        title: '🚨 AI Extreme Mode',
+        message: 'Target is extremely small. AI will scan and compress PDF. Text may not be selectable.',
         color: '#ef4444',
         bg: 'rgba(239,68,68,0.15)',
         barPct: 15
