@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-title" content="Bharat24Tools">
 
     <title>Compress PDF - Reduce PDF to Any Size (MB/KB) Free | Bharat24Tools</title>
-    <meta name="description" content="Compress PDF to any target size — MB or KB (min 100KB). Smart AI-driven compression with quality warning. Free, up to 90% reduction, auto-cleanup.">
+    <meta name="description" content="Compress PDF to any target size — MB or KB (min 10KB). Smart AI-driven compression with quality warning. Free, up to 90% reduction, auto-cleanup.">
     <meta name="keywords" content="compress pdf, reduce pdf size, pdf compressor, compress pdf to 500kb, compress pdf to 1mb, shrink pdf, pdf size reducer">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
@@ -193,7 +193,7 @@
 
 <main>
     <h1>📉 Compress PDF</h1>
-    <p class="subtitle">PDF को किसी भी size में compress करो — MB या KB (min 100KB)</p>
+    <p class="subtitle">PDF को किसी भी size में compress करो — MB या KB (min 10KB)</p>
 
     <div class="card">
         <div class="upload-zone" id="uploadZone">
@@ -201,9 +201,9 @@
             <p><span class="highlight">Click करो या Drag करो</span></p>
             <p>PDF file (max 20MB)</p>
             <div class="badge-row">
-                <span class="badge">⚡ Smart Compress</span>
+                <span class="badge">⚡ Smart AI Compress</span>
                 <span class="badge">🔒 Auto-Delete 30s</span>
-                <span class="badge">🎯 Min 100KB</span>
+                <span class="badge">🎯 Min 10KB</span>
             </div>
             <input type="file" id="fileInput" accept=".pdf,application/pdf">
         </div>
@@ -247,14 +247,14 @@
                     </label>
                 </div>
                 <div class="target-inputs disabled" id="targetInputs">
-                    <input type="number" id="targetValue" placeholder="e.g. 500" min="100" max="20000" value="500">
+                    <input type="number" id="targetValue" placeholder="e.g. 100" min="10" max="20000" value="100">
                     <select id="targetUnit">
                         <option value="KB">KB</option>
                         <option value="MB">MB</option>
                     </select>
                 </div>
                 <div class="target-hint">
-                    💡 Server smart-compress करेगा और target size के सबसे नज़दीक output देगा। Minimum <strong>100 KB</strong> allowed है।
+                    💡 Server smart-compress करेगा और target size के सबसे नज़दीक output देगा। Minimum <strong>10 KB</strong> allowed है।
                 </div>
 
                 <div class="quality-warning" id="qualityWarning">
@@ -329,7 +329,7 @@
         </div>
 
         <div class="info-box">
-            <strong>💡 Kaise Kaam Karta Hai:</strong> Smart compression algorithm — target size hit करने के लिए server automatically Ghostscript के settings adjust करता है। Fast 4-attempt progressive compression से best output देता है।
+            <strong>💡 Kaise Kaam Karta Hai:</strong> Smart AI compression algorithm — Agar aap bahut chhota size maangte hain, toh server automatically AI Scanner Mode use karta hai taaki aapko exactly wahi size mile jo aapne manga hai.
         </div>
 
         <div class="auto-cleanup-note">
@@ -340,7 +340,7 @@
 
 <script>
 const API_URL = 'https://bharat24tools-api.onrender.com';
-const MIN_TARGET_KB = 100;
+const MIN_TARGET_KB = 10;
 
 const uploadZone = document.getElementById('uploadZone');
 const fileInput = document.getElementById('fileInput');
@@ -452,6 +452,19 @@ function updateQualityWarning() {
         qwMessage.textContent = 'Aapka target size original file se bada hai. Compress karne ka koi fayda nahi hoga.';
         qwBarFill.style.width = '100%';
         qwBarFill.style.background = '#fbbf24';
+        return;
+    }
+
+    // AI Extreme Mode warning for sizes < 100KB
+    if (targetBytes < 100 * 1024) {
+        qualityWarning.classList.add('show');
+        qualityWarning.style.background = 'rgba(251,146,60,0.12)';
+        qualityWarning.style.borderLeft = '4px solid #fb923c';
+        qualityWarning.style.color = '#fb923c';
+        qwTitle.textContent = '⚡ AI Extreme Scanner Mode Activated';
+        qwMessage.textContent = 'Aapne bahut chhota size manga hai. AI PDF ko scan karke size kam karega. (Note: Text copy nahi ho payega, par padhne me clear rahega).';
+        qwBarFill.style.width = '35%';
+        qwBarFill.style.background = '#fb923c';
         return;
     }
 
