@@ -4,41 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="manifest" href="site.webmanifest">
-    <meta name="theme-color" content="#0d6efd">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Bharat24Tools">
-
-    <title>AI Background Remover & Editor - Bharat24Tools</title>
-    <meta name="description" content="Advanced AI background remover. Add shadows, change backgrounds, blur, and create passport photos instantly in your browser. 100% free and private.">
-    <meta name="keywords" content="background remover, remove bg, ai background remover, passport photo maker, blur background, change background">
-    <meta name="author" content="Alok">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/background-remover.html">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/background-remover.html">
-    <meta property="og:title" content="AI Background Remover & Editor - Bharat24Tools">
-    <meta property="og:description" content="Remove background using AI in your browser. Add custom colors, presets, shadows, and blur instantly.">
-    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
-    <meta property="og:site_name" content="Bharat24Tools">
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "AI Background Remover & Editor",
-        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/background-remover.html",
-        "applicationCategory": "MultimediaApplication",
-        "operatingSystem": "Web Browser",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-        "featureList": ["AI Background Removal", "Preset Backgrounds", "Auto Shadow", "Blur Effect", "Passport Photo Mode"]
-    }
-    </script>
-
+    <title>AI Background Remover Pro - Bharat24Tools</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
 
@@ -69,17 +36,18 @@
         .loader-box { display:none; text-align:center; padding:40px 0; }
         .spinner { width:50px; height:50px; border:5px solid rgba(168,85,247,0.2); border-top-color:#a855f7; border-radius:50%; animation:spin 1s linear infinite; margin:0 auto 16px; }
         @keyframes spin { to { transform:rotate(360deg); } }
+        .loader-text { font-size:0.9rem; color:#a5b4fc; }
 
         /* Editor Layout */
         .editor-area { display:none; margin-top:20px; }
         .editor-area.show { display:flex; gap:20px; flex-wrap:wrap; }
         
-        /* Canvas Area (Left) */
+        /* Canvas Area */
         .canvas-side { flex:1; min-width:300px; display:flex; flex-direction:column; gap:12px; }
         .canvas-container { background: repeating-conic-gradient(#2a2a4a 0% 25%, #1e1b4b 0% 50%) 50% / 20px 20px; border-radius:12px; border:2px solid rgba(168,85,247,0.3); overflow:hidden; display:flex; justify-content:center; align-items:center; min-height:400px; padding:10px; }
         canvas { max-width:100%; max-height:500px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3); }
         
-        /* Tools Area (Right) */
+        /* Tools Area */
         .tools-side { flex:1; min-width:300px; background:rgba(15,15,30,0.5); border-radius:12px; padding:20px; border:1px solid rgba(168,85,247,0.2); }
         
         .section-title { font-size:0.9rem; font-weight:700; color:#a855f7; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
@@ -110,7 +78,7 @@
 
         .status { display:none; margin-top:20px; padding:16px; border-radius:12px; text-align:center; font-weight:600; font-size:0.9rem; }
         .status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
-        .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
+        .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; border: 1px solid #ef4444; }
         .status.info { background:rgba(251,191,36,0.15); color:#fde68a; display:block; }
 
         @media(max-width:800px) {
@@ -131,6 +99,9 @@
     <p class="subtitle">Remove background, add shadows, apply presets, or make passport photos instantly.</p>
 
     <div class="card">
+        <!-- Status Message -->
+        <div class="status" id="status"></div>
+
         <!-- Upload Zone -->
         <div class="upload-zone" id="uploadZone">
             <div class="upload-icon"><i class="fas fa-magic"></i></div>
@@ -142,10 +113,8 @@
         <!-- Loader -->
         <div class="loader-box" id="loaderBox">
             <div class="spinner"></div>
-            <p>AI is removing background... <br><span style="font-size:0.8rem; opacity:0.7;">(First time model download ho raha hai, thoda time lag sakta hai)</span></p>
+            <p class="loader-text">AI is removing background... <br><span style="font-size:0.8rem; opacity:0.7;">(Pehli baar me 10-15 sec lag sakte hain)</span></p>
         </div>
-
-        <div class="status" id="status"></div>
 
         <!-- Editor Area -->
         <div class="editor-area" id="editorArea">
@@ -162,15 +131,12 @@
             <div class="tools-side">
                 
                 <div class="section-title"><i class="fas fa-images"></i> Preset Backgrounds</div>
-                <div class="preset-grid" id="presetGrid">
-                    <!-- Filled by JS -->
-                </div>
+                <div class="preset-grid" id="presetGrid"></div>
                 
                 <div class="divider"></div>
 
                 <div class="section-title"><i class="fas fa-magic"></i> AI Effects</div>
                 
-                <!-- Shadow Toggle -->
                 <div class="control-row">
                     <label>Add 3D Shadow</label>
                     <label class="toggle-switch">
@@ -179,7 +145,6 @@
                     </label>
                 </div>
 
-                <!-- Blur Toggle -->
                 <div class="control-row">
                     <label>Blur Background</label>
                     <label class="toggle-switch">
@@ -188,7 +153,6 @@
                     </label>
                 </div>
 
-                <!-- Custom Color -->
                 <div class="control-row">
                     <label>Custom Solid Color</label>
                     <input type="color" id="customColor" value="#ffffff" style="width:36px; height:24px; border:none; border-radius:4px; cursor:pointer;">
@@ -209,7 +173,7 @@
     </div>
 </main>
 
-<!-- ✅ AI Background Removal Library -->
+<!-- ✅ AI Background Removal Library (Wait for it to load) -->
 <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.8/dist/browser/index.js"></script>
 
 <script>
@@ -218,7 +182,7 @@
     let originalImage = new Image();
     let transparentImage = new Image();
     
-    let currentBg = 'transparent'; // 'transparent', 'blur', 'color', or preset_url
+    let currentBg = 'transparent';
     let activeUrls = new Set();
 
     const uploadZone = document.getElementById('uploadZone');
@@ -229,13 +193,11 @@
     const previewCanvas = document.getElementById('previewCanvas');
     const ctx = previewCanvas.getContext('2d');
 
-    // UI Elements
     const presetGrid = document.getElementById('presetGrid');
     const shadowToggle = document.getElementById('shadowToggle');
     const blurToggle = document.getElementById('blurToggle');
     const customColor = document.getElementById('customColor');
     
-    // Preset Data (Gradients & Colors)
     const presets = [
         { id: 'gradient1', type: 'gradient', c1: '#ff9a9e', c2: '#fecfef' },
         { id: 'gradient2', type: 'gradient', c1: '#a18cd1', c2: '#fbc2eb' },
@@ -247,7 +209,7 @@
         { id: 'transparent', type: 'transparent' }
     ];
 
-    // 🧹 Memory Cleanup
+    // 🧹 Cleanup
     function trackUrl(url) { activeUrls.add(url); return url; }
     function fullCleanup() {
         activeUrls.forEach(u => { try { URL.revokeObjectURL(u); } catch(e){} });
@@ -260,15 +222,25 @@
         blurToggle.checked = false;
         try { ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height); } catch(e){}
     }
-    window.addEventListener('beforeunload', fullCleanup);
 
+    // UI State Management
     function showStatus(msg, type) {
-        status.className = 'status ' + type;
-        status.textContent = msg;
-        if(!msg) status.className = 'status';
+        if(!msg) {
+            status.style.display = 'none';
+        } else {
+            status.className = 'status ' + type;
+            status.textContent = msg;
+        }
     }
 
-    // Init Presets UI
+    function resetUI() {
+        uploadZone.style.display = 'block';
+        loaderBox.style.display = 'none';
+        editorArea.classList.remove('show');
+        showStatus('', '');
+    }
+
+    // Init Presets
     presets.forEach(p => {
         const div = document.createElement('div');
         div.className = 'preset-item';
@@ -305,13 +277,17 @@
         originalFile = file;
         uploadZone.style.display = 'none';
         loaderBox.style.display = 'block';
+        showStatus('', '');
 
-        // Load Original Image for Blur Mode
         const origUrl = trackUrl(URL.createObjectURL(file));
         originalImage.src = origUrl;
 
         try {
             // AI Background Removal
+            if (!window.imglyBackgroundRemoval) {
+                throw new Error("AI Model load nahi hua. Internet check karein.");
+            }
+            
             const { removeBackground } = window.imglyBackgroundRemoval;
             const transparentBlob = await removeBackground(file);
             
@@ -321,25 +297,21 @@
             transparentImage.onload = () => {
                 loaderBox.style.display = 'none';
                 editorArea.classList.add('show');
-                showStatus('', '');
                 
-                // Match canvas to image size
                 previewCanvas.width = transparentImage.width;
                 previewCanvas.height = transparentImage.height;
                 
-                // Set default preset
-                presetGrid.children[7].click(); // Transparent
+                presetGrid.children[7].click(); // Default Transparent
                 renderCanvas();
             };
         } catch (error) {
             console.error(error);
-            loaderBox.style.display = 'none';
-            uploadZone.style.display = 'block';
-            showStatus('❌ AI Error. Please try again.', 'error');
+            resetUI();
+            showStatus('❌ AI Error: ' + error.message + ' (Kripya internet check karein ya choti image try karein)', 'error');
         }
     }
 
-    // Main Render Function
+    // Main Render
     function renderCanvas() {
         if (!transparentImage.src) return;
         
@@ -347,24 +319,17 @@
         const h = previewCanvas.height;
         ctx.clearRect(0, 0, w, h);
 
-        // 1. Draw Background
+        // Draw BG
         if (blurToggle.checked && originalImage.src) {
-            // Blur Mode
             ctx.filter = 'blur(15px) brightness(0.8)';
-            // Scale original to cover canvas
             const scale = Math.max(w / originalImage.width, h / originalImage.height);
             const dx = (w - originalImage.width * scale) / 2;
             const dy = (h - originalImage.height * scale) / 2;
             ctx.drawImage(originalImage, dx, dy, originalImage.width * scale, originalImage.height * scale);
             ctx.filter = 'none';
         } else {
-            // Preset / Color Mode
             let bgData = presets.find(p => p.id === currentBg);
-            
-            // Check custom color override
-            if (currentBg === 'custom') {
-                bgData = { type: 'color', c1: customColor.value };
-            }
+            if (currentBg === 'custom') bgData = { type: 'color', c1: customColor.value };
 
             if (bgData && bgData.type === 'color') {
                 ctx.fillStyle = bgData.c1;
@@ -378,7 +343,7 @@
             }
         }
 
-        // 2. Draw Shadow (if enabled)
+        // Draw Shadow
         if (shadowToggle.checked) {
             ctx.shadowColor = 'rgba(0,0,0,0.6)';
             ctx.shadowBlur = 20;
@@ -386,17 +351,16 @@
             ctx.shadowOffsetX = 5;
         }
 
-        // 3. Draw Foreground Image
+        // Draw Image
         ctx.drawImage(transparentImage, 0, 0, w, h);
         
-        // Reset Shadow
         ctx.shadowColor = 'transparent';
         ctx.shadowBlur = 0;
         ctx.shadowOffsetY = 0;
         ctx.shadowOffsetX = 0;
     }
 
-    // Event Listeners for Controls
+    // Controls
     shadowToggle.addEventListener('change', renderCanvas);
     blurToggle.addEventListener('change', () => {
         if(blurToggle.checked) document.querySelectorAll('.preset-item').forEach(el => el.classList.remove('active'));
@@ -412,19 +376,15 @@
     // Passport Mode
     document.getElementById('passportBtn').addEventListener('click', () => {
         if(!transparentImage.src) return;
-        // 35x45 ratio approx 7:9
         const ratio = 35 / 45; 
-        // Set a base height
         const newH = 600;
         const newW = Math.round(newH * ratio);
         
         previewCanvas.width = newW;
         previewCanvas.height = newH;
         
-        // Force white bg
-        presetGrid.children[4].click(); // White
-        
-        showStatus('✅ Passport size set to 35x45mm ratio. (White Background)', 'success');
+        presetGrid.children[4].click(); // White bg
+        showStatus('✅ Passport size set to 35x45mm ratio.', 'success');
         setTimeout(() => showStatus('', ''), 3000);
     });
 
@@ -432,21 +392,18 @@
     document.getElementById('resetBtn').addEventListener('click', () => {
         fullCleanup();
         fileInput.value = '';
-        uploadZone.style.display = 'block';
-        editorArea.classList.remove('show');
+        resetUI();
     });
 
-    // Download Functions
+    // Download
     function downloadCanvas(scale = 1) {
         if (!transparentImage.src) return;
         
-        // Create temp canvas for scaling
         const tempCanvas = document.createElement('canvas');
         tempCanvas.width = previewCanvas.width * scale;
         tempCanvas.height = previewCanvas.height * scale;
         const tCtx = tempCanvas.getContext('2d');
         
-        // Scale up
         tCtx.scale(scale, scale);
         tCtx.drawImage(previewCanvas, 0, 0);
 
@@ -463,6 +420,5 @@
     document.getElementById('downloadHDBtn').addEventListener('click', () => downloadCanvas(2));
 
 </script>
-
 </body>
 </html>
