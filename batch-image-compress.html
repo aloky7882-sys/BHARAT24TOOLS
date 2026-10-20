@@ -43,18 +43,6 @@
     }
     </script>
 
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://aloky7882-sys.github.io/BHARAT24TOOLS/" },
-            { "@type": "ListItem", "position": 2, "name": "Image Tools", "item": "https://aloky7882-sys.github.io/BHARAT24TOOLS/#image-tools" },
-            { "@type": "ListItem", "position": 3, "name": "Batch Image Compressor" }
-        ]
-    }
-    </script>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -62,173 +50,264 @@
 
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-        body { min-height:100vh; background:linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); background-attachment:fixed; color:#e0e7ff; }
-        header { background:rgba(15,15,30,0.95); backdrop-filter:blur(10px); padding:16px 24px; display:flex; align-items:center; gap:20px; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; }
-        header a { color:#cbd5e1; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:6px; transition:all 0.3s; }
-        header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
-        .brand { font-weight:800; font-size:1.3rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; flex:1; }
-        main { max-width:1100px; margin:0 auto; padding:40px 20px 60px; }
-        h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
-        .subtitle { text-align:center; color:#a5b4fc; margin-bottom:40px; }
-        .card { background:rgba(30,27,75,0.9); backdrop-filter:blur(10px); border-radius:16px; padding:40px; border:1px solid rgba(168,85,247,0.3); margin-bottom:24px; }
-        .upload-zone { border:3px dashed rgba(168,85,247,0.6); border-radius:16px; padding:50px 30px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); position:relative; overflow:hidden; }
-        .upload-zone:hover, .upload-zone.active { border-color:#a855f7; background:rgba(168,85,247,0.15); }
-        .upload-zone input { position:absolute; inset:0; opacity:0; cursor:pointer; }
-        .upload-icon { font-size:3rem; color:#a855f7; margin-bottom:16px; }
-        .upload-zone p { color:#cbd5e1; margin:8px 0; }
+        
+        /* ✅ Dark Premium Theme */
+        body { min-height:100vh; background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); padding:16px; color: #e0e7ff; display: flex; flex-direction: column; }
+        
+        header { background:rgba(15,15,30,0.95); padding:12px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; margin:-16px -16px 24px; border-radius:0 0 10px 10px; }
+        header a.back { color:#cbd5e1; text-decoration:none; font-weight:600; font-size:0.9rem; display:flex; align-items:center; gap:6px; }
+        header a.back:hover { color:#a855f7; }
+        header .brand { font-weight:800; font-size:1rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; display:flex; align-items:center; gap:6px; }
+
+        .lang-select { background: rgba(255,255,255,0.1); border: 1px solid rgba(168,85,247,0.4); color: #e0e7ff; padding: 6px 10px; border-radius: 6px; font-family: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer; outline: none; }
+        .lang-select option { background: #1e1b4b; color: #e0e7ff; }
+
+        .container { max-width:1000px; margin:0 auto; background:rgba(30,27,75,0.9); border-radius:16px; padding:24px; box-shadow:0 10px 40px rgba(0,0,0,0.3); border:1px solid rgba(168,85,247,0.3); flex: 1; width: 100%; }
+        
+        .header-title { text-align:center; margin-bottom:24px; }
+        .header-title h1 { font-size:1.8rem; color:#a855f7; margin-bottom:6px; font-weight:800; }
+        .header-title p { color:#a5b4fc; font-size:0.9rem; }
+
+        .privacy-badge { display:inline-block; background:rgba(34,197,94,0.15); color:#86efac; padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:700; margin-bottom:12px; }
+
+        .upload-zone { position:relative; border:2px dashed rgba(168,85,247,0.6); border-radius:12px; padding:30px 20px; margin-bottom:20px; background:rgba(99,102,241,0.05); cursor:pointer; transition:all .2s ease; overflow:hidden; text-align: center; }
+        .upload-zone:hover, .upload-zone.active { background:rgba(168,85,247,0.15); border-color:#a855f7; transform:translateY(-2px); }
+        .upload-zone input { position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; margin:0; z-index: 10; }
+        .upload-icon { font-size:2.5rem; color:#a855f7; margin-bottom:12px; }
+        .upload-zone p { color:#cbd5e1; margin:6px 0; font-size: 0.9rem; }
         .highlight { color:#e0e7ff; font-weight:700; }
-        .privacy-badge { display:inline-block; background:rgba(34,197,94,0.15); color:#86efac; padding:6px 14px; border-radius:20px; font-size:0.78rem; font-weight:700; margin-bottom:12px; }
-        .controls { display:none; margin-top:24px; padding:24px; background:rgba(20,20,40,0.8); border-radius:12px; border:1px solid rgba(168,85,247,0.2); }
-        .controls-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px; }
-        .control-group label { display:block; font-weight:700; margin-bottom:8px; font-size:0.9rem; }
-        .control-group select, .control-group input[type="number"] { width:100%; padding:12px; background:rgba(15,15,30,0.8); border:2px solid rgba(168,85,247,0.4); border-radius:10px; color:#e0e7ff; font-family:inherit; font-weight:600; font-size:0.9rem; }
-        .control-group select:focus, .control-group input:focus { outline:none; border-color:#a855f7; box-shadow:0 0 0 4px rgba(168,85,247,0.15); }
+
+        .controls { display: none; margin-top: 20px; padding:20px; background:rgba(15,15,30,0.5); border-radius:12px; border:1px solid rgba(168,85,247,0.2); }
+        .controls-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+        .control-group label { display:block; font-weight:700; margin-bottom:6px; font-size:0.8rem; color: #cbd5e1; }
+        .control-group select, .control-group input[type="number"], .control-group input[type="text"] { width:100%; padding:10px; background:rgba(15,15,30,0.8); border:1px solid rgba(168,85,247,0.3); border-radius:8px; color:#e0e7ff; font-family:inherit; font-weight:600; font-size:0.85rem; outline: none; }
+        .control-group select:focus, .control-group input:focus { border-color:#a855f7; }
+        
         .range-wrapper { display:flex; align-items:center; gap:12px; }
         .range-wrapper input[type="range"] { flex:1; accent-color:#a855f7; height:6px; }
-        .range-value { min-width:60px; text-align:center; font-weight:700; color:#a855f7; background:rgba(168,85,247,0.15); padding:6px 10px; border-radius:8px; font-size:0.85rem; }
-        .image-grid { display:none; margin-top:20px; max-height:500px; overflow-y:auto; padding:14px; background:rgba(15,15,30,0.6); border-radius:12px; }
-        .grid-inner { display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:12px; }
-        .image-item { background:rgba(99,102,241,0.1); border-radius:10px; padding:10px; text-align:center; position:relative; transition:all 0.3s; }
-        .image-item:hover { background:rgba(99,102,241,0.2); }
-        .image-item img { width:100%; height:90px; object-fit:cover; border-radius:8px; background:#fff; margin-bottom:8px; }
-        .image-item .name { font-size:0.7rem; color:#cbd5e1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-bottom:4px; }
-        .image-item .size { font-size:0.7rem; color:#a5b4fc; font-weight:600; }
-        .image-item .status { font-size:0.65rem; margin-top:4px; font-weight:700; min-height:12px; }
+        .range-value { min-width:50px; text-align:center; font-weight:700; color:#a855f7; background:rgba(168,85,247,0.15); padding:6px; border-radius:6px; font-size:0.8rem; }
+
+        .image-grid { display:none; margin-top:16px; max-height:400px; overflow-y:auto; padding:12px; background:rgba(15,15,30,0.5); border-radius:12px; }
+        .grid-inner { display:grid; grid-template-columns:repeat(auto-fill, minmax(120px, 1fr)); gap:10px; }
+        .image-item { background:rgba(99,102,241,0.1); border-radius:8px; padding:8px; text-align:center; position:relative; }
+        .image-item img { width:100%; height:80px; object-fit:cover; border-radius:6px; background:#fff; margin-bottom:6px; }
+        .image-item .name { font-size:0.65rem; color:#cbd5e1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-bottom:2px; }
+        .image-item .size { font-size:0.65rem; color:#a5b4fc; font-weight:600; }
+        .image-item .status { font-size:0.6rem; margin-top:4px; font-weight:700; min-height:10px; }
         .image-item .status.ok { color:#86efac; }
         .image-item .status.fail { color:#fca5a5; }
-        .image-item .remove { position:absolute; top:6px; right:6px; background:rgba(220,53,69,0.9); color:#fff; border:none; width:22px; height:22px; border-radius:50%; cursor:pointer; font-size:0.7rem; display:flex; align-items:center; justify-content:center; }
-        .action-btn { width:100%; padding:16px; background:linear-gradient(135deg, #a855f7, #ec4899); border:none; border-radius:12px; color:#fff; font-weight:700; font-size:1.05rem; cursor:pointer; font-family:inherit; margin-top:16px; transition:all 0.3s; }
-        .action-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 30px rgba(168,85,247,0.4); }
+        .image-item .remove { position:absolute; top:4px; right:4px; background:rgba(220,53,69,0.9); color:#fff; border:none; width:20px; height:20px; border-radius:50%; cursor:pointer; font-size:0.6rem; display:flex; align-items:center; justify-content:center; }
+
+        .action-btn { width:100%; padding:14px; background:linear-gradient(135deg, #a855f7, #ec4899); border:none; border-radius:8px; color:#fff; font-weight:700; font-size:0.95rem; cursor:pointer; font-family:inherit; margin-top:16px; transition:all 0.3s; }
+        .action-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 6px 16px rgba(168,85,247,0.3); }
         .action-btn:disabled { opacity:0.6; cursor:not-allowed; }
-        .progress-bar { display:none; width:100%; height:12px; background:rgba(15,15,30,0.8); border-radius:20px; margin-top:16px; overflow:hidden; }
+
+        .progress-bar { display:none; width:100%; height:8px; background:rgba(15,15,30,0.8); border-radius:20px; margin-top:16px; overflow:hidden; }
         .progress-bar .fill { height:100%; width:0%; background:linear-gradient(90deg, #a855f7, #ec4899); transition:width 0.3s; }
-        .progress-text { display:none; text-align:center; margin-top:10px; font-size:0.85rem; color:#a5b4fc; }
-        .status { display:none; margin-top:20px; padding:16px; border-radius:10px; text-align:center; font-weight:600; }
-        .status.loading { background:rgba(99,102,241,0.2); color:#a5b4fc; display:block; }
+        .progress-text { display:none; text-align:center; margin-top:8px; font-size:0.8rem; color:#a5b4fc; }
+
+        .status { display:none; margin-top:16px; padding:12px; border-radius:8px; text-align:center; font-weight:600; font-size:0.85rem; }
+        .status.loading { background:rgba(251,191,36,0.15); color:#fde68a; display:block; }
         .status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
         .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
-        .stats-grid { display:none; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:12px; margin-top:20px; margin-bottom:16px; }
-        .stat-box { background:rgba(99,102,241,0.15); padding:14px; border-radius:10px; text-align:center; }
-        .stat-box .label { font-size:0.72rem; color:#a5b4fc; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
-        .stat-box .value { font-size:1.15rem; font-weight:800; color:#e0e7ff; }
+
+        .stats-grid { display:none; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:10px; margin-top:16px; margin-bottom:16px; }
+        .stat-box { background:rgba(99,102,241,0.15); padding:12px; border-radius:8px; text-align:center; }
+        .stat-box .label { font-size:0.65rem; color:#a5b4fc; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
+        .stat-box .value { font-size:1rem; font-weight:800; color:#e0e7ff; }
         .stat-box .value.green { color:#86efac; }
         .stat-box .value.pink { color:#f9a8d4; }
-        .download-all-btn { display:none; width:100%; padding:14px; background:linear-gradient(135deg, #198754, #22c55e); color:#fff; border:none; border-radius:10px; font-weight:700; font-size:1rem; cursor:pointer; margin-top:12px; font-family:inherit; transition:all 0.3s; }
-        .download-all-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 30px rgba(25,135,84,0.4); }
-        .download-all-btn:disabled { opacity:0.6; cursor:not-allowed; }
-        .reset-btn { display:none; width:100%; padding:14px; background:rgba(220,53,69,0.8); color:#fff; border:none; border-radius:10px; font-weight:700; font-size:1rem; cursor:pointer; margin-top:12px; font-family:inherit; transition:all 0.3s; }
+
+        .download-all-btn { display:none; width:100%; padding:14px; background:rgba(34,197,94,0.9); color:#fff; border:none; border-radius:8px; font-weight:700; font-size:0.95rem; cursor:pointer; margin-top:12px; font-family:inherit; transition:all 0.3s; }
+        .download-all-btn:hover:not(:disabled) { background:rgba(34,197,94,1); transform:translateY(-2px); }
+        .reset-btn { display:none; width:100%; padding:14px; background:rgba(220,53,69,0.8); color:#fff; border:none; border-radius:8px; font-weight:700; font-size:0.95rem; cursor:pointer; margin-top:12px; font-family:inherit; transition:all 0.3s; }
         .reset-btn:hover { background:rgba(220,53,69,1); }
-        .info-box { background:rgba(99,102,241,0.1); border-left:4px solid #a855f7; padding:16px; border-radius:8px; margin-top:20px; font-size:0.85rem; color:#a5b4fc; line-height:1.7; }
-        .info-box strong { color:#e0e7ff; }
-        .auto-cleanup-note { background:rgba(34,197,94,0.08); border-left:4px solid #22c55e; padding:12px 16px; border-radius:10px; margin-top:12px; font-size:0.78rem; color:#86efac; line-height:1.6; }
-        @media(max-width:768px){ .card { padding:24px; } h1 { font-size:1.5rem; } .upload-zone { padding:40px 20px; } .controls-grid { grid-template-columns:1fr; } .grid-inner { grid-template-columns:repeat(auto-fill, minmax(110px, 1fr)); } }
+
+        .info-box { background:rgba(99,102,241,0.1); border-left:3px solid #a855f7; padding:12px; border-radius:8px; margin-top:16px; font-size:0.75rem; color:#a5b4fc; line-height:1.6; }
+        .auto-cleanup-note { background:rgba(34,197,94,0.08); border-left:3px solid #22c55e; padding:12px; border-radius:8px; margin-top:12px; font-size:0.75rem; color:#86efac; line-height:1.6; }
+
+        /* ✅ How to Use */
+        .how-to-use { margin-top: 30px; padding-top: 24px; border-top: 1px dashed rgba(168,85,247,0.3); }
+        .how-to-use h2 { text-align: center; font-size: 1.2rem; color: #e0e7ff; margin-bottom: 20px; font-weight: 700; }
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .step-box { background: rgba(15,15,30,0.5); border-radius: 10px; padding: 20px 14px; text-align: center; border: 1px solid rgba(168,85,247,0.2); transition: all 0.3s; }
+        .step-box:hover { transform: translateY(-3px); border-color: #a855f7; background: rgba(30,27,75,0.8); }
+        .step-icon { width: 40px; height: 40px; background: rgba(168,85,247,0.15); color: #a855f7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin: 0 auto 10px; }
+        .step-box h3 { font-size: 0.85rem; color: #e0e7ff; margin-bottom: 6px; font-weight: 600; }
+        .step-box p { font-size: 0.7rem; color: #a5b4fc; line-height: 1.4; }
+
+        @media(max-width:768px){ .container { padding:16px; } .header-title h1 { font-size:1.4rem; } .controls-grid { grid-template-columns:1fr; } .grid-inner { grid-template-columns:repeat(auto-fill, minmax(100px, 1fr)); } .steps-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="index.html"><i class="fas fa-arrow-left"></i> Back</a>
+    <a href="index.html" class="back"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Back</span></a>
     <div class="brand"><i class="fas fa-microchip"></i> Bharat24Tools</div>
+    <select class="lang-select" id="languageSelect" onchange="changeLanguage(this.value)">
+        <option value="en">EN</option>
+        <option value="hi">HI</option>
+    </select>
 </header>
 
-<main>
-    <h1>🗜️ Batch Image Compressor</h1>
-    <p class="subtitle">एक साथ 50+ इमेज कंप्रेस करो — क्वालिटी कंट्रोल के साथ</p>
+<div class="container">
+    <div class="header-title">
+        <h1 data-i18n="title">🗜️ Batch Image Compressor</h1>
+        <p data-i18n="subtitle">Compress 50+ images at once with quality control</p>
+    </div>
 
-    <div class="card">
-        <div style="text-align:center;">
-            <span class="privacy-badge">🔒 100% Client-Side — No Upload</span>
-        </div>
+    <div style="text-align:center;">
+        <span class="privacy-badge" data-i18n="privacyBadge">🔒 100% Client-Side — No Upload</span>
+    </div>
 
-        <div class="upload-zone" id="uploadZone">
-            <div class="upload-icon"><i class="fas fa-images"></i></div>
-            <p><span class="highlight">Click करो या Drag करो</span></p>
-            <p>एक साथ कई इमेज चुन सकते हो (JPG, PNG, WebP)</p>
-            <p style="font-size:0.8rem; opacity:0.8;">Max size: 20MB per image</p>
-            <input type="file" id="fileInput" accept="image/*" multiple>
-        </div>
+    <div class="upload-zone" id="uploadZone">
+        <div class="upload-icon"><i class="fas fa-images"></i></div>
+        <p><span class="highlight" data-i18n="uploadTitle">Click or Drag</span></p>
+        <p data-i18n="uploadText">Select multiple images (JPG, PNG, WebP)</p>
+        <p style="font-size:0.8rem; opacity:0.8;" data-i18n="uploadSize">Max size: 20MB per image</p>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" multiple>
 
-        <div class="controls" id="controls">
-            <div class="controls-grid">
-                <div class="control-group">
-                    <label>🎨 Quality:</label>
-                    <div class="range-wrapper">
-                        <input type="range" id="qualityRange" min="10" max="100" value="80" step="5">
-                        <span class="range-value" id="qualityValue">80%</span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label>📐 Max Width (px):</label>
-                    <input type="number" id="maxWidth" value="1920" min="100" max="5000">
-                </div>
-                <div class="control-group">
-                    <label>📷 Output Format:</label>
-                    <select id="outputFormat">
-                        <option value="image/jpeg">JPEG (Smallest)</option>
-                        <option value="image/webp">WebP (Best Balance)</option>
-                        <option value="image/png">PNG (Lossless)</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <label>📊 Total Images:</label>
-                    <input type="text" id="totalInfo" value="0 images" readonly>
+    <div class="controls" id="controls">
+        <div class="controls-grid">
+            <div class="control-group">
+                <label data-i18n="qualityLabel">🎨 Quality:</label>
+                <div class="range-wrapper">
+                    <input type="range" id="qualityRange" min="10" max="100" value="80" step="5">
+                    <span class="range-value" id="qualityValue">80%</span>
                 </div>
             </div>
-
-            <button class="action-btn" id="compressBtn">
-                <i class="fas fa-compress-alt"></i> सभी Images Compress करो
-            </button>
-
-            <div class="progress-bar" id="progressBar">
-                <div class="fill" id="progressFill"></div>
+            <div class="control-group">
+                <label data-i18n="widthLabel">📐 Max Width (px):</label>
+                <input type="number" id="maxWidth" value="1920" min="100" max="5000">
             </div>
-            <div class="progress-text" id="progressText"></div>
-        </div>
-
-        <div class="image-grid" id="imageGrid">
-            <div class="grid-inner" id="gridInner"></div>
-        </div>
-
-        <div class="status" id="status"></div>
-
-        <div class="stats-grid" id="statsGrid">
-            <div class="stat-box">
-                <div class="label">Original</div>
-                <div class="value pink" id="statOriginal">0 MB</div>
+            <div class="control-group">
+                <label data-i18n="formatLabel">📷 Output Format:</label>
+                <select id="outputFormat">
+                    <option value="image/jpeg">JPEG (Smallest)</option>
+                    <option value="image/webp">WebP (Best Balance)</option>
+                    <option value="image/png">PNG (Lossless)</option>
+                </select>
             </div>
-            <div class="stat-box">
-                <div class="label">Compressed</div>
-                <div class="value green" id="statCompressed">0 MB</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">Saved</div>
-                <div class="value" id="statSaved">0 MB</div>
-            </div>
-            <div class="stat-box">
-                <div class="label">Reduction</div>
-                <div class="value green" id="statPercent">0%</div>
+            <div class="control-group">
+                <label data-i18n="totalLabel">📊 Total Images:</label>
+                <input type="text" id="totalInfo" value="0 images" readonly>
             </div>
         </div>
 
-        <button class="download-all-btn" id="downloadAllBtn">
-            <i class="fas fa-download"></i> Download All as ZIP
+        <button class="action-btn" id="compressBtn">
+            <i class="fas fa-compress-alt"></i> <span data-i18n="compressBtn">Compress All Images</span>
         </button>
 
-        <button class="reset-btn" id="resetBtn">
-            <i class="fas fa-redo"></i> Reset / Compress More
-        </button>
+        <div class="progress-bar" id="progressBar"><div class="fill" id="progressFill"></div></div>
+        <div class="progress-text" id="progressText"></div>
+    </div>
 
-        <div class="info-box">
-            <strong>💡 कैसे काम करता है:</strong> हर इमेज को canvas पर draw किया जाता है, quality सेट की जाती है, और नए format में export किया जाता है। सारी प्रोसेसिंग ब्राउज़र में — कोई इमेज सर्वर पर नहीं जाती।
+    <div class="image-grid" id="imageGrid">
+        <div class="grid-inner" id="gridInner"></div>
+    </div>
+
+    <div class="status" id="status"></div>
+
+    <div class="stats-grid" id="statsGrid">
+        <div class="stat-box">
+            <div class="label" data-i18n="statOriginal">Original</div>
+            <div class="value pink" id="statOriginal">0 MB</div>
         </div>
-
-        <div class="auto-cleanup-note">
-            <strong>🧹 Auto-Cleanup:</strong> Download के 60 second बाद memory automatically clear हो जाती है। Reset button dabao ya page band karo — sab temporary data delete ho jaata hai।
+        <div class="stat-box">
+            <div class="label" data-i18n="statCompressed">Compressed</div>
+            <div class="value green" id="statCompressed">0 MB</div>
+        </div>
+        <div class="stat-box">
+            <div class="label" data-i18n="statSaved">Saved</div>
+            <div class="value" id="statSaved">0 MB</div>
+        </div>
+        <div class="stat-box">
+            <div class="label" data-i18n="statReduction">Reduction</div>
+            <div class="value green" id="statPercent">0%</div>
         </div>
     </div>
-</main>
+
+    <button class="download-all-btn" id="downloadAllBtn">
+        <i class="fas fa-download"></i> <span data-i18n="downloadBtn">Download All as ZIP</span>
+    </button>
+
+    <button class="reset-btn" id="resetBtn">
+        <i class="fas fa-redo"></i> <span data-i18n="resetBtn">Reset / Compress More</span>
+    </button>
+
+    <div class="info-box">
+        <strong data-i18n="infoTitle">💡 How it works:</strong> <span data-i18n="infoText">Each image is drawn on canvas, quality is set, and exported in the new format. All processing happens in your browser — no image goes to a server.</span>
+    </div>
+
+    <div class="auto-cleanup-note">
+        <strong data-i18n="cleanupTitle">🧹 Auto-Cleanup:</strong> <span data-i18n="cleanupText">Memory automatically clears 60 seconds after download. Click Reset or close the page — all temporary data is deleted.</span>
+    </div>
+
+    <!-- ✅ How to Use -->
+    <div class="how-to-use">
+        <h2 data-i18n="howToTitle">How to Use</h2>
+        <div class="steps-grid">
+            <div class="step-box">
+                <div class="step-icon"><i class="fas fa-upload"></i></div>
+                <h3 data-i18n="step1Title">1. Upload Images</h3>
+                <p data-i18n="step1Desc">Select multiple images or drag them into the box.</p>
+            </div>
+            <div class="step-box">
+                <div class="step-icon"><i class="fas fa-sliders-h"></i></div>
+                <h3 data-i18n="step2Title">2. Adjust Settings</h3>
+                <p data-i18n="step2Desc">Set quality, max width, and output format.</p>
+            </div>
+            <div class="step-box">
+                <div class="step-icon"><i class="fas fa-download"></i></div>
+                <h3 data-i18n="step3Title">3. Download ZIP</h3>
+                <p data-i18n="step3Desc">Click Compress, then download all results as a ZIP file.</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
+    const translations = {
+        en: {
+            back: "Back", title: "🗜️ Batch Image Compressor", subtitle: "Compress 50+ images at once with quality control",
+            privacyBadge: "🔒 100% Client-Side — No Upload", uploadTitle: "Click or Drag", uploadText: "Select multiple images (JPG, PNG, WebP)", uploadSize: "Max size: 20MB per image",
+            qualityLabel: "🎨 Quality:", widthLabel: "📐 Max Width (px):", formatLabel: "📷 Output Format:", totalLabel: "📊 Total Images:",
+            compressBtn: "Compress All Images", downloadBtn: "Download All as ZIP", resetBtn: "Reset / Compress More",
+            statOriginal: "Original", statCompressed: "Compressed", statSaved: "Saved", statReduction: "Reduction",
+            infoTitle: "💡 How it works:", infoText: "Each image is drawn on canvas, quality is set, and exported in the new format. All processing happens in your browser — no image goes to a server.",
+            cleanupTitle: "🧹 Auto-Cleanup:", cleanupText: "Memory automatically clears 60 seconds after download. Click Reset or close the page — all temporary data is deleted.",
+            howToTitle: "How to Use", step1Title: "1. Upload Images", step1Desc: "Select multiple images or drag them into the box.",
+            step2Title: "2. Adjust Settings", step2Desc: "Set quality, max width, and output format.",
+            step3Title: "3. Download ZIP", step3Desc: "Click Compress, then download all results as a ZIP file.",
+            msgAdded: "images added", msgReady: "images ready", msgErrValid: "Please select valid images", msgErrSize: "Some images exceed 20MB", msgCompressing: "Compressing", msgDone: "Done", msgFail: "Failed", msgSuccess: "images compressed!", msgDownloading: "Creating ZIP...", msgDownloaded: "Downloaded!"
+        },
+        hi: {
+            back: "वापस", title: "🗜️ बैच इमेज कंप्रेसर", subtitle: "गुणवत्ता नियंत्रण के साथ एक साथ 50+ इमेज कंप्रेस करें",
+            privacyBadge: "🔒 100% क्लाइंट-साइड — कोई अपलोड नहीं", uploadTitle: "क्लिक करें या ड्रैग करें", uploadText: "कई इमेज चुनें (JPG, PNG, WebP)", uploadSize: "अधिकतम आकार: 20MB प्रति इमेज",
+            qualityLabel: "🎨 गुणवत्ता:", widthLabel: "📐 अधिकतम चौड़ाई (px):", formatLabel: "📷 आउटपुट फॉर्मेट:", totalLabel: "📊 कुल इमेज:",
+            compressBtn: "सभी इमेज कंप्रेस करें", downloadBtn: "ZIP में सभी डाउनलोड करें", resetBtn: "रीसेट / और कंप्रेस करें",
+            statOriginal: "ओरिजिनल", statCompressed: "कंप्रेस्ड", statSaved: "बचत", statReduction: "कमी",
+            infoTitle: "💡 यह कैसे काम करता है:", infoText: "प्रत्येक इमेज को कैनवास पर बनाया जाता है, गुणवत्ता सेट की जाती है, और नए फॉर्मेट में निर्यात किया जाता है। सारी प्रोसेसिंग आपके ब्राउज़र में होती है।",
+            cleanupTitle: "🧹 ऑटो-क्लीनअप:", cleanupText: "डाउनलोड के 60 सेकंड बाद मेमोरी अपने आप साफ हो जाती है।",
+            howToTitle: "इसका उपयोग कैसे करें", step1Title: "1. इमेज अपलोड करें", step1Desc: "कई इमेज चुनें या उन्हें बॉक्स में ड्रैग करें।",
+            step2Title: "2. सेटिंग्स एडजस्ट करें", step2Desc: "गुणवत्ता, अधिकतम चौड़ाई और आउटपुट फॉर्मेट सेट करें।",
+            step3Title: "3. ZIP डाउनलोड करें", step3Desc: "कंप्रेस पर क्लिक करें, फिर सभी परिणाम ZIP फाइल के रूप में डाउनलोड करें।",
+            msgAdded: "इमेज जोड़ी गईं", msgReady: "इमेज तैयार हैं", msgErrValid: "कृपया वैध इमेज चुनें", msgErrSize: "कुछ इमेज 20MB से बड़ी हैं", msgCompressing: "कंप्रेस हो रही हैं", msgDone: "हो गया", msgFail: "विफल", msgSuccess: "इमेज कंप्रेस हो गईं!", msgDownloading: "ZIP बन रहा है...", msgDownloaded: "डाउनलोड हो गया!"
+        }
+    };
+
+    let currentLang = 'en';
+    function changeLanguage(lang) {
+        currentLang = lang;
+        const t = translations[lang];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key]) el.textContent = t[key];
+        });
+    }
+    function t(key) { return (translations[currentLang] || translations.en)[key] || key; }
+
     const uploadZone = document.getElementById('uploadZone');
     const fileInput = document.getElementById('fileInput');
     const controls = document.getElementById('controls');
@@ -257,13 +336,11 @@
     let previewUrls = [];
     let autoCleanupTimer = null;
 
-    // ===== AUTO CLEANUP =====
     function scheduleAutoCleanup() {
         if (autoCleanupTimer) clearTimeout(autoCleanupTimer);
         autoCleanupTimer = setTimeout(() => {
             cleanupPreviewUrls();
-            console.log('🧹 Auto-cleanup: preview URLs revoked');
-        }, 60000); // 60 seconds after last action
+        }, 60000);
     }
 
     function cleanupPreviewUrls() {
@@ -288,7 +365,6 @@
         if (autoCleanupTimer) { clearTimeout(autoCleanupTimer); autoCleanupTimer = null; }
     }
 
-    // ===== UPLOAD HANDLERS =====
     uploadZone.addEventListener('click', () => fileInput.click());
     uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
     uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
@@ -302,12 +378,12 @@
     function handleFiles(files) {
         const newFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
         if (newFiles.length === 0) {
-            showStatus('❌ कृपया valid image फाइलें चुनें', 'error');
+            showStatus('❌ ' + t('msgErrValid'), 'error');
             return;
         }
         const tooBig = newFiles.filter(f => f.size > 20 * 1024 * 1024);
         if (tooBig.length > 0) {
-            showStatus('❌ कुछ इमेज 20MB से बड़ी हैं', 'error');
+            showStatus('❌ ' + t('msgErrSize'), 'error');
             return;
         }
         imageFiles = imageFiles.concat(newFiles);
@@ -317,7 +393,7 @@
         downloadAllBtn.style.display = 'none';
         resetBtn.style.display = 'none';
         totalInfo.value = imageFiles.length + ' images';
-        showStatus(`✅ ${newFiles.length} इमेज add हुईं (Total: ${imageFiles.length})`, 'success');
+        showStatus(`✅ ${newFiles.length} ` + t('msgAdded') + ` (Total: ${imageFiles.length})`, 'success');
         scheduleAutoCleanup();
     }
 
@@ -370,10 +446,9 @@
         qualityValue.textContent = qualityRange.value + '%';
     });
 
-    // ===== COMPRESS =====
     compressBtn.addEventListener('click', async () => {
         if (imageFiles.length === 0) {
-            showStatus('❌ पहले इमेज चुनें', 'error');
+            showStatus('❌ ' + t('msgErrValid'), 'error');
             return;
         }
 
@@ -399,7 +474,7 @@
                 const file = imageFiles[i];
                 const progress = (i / imageFiles.length) * 100;
                 progressFill.style.width = progress + '%';
-                progressText.textContent = `Compressing ${i + 1} of ${imageFiles.length}: ${file.name}`;
+                progressText.textContent = `${t('msgCompressing')} ${i + 1} / ${imageFiles.length}: ${file.name}`;
 
                 const card = gridInner.querySelector(`[data-index="${i}"]`);
                 if (card) {
@@ -413,22 +488,19 @@
                     if (card) {
                         const st = card.querySelector('.status');
                         st.className = 'status ok';
-                        st.textContent = '✅ Done';
+                        st.textContent = '✅ ' + t('msgDone');
                     }
                     totalOriginal += file.size;
                     totalCompressed += result.blob.size;
                     compressedResults.push({
                         name: file.name.replace(/\.[^/.]+$/, '') + '-compressed.' + ext,
-                        blob: result.blob,
-                        originalSize: file.size,
-                        compressedSize: result.blob.size
+                        blob: result.blob
                     });
                 } catch (err) {
-                    console.error('Error:', file.name, err);
                     if (card) {
                         const st = card.querySelector('.status');
                         st.className = 'status fail';
-                        st.textContent = '❌ Failed';
+                        st.textContent = '❌ ' + t('msgFail');
                     }
                 }
                 progressFill.style.width = ((i + 1) / imageFiles.length) * 100 + '%';
@@ -443,9 +515,8 @@
             statsGrid.style.display = 'grid';
             downloadAllBtn.style.display = 'block';
             resetBtn.style.display = 'block';
-            showStatus(`🎉 ${compressedResults.length} इमेज कंप्रेस हो गईं!`, 'success');
+            showStatus(`🎉 ${compressedResults.length} ` + t('msgSuccess'), 'success');
         } catch (error) {
-            console.error(error);
             showStatus('❌ Error: ' + error.message, 'error');
         }
 
@@ -463,18 +534,14 @@
                 const img = new Image();
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    let w = img.width;
-                    let h = img.height;
-                    if (w > maxW) {
-                        h = Math.round((h * maxW) / w);
-                        w = maxW;
-                    }
-                    canvas.width = w;
-                    canvas.height = h;
+                    let w = img.width, h = img.height;
+                    if (w > maxW) { h = Math.round((h * maxW) / w); w = maxW; }
+                    canvas.width = w; canvas.height = h;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, w, h);
                     canvas.toBlob(
                         (blob) => {
+                            try { canvas.width = 0; canvas.height = 0; } catch(e){}
                             if (blob) resolve({ blob });
                             else reject(new Error('Compression failed'));
                         },
@@ -491,26 +558,23 @@
     }
 
     downloadAllBtn.addEventListener('click', async () => {
-        if (compressedResults.length === 0) {
-            showStatus('❌ पहले compress करें', 'error');
-            return;
-        }
+        if (compressedResults.length === 0) return;
         downloadAllBtn.disabled = true;
-        downloadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating ZIP...';
+        downloadAllBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${t('msgDownloading')}`;
 
         try {
             const zip = new JSZip();
             compressedResults.forEach(r => zip.file(r.name, r.blob));
             const zipBlob = await zip.generateAsync({ type: 'blob' });
             saveAs(zipBlob, 'compressed-images.zip');
-            downloadAllBtn.innerHTML = '<i class="fas fa-check"></i> Downloaded!';
+            downloadAllBtn.innerHTML = `<i class="fas fa-check"></i> ${t('msgDownloaded')}`;
             scheduleAutoCleanup();
         } catch (err) {
             downloadAllBtn.innerHTML = '<i class="fas fa-times"></i> Failed';
         }
         setTimeout(() => {
             downloadAllBtn.disabled = false;
-            downloadAllBtn.innerHTML = '<i class="fas fa-download"></i> Download All as ZIP';
+            downloadAllBtn.innerHTML = `<i class="fas fa-download"></i> ${t('downloadBtn')}`;
         }, 2000);
     });
 
@@ -520,17 +584,14 @@
         setTimeout(() => { status.style.display = 'none'; }, 2000);
     });
 
-    // Cleanup on page unload
-    window.addEventListener('beforeunload', () => {
-        cleanupPreviewUrls();
-    });
-
+    window.addEventListener('beforeunload', () => cleanupPreviewUrls());
     function showStatus(message, type) {
         status.textContent = message;
         status.className = `status ${type}`;
         status.style.display = 'block';
     }
-</script>
 
+    window.addEventListener('load', () => changeLanguage('en'));
+</script>
 </body>
 </html>

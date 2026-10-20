@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -14,7 +13,6 @@
     <meta name="theme-color" content="#0d6efd">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/png-to-jpg.html">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/png-to-jpg.html">
     <meta property="og:title" content="PNG to JPG Converter - Convert PNG to JPG Free | Bharat24Tools">
@@ -22,13 +20,11 @@
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
     <meta property="og:site_name" content="Bharat24Tools">
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="PNG to JPG Converter - Convert PNG to JPG Free | Bharat24Tools">
     <meta name="twitter:description" content="Convert PNG images to JPG format online instantly. Free, no upload.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-    <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -42,280 +38,251 @@
     </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family:'Poppins',sans-serif; }
+        
+        /* ✅ Dark Premium Theme */
+        body { background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); min-height:100vh; padding:16px; color: #e0e7ff; display: flex; flex-direction: column; }
+        
+        header { background:rgba(15,15,30,0.95); padding:12px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; margin:-16px -16px 24px; border-radius:0 0 10px 10px; }
+        header a.back { color:#cbd5e1; text-decoration:none; font-weight:600; font-size:0.9rem; display:flex; align-items:center; gap:6px; }
+        header a.back:hover { color:#a855f7; }
+        header .brand { font-weight:800; font-size:1rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; display:flex; align-items:center; gap:6px; }
 
-        body {
-            background: #f4f6fb;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+        .lang-select { background: rgba(255,255,255,0.1); border: 1px solid rgba(168,85,247,0.4); color: #e0e7ff; padding: 6px 10px; border-radius: 6px; font-family: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer; outline: none; }
+        .lang-select option { background: #1e1b4b; color: #e0e7ff; }
 
-        .container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, .1);
-            width: 100%;
-            max-width: 700px;
-            text-align: center;
-        }
+        .container { max-width:700px; margin:0 auto; background:rgba(30,27,75,0.9); border-radius:16px; padding:24px; box-shadow:0 10px 40px rgba(0,0,0,0.3); border:1px solid rgba(168,85,247,0.3); text-align: center; flex: 1; width: 100%; }
+        
+        .header-title { margin-bottom:24px; }
+        .header-title h1 { font-size:1.8rem; color:#a855f7; margin-bottom:6px; font-weight:800; }
+        .header-title p { color:#a5b4fc; font-size:0.9rem; }
 
-        h1 {
-            margin-bottom: 20px;
-        }
+        .upload-zone { position:relative; border:2px dashed rgba(168,85,247,0.6); border-radius:12px; padding:32px 20px; margin:20px 0; background:rgba(99,102,241,0.05); cursor:pointer; transition:all .2s ease; overflow:hidden; }
+        .upload-zone:hover, .upload-zone.dragover { background:rgba(168,85,247,0.15); border-color:#a855f7; transform:translateY(-2px); }
+        .upload-zone input { position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; margin:0; z-index: 10; }
+        
+        .upload-icon { width:60px; height:60px; margin:0 auto 14px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(168,85,247,0.2); color:#a855f7; font-size:28px; transition:transform .2s ease; }
+        .upload-zone:hover .upload-icon { transform:translateY(-3px); }
+        
+        .upload-title { font-size:1.1rem; font-weight:700; color:#e0e7ff; margin-bottom:6px; }
+        .upload-subtitle { font-size:0.85rem; color:#a5b4fc; margin-bottom:10px; }
+        .upload-formats { display:inline-block; padding:4px 10px; border-radius:20px; background:rgba(0,0,0,0.2); border:1px solid rgba(168,85,247,0.3); color:#e0e7ff; font-size:0.7rem; font-weight:600; }
 
-        .upload-zone {
-            position: relative;
-            border: 2px dashed #0d6efd;
-            border-radius: 12px;
-            padding: 32px 20px;
-            margin: 20px 0;
-            background: #f8f9fa;
-            cursor: pointer;
-            transition: all .2s ease;
-            overflow: hidden;
-        }
+        img.preview { width:100%; max-height:350px; object-fit:contain; display:none; margin-top:20px; border-radius:10px; background: repeating-conic-gradient(#2a2a4a 0% 25%, #1e1b4b 0% 50%) 50% / 10px 10px; }
+        
+        button.btn-download { width:100%; padding:14px; background:linear-gradient(135deg,#a855f7,#ec4899); color:#fff; border:none; border-radius:8px; font-size:1rem; font-weight:700; cursor:pointer; margin-top:20px; display:none; align-items:center; justify-content:center; gap:8px; }
+        button.btn-download:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(168,85,247,0.3); }
+        
+        #status { margin-top:15px; font-size:0.85rem; font-weight:600; padding: 10px; border-radius: 8px; display: none; }
+        #status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
+        #status.info { background:rgba(251,191,36,0.15); color:#fde68a; display:block; }
+        #status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
 
-        .upload-zone:hover,
-        .upload-zone.dragover {
-            background: #eef5ff;
-            border-color: #0b5ed7;
-            transform: translateY(-1px);
-        }
+        /* ✅ How to Use */
+        .how-to-use { margin-top: 30px; padding-top: 24px; border-top: 1px dashed rgba(168,85,247,0.3); }
+        .how-to-use h2 { text-align: center; font-size: 1.2rem; color: #e0e7ff; margin-bottom: 20px; font-weight: 700; }
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .step-box { background: rgba(15,15,30,0.5); border-radius: 10px; padding: 20px 14px; text-align: center; border: 1px solid rgba(168,85,247,0.2); transition: all 0.3s; }
+        .step-box:hover { transform: translateY(-3px); border-color: #a855f7; background: rgba(30,27,75,0.8); }
+        .step-icon { width: 40px; height: 40px; background: rgba(168,85,247,0.15); color: #a855f7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin: 0 auto 10px; }
+        .step-box h3 { font-size: 0.85rem; color: #e0e7ff; margin-bottom: 6px; font-weight: 600; }
+        .step-box p { font-size: 0.7rem; color: #a5b4fc; line-height: 1.4; }
 
-        .upload-zone input {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-            margin: 0;
-        }
-
-        .upload-icon {
-            width: 76px;
-            height: 76px;
-            margin: 0 auto 14px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #e7f0ff;
-            color: #0d6efd;
-            font-size: 34px;
-            transition: transform .2s ease;
-        }
-
-        .upload-zone:hover .upload-icon {
-            transform: translateY(-3px);
-        }
-
-        .upload-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #212529;
-            margin-bottom: 6px;
-        }
-
-        .upload-subtitle {
-            font-size: 14px;
-            color: #6c757d;
-            margin-bottom: 10px;
-        }
-
-        .upload-formats {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 20px;
-            background: #fff;
-            border: 1px solid #dee2e6;
-            color: #6c757d;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        img.preview {
-            width: 100%;
-            max-height: 400px;
-            object-fit: contain;
-            display: none;
-            margin-top: 20px;
-            border-radius: 10px;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            background: #0d6efd;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        button:hover {
-            background: #0b5ed7;
-        }
-
-        #status {
-            margin-top: 15px;
-            font-size: 15px;
-            font-weight: 600;
-        }
+        @media(max-width:600px) { .steps-grid { grid-template-columns: 1fr; } .header-title h1 { font-size: 1.4rem; } }
     </style>
 </head>
-
 <body>
 
-<div class="container">
+<header>
+    <a href="index.html" class="back"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Back</span></a>
+    <div class="brand"><i class="fas fa-file-image"></i> Bharat24Tools</div>
+    <select class="lang-select" id="languageSelect" onchange="changeLanguage(this.value)">
+        <option value="en">EN</option>
+        <option value="hi">HI</option>
+    </select>
+</header>
 
-    <h1>
-        <i class="fa-solid fa-file-image" style="color:#0d6efd;"></i>
-        PNG to JPG Converter
-    </h1>
+<div class="container">
+    <div class="header-title">
+        <h1 data-i18n="title">PNG to JPG Converter</h1>
+        <p data-i18n="subtitle">Convert PNG images to JPG format online instantly. 100% Private.</p>
+    </div>
 
     <div class="upload-zone" id="dropZone">
-        <div class="upload-icon">
-            <i class="fa-solid fa-cloud-arrow-up"></i>
-        </div>
-
-        <div class="upload-title">
-            Drag & Drop your PNG here
-        </div>
-
-        <div class="upload-subtitle">
-            or click to choose an image
-        </div>
-
-        <div class="upload-formats">
-            PNG
-        </div>
-
+        <div class="upload-icon"><i class="fas fa-cloud-arrow-up"></i></div>
+        <div class="upload-title" data-i18n="uploadTitle">Drag & Drop your PNG here</div>
+        <div class="upload-subtitle" data-i18n="uploadSubtitle">or click to choose an image (max 20MB)</div>
+        <div class="upload-formats">PNG</div>
         <input type="file" id="upload" accept=".png,image/png">
     </div>
 
     <img id="preview" class="preview" alt="Preview">
-
-    <button id="download" style="display:none;">Download JPG</button>
+    
+    <button id="download" class="btn-download">
+        <i class="fas fa-download"></i> <span data-i18n="btnDownload">Download JPG</span>
+    </button>
 
     <div id="status"></div>
 
+    <!-- ✅ How to Use -->
+    <div class="how-to-use">
+        <h2 data-i18n="howToTitle">How to Use</h2>
+        <div class="steps-grid">
+            <div class="step-box">
+                <div class="step-icon"><i class="fas fa-image"></i></div>
+                <h3 data-i18n="step1Title">1. Upload PNG</h3>
+                <p data-i18n="step1Desc">Select or drag your PNG image from your device.</p>
+            </div>
+            <div class="step-box">
+                <div class="step-icon"><i class="fas fa-magic"></i></div>
+                <h3 data-i18n="step2Title">2. Auto Convert</h3>
+                <p data-i18n="step2Desc">The tool adds a white background and converts it to JPG format instantly.</p>
+            </div>
+            <div class="step-box">
+                <div class="step-icon"><i class="fas fa-download"></i></div>
+                <h3 data-i18n="step3Title">3. Download</h3>
+                <p data-i18n="step3Desc">Click the download button to save your converted JPG image.</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
+const translations = {
+    en: {
+        back: "Back", title: "PNG to JPG Converter", subtitle: "Convert PNG images to JPG format online instantly. 100% Private.",
+        uploadTitle: "Drag & Drop your PNG here", uploadSubtitle: "or click to choose an image (max 20MB)",
+        btnDownload: "Download JPG", howToTitle: "How to Use",
+        step1Title: "1. Upload PNG", step1Desc: "Select or drag your PNG image from your device.",
+        step2Title: "2. Auto Convert", step2Desc: "The tool adds a white background and converts it to JPG format instantly.",
+        step3Title: "3. Download", step3Desc: "Click the download button to save your converted JPG image.",
+        errFormat: "Please select a PNG image.", errSize: "File exceeds 20MB limit.", converting: "Converting...", ready: "Ready! Click Download JPG.", errProcess: "Could not process the image."
+    },
+    hi: {
+        back: "वापस", title: "PNG से JPG कनवर्टर", subtitle: "PNG इमेज को तुरंत ऑनलाइन JPG फॉर्मेट में बदलें। 100% प्राइवेट।",
+        uploadTitle: "अपनी PNG यहाँ ड्रैग और ड्रॉप करें", uploadSubtitle: "या इमेज चुनने के लिए क्लिक करें (अधिकतम 20MB)",
+        btnDownload: "JPG डाउनलोड करें", howToTitle: "इसका उपयोग कैसे करें",
+        step1Title: "1. PNG अपलोड करें", step1Desc: "अपने डिवाइस से PNG इमेज चुनें या ड्रैग करें।",
+        step2Title: "2. ऑटो कन्वर्ट", step2Desc: "यह टूल सफ़ेद बैकग्राउंड जोड़कर तुरंत इमेज को JPG फॉर्मेट में बदल देता है।",
+        step3Title: "3. डाउनलोड करें", step3Desc: "अपनी कन्वर्ट की गई JPG इमेज सेव करने के लिए डाउनलोड बटन पर क्लिक करें।",
+        errFormat: "कृपया एक PNG इमेज चुनें।", errSize: "फ़ाइल 20MB की सीमा से बड़ी है।", converting: "कन्वर्ट हो रहा है...", ready: "तैयार! JPG डाउनलोड करने के लिए क्लिक करें।", errProcess: "इमेज प्रोसेस नहीं हो सकी।"
+    }
+};
 
+let currentLang = 'en';
+function changeLanguage(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.textContent = t[key];
+    });
+}
+
+const MAX_SIZE = 20 * 1024 * 1024;
 const upload = document.getElementById("upload");
 const preview = document.getElementById("preview");
 const download = document.getElementById("download");
 const status = document.getElementById("status");
 const dropZone = document.getElementById("dropZone");
 
-let jpgData = "";
+let currentBlob = null;
+let activeUrls = new Set();
+let activeReader = null;
 
-function processFile(file){
+function trackUrl(url) { activeUrls.add(url); return url; }
+function revokeAllUrls() { activeUrls.forEach(u => { try { URL.revokeObjectURL(u); } catch(e){} }); activeUrls.clear(); }
+function abortReader() { if (activeReader) { try { activeReader.abort(); } catch(e){} activeReader = null; } }
 
-    if(!file) return;
+function fullCleanup() {
+    revokeAllUrls();
+    abortReader();
+    currentBlob = null;
+    preview.src = "";
+    preview.style.display = "none";
+    download.style.display = "none";
+}
+window.addEventListener('beforeunload', fullCleanup);
 
-    if(
-        file.type !== "image/png" &&
-        !file.name.toLowerCase().endsWith(".png")
-    ){
-        status.innerText = "❌ Please select a PNG image.";
-        status.style.color = "#dc3545";
+function showStatus(msg, type) {
+    status.className = type;
+    status.textContent = msg;
+    if(!msg) status.className = "";
+}
+
+function processFile(file) {
+    const t = translations[currentLang];
+    if (!file) return;
+
+    if(file.type !== "image/png" && !file.name.toLowerCase().endsWith(".png")){
+        showStatus("❌ " + t.errFormat, "error");
+        return;
+    }
+    if(file.size > MAX_SIZE) {
+        showStatus("❌ " + t.errSize, "error");
         return;
     }
 
-    status.innerText = "Converting...";
-    status.style.color = "#0d6efd";
+    fullCleanup();
+    showStatus("⏳ " + t.converting, "info");
 
     const reader = new FileReader();
-
-    reader.onload = function(e){
-
+    activeReader = reader;
+    reader.onload = function(e) {
+        activeReader = null;
         const img = new Image();
-
-        img.onload = function(){
-
+        img.onload = function() {
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
-
             canvas.width = img.width;
             canvas.height = img.height;
-
+            
+            // ✅ Fill white background for JPG (transparent PNGs will look black otherwise)
             ctx.fillStyle = "#ffffff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+            
             ctx.drawImage(img, 0, 0);
-
-            jpgData = canvas.toDataURL("image/jpeg", 0.95);
-
-            preview.src = jpgData;
-            preview.style.display = "block";
-            download.style.display = "block";
-
-            status.innerText = "✅ Ready! Click Download JPG.";
-            status.style.color = "#198754";
-
+            
+            // ✅ Using toBlob instead of DataURL for better memory management
+            canvas.toBlob((blob) => {
+                currentBlob = blob;
+                const url = trackUrl(URL.createObjectURL(blob));
+                preview.src = url;
+                preview.style.display = "block";
+                download.style.display = "flex";
+                showStatus("✅ " + t.ready, "success");
+                
+                // Cleanup canvas
+                canvas.width = 0;
+                canvas.height = 0;
+            }, "image/jpeg", 0.95);
         };
-
-        img.onerror = function(){
-            status.innerText = "❌ Could not process the image.";
-            status.style.color = "#dc3545";
-        };
-
+        img.onerror = function() { showStatus("❌ " + t.errProcess, "error"); };
         img.src = e.target.result;
-
     };
-
-    reader.onerror = function(){
-        status.innerText = "❌ Could not read the image.";
-        status.style.color = "#dc3545";
-    };
-
+    reader.onerror = function() { activeReader = null; showStatus("❌ " + t.errProcess, "error"); };
     reader.readAsDataURL(file);
-
 }
 
-upload.addEventListener("change", function(){
-    processFile(this.files[0]);
-});
+upload.addEventListener("change", function() { processFile(this.files[0]); });
+dropZone.addEventListener("dragover", function(e) { e.preventDefault(); dropZone.classList.add("dragover"); });
+dropZone.addEventListener("dragleave", function() { dropZone.classList.remove("dragover"); });
+dropZone.addEventListener("drop", function(e) { e.preventDefault(); dropZone.classList.remove("dragover"); processFile(e.dataTransfer.files[0]); });
 
-dropZone.addEventListener("dragover", function(e){
-    e.preventDefault();
-    dropZone.classList.add("dragover");
-});
-
-dropZone.addEventListener("dragleave", function(){
-    dropZone.classList.remove("dragover");
-});
-
-dropZone.addEventListener("drop", function(e){
-    e.preventDefault();
-    dropZone.classList.remove("dragover");
-    processFile(e.dataTransfer.files[0]);
-});
-
-download.addEventListener("click", function(){
-    if(!jpgData) return;
+download.addEventListener("click", function() {
+    if(!currentBlob) return;
+    const url = URL.createObjectURL(currentBlob);
     const a = document.createElement("a");
-    a.href = jpgData;
-    a.download = "converted-image.jpg";
+    a.href = url;
+    a.download = "converted-Bharat24Tools.jpg";
     a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
 });
 
+window.addEventListener('load', () => changeLanguage('en'));
 </script>
-
 </body>
 </html>

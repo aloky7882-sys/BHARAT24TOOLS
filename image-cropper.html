@@ -45,7 +45,6 @@
     }
     </script>
 
-    <!-- FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -54,84 +53,112 @@
 
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-        body { min-height:100vh; background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); padding:30px 16px 60px; color:#e0e7ff; }
         
-        header { background:rgba(15,15,30,0.95); padding:16px 24px; display:flex; align-items:center; gap:20px; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; margin:-30px -16px 30px; }
-        header a { color:#cbd5e1; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:6px; transition:all 0.3s; }
-        header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
-        .brand { font-weight:800; font-size:1.3rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; flex:1; }
-
-        main { max-width:900px; margin:0 auto; }
-        h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
-        .subtitle { text-align:center; color:#a5b4fc; margin-bottom:30px; font-size:0.95rem; }
+        /* ✅ Dark Premium Theme (Compact) */
+        body { min-height:100vh; background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); padding:16px; color:#e0e7ff; }
         
-        .card { background:rgba(30,27,75,0.9); border-radius:20px; padding:36px; border:1px solid rgba(168,85,247,0.3); box-shadow:0 20px 60px rgba(0,0,0,0.4); }
+        header { background:rgba(15,15,30,0.95); padding:12px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; margin:-16px -16px 24px; border-radius:0 0 10px 10px; }
+        header a { color:#cbd5e1; text-decoration:none; font-weight:600; font-size:0.9rem; display:flex; align-items:center; gap:6px; }
+        header a:hover { color:#a855f7; }
+        .brand { font-weight:800; font-size:1rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; display:flex; align-items:center; gap:6px; }
+        
+        /* ✅ Language Selector */
+        .lang-select { background: rgba(255,255,255,0.1); border: 1px solid rgba(168,85,247,0.4); color: #e0e7ff; padding: 6px 10px; border-radius: 6px; font-family: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer; outline: none; }
+        .lang-select option { background: #1e1b4b; color: #e0e7ff; }
 
-        /* Upload Zone */
-        .upload-zone { border:3px dashed rgba(168,85,247,0.6); border-radius:16px; padding:50px 25px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); position:relative; overflow:hidden; }
+        main { max-width:850px; margin:0 auto; }
+        
+        .header-title { text-align:center; margin-bottom:24px; }
+        .header-title h1 { font-size:1.8rem; font-weight:800; margin-bottom:6px; }
+        .header-title p { color:#a5b4fc; font-size:0.9rem; }
+        
+        .card { background:rgba(30,27,75,0.9); border-radius:16px; padding:24px; border:1px solid rgba(168,85,247,0.3); box-shadow:0 10px 40px rgba(0,0,0,0.3); }
+
+        /* ✅ Compact Upload Zone */
+        .upload-zone { border:2px dashed rgba(168,85,247,0.6); border-radius:12px; padding:30px 20px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); position:relative; overflow:hidden; }
         .upload-zone:hover, .upload-zone.active { border-color:#a855f7; background:rgba(168,85,247,0.15); transform:translateY(-2px); }
         .upload-zone input { position:absolute; inset:0; opacity:0; cursor:pointer; }
-        .upload-icon { font-size:3rem; color:#a855f7; margin-bottom:14px; }
-        .upload-zone p { color:#cbd5e1; margin:6px 0; }
-        .highlight { color:#e0e7ff; font-weight:700; }
-        .badge-row { display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
-        .badge { background:rgba(34,197,94,0.15); color:#86efac; padding:5px 12px; border-radius:20px; font-size:0.72rem; font-weight:600; }
+        .upload-icon { font-size:2.5rem; color:#a855f7; margin-bottom:10px; }
+        .upload-zone h2 { font-size:1.1rem; color:#e0e7ff; margin-bottom:6px; }
+        .upload-zone p { color:#a5b4fc; font-size:0.85rem; margin-bottom:10px; }
+        
+        .badge-row { display:flex; gap:6px; justify-content:center; margin-top:12px; flex-wrap:wrap; }
+        .badge { background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.65rem; font-weight:600; }
 
-        /* Editor Area */
+        /* ✅ Editor Area */
         .editor-area { display:none; margin-top:20px; }
         .editor-area.show { display:block; }
         
-        .image-container { background:#111; border-radius:12px; overflow:hidden; max-height:500px; display:flex; justify-content:center; align-items:center; margin-bottom:20px; border:2px solid rgba(168,85,247,0.3); }
-        .image-container img { max-width:100%; max-height:500px; display:block; }
+        .image-container { background:#111; border-radius:10px; overflow:hidden; max-height:450px; display:flex; justify-content:center; align-items:center; margin-bottom:16px; border:1px solid rgba(168,85,247,0.3); }
+        .image-container img { max-width:100%; max-height:450px; display:block; }
 
-        /* Controls */
-        .controls { display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:10px; margin-bottom:20px; }
-        .btn-control { background:rgba(99,102,241,0.1); border:2px solid rgba(168,85,247,0.2); border-radius:10px; padding:12px 8px; color:#cbd5e1; cursor:pointer; font-family:inherit; font-size:0.8rem; font-weight:600; transition:all 0.3s; display:flex; flex-direction:column; align-items:center; gap:6px; }
-        .btn-control:hover, .btn-control.active { background:rgba(168,85,247,0.2); border-color:#a855f7; color:#fff; }
-        .btn-control i { font-size:1.2rem; color:#a855f7; }
+        /* ✅ Compact Controls */
+        .controls { display:grid; grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:8px; margin-bottom:16px; }
+        .btn-control { background:rgba(99,102,241,0.1); border:1px solid rgba(168,85,247,0.3); border-radius:8px; padding:10px 6px; color:#cbd5e1; cursor:pointer; font-family:inherit; font-size:0.75rem; font-weight:600; transition:all 0.3s; display:flex; flex-direction:column; align-items:center; gap:4px; }
+        .btn-control:hover, .btn-control.active { background:rgba(168,85,247,0.25); border-color:#a855f7; color:#fff; }
+        .btn-control i { font-size:1rem; color:#a855f7; }
 
-        .action-row { display:flex; gap:12px; margin-top:20px; }
-        .btn-action { flex:1; padding:16px; border:none; border-radius:12px; font-size:1rem; font-weight:700; cursor:pointer; font-family:inherit; transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:8px; }
+        .action-row { display:flex; gap:10px; margin-top:16px; }
+        .btn-action { flex:1; padding:12px; border:none; border-radius:8px; font-size:0.9rem; font-weight:700; cursor:pointer; font-family:inherit; transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:6px; }
         .btn-download { background:linear-gradient(135deg, #a855f7, #ec4899); color:#fff; }
-        .btn-download:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(168,85,247,0.4); }
+        .btn-download:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(168,85,247,0.3); }
         .btn-reset { background:rgba(220,53,69,0.8); color:#fff; }
         .btn-reset:hover { background:rgba(220,53,69,1); }
 
         /* Status & Cleanup */
-        .status { display:none; margin-top:20px; padding:16px; border-radius:12px; text-align:center; font-weight:600; font-size:0.9rem; }
+        .status { display:none; margin-top:16px; padding:12px; border-radius:8px; text-align:center; font-weight:600; font-size:0.85rem; }
         .status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
         .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
         .status.info { background:rgba(251,191,36,0.15); color:#fde68a; display:block; }
 
-        .auto-cleanup-note { background:rgba(34,197,94,0.08); border-left:4px solid #22c55e; padding:12px 16px; border-radius:10px; margin-top:24px; font-size:0.78rem; color:#86efac; line-height:1.6; }
+        .auto-cleanup-note { background:rgba(34,197,94,0.08); border-left:3px solid #22c55e; padding:10px 14px; border-radius:8px; margin-top:16px; font-size:0.75rem; color:#86efac; line-height:1.5; }
+
+        /* ✅ PDF24 Style "How to Use" Section */
+        .how-to-use { margin-top: 30px; padding-top: 24px; border-top: 1px dashed rgba(168,85,247,0.3); }
+        .how-to-use h2 { text-align: center; font-size: 1.2rem; color: #e0e7ff; margin-bottom: 20px; font-weight: 700; }
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .step-box { background: rgba(15,15,30,0.5); border-radius: 10px; padding: 20px 14px; text-align: center; border: 1px solid rgba(168,85,247,0.2); transition: all 0.3s; }
+        .step-box:hover { transform: translateY(-3px); border-color: #a855f7; background: rgba(30,27,75,0.8); }
+        .step-icon { width: 40px; height: 40px; background: rgba(168,85,247,0.15); color: #a855f7; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin: 0 auto 10px; }
+        .step-box h3 { font-size: 0.85rem; color: #e0e7ff; margin-bottom: 6px; font-weight: 600; }
+        .step-box p { font-size: 0.7rem; color: #a5b4fc; line-height: 1.4; }
 
         @media(max-width:600px) {
-            .card { padding:20px; } h1 { font-size:1.6rem; }
+            .card { padding:16px; } .header-title h1 { font-size:1.4rem; }
             .action-row { flex-direction:column; }
+            .steps-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="index.html">← Back</a>
-    <div class="brand">⚡ Bharat24Tools</div>
+    <a href="index.html"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Back</span></a>
+    <div class="brand"><i class="fas fa-bolt"></i> Bharat24Tools</div>
+    
+    <!-- ✅ Language Selector -->
+    <select class="lang-select" id="languageSelect" onchange="changeLanguage(this.value)">
+        <option value="en">EN</option>
+        <option value="hi">HI</option>
+    </select>
 </header>
 
 <main>
-    <h1>✂️ Advanced Image Cropper</h1>
-    <p class="subtitle">Drag & drop the box on the image to crop perfectly.</p>
+    <div class="header-title">
+        <h1 data-i18n="title">✂️ Advanced Image Cropper</h1>
+        <p data-i18n="subtitle">Drag & drop the box on the image to crop perfectly.</p>
+    </div>
 
     <div class="card">
         <!-- Upload Zone -->
         <div class="upload-zone" id="uploadZone">
             <div class="upload-icon"><i class="fas fa-crop-alt"></i></div>
-            <p><span class="highlight">Click करो या Drag करो</span></p>
-            <p>JPG, PNG, WebP (max 20MB)</p>
+            <h2 data-i18n="uploadTitle">Click or Drag Image Here</h2>
+            <p data-i18n="uploadText">JPG, PNG, WebP (max 20MB)</p>
             <div class="badge-row">
-                <span class="badge">⚡ Visual Crop</span>
-                <span class="badge">🔒 100% Private</span>
-                <span class="badge">🧹 Auto Cleanup</span>
+                <span class="badge" data-i18n="badge1">⚡ Visual Crop</span>
+                <span class="badge" data-i18n="badge2">🔒 100% Private</span>
+                <span class="badge" data-i18n="badge3">🧹 Auto Cleanup</span>
             </div>
             <input type="file" id="fileInput" accept="image/*">
         </div>
@@ -147,26 +174,48 @@
 
             <!-- Tools (Aspect Ratio & Rotate) -->
             <div class="controls">
-                <button class="btn-control active" data-ratio="NaN"><i class="fas fa-expand"></i> Free</button>
-                <button class="btn-control" data-ratio="1"><i class="fas fa-square"></i> 1:1 (DP)</button>
+                <button class="btn-control active" data-ratio="NaN"><i class="fas fa-expand"></i> <span data-i18n="btnFree">Free</span></button>
+                <button class="btn-control" data-ratio="1"><i class="fas fa-square"></i> 1:1</button>
                 <button class="btn-control" data-ratio="1.777"><i class="fas fa-tv"></i> 16:9</button>
                 <button class="btn-control" data-ratio="1.333"><i class="fas fa-image"></i> 4:3</button>
-                <button class="btn-control" onclick="rotateImage(90)"><i class="fas fa-undo"></i> Rotate L</button>
-                <button class="btn-control" onclick="rotateImage(-90)"><i class="fas fa-redo"></i> Rotate R</button>
+                <button class="btn-control" onclick="rotateImage(90)"><i class="fas fa-undo"></i> <span data-i18n="btnRotateL">Rotate L</span></button>
+                <button class="btn-control" onclick="rotateImage(-90)"><i class="fas fa-redo"></i> <span data-i18n="btnRotateR">Rotate R</span></button>
             </div>
 
             <div class="action-row">
                 <button class="btn-action btn-download" id="downloadBtn">
-                    <i class="fas fa-download"></i> Crop & Download
+                    <i class="fas fa-download"></i> <span data-i18n="btnDownload">Crop & Download</span>
                 </button>
                 <button class="btn-action btn-reset" id="resetBtn">
-                    <i class="fas fa-redo"></i> Reset
+                    <i class="fas fa-redo"></i> <span data-i18n="btnReset">Reset</span>
                 </button>
             </div>
         </div>
 
         <div class="auto-cleanup-note">
-            <strong>🧹 Auto Cleanup:</strong> Naya image select karne par purane object URLs aur canvas memory automatically release ho jaate hain. Aapki image server par upload nahi hoti.
+            <strong data-i18n="cleanupTitle">🧹 Auto Cleanup:</strong> <span data-i18n="cleanupText">Object URLs and canvas memory are released automatically. Your image is never uploaded.</span>
+        </div>
+
+        <!-- ✅ PDF24 Style How to Use Section -->
+        <div class="how-to-use">
+            <h2 data-i18n="howToTitle">How to Use</h2>
+            <div class="steps-grid">
+                <div class="step-box">
+                    <div class="step-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <h3 data-i18n="step1Title">1. Upload Image</h3>
+                    <p data-i18n="step1Desc">Select an image from your device or drag and drop it.</p>
+                </div>
+                <div class="step-box">
+                    <div class="step-icon"><i class="fas fa-crop"></i></div>
+                    <h3 data-i18n="step2Title">2. Adjust Crop</h3>
+                    <p data-i18n="step2Desc">Drag the box to select the area. Use buttons to lock aspect ratio or rotate.</p>
+                </div>
+                <div class="step-box">
+                    <div class="step-icon"><i class="fas fa-download"></i></div>
+                    <h3 data-i18n="step3Title">3. Download</h3>
+                    <p data-i18n="step3Desc">Click Crop & Download to save your perfectly cropped image.</p>
+                </div>
+            </div>
         </div>
     </div>
 </main>
@@ -175,6 +224,46 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
 
 <script>
+    // ✅ Translations Dictionary
+    const translations = {
+        en: {
+            back: "Back", title: "✂️ Advanced Image Cropper", subtitle: "Drag & drop the box on the image to crop perfectly.",
+            uploadTitle: "Click or Drag Image Here", uploadText: "JPG, PNG, WebP (max 20MB)",
+            badge1: "⚡ Visual Crop", badge2: "🔒 100% Private", badge3: "🧹 Auto Cleanup",
+            btnFree: "Free", btnRotateL: "Rotate L", btnRotateR: "Rotate R", btnDownload: "Crop & Download", btnReset: "Reset",
+            cleanupTitle: "🧹 Auto Cleanup:", cleanupText: "Object URLs and canvas memory are released automatically. Your image is never uploaded.",
+            howToTitle: "How to Use",
+            step1Title: "1. Upload Image", step1Desc: "Select an image from your device or drag and drop it.",
+            step2Title: "2. Adjust Crop", step2Desc: "Drag the box to select the area. Use buttons to lock aspect ratio or rotate.",
+            step3Title: "3. Download", step3Desc: "Click Crop & Download to save your perfectly cropped image.",
+            loadErr: "Please select a valid image file.", sizeErr: "File exceeds 20MB limit.", loading: "Loading image...", loaded: "Drag the box on image to crop.", cropErr: "Crop failed. Try again.", success: "Image cropped & downloaded!"
+        },
+        hi: {
+            back: "वापस", title: "✂️ एडवांस इमेज क्रॉपर", subtitle: "सटीक क्रॉपिंग के लिए इमेज पर बॉक्स को ड्रैग करें।",
+            uploadTitle: "यहाँ इमेज क्लिक या ड्रैग करें", uploadText: "JPG, PNG, WebP (अधिकतम 20MB)",
+            badge1: "⚡ विजुअल क्रॉप", badge2: "🔒 100% प्राइवेट", badge3: "🧹 ऑटो क्लीनअप",
+            btnFree: "फ्री", btnRotateL: "बाएं घुमाएं", btnRotateR: "दाएं घुमाएं", btnDownload: "क्रॉप और डाउनलोड", btnReset: "रीसेट",
+            cleanupTitle: "🧹 ऑटो क्लीनअप:", cleanupText: "मेमोरी अपने आप रिलीज़ हो जाती है। आपकी इमेज कभी अपलोड नहीं होती।",
+            howToTitle: "इसका उपयोग कैसे करें",
+            step1Title: "1. इमेज अपलोड करें", step1Desc: "अपने डिवाइस से इमेज चुनें या ड्रैग और ड्रॉप करें।",
+            step2Title: "2. क्रॉप एडजस्ट करें", step2Desc: "क्षेत्र चुनने के लिए बॉक्स खींचें। रेशियो या रोटेट के लिए बटन दबाएं।",
+            step3Title: "3. डाउनलोड करें", step3Desc: "अपनी क्रॉप की गई इमेज को सेव करने के लिए डाउनलोड पर क्लिक करें।",
+            loadErr: "कृपया एक वैध इमेज फ़ाइल चुनें।", sizeErr: "फ़ाइल 20MB की सीमा से बड़ी है।", loading: "इमेज लोड हो रही है...", loaded: "क्रॉप करने के लिए बॉक्स को ड्रैग करें।", cropErr: "क्रॉप विफल रहा।", success: "इमेज क्रॉप और डाउनलोड हो गई!"
+        }
+    };
+
+    let currentLang = 'en';
+
+    function changeLanguage(lang) {
+        currentLang = lang;
+        const t = translations[lang];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key]) el.textContent = t[key];
+        });
+    }
+
+    // 🧹 Core Logic & Auto Cleanup
     const MAX_SIZE = 20 * 1024 * 1024;
     let cropper = null;
     let activeUrls = new Set();
@@ -189,7 +278,6 @@
     const resetBtn = document.getElementById('resetBtn');
     const ratioBtns = document.querySelectorAll('[data-ratio]');
 
-    // 🧹 Memory Cleanup
     function trackUrl(url) { activeUrls.add(url); return url; }
     function revokeAllUrls() {
         activeUrls.forEach(u => { try { URL.revokeObjectURL(u); } catch(e){} });
@@ -215,7 +303,6 @@
         if(!msg) status.className = 'status';
     }
 
-    // Upload Handlers
     uploadZone.addEventListener('click', () => fileInput.click());
     uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
     uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
@@ -229,97 +316,77 @@
     });
 
     function handleFile(file) {
+        const t = translations[currentLang];
         if (!file.type.startsWith('image/')) {
-            showStatus('❌ Please select a valid image file.', 'error');
-            return;
+            showStatus('❌ ' + t.loadErr, 'error'); return;
         }
         if (file.size > MAX_SIZE) {
-            showStatus('❌ File 20MB से बड़ी है।', 'error');
-            return;
+            showStatus('❌ ' + t.sizeErr, 'error'); return;
         }
 
-        fullCleanup(); // Pura purana data clear karo
-        showStatus('⏳ Loading image...', 'info');
+        fullCleanup();
+        showStatus('⏳ ' + t.loading, 'info');
 
         const reader = new FileReader();
         activeReader = reader;
         reader.onload = (e) => {
             activeReader = null;
-            const imgUrl = trackUrl(e.target.result); // Track URL for cleanup
+            const imgUrl = trackUrl(e.target.result); 
             
             imageToCrop.src = imgUrl;
             imageToCrop.onload = () => {
                 uploadZone.style.display = 'none';
                 editorArea.classList.add('show');
-                showStatus('✅ Drag the box on image to crop.', 'success');
+                showStatus('✅ ' + t.loaded, 'success');
 
-                // Initialize Cropper.js
                 cropper = new Cropper(imageToCrop, {
-                    viewMode: 1,
-                    dragMode: 'move',
-                    aspectRatio: NaN,
-                    autoCropArea: 0.8,
-                    restore: false,
-                    guides: true,
-                    center: true,
-                    highlight: false,
-                    cropBoxMovable: true,
-                    cropBoxResizable: true,
-                    toggleDragModeOnDblclick: false,
+                    viewMode: 1, dragMode: 'move', aspectRatio: NaN, autoCropArea: 0.8,
+                    restore: false, guides: true, center: true, highlight: false,
+                    cropBoxMovable: true, cropBoxResizable: true, toggleDragModeOnDblclick: false,
                 });
             };
         };
         reader.readAsDataURL(file);
     }
 
-    // Aspect Ratio Buttons
     ratioBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             if (!cropper) return;
             ratioBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            
             const ratio = parseFloat(btn.dataset.ratio);
             cropper.setAspectRatio(isNaN(ratio) ? NaN : ratio);
         });
     });
 
-    // Rotate Function
     window.rotateImage = function(degree) {
         if (!cropper) return;
         cropper.rotate(degree);
     };
 
-    // Download Crop
     downloadBtn.addEventListener('click', () => {
+        const t = translations[currentLang];
         if (!cropper) return;
         
         const canvas = cropper.getCroppedCanvas({
-            maxWidth: 4096,
-            maxHeight: 4096,
-            fillColor: '#fff', // Agar PNG transparent hai toh white bg
-            imageSmoothingEnabled: true,
-            imageSmoothingQuality: 'high',
+            maxWidth: 4096, maxHeight: 4096, fillColor: '#fff',
+            imageSmoothingEnabled: true, imageSmoothingQuality: 'high',
         });
 
         if (!canvas) {
-            showStatus('❌ Crop failed. Try again.', 'error');
-            return;
+            showStatus('❌ ' + t.cropErr, 'error'); return;
         }
 
-        // Convert canvas to Blob and download
         canvas.toBlob((blob) => {
             const url = trackUrl(URL.createObjectURL(blob));
             const a = document.createElement('a');
             a.href = url;
-            a.download = `cropped-Bharat24Tools-${Date.now()}.jpg`; // Default JPG for smaller size
+            a.download = `cropped-Bharat24Tools-${Date.now()}.jpg`;
             a.click();
-            
-            showStatus('🎉 Image cropped & downloaded!', 'success');
-        }, 'image/jpeg', 0.95); // Quality 95%
+            showStatus('🎉 ' + t.success, 'success');
+        }, 'image/jpeg', 0.95); 
     });
 
-    // Reset Button
     resetBtn.addEventListener('click', () => {
         fullCleanup();
         fileInput.value = '';
@@ -327,10 +394,14 @@
         editorArea.classList.remove('show');
         showStatus('', '');
         ratioBtns.forEach(b => b.classList.remove('active'));
-        ratioBtns[0].classList.add('active'); // Free
+        ratioBtns[0].classList.add('active');
+    });
+
+    // Initialize language
+    window.addEventListener('load', () => {
+        changeLanguage('en');
     });
 
 </script>
-
 </body>
 </html>
