@@ -34,7 +34,7 @@
         .mode-panel { display:none; margin-top:20px; }
         .mode-panel.active { display:block; }
         
-        .thumbnails { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:12px; max-height:400px; overflow-y:auto; padding:10px; background:rgba(0,0,0,0.2); border-radius:12px; }
+        .thumbnails { display:grid; grid-template-columns:repeat(auto-fill,minmax(90px,1fr)); gap:12px; max-height:400px; overflow-y:auto; padding:10px; background:rgba(0,0,0,0.2); border-radius:12px; }
         .page-thumb { position:relative; cursor:pointer; border:3px solid transparent; border-radius:8px; overflow:hidden; background:#fff; transition:all 0.2s; aspect-ratio:3/4; }
         .page-thumb.selected { border-color:#a855f7; box-shadow:0 0 0 3px rgba(168,85,247,0.4); }
         .page-thumb canvas { width:100%; height:100%; display:block; object-fit:contain; }
@@ -53,7 +53,6 @@
         .input-group input:focus { outline:none; border-color:#a855f7; box-shadow:0 0 0 3px rgba(168,85,247,0.2); }
         .example { color:#6b7280; font-size:0.8rem; margin-top:8px; }
         
-        /* FIXED LIVE PREVIEW BOX */
         .live-preview-box { margin-top:15px; padding:15px; border-radius:10px; background:rgba(0,0,0,0.4); border:1px solid rgba(168,85,247,0.3); font-size:1rem; font-weight:600; text-align:center; transition: all 0.3s; }
         
         .split-btn { width:100%; padding:16px; background:linear-gradient(135deg,#a855f7,#6366f1); color:#fff; border:none; border-radius:12px; font-size:1.1rem; font-weight:700; cursor:pointer; margin-top:20px; transition:all 0.2s; display:flex; justify-content:center; align-items:center; gap:8px;}
@@ -82,15 +81,15 @@
 
   <div class="dropzone" id="dropzone">
     <div class="icon">📄</div>
-    <div class="text" data-i18n="dropText">Drop file here or click to browse</div>
-    <div class="hint" data-i18n="dropHint">Max 20MB • PDF only</div>
+    <div class="text">Drop file here or click to browse</div>
+    <div class="hint">Max 20MB • PDF only</div>
     <input type="file" id="fileInput" accept=".pdf,application/pdf">
   </div>
 
   <div class="file-info" id="fileInfo">
     <div class="name" id="fileName">-</div>
     <div style="color:#a5b4fc; font-size:0.85rem; margin-top:4px;">
-      <span id="pageCount">-</span> <span data-i18n="pages">pages</span> • <span id="fileSize">-</span>
+      <span id="pageCount">-</span> pages • <span id="fileSize">-</span>
     </div>
   </div>
 
@@ -110,13 +109,17 @@
     <div class="thumbnails" id="thumbnails">
       <div style="color:#a5b4fc; padding:20px; text-align:center; grid-column: 1/-1;">Please upload a PDF</div>
     </div>
+    <!-- NAYA: Visual Live Preview Box -->
+    <div class="live-preview-box" id="visualPreview">
+      <span style="color:#fca5a5;">Select at least 1 page</span>
+    </div>
   </div>
 
   <!-- MANUAL MODE -->
   <div class="mode-panel" id="panel-manual">
     <div class="input-group">
       <label>Enter pages (e.g., 1-3, 5, 8-10 or 'all')</label>
-      <input type="text" id="manualRanges" placeholder="1-3, 5" oninput="updateLivePreview()" autocomplete="off">
+      <input type="text" id="manualRanges" placeholder="1-3, 5" autocomplete="off">
     </div>
     <div class="live-preview-box" id="manualPreview">
       <span style="color:#6b7280;">Type page numbers to see preview...</span>
@@ -127,7 +130,7 @@
   <div class="mode-panel" id="panel-fixed">
     <div class="input-group">
       <label>Pages per split file?</label>
-      <input type="number" id="fixedSize" min="1" value="1" oninput="updateLivePreview()">
+      <input type="number" id="fixedSize" min="1" value="1">
     </div>
     <div class="live-preview-box" id="fixedPreview">
       <span style="color:#6b7280;">Enter number to see preview...</span>
@@ -139,7 +142,6 @@
 </div>
 
 <script>
-// Yahan apka Backend URL fix hai
 const API_URL = "https://bharat24tools-api.onrender.com/split-pdf"; 
 
 let currentFile = null;
@@ -147,12 +149,6 @@ let totalPages = 0;
 let selectedPages = new Set();
 let currentMode = 'custom';
 let pdfDoc = null;
-
-// Event Listeners
-document.getElementById('langSelect').addEventListener('change', function() {
-    // Dummy language toggle just for UI look
-    alert("Language feature is visual only in this demo.");
-});
 
 const dropzone = document.getElementById('dropzone');
 const fileInput = document.getElementById('fileInput');
@@ -187,41 +183,47 @@ async function handleFile(file) {
   document.getElementById('tabs').style.display = 'flex';
   document.getElementById('splitBtn').disabled = false;
   
-  document.getElementById('thumbnails').innerHTML = `<div style="color:#a5b4fc; padding:20px; text-align:center; grid-column:1/-1;"><span class="spinner"></span> Loading pages...</div>`;
-  showStatus('info', 'Loading PDF...');
+  document.getElementById('thumbnails').innerHTML = `<div style="color:#a5b4fc; padding:20px; text-align:center; grid-column:1/-1;"><span class="spinner"></span> Loading pages... (Please wait)</div>`;
+  showStatus('info', 'Loading PDF pages...');
 
   try {
     const arrayBuffer = await file.arrayBuffer();
-    // MAIN FIX: disableWorker true for local file access
     pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer, disableWorker: true }).promise;
     totalPages = pdfDoc.numPages;
     document.getElementById('pageCount').textContent = totalPages;
     await renderThumbnails();
     hideStatus();
-    updateLivePreview(); // Update manual preview with correct total pages
+    updateLivePreview();
   } catch (err) {
     console.error('PDF.js error:', err);
     totalPages = 1; 
     document.getElementById('pageCount').textContent = '?';
     
-    // Fallback to manual mode if visual fails
     setMode('manual');
-    document.getElementById('thumbnails').innerHTML = '<div style="color:#fca5a5; padding:20px; text-align:center; grid-column:1/-1;">Visual preview blocked by browser. Please use Manual mode.</div>';
-    showStatus('error', '⚠️ Browser blocked visual preview. Automatically switched to Manual mode. You can type page numbers here.');
+    document.getElementById('thumbnails').innerHTML = '<div style="color:#fca5a5; padding:20px; text-align:center; grid-column:1/-1;">Visual blocked by browser. Use Manual mode.</div>';
+    showStatus('error', '⚠️ Visual preview blocked. Automatically switched to Manual mode.');
   }
 }
 
+// 🟢 FIXED BLANK THUMBNAILS (Added delay & smaller scale)
 async function renderThumbnails() {
   const container = document.getElementById('thumbnails');
   container.innerHTML = '';
   for (let i = 1; i <= totalPages; i++) {
     try {
       const page = await pdfDoc.getPage(i);
-      const viewport = page.getViewport({ scale: 0.5 });
+      // Chhota scale (0.4) taaki memory kam lage aur blank na ho
+      const viewport = page.getViewport({ scale: 0.4 });
       const canvas = document.createElement('canvas');
       canvas.width = viewport.width;
       canvas.height = viewport.height;
-      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+      
+      // White background taaki blank na dikhe
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      await page.render({ canvasContext: ctx, viewport }).promise;
 
       const div = document.createElement('div');
       div.className = 'page-thumb';
@@ -230,6 +232,10 @@ async function renderThumbnails() {
       div.innerHTML += `<div class="check">✓</div><div class="page-num">${i}</div>`;
       div.addEventListener('click', () => togglePage(i, div));
       container.appendChild(div);
+      
+      // 🟢 DELAY: Browser ko saans lene do taaki photo render ho sake
+      await new Promise(resolve => setTimeout(resolve, 50));
+      
     } catch (e) { console.error('Page render error:', i, e); }
   }
   updateSelectedCount();
@@ -253,6 +259,7 @@ function clearAll() {
 
 function updateSelectedCount() { 
     document.getElementById('selectedCount').textContent = selectedPages.size; 
+    updateLivePreview(); // Call preview update on every click
 }
 
 function setMode(mode) {
@@ -295,18 +302,18 @@ function buildRangesFromSet(set) {
   return ranges.join(',');
 }
 
-// 🟢 FIXED LIVE PREVIEW LOGIC
 function updateLivePreview() {
+  const visualPrev = document.getElementById('visualPreview');
   const manualPrev = document.getElementById('manualPreview');
   const fixedPrev = document.getElementById('fixedPreview');
   const max = totalPages || 10000;
 
-  // Visual Mode Auto-Update
+  // Visual Mode Update
   if (currentMode === 'custom') {
     if (selectedPages.size === 0) { 
-        manualPrev.innerHTML = `<span style="color:#fca5a5;">Select at least 1 page</span>`; 
+        visualPrev.innerHTML = `<span style="color:#fca5a5;">Select at least 1 page</span>`; 
     } else {
-        manualPrev.innerHTML = `<span style="color:#86efac;">✅ Will extract ${selectedPages.size} pages → <b>${buildRangesFromSet(selectedPages)}</b></span>`;
+        visualPrev.innerHTML = `<span style="color:#86efac;">✅ Will extract ${selectedPages.size} pages → <b>${buildRangesFromSet(selectedPages)}</b></span>`;
     }
   }
 
@@ -348,7 +355,6 @@ function updateLivePreview() {
   }
 }
 
-// Listen for keystrokes manually to ensure preview updates
 document.getElementById('manualRanges').addEventListener('input', updateLivePreview);
 document.getElementById('fixedSize').addEventListener('input', updateLivePreview);
 
@@ -374,7 +380,7 @@ async function doSplit() {
 
   const btn = document.getElementById('splitBtn');
   btn.disabled = true;
-  showStatus('info', '<span class="spinner"></span> Uploading and splitting (Please wait 30-50s if server is sleeping)...');
+  showStatus('info', '<span class="spinner"></span> Uploading and splitting (Please wait 30-50s)...');
 
   try {
     const res = await fetch(API_URL, { method: 'POST', body: formData });
