@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Split PDF - Bharat24Tools</title>
-    <!-- PDF.js Stable Version -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <!-- Fast & Reliable CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.16.105/build/pdf.min.js"></script>
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Arial,sans-serif; }
         body { background: linear-gradient(135deg,#0f0f1e,#533483); min-height:100vh; color:#fff; padding:20px; }
@@ -15,8 +15,7 @@
         .subtitle { text-align:center; color:#a5b4fc; margin-bottom:25px; font-size:0.9rem; }
         
         .lang-select { position:absolute; top:20px; right:20px; background:#a855f7; color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600; z-index:10; outline:none; font-size:0.9rem; }
-        html[dir="rtl"] .lang-select { right: auto; left: 20px; }
-
+        
         .dropzone { border:3px dashed rgba(168,85,247,0.5); border-radius:16px; padding:35px 20px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); }
         .dropzone:hover, .dropzone.dragover { border-color:#a855f7; background:rgba(168,85,247,0.15); transform:scale(1.01); }
         .dropzone .icon { font-size:2.5rem; margin-bottom:10px; }
@@ -25,7 +24,6 @@
         #fileInput { display:none; }
         
         .file-info { margin-top:20px; padding:15px; background:rgba(99,102,241,0.15); border-radius:12px; border-left:4px solid #86efac; display:none; }
-        html[dir="rtl"] .file-info { border-left: none; border-right: 4px solid #86efac; }
         .file-info.show { display:block; }
         .file-info .name { color:#86efac; font-weight:600; font-size: 1.1rem; word-break: break-all; }
         
@@ -48,25 +46,26 @@
         .btn { padding:10px 18px; border:none; border-radius:8px; cursor:pointer; font-weight:600; font-size:0.9rem; transition:all 0.2s; }
         .btn-secondary { background:rgba(99,102,241,0.3); color:#a5b4fc; border:1px solid rgba(99,102,241,0.5); }
         .btn-secondary:hover { background:rgba(99,102,241,0.5); color:#fff; }
+        
         .input-group { margin:15px 0; }
         .input-group label { display:block; color:#a5b4fc; margin-bottom:6px; font-size:0.9rem; font-weight:600; }
-        .input-group input { width:100%; padding:14px; background:rgba(0,0,0,0.3); border:2px solid rgba(168,85,247,0.3); border-radius:8px; color:#fff; font-size:1rem; font-family:'Courier New',monospace; letter-spacing:0.5px; direction:ltr; }
+        .input-group input { width:100%; padding:14px; background:rgba(0,0,0,0.3); border:2px solid rgba(168,85,247,0.3); border-radius:8px; color:#fff; font-size:1rem; font-family:'Courier New',monospace; letter-spacing:0.5px; }
         .input-group input:focus { outline:none; border-color:#a855f7; box-shadow:0 0 0 3px rgba(168,85,247,0.2); }
-        .example { color:#6b7280; font-size:0.8rem; margin-top:8px; line-height: 1.4; }
+        .example { color:#6b7280; font-size:0.8rem; margin-top:8px; }
         
-        .live-preview { margin-top:12px; padding:12px; border-radius:8px; background:rgba(0,0,0,0.25); font-size:0.9rem; min-height:44px; display:flex; align-items:center; border-left: 4px solid #6366f1; }
-        html[dir="rtl"] .live-preview { border-left: none; border-right: 4px solid #6366f1; }
+        /* FIXED LIVE PREVIEW BOX */
+        .live-preview-box { margin-top:15px; padding:15px; border-radius:10px; background:rgba(0,0,0,0.4); border:1px solid rgba(168,85,247,0.3); font-size:1rem; font-weight:600; text-align:center; transition: all 0.3s; }
         
         .split-btn { width:100%; padding:16px; background:linear-gradient(135deg,#a855f7,#6366f1); color:#fff; border:none; border-radius:12px; font-size:1.1rem; font-weight:700; cursor:pointer; margin-top:20px; transition:all 0.2s; display:flex; justify-content:center; align-items:center; gap:8px;}
         .split-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 8px 20px rgba(168,85,247,0.4); }
         .split-btn:disabled { opacity:0.5; cursor:not-allowed; }
         
-        .status { margin-top:15px; padding:15px; border-radius:8px; font-size:0.95rem; display:none; line-height:1.5; }
+        .status { margin-top:15px; padding:15px; border-radius:8px; font-size:0.95rem; display:none; line-height:1.5; text-align:center; }
         .status.show { display:block; }
-        .status.info { background:rgba(99,102,241,0.2); color:#a5b4fc; border-left:4px solid #6366f1; }
-        .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; border-left:4px solid #ef4444; }
-        .status.success { background:rgba(34,197,94,0.2); color:#86efac; border-left:4px solid #22c55e; }
-        .spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; }
+        .status.info { background:rgba(99,102,241,0.2); color:#a5b4fc; }
+        .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; }
+        .status.success { background:rgba(34,197,94,0.2); color:#86efac; }
+        .spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; margin-right:5px; vertical-align:middle;}
         @keyframes spin { to { transform:rotate(360deg); } }
     </style>
 </head>
@@ -76,18 +75,10 @@
   <select class="lang-select" id="langSelect">
     <option value="en">🇬🇧 English</option>
     <option value="hi">🇮🇳 हिंदी (Hindi)</option>
-    <option value="de">🇩🇪 Deutsch (German)</option>
-    <option value="es">🇪🇸 Español (Spanish)</option>
-    <option value="fr">🇫🇷 Français (French)</option>
-    <option value="pt">🇵🇹 Português (Portuguese)</option>
-    <option value="ru">🇷🇺 Русский (Russian)</option>
-    <option value="ja">🇯🇵 日本語 (Japanese)</option>
-    <option value="zh">🇨🇳 中文 (Chinese)</option>
-    <option value="ar">🇸🇦 العربية (Arabic)</option>
   </select>
 
-  <h1>✂️ <span data-i18n="title">Split PDF</span></h1>
-  <p class="subtitle" data-i18n="subtitle">Split PDF into pages — Visual, Manual or Fixed</p>
+  <h1>✂️ Split PDF</h1>
+  <p class="subtitle">Split PDF into pages — Visual, Manual or Fixed</p>
 
   <div class="dropzone" id="dropzone">
     <div class="icon">📄</div>
@@ -104,107 +95,63 @@
   </div>
 
   <div class="tabs" id="tabs">
-    <div class="tab active" data-mode="custom" onclick="setMode('custom')">✋ <span data-i18n="visualMode">Visual</span></div>
-    <div class="tab" data-mode="manual" onclick="setMode('manual')">✏️ <span data-i18n="manualMode">Manual Type</span></div>
-    <div class="tab" data-mode="fixed" onclick="setMode('fixed')">⚡ <span data-i18n="fixedMode">Fixed</span></div>
+    <div class="tab active" data-mode="custom" onclick="setMode('custom')">✋ Visual</div>
+    <div class="tab" data-mode="manual" onclick="setMode('manual')">✏️ Manual</div>
+    <div class="tab" data-mode="fixed" onclick="setMode('fixed')">⚡ Fixed</div>
   </div>
 
+  <!-- VISUAL MODE -->
   <div class="mode-panel active" id="panel-custom">
     <div class="controls">
-      <button class="btn btn-secondary" onclick="selectAll()" data-i18n="selectAll">Select All</button>
-      <button class="btn btn-secondary" onclick="clearAll()" data-i18n="clearAll">Clear All</button>
-      <span style="margin-left:auto; padding-top:10px;"><span id="selectedCount" style="color:#86efac; font-weight:700;">0</span> <span data-i18n="selected">selected</span></span>
+      <button class="btn btn-secondary" onclick="selectAll()">Select All</button>
+      <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
+      <span style="margin-left:auto; padding-top:10px;"><span id="selectedCount" style="color:#86efac; font-weight:700;">0</span> selected</span>
     </div>
     <div class="thumbnails" id="thumbnails">
-      <div style="color:#a5b4fc; padding:20px; text-align:center; grid-column: 1/-1;" data-i18n="noFileLoaded">Please upload a PDF to see pages</div>
+      <div style="color:#a5b4fc; padding:20px; text-align:center; grid-column: 1/-1;">Please upload a PDF</div>
     </div>
   </div>
 
+  <!-- MANUAL MODE -->
   <div class="mode-panel" id="panel-manual">
     <div class="input-group">
-      <label data-i18n="manualHint">Enter pages (e.g., 1-3, 5, 8-10 or 'all')</label>
-      <input type="text" id="manualRanges" placeholder="1-3, 5, 8-10" oninput="updateLivePreview()" autocomplete="off">
-      <div class="example">💡 <span data-i18n="manualExample">Example: 1-5 = pages 1 to 5, 2, 4, 6 = only these, all = every page</span></div>
+      <label>Enter pages (e.g., 1-3, 5, 8-10 or 'all')</label>
+      <input type="text" id="manualRanges" placeholder="1-3, 5" oninput="updateLivePreview()" autocomplete="off">
     </div>
-    <div class="live-preview" id="manualPreview">
-      <span style="color:#6b7280;" data-i18n="manualPreviewEmpty">Type page numbers to see live preview...</span>
+    <div class="live-preview-box" id="manualPreview">
+      <span style="color:#6b7280;">Type page numbers to see preview...</span>
     </div>
   </div>
 
+  <!-- FIXED MODE -->
   <div class="mode-panel" id="panel-fixed">
     <div class="input-group">
-      <label data-i18n="pagesPerChunk">Pages per split file?</label>
-      <input type="number" id="fixedSize" min="1" value="1" placeholder="1" oninput="updateLivePreview()">
-      <div class="example">💡 <span data-i18n="fixedExample">Example: 1 = one file per page, 5 = each file 5 pages</span></div>
+      <label>Pages per split file?</label>
+      <input type="number" id="fixedSize" min="1" value="1" oninput="updateLivePreview()">
     </div>
-    <div class="live-preview" id="fixedPreview">
-      <span style="color:#6b7280;" data-i18n="fixedPreviewEmpty">Enter number to see live preview...</span>
+    <div class="live-preview-box" id="fixedPreview">
+      <span style="color:#6b7280;">Enter number to see preview...</span>
     </div>
   </div>
 
-  <button class="split-btn" id="splitBtn" onclick="doSplit()" disabled>✂️ <span data-i18n="splitBtn">Split PDF</span></button>
+  <button class="split-btn" id="splitBtn" onclick="doSplit()" disabled>✂️ Split PDF</button>
   <div class="status" id="status"></div>
 </div>
 
 <script>
-// =========================================================
-// Yahan aapka Render URL FIX kar diya gaya hai
-// =========================================================
-const API_BASE = "https://bharat24tools-api.onrender.com"; 
-const API_URL = API_BASE + '/split-pdf';
+// Yahan apka Backend URL fix hai
+const API_URL = "https://bharat24tools-api.onrender.com/split-pdf"; 
 
 let currentFile = null;
 let totalPages = 0;
 let selectedPages = new Set();
 let currentMode = 'custom';
 let pdfDoc = null;
-let currentLang = 'en';
 
-const i18n = {
-  en: { title: "Split PDF", subtitle: "Split PDF into pages — Visual, Manual or Fixed", dropText: "Drop file here or click to browse", dropHint: "Max 20MB • PDF only", pages: "pages", visualMode: "Visual", manualMode: "Manual Type", fixedMode: "Fixed", selectAll: "Select All", clearAll: "Clear All", selected: "selected", noFileLoaded: "Please upload a PDF to see pages", manualHint: "Enter pages (e.g., 1-3, 5, 8-10 or 'all')", manualExample: "Example: <b>1-5</b> = pages 1 to 5, <b>2, 4, 6</b> = only these, <b>all</b> = every page", manualPreviewEmpty: "Type page numbers to see live preview...", fixedPreviewEmpty: "Enter number to see live preview...", manualInvalid: "Invalid page numbers. Use format like 1-3, 5", pagesPerChunk: "Pages per split file?", fixedExample: "Example: <b>1</b> = one file per page, <b>5</b> = each file 5 pages", splitBtn: "Split PDF", uploading: "Uploading & splitting (Server may take 50s to wake up)...", processing: "Loading PDF...", errNoPages: "Please select at least one page", errNoFile: "Please select a PDF first", errNotPdf: "Only PDF files allowed", errTooBig: "File too large (max 20MB)", errNetwork: "Network error. Server is waking up, please try again in 1 min.", success: "Split complete! Download started.", willExtract: "Will extract {n} pages", willExtractAll: "Will extract all {n} pages", willMakeFiles: "Will create {n} PDF files", filePages: "File {i}: Pages {start} to {end}" },
-  hi: { title: "PDF स्प्लिट करें", subtitle: "PDF को पेजों में बांटें — विज़ुअल, मैन्युअल या फिक्स्ड", dropText: "फ़ाइल यहां ड्रॉप करें या क्लिक करें", dropHint: "अधिकतम 20MB • केवल PDF", pages: "पेज", visualMode: "विज़ुअल", manualMode: "मैन्युअल टाइप", fixedMode: "फिक्स्ड", selectAll: "सभी चुनें", clearAll: "सभी हटाएं", selected: "चुने गए", noFileLoaded: "पेज देखने के लिए कृपया PDF अपलोड करें", manualHint: "पेज टाइप करें (जैसे: 1-3, 5, 8-10 या 'all')", manualExample: "उदाहरण: <b>1-5</b> = पेज 1 से 5, <b>2, 4, 6</b> = सिर्फ ये, <b>all</b> = सभी", manualPreviewEmpty: "लाइव प्रीव्यू देखने के लिए पेज टाइप करें...", fixedPreviewEmpty: "लाइव प्रीव्यू देखने के लिए संख्या डालें...", manualInvalid: "गलत पेज नंबर। फॉर्मेट: 1-3, 5", pagesPerChunk: "हर फ़ाइल में कितने पेज?", fixedExample: "उदाहरण: <b>1</b> = हर पेज अलग, <b>5</b> = हर फाइल 5 पेज", splitBtn: "PDF स्प्लिट करें", uploading: "अपलोड हो रहा है (सर्वर शुरू होने में 50 सेकंड लग सकते हैं)...", processing: "PDF लोड हो रहा है...", errNoPages: "कम से कम एक पेज चुनें", errNoFile: "पहले PDF चुनें", errNotPdf: "केवल PDF मान्य है", errTooBig: "फ़ाइल बहुत बड़ी (20MB)", errNetwork: "नेटवर्क त्रुटि। सर्वर जाग रहा है, कृपया 1 मिनट बाद प्रयास करें।", success: "स्प्लिट पूरा! डाउनलोड शुरू।", willExtract: "{n} पेज निकाले जाएंगे", willExtractAll: "सभी {n} पेज निकाले जाएंगे", willMakeFiles: "{n} PDF फाइलें बनेंगी", filePages: "फाइल {i}: पेज {start} से {end}" },
-  de: { title: "PDF teilen", subtitle: "PDF in Seiten aufteilen — Visuell, Manuell oder Fest", dropText: "Datei hier ablegen oder klicken", dropHint: "Max 20MB • Nur PDF", pages: "Seiten", visualMode: "Visuell", manualMode: "Manuell", fixedMode: "Fest", selectAll: "Alle auswählen", clearAll: "Alle löschen", selected: "ausgewählt", noFileLoaded: "Bitte laden Sie ein PDF hoch", manualHint: "Seiten eingeben (z.B. 1-3, 5 oder 'all')", manualExample: "Beispiel: <b>1-5</b> = Seiten 1 bis 5, <b>2, 4, 6</b> = nur diese, <b>all</b> = alle", manualPreviewEmpty: "Seiten eingeben für Vorschau...", fixedPreviewEmpty: "Nummer eingeben für Vorschau...", manualInvalid: "Ungültige Seitenzahlen.", pagesPerChunk: "Seiten pro Datei?", fixedExample: "Beispiel: <b>1</b> = eine Datei pro Seite, <b>5</b> = 5 Seiten pro Datei", splitBtn: "PDF teilen", uploading: "Wird hochgeladen...", processing: "PDF wird geladen...", errNoPages: "Bitte mindestens eine Seite wählen", errNoFile: "Bitte zuerst PDF wählen", errNotPdf: "Nur PDF erlaubt", errTooBig: "Datei zu groß (max 20MB)", errNetwork: "Netzwerkfehler.", success: "Teilen abgeschlossen!", willExtract: "{n} Seiten extrahieren", willExtractAll: "Alle {n} Seiten extrahieren", willMakeFiles: "{n} PDF-Dateien erstellen", filePages: "Datei {i}: Seiten {start} bis {end}" },
-  es: { title: "Dividir PDF", subtitle: "Dividir PDF en páginas — Visual, Manual o Fijo", dropText: "Suelta el archivo aquí o haz clic", dropHint: "Máx 20MB • Solo PDF", pages: "páginas", visualMode: "Visual", manualMode: "Manual", fixedMode: "Fijo", selectAll: "Seleccionar todo", clearAll: "Limpiar todo", selected: "seleccionado", noFileLoaded: "Sube un PDF para ver las páginas", manualHint: "Ingresa páginas (ej. 1-3, 5 o 'all')", manualExample: "Ejemplo: <b>1-5</b> = páginas 1 a 5, <b>2, 4, 6</b> = solo estas, <b>all</b> = todas", manualPreviewEmpty: "Escribe páginas para ver la vista previa...", fixedPreviewEmpty: "Ingresa número para vista previa...", manualInvalid: "Números inválidos.", pagesPerChunk: "¿Páginas por archivo?", fixedExample: "Ejemplo: <b>1</b> = un archivo por página, <b>5</b> = 5 páginas por archivo", splitBtn: "Dividir PDF", uploading: "Subiendo...", processing: "Cargando PDF...", errNoPages: "Selecciona al menos una página", errNoFile: "Selecciona un PDF primero", errNotPdf: "Solo PDF permitido", errTooBig: "Archivo muy grande (máx 20MB)", errNetwork: "Error de red.", success: "¡División completa!", willExtract: "Extraerá {n} páginas", willExtractAll: "Extraerá las {n} páginas", willMakeFiles: "Creará {n} archivos PDF", filePages: "Archivo {i}: Páginas {start} a {end}" },
-  fr: { title: "Diviser PDF", subtitle: "Diviser le PDF en pages — Visuel, Manuel ou Fixe", dropText: "Déposez le fichier ici ou cliquez", dropHint: "Max 20MB • PDF uniquement", pages: "pages", visualMode: "Visuel", manualMode: "Manuel", fixedMode: "Fixe", selectAll: "Tout sélectionner", clearAll: "Tout effacer", selected: "sélectionné", noFileLoaded: "Veuillez télécharger un PDF", manualHint: "Entrez les pages (ex. 1-3, 5 ou 'all')", manualExample: "Exemple : <b>1-5</b> = pages 1 à 5, <b>2, 4, 6</b> = seulement celles-ci, <b>all</b> = toutes", manualPreviewEmpty: "Tapez les numéros pour l'aperçu...", fixedPreviewEmpty: "Entrez un nombre pour l'aperçu...", manualInvalid: "Numéros invalides.", pagesPerChunk: "Pages par fichier ?", fixedExample: "Exemple : <b>1</b> = un fichier par page, <b>5</b> = 5 pages par fichier", splitBtn: "Diviser PDF", uploading: "Téléchargement...", processing: "Chargement du PDF...", errNoPages: "Sélectionnez au moins une page", errNoFile: "Sélectionnez un PDF d'abord", errNotPdf: "Seuls les PDF sont autorisés", errTooBig: "Fichier trop volumineux (max 20MB)", errNetwork: "Erreur réseau.", success: "Division terminée !", willExtract: "Extraira {n} pages", willExtractAll: "Extraira toutes les {n} pages", willMakeFiles: "Créera {n} fichiers PDF", filePages: "Fichier {i} : Pages {start} à {end}" },
-  pt: { title: "Dividir PDF", subtitle: "Dividir PDF em páginas — Visual, Manual ou Fixo", dropText: "Solte o arquivo aqui ou clique", dropHint: "Máx 20MB • Apenas PDF", pages: "páginas", visualMode: "Visual", manualMode: "Manual", fixedMode: "Fixo", selectAll: "Selecionar tudo", clearAll: "Limpar tudo", selected: "selecionado", noFileLoaded: "Carregue um PDF para ver as páginas", manualHint: "Digite páginas (ex. 1-3, 5 ou 'all')", manualExample: "Exemplo: <b>1-5</b> = páginas 1 a 5, <b>2, 4, 6</b> = apenas estas, <b>all</b> = todas", manualPreviewEmpty: "Digite páginas para ver o preview...", fixedPreviewEmpty: "Digite número para preview...", manualInvalid: "Números inválidos.", pagesPerChunk: "Páginas por arquivo?", fixedExample: "Exemplo: <b>1</b> = um arquivo por página, <b>5</b> = 5 páginas por arquivo", splitBtn: "Dividir PDF", uploading: "Enviando...", processing: "Carregando PDF...", errNoPages: "Selecione pelo menos uma página", errNoFile: "Selecione um PDF primeiro", errNotPdf: "Apenas PDF é permitido", errTooBig: "Arquivo muito grande (máx 20MB)", errNetwork: "Erro de rede.", success: "Divisão completa!", willExtract: "Extrairá {n} páginas", willExtractAll: "Extrairá todas as {n} páginas", willMakeFiles: "Criará {n} arquivos PDF", filePages: "Arquivo {i}: Páginas {start} a {end}" },
-  ru: { title: "Разделить PDF", subtitle: "Разделить PDF на страницы — Визуально, Вручную или Фиксированно", dropText: "Перетащите файл сюда или нажмите", dropHint: "Макс 20МБ • Только PDF", pages: "стр.", visualMode: "Визуально", manualMode: "Вручную", fixedMode: "Фиксированно", selectAll: "Выбрать все", clearAll: "Очистить", selected: "выбрано", noFileLoaded: "Пожалуйста, загрузите PDF", manualHint: "Введите страницы (напр. 1-3, 5 или 'all')", manualExample: "Пример: <b>1-5</b> = с 1 по 5, <b>2, 4, 6</b> = только эти, <b>all</b> = все", manualPreviewEmpty: "Введите страницы для предпросмотра...", fixedPreviewEmpty: "Введите число для предпросмотра...", manualInvalid: "Неверные номера страниц.", pagesPerChunk: "Страниц в файле?", fixedExample: "Пример: <b>1</b> = по одному файлу на страницу, <b>5</b> = по 5 страниц", splitBtn: "Разделить PDF", uploading: "Загрузка...", processing: "Загрузка PDF...", errNoPages: "Выберите хотя бы одну страницу", errNoFile: "Сначала выберите PDF", errNotPdf: "Разрешены только PDF", errTooBig: "Файл слишком большой (макс 20МБ)", errNetwork: "Ошибка сети.", success: "Разделение завершено!", willExtract: "Будет извлечено {n} стр.", willExtractAll: "Будут извлечены все {n} стр.", willMakeFiles: "Будет создано {n} файлов", filePages: "Файл {i}: Страницы {start} - {end}" },
-  ja: { title: "PDFを分割", subtitle: "PDFをページに分割 — ビジュアル、手動、または固定", dropText: "ここにファイルをドロップするかクリック", dropHint: "最大20MB • PDFのみ", pages: "ページ", visualMode: "ビジュアル", manualMode: "手動", fixedMode: "固定", selectAll: "すべて選択", clearAll: "すべてクリア", selected: "選択済み", noFileLoaded: "PDFをアップロードしてください", manualHint: "ページを入力（例：1-3, 5 または 'all'）", manualExample: "例：<b>1-5</b> = 1〜5ページ、<b>2, 4, 6</b> = これらのみ、<b>all</b> = すべて", manualPreviewEmpty: "ページを入力してプレビュー...", fixedPreviewEmpty: "数値を入力してプレビュー...", manualInvalid: "無効なページ番号です。", pagesPerChunk: "1ファイルあたりのページ数？", fixedExample: "例：<b>1</b> = 1ページごとに1ファイル、<b>5</b> = 5ページごとに1ファイル", splitBtn: "PDFを分割", uploading: "アップロード中...", processing: "PDFを読み込み中...", errNoPages: "少なくとも1ページを選択してください", errNoFile: "先にPDFを選択してください", errNotPdf: "PDFのみ許可されています", errTooBig: "ファイルが大きすぎます（最大20MB）", errNetwork: "ネットワークエラー。", success: "分割完了！", willExtract: "{n} ページを抽出します", willExtractAll: "全 {n} ページを抽出します", willMakeFiles: "{n} 個のPDFファイルを作成します", filePages: "ファイル {i}: ページ {start} 〜 {end}" },
-  zh: { title: "拆分PDF", subtitle: "将PDF拆分为页面 — 可视化、手动或固定", dropText: "将文件拖放到此处或点击浏览", dropHint: "最大20MB • 仅限PDF", pages: "页", visualMode: "可视化", manualMode: "手动", fixedMode: "固定", selectAll: "全选", clearAll: "清除全选", selected: "已选择", noFileLoaded: "请上传PDF以查看页面", manualHint: "输入页码（例如：1-3, 5 或 'all'）", manualExample: "示例：<b>1-5</b> = 第1到5页，<b>2, 4, 6</b> = 仅这些页，<b>all</b> = 所有页", manualPreviewEmpty: "输入页码查看预览...", fixedPreviewEmpty: "输入数字查看预览...", manualInvalid: "页码格式无效。", pagesPerChunk: "每个文件几页？", fixedExample: "示例：<b>1</b> = 每页一个文件，<b>5</b> = 每个文件5页", splitBtn: "拆分PDF", uploading: "上传中...", processing: "加载PDF中...", errNoPages: "请至少选择一页", errNoFile: "请先选择一个PDF", errNotPdf: "仅允许PDF文件", errTooBig: "文件太大（最大20MB）", errNetwork: "网络错误。", success: "拆分完成！", willExtract: "将提取 {n} 页", willExtractAll: "将提取全部 {n} 页", willMakeFiles: "将创建 {n} 个PDF文件", filePages: "文件 {i}: 第 {start} 到 {end} 页" },
-  ar: { title: "تقسيم PDF", subtitle: "تقسيم PDF إلى صفحات — مرئي، يدوي أو ثابت", dropText: "أسقط الملف هنا أو انقر للتصفح", dropHint: "الحد الأقصى 20MB • PDF فقط", pages: "صفحات", visualMode: "مرئي", manualMode: "يدوي", fixedMode: "ثابت", selectAll: "تحديد الكل", clearAll: "مسح الكل", selected: "محدد", noFileLoaded: "يرجى تحميل ملف PDF", manualHint: "أدخل الصفحات (مثل: 1-3, 5 أو 'all')", manualExample: "مثال: <b>1-5</b> = من 1 إلى 5، <b>2, 4, 6</b> = هذه فقط، <b>all</b> = الكل", manualPreviewEmpty: "اكتب أرقام الصفحات لرؤية المعاينة...", fixedPreviewEmpty: "أدخل رقماً لرؤية المعاينة...", manualInvalid: "أرقام صفحات غير صالحة.", pagesPerChunk: "كم صفحة في كل ملف؟", fixedExample: "مثال: <b>1</b> = ملف لكل صفحة، <b>5</b> = 5 صفحات لكل ملف", splitBtn: "تقسيم PDF", uploading: "جاري الرفع...", processing: "جاري تحميل PDF...", errNoPages: "يرجى تحديد صفحة واحدة على الأقل", errNoFile: "يرجى تحديد ملف PDF أولاً", errNotPdf: "ملفات PDF فقط مسموح بها", errTooBig: "الملف كبير جداً (الحد 20MB)", errNetwork: "خطأ في الشبكة.", success: "تم التقسيم!", willExtract: "سيتم استخراج {n} صفحات", willExtractAll: "سيتم استخراج كل {n} صفحات", willMakeFiles: "سيتم إنشاء {n} ملفات PDF", filePages: "ملف {i}: الصفحات {start} إلى {end}" }
-};
-
-function t(key, ...args) {
-  let str = (i18n[currentLang] && i18n[currentLang][key]) ? i18n[currentLang][key] : key;
-  if (args.length > 0) {
-      if (Array.isArray(args[0])) {
-          const map = args[0];
-          for (const k in map) str = str.replace(`{${k}}`, map[k]);
-      } else {
-          args.forEach((val, i) => { str = str.replace(`{${['n','max'][i]}}`, val); });
-      }
-  }
-  return str;
-}
-
-function changeLanguage(lang) {
-  currentLang = lang;
-  document.documentElement.lang = lang;
-  if (lang === 'ar') { document.documentElement.dir = 'rtl'; document.body.dir = 'rtl'; }
-  else { document.documentElement.dir = 'ltr'; document.body.dir = 'ltr'; }
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (i18n[lang] && i18n[lang][key]) { el.innerHTML = i18n[lang][key]; }
-  });
-  updateLivePreview();
-  try { localStorage.setItem('preferredLang', lang); } catch(e) {}
-}
-
-document.getElementById('langSelect').addEventListener('change', function() { changeLanguage(this.value); });
-window.addEventListener('DOMContentLoaded', () => {
-  let savedLang = 'en';
-  try { savedLang = localStorage.getItem('preferredLang') || 'en'; } catch(e) {}
-  document.getElementById('langSelect').value = savedLang;
-  changeLanguage(savedLang);
+// Event Listeners
+document.getElementById('langSelect').addEventListener('change', function() {
+    // Dummy language toggle just for UI look
+    alert("Language feature is visual only in this demo.");
 });
 
 const dropzone = document.getElementById('dropzone');
@@ -223,12 +170,11 @@ function resetUI() {
     document.getElementById('thumbnails').innerHTML = '';
     document.getElementById('selectedCount').textContent = '0';
     hideStatus();
-    updateLivePreview();
 }
 
 async function handleFile(file) {
-  if (!file.name.toLowerCase().endsWith('.pdf')) return showStatus('error', t('errNotPdf'));
-  if (file.size > 20 * 1024 * 1024) return showStatus('error', t('errTooBig'));
+  if (!file.name.toLowerCase().endsWith('.pdf')) return showStatus('error', 'Only PDF files allowed!');
+  if (file.size > 20 * 1024 * 1024) return showStatus('error', 'File too large (max 20MB)');
 
   resetUI();
   currentFile = file;
@@ -241,23 +187,27 @@ async function handleFile(file) {
   document.getElementById('tabs').style.display = 'flex';
   document.getElementById('splitBtn').disabled = false;
   
-  document.getElementById('thumbnails').innerHTML = `<div style="color:#a5b4fc; padding:20px; text-align:center; grid-column:1/-1;"><span class="spinner"></span> ${t('processing')}</div>`;
-  showStatus('info', '<span class="spinner"></span> ' + t('processing'));
+  document.getElementById('thumbnails').innerHTML = `<div style="color:#a5b4fc; padding:20px; text-align:center; grid-column:1/-1;"><span class="spinner"></span> Loading pages...</div>`;
+  showStatus('info', 'Loading PDF...');
 
   try {
     const arrayBuffer = await file.arrayBuffer();
-    // disableWorker true kiya hai taaki local file se kholne par preview 100% load ho
+    // MAIN FIX: disableWorker true for local file access
     pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer, disableWorker: true }).promise;
     totalPages = pdfDoc.numPages;
     document.getElementById('pageCount').textContent = totalPages;
     await renderThumbnails();
     hideStatus();
+    updateLivePreview(); // Update manual preview with correct total pages
   } catch (err) {
     console.error('PDF.js error:', err);
     totalPages = 1; 
     document.getElementById('pageCount').textContent = '?';
-    document.getElementById('thumbnails').innerHTML = '<div style="color:#fca5a5; padding:20px; text-align:center; grid-column:1/-1;">Preview failed. Please use Manual Type or Fixed mode.</div>';
-    showStatus('info', '⚠️ Visual preview failed. Please use <b>Manual Type</b> or <b>Fixed</b> mode.');
+    
+    // Fallback to manual mode if visual fails
+    setMode('manual');
+    document.getElementById('thumbnails').innerHTML = '<div style="color:#fca5a5; padding:20px; text-align:center; grid-column:1/-1;">Visual preview blocked by browser. Please use Manual mode.</div>';
+    showStatus('error', '⚠️ Browser blocked visual preview. Automatically switched to Manual mode. You can type page numbers here.');
   }
 }
 
@@ -283,25 +233,27 @@ async function renderThumbnails() {
     } catch (e) { console.error('Page render error:', i, e); }
   }
   updateSelectedCount();
-  updateLivePreview();
 }
 
 function togglePage(num, el) {
   if (selectedPages.has(num)) { selectedPages.delete(num); el.classList.remove('selected'); }
   else { selectedPages.add(num); el.classList.add('selected'); }
   updateSelectedCount();
-  updateLivePreview();
 }
 
 function selectAll() { 
   document.querySelectorAll('.page-thumb').forEach(el => { selectedPages.add(parseInt(el.dataset.page)); el.classList.add('selected'); }); 
-  updateSelectedCount(); updateLivePreview();
+  updateSelectedCount();
 }
+
 function clearAll() { 
   selectedPages.clear(); document.querySelectorAll('.page-thumb').forEach(el => el.classList.remove('selected')); 
-  updateSelectedCount(); updateLivePreview();
+  updateSelectedCount();
 }
-function updateSelectedCount() { document.getElementById('selectedCount').textContent = selectedPages.size; }
+
+function updateSelectedCount() { 
+    document.getElementById('selectedCount').textContent = selectedPages.size; 
+}
 
 function setMode(mode) {
   currentMode = mode;
@@ -343,65 +295,76 @@ function buildRangesFromSet(set) {
   return ranges.join(',');
 }
 
+// 🟢 FIXED LIVE PREVIEW LOGIC
 function updateLivePreview() {
   const manualPrev = document.getElementById('manualPreview');
   const fixedPrev = document.getElementById('fixedPreview');
+  const max = totalPages || 10000;
 
+  // Visual Mode Auto-Update
   if (currentMode === 'custom') {
-    if (selectedPages.size === 0) { manualPrev.innerHTML = `<span style="color:#fca5a5;">${t('errNoPages')}</span>`; }
-    else {
-      const msg = (totalPages && selectedPages.size === totalPages) ? t('willExtractAll', selectedPages.size) : t('willExtract', selectedPages.size);
-      manualPrev.innerHTML = `<span style="color:#86efac;">✅ ${msg} → <b>${buildRangesFromSet(selectedPages)}</b></span>`;
+    if (selectedPages.size === 0) { 
+        manualPrev.innerHTML = `<span style="color:#fca5a5;">Select at least 1 page</span>`; 
+    } else {
+        manualPrev.innerHTML = `<span style="color:#86efac;">✅ Will extract ${selectedPages.size} pages → <b>${buildRangesFromSet(selectedPages)}</b></span>`;
     }
   }
 
+  // Manual Mode Update
   if (currentMode === 'manual') {
     const input = document.getElementById('manualRanges').value.trim();
-    if (!input) { manualPrev.innerHTML = `<span style="color:#6b7280;">${t('manualPreviewEmpty')}</span>`; }
-    else {
-      const max = totalPages || 10000;
+    if (!input) { 
+        manualPrev.innerHTML = `<span style="color:#6b7280;">Type page numbers to see preview...</span>`; 
+    } else {
       const pages = parseRanges(input, max);
-      if (pages.size === 0) { manualPrev.innerHTML = `<span style="color:#fca5a5;">❌ ${t('manualInvalid')}</span>`; }
-      else {
-        const msg = (totalPages && pages.size === totalPages) ? t('willExtractAll', pages.size) : t('willExtract', pages.size);
-        manualPrev.innerHTML = `<span style="color:#86efac;">✅ ${msg} → <b>${buildRangesFromSet(pages)}</b></span>`;
+      if (pages.size === 0) { 
+          manualPrev.innerHTML = `<span style="color:#fca5a5;">❌ Invalid pages or out of range!</span>`; 
+      } else {
+        manualPrev.innerHTML = `<span style="color:#86efac;">✅ Will extract ${pages.size} pages → <b>${buildRangesFromSet(pages)}</b></span>`;
       }
     }
   }
 
+  // Fixed Mode Update
   if (currentMode === 'fixed') {
     const sizeInput = parseInt(document.getElementById('fixedSize').value, 10);
-    if (isNaN(sizeInput) || sizeInput < 1) { fixedPrev.innerHTML = `<span style="color:#fca5a5;">❌ Invalid number</span>`; }
-    else if (!totalPages) { fixedPrev.innerHTML = `<span style="color:#6b7280;">Upload PDF to see preview...</span>`; }
-    else {
+    if (isNaN(sizeInput) || sizeInput < 1) { 
+        fixedPrev.innerHTML = `<span style="color:#fca5a5;">❌ Invalid number</span>`; 
+    } else if (!totalPages) { 
+        fixedPrev.innerHTML = `<span style="color:#6b7280;">Upload PDF to see preview...</span>`; 
+    } else {
       const numFiles = Math.ceil(totalPages / sizeInput);
-      let html = `<span style="color:#86efac;">✅ ${t('willMakeFiles', numFiles)}</span><br>`;
+      let html = `<span style="color:#86efac;">✅ Will create ${numFiles} PDF files</span><br>`;
       let previewText = [];
       for (let i = 0; i < Math.min(numFiles, 3); i++) {
         let start = (i * sizeInput) + 1;
         let end = Math.min((i + 1) * sizeInput, totalPages);
-        previewText.push(t('filePages', { i: i + 1, start: start, end: end }));
+        previewText.push(`File ${i + 1}: Pages ${start} to ${end}`);
       }
-      if (numFiles > 3) previewText.push("...");
+      if (numFiles > 3) previewText.push("...and more");
       html += `<div style="font-size:0.8rem; color:#a5b4fc; margin-top:4px;">${previewText.join('<br>')}</div>`;
       fixedPrev.innerHTML = html;
     }
   }
 }
 
+// Listen for keystrokes manually to ensure preview updates
+document.getElementById('manualRanges').addEventListener('input', updateLivePreview);
+document.getElementById('fixedSize').addEventListener('input', updateLivePreview);
+
 async function doSplit() {
-  if (!currentFile) return showStatus('error', t('errNoFile'));
+  if (!currentFile) return showStatus('error', 'Please select a PDF first');
   
   const formData = new FormData();
   formData.append('file', currentFile);
 
   if (currentMode === 'custom') {
-    if (selectedPages.size === 0) return showStatus('error', t('errNoPages'));
+    if (selectedPages.size === 0) return showStatus('error', 'Please select at least one page');
     formData.append('mode', 'custom');
     formData.append('ranges', buildRangesFromSet(selectedPages));
   } else if (currentMode === 'manual') {
     const input = document.getElementById('manualRanges').value.trim();
-    if (!input) return showStatus('error', t('manualInvalid'));
+    if (!input) return showStatus('error', 'Please enter valid page numbers');
     formData.append('mode', 'custom');
     formData.append('ranges', input);
   } else {
@@ -411,7 +374,7 @@ async function doSplit() {
 
   const btn = document.getElementById('splitBtn');
   btn.disabled = true;
-  showStatus('info', '<span class="spinner"></span> ' + t('uploading'));
+  showStatus('info', '<span class="spinner"></span> Uploading and splitting (Please wait 30-50s if server is sleeping)...');
 
   try {
     const res = await fetch(API_URL, { method: 'POST', body: formData });
@@ -434,19 +397,25 @@ async function doSplit() {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    showStatus('success', '✅ ' + t('success'));
+    showStatus('success', '✅ Split complete! Download started.');
   } catch (err) {
     console.error('Split error:', err);
     let msg = err.message;
     if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) { 
-      msg = t('errNetwork'); 
+      msg = "Network error. Server is waking up, please try again in 1 min."; 
     }
     showStatus('error', '❌ ' + msg);
   } finally { btn.disabled = false; }
 }
 
-function showStatus(type, msg) { const s = document.getElementById('status'); s.className = 'status show ' + type; s.innerHTML = msg; }
-function hideStatus() { document.getElementById('status').classList.remove('show'); }
+function showStatus(type, msg) { 
+    const s = document.getElementById('status'); 
+    s.className = 'status show ' + type; 
+    s.innerHTML = msg; 
+}
+function hideStatus() { 
+    document.getElementById('status').classList.remove('show'); 
+}
 </script>
 </body>
 </html>
