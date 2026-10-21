@@ -112,7 +112,7 @@
         }
         .float-icon {
             position: absolute;
-            color: rgba(255, 255, 255, 0.4); /* Original visibility */
+            color: rgba(255, 255, 255, 0.5); /* Icons clearly visible */
             font-size: 3rem;
             animation: floatUp 4s infinite ease-in-out alternate;
         }
@@ -404,7 +404,7 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background: var(--bg-card);
+                background: var(--bg-card) !important; /* Force white in light mode */
                 flex-direction: column;
                 padding: 20px;
                 box-shadow: 0 10px 20px rgba(0,0,0,0.1);
@@ -414,7 +414,16 @@
             
             /* CSS Checkbox Trick to Open Menu */
             #menu-toggle:checked ~ .menu { display: flex; }
+            
+            /* FIX: Links ka color force karna taaki light mode me white on white na ho */
             .menu li { margin: 10px 0; }
+            .menu a {
+                color: var(--text-primary) !important; /* Forces black text in light, white in dark */
+                font-size: 1rem !important;
+                font-weight: 600 !important;
+                display: block;
+                padding: 8px 0;
+            }
             
             .mobile-bottom-nav { display: flex; }
             body { padding-bottom: 70px; }
@@ -425,9 +434,9 @@
             /* Clock visible on mobile */
             .live-clock { display: flex !important; font-size: 0.75rem !important; padding: 4px 8px !important; margin-right: 5px; align-items: center; gap: 4px; }
 
-            /* 🟢 FLOATING ICONS FIX: Original look on mobile */
-            .floating-icons { display: block !important; opacity: 0.3; }
-            .float-icon { font-size: 2.5rem !important; }
+            /* FLOATING ICONS: Force display */
+            .floating-icons { display: block !important; opacity: 0.3 !important; }
+            .float-icon { font-size: 2.5rem !important; color: #ffffff !important; }
 
             .hero h1 { font-size: 2.2rem !important; }
             .hero p { font-size: 0.85rem !important; }
