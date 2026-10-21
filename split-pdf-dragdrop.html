@@ -4,13 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Split PDF - Bharat24Tools</title>
-<!-- PDF.js CDN with Fallback -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script>
-  if (typeof pdfjsLib === 'undefined') {
-    document.write('<script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"><\/script>');
-  }
-</script>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Arial,sans-serif; }
   body { background: linear-gradient(135deg,#0f0f1e,#533483); min-height:100vh; color:#fff; padding:20px; }
@@ -148,16 +142,8 @@
 </div>
 
 <script>
-// ==========================================
-// ⚠️ APNA BACKEND URL YAHAN DAALEIN (Agar alag server par hai)
-// Example: const API_BASE = 'https://my-app.onrender.com';
-// ==========================================
 const API_BASE = ''; 
 const API_URL = API_BASE + '/split-pdf';
-
-if (typeof pdfjsLib !== 'undefined') {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-}
 
 let currentFile = null;
 let totalPages = 0;
@@ -166,9 +152,6 @@ let currentMode = 'custom';
 let pdfDoc = null;
 let currentLang = 'en';
 
-// ==========================================
-// 🌍 10 LANGUAGES DICTIONARY (Strict JSON Format)
-// ==========================================
 const i18n = {
   en: { title: "Split PDF", subtitle: "Split PDF into pages — Visual, Manual or Fixed", dropText: "Drop file here or click to browse", dropHint: "Max 20MB • PDF only", pages: "pages", visualMode: "Visual", manualMode: "Manual Type", fixedMode: "Fixed", selectAll: "Select All", clearAll: "Clear All", selected: "selected", noFileLoaded: "Please upload a PDF to see pages", manualHint: "Enter pages (e.g., 1-3, 5, 8-10 or 'all')", manualExample: "Example: <b>1-5</b> = pages 1 to 5, <b>2, 4, 6</b> = only these, <b>all</b> = every page", manualPreviewEmpty: "Type page numbers to see preview...", manualInvalid: "Invalid page numbers. Use format like 1-3, 5", pagesPerChunk: "Pages per split file?", fixedExample: "Example: <b>1</b> = one file per page, <b>5</b> = each file 5 pages", splitBtn: "Split PDF", uploading: "Uploading & splitting...", processing: "Loading PDF...", errNoPages: "Please select at least one page", errNoFile: "Please select a PDF first", errNotPdf: "Only PDF files allowed", errTooBig: "File too large (max 20MB)", errNetwork: "Network error. Backend down or CORS issue.", success: "Split complete! Download started.", willExtract: "Will extract {n} pages", willExtractAll: "Will extract all {n} pages" },
   hi: { title: "PDF स्प्लिट करें", subtitle: "PDF को पेजों में बांटें — विज़ुअल, मैन्युअल या फिक्स्ड", dropText: "फ़ाइल यहां ड्रॉप करें या क्लिक करें", dropHint: "अधिकतम 20MB • केवल PDF", pages: "पेज", visualMode: "विज़ुअल", manualMode: "मैन्युअल टाइप", fixedMode: "फिक्स्ड", selectAll: "सभी चुनें", clearAll: "सभी हटाएं", selected: "चुने गए", noFileLoaded: "पेज देखने के लिए कृपया PDF अपलोड करें", manualHint: "पेज टाइप करें (जैसे: 1-3, 5, 8-10 या 'all')", manualExample: "उदाहरण: <b>1-5</b> = पेज 1 से 5, <b>2, 4, 6</b> = सिर्फ ये, <b>all</b> = सभी", manualPreviewEmpty: "पेज नंबर टाइप करते ही प्रीव्यू दिखेगा...", manualInvalid: "गलत पेज नंबर। फॉर्मेट: 1-3, 5", pagesPerChunk: "हर फ़ाइल में कितने पेज?", fixedExample: "उदाहरण: <b>1</b> = हर पेज अलग, <b>5</b> = हर फाइल 5 पेज", splitBtn: "PDF स्प्लिट करें", uploading: "अपलोड हो रहा है...", processing: "PDF लोड हो रहा है...", errNoPages: "कम से कम एक पेज चुनें", errNoFile: "पहले PDF चुनें", errNotPdf: "केवल PDF मान्य है", errTooBig: "फ़ाइल बहुत बड़ी (20MB)", errNetwork: "नेटवर्क त्रुटि। बैकएंड बंद है।", success: "स्प्लिट पूरा! डाउनलोड शुरू।", willExtract: "{n} पेज निकाले जाएंगे", willExtractAll: "सभी {n} पेज निकाले जाएंगे" },
@@ -182,13 +165,9 @@ const i18n = {
   ar: { title: "تقسيم PDF", subtitle: "تقسيم PDF إلى صفحات — مرئي، يدوي أو ثابت", dropText: "أسقط الملف هنا أو انقر للتصفح", dropHint: "الحد الأقصى 20MB • PDF فقط", pages: "صفحات", visualMode: "مرئي", manualMode: "يدوي", fixedMode: "ثابت", selectAll: "تحديد الكل", clearAll: "مسح الكل", selected: "محدد", noFileLoaded: "يرجى تحميل ملف PDF", manualHint: "أدخل الصفحات (مثل: 1-3, 5 أو 'all')", manualExample: "مثال: <b>1-5</b> = من 1 إلى 5، <b>2, 4, 6</b> = هذه فقط، <b>all</b> = الكل", manualPreviewEmpty: "اكتب أرقام الصفحات لرؤية المعاينة...", manualInvalid: "أرقام صفحات غير صالحة.", pagesPerChunk: "كم صفحة في كل ملف؟", fixedExample: "مثال: <b>1</b> = ملف لكل صفحة، <b>5</b> = 5 صفحات لكل ملف", splitBtn: "تقسيم PDF", uploading: "جاري الرفع...", processing: "جاري تحميل PDF...", errNoPages: "يرجى تحديد صفحة واحدة على الأقل", errNoFile: "يرجى تحديد ملف PDF أولاً", errNotPdf: "ملفات PDF فقط مسموح بها", errTooBig: "الملف كبير جداً (الحد 20MB)", errNetwork: "خطأ في الشبكة.", success: "تم التقسيم!", willExtract: "سيتم استخراج {n} صفحات", willExtractAll: "سيتم استخراج كل {n} صفحات" }
 };
 
-// ==========================================
-// 🌍 LANGUAGE ENGINE (Fixed)
-// ==========================================
 function changeLanguage(lang) {
   currentLang = lang;
   document.documentElement.lang = lang;
-  
   if (lang === 'ar') {
     document.documentElement.dir = 'rtl';
     document.body.dir = 'rtl';
@@ -196,25 +175,16 @@ function changeLanguage(lang) {
     document.documentElement.dir = 'ltr';
     document.body.dir = 'ltr';
   }
-
-  // Translate all static elements
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    if (i18n[lang] && i18n[lang][key]) {
-      el.innerHTML = i18n[lang][key];
-    }
+    if (i18n[lang] && i18n[lang][key]) { el.innerHTML = i18n[lang][key]; }
   });
-
   validateManual();
   try { localStorage.setItem('preferredLang', lang); } catch(e) {}
 }
 
-// Event Listener for dropdown
-document.getElementById('langSelect').addEventListener('change', function() {
-  changeLanguage(this.value);
-});
+document.getElementById('langSelect').addEventListener('change', function() { changeLanguage(this.value); });
 
-// Load default language
 window.addEventListener('DOMContentLoaded', () => {
   let savedLang = 'en';
   try { savedLang = localStorage.getItem('preferredLang') || 'en'; } catch(e) {}
@@ -228,9 +198,6 @@ function t(key, ...args) {
   return str;
 }
 
-// ==========================================
-// 📄 FILE HANDLING
-// ==========================================
 const dropzone = document.getElementById('dropzone');
 const fileInput = document.getElementById('fileInput');
 
@@ -262,7 +229,8 @@ async function handleFile(file) {
 
   try {
     const arrayBuffer = await file.arrayBuffer();
-    pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    // 🟢 MAIN FIX: Disable worker for local CORS issue
+    pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer, disableWorker: true }).promise;
     totalPages = pdfDoc.numPages;
     document.getElementById('pageCount').textContent = totalPages;
     await renderThumbnails();
@@ -323,7 +291,6 @@ function parseRanges(input, max) {
   const trimmed = input.trim().toLowerCase();
   if (!trimmed) return pages;
   if (trimmed === 'all' || trimmed === '*') { for (let i = 1; i <= max; i++) pages.add(i); return pages; }
-  
   for (const part of trimmed.split(',')) {
     const p = part.trim();
     if (!p) continue;
@@ -357,12 +324,9 @@ function validateManual() {
   const input = document.getElementById('manualRanges').value.trim();
   const preview = document.getElementById('manualPreview');
   if (!input) return (preview.innerHTML = `<span style="color:#6b7280;">${t('manualPreviewEmpty')}</span>`);
-
   const max = totalPages || 10000;
   const pages = parseRanges(input, max);
-  
   if (pages.size === 0) return (preview.innerHTML = `<span style="color:#fca5a5;">❌ ${t('manualInvalid')}</span>`);
-  
   const ranges = buildRangesFromSet(pages);
   const msg = (totalPages && pages.size === totalPages) ? t('willExtractAll', pages.size) : t('willExtract', pages.size);
   preview.innerHTML = `<span style="color:#86efac;">✅ ${msg} → <b>${ranges}</b></span>`;
@@ -371,7 +335,6 @@ function validateManual() {
 
 async function doSplit() {
   if (!currentFile) return showStatus('error', t('errNoFile'));
-
   const formData = new FormData();
   formData.append('file', currentFile);
 
@@ -399,7 +362,6 @@ async function doSplit() {
       const text = await res.text();
       throw new Error(text || `Server Error (${res.status})`);
     }
-
     const blob = await res.blob();
     const cd = res.headers.get('Content-Disposition') || '';
     let filename = 'split.pdf';
@@ -419,13 +381,9 @@ async function doSplit() {
   } catch (err) {
     console.error('Split error:', err);
     let msg = err.message;
-    if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
-      msg = t('errNetwork');
-    }
+    if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) { msg = t('errNetwork'); }
     showStatus('error', '❌ ' + msg);
-  } finally {
-    btn.disabled = false;
-  }
+  } finally { btn.disabled = false; }
 }
 
 function showStatus(type, msg) { const s = document.getElementById('status'); s.className = 'status show ' + type; s.innerHTML = msg; }
