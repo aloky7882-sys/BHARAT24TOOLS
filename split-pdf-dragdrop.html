@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Split PDF - Bharat24Tools</title>
     <!-- Fast & Reliable CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.16.105/build/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Arial,sans-serif; }
         body { background: linear-gradient(135deg,#0f0f1e,#533483); min-height:100vh; color:#fff; padding:20px; }
@@ -34,8 +34,8 @@
         .mode-panel { display:none; margin-top:20px; }
         .mode-panel.active { display:block; }
         
-        .thumbnails { display:grid; grid-template-columns:repeat(auto-fill,minmax(90px,1fr)); gap:12px; max-height:400px; overflow-y:auto; padding:10px; background:rgba(0,0,0,0.2); border-radius:12px; }
-        .page-thumb { position:relative; cursor:pointer; border:3px solid transparent; border-radius:8px; overflow:hidden; background:#fff; transition:all 0.2s; aspect-ratio:3/4; }
+        .thumbnails { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:12px; max-height:500px; overflow-y:auto; padding:10px; background:rgba(0,0,0,0.2); border-radius:12px; }
+        .page-thumb { position:relative; cursor:pointer; border:3px solid transparent; border-radius:8px; overflow:hidden; background:#fff; transition:all 0.2s; aspect-ratio:3/4; display:flex; align-items:center; justify-content:center; }
         .page-thumb.selected { border-color:#a855f7; box-shadow:0 0 0 3px rgba(168,85,247,0.4); }
         .page-thumb canvas { width:100%; height:100%; display:block; object-fit:contain; }
         .page-thumb .page-num { position:absolute; bottom:4px; right:4px; background:rgba(0,0,0,0.75); color:#fff; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:700; }
@@ -81,15 +81,15 @@
 
   <div class="dropzone" id="dropzone">
     <div class="icon">📄</div>
-    <div class="text">Drop file here or click to browse</div>
-    <div class="hint">Max 20MB • PDF only</div>
+    <div class="text" data-i18n="dropText">Drop file here or click to browse</div>
+    <div class="hint" data-i18n="dropHint">Max 20MB • PDF only</div>
     <input type="file" id="fileInput" accept=".pdf,application/pdf">
   </div>
 
   <div class="file-info" id="fileInfo">
     <div class="name" id="fileName">-</div>
     <div style="color:#a5b4fc; font-size:0.85rem; margin-top:4px;">
-      <span id="pageCount">-</span> pages • <span id="fileSize">-</span>
+      <span id="pageCount">-</span> <span data-i18n="pages">pages</span> • <span id="fileSize">-</span>
     </div>
   </div>
 
@@ -109,7 +109,7 @@
     <div class="thumbnails" id="thumbnails">
       <div style="color:#a5b4fc; padding:20px; text-align:center; grid-column: 1/-1;">Please upload a PDF</div>
     </div>
-    <!-- NAYA: Visual Live Preview Box -->
+    <!-- VISUAL LIVE PREVIEW BOX -->
     <div class="live-preview-box" id="visualPreview">
       <span style="color:#fca5a5;">Select at least 1 page</span>
     </div>
@@ -142,6 +142,7 @@
 </div>
 
 <script>
+// ✅ Aapka Backend URL yahan fix hai
 const API_URL = "https://bharat24tools-api.onrender.com/split-pdf"; 
 
 let currentFile = null;
@@ -188,9 +189,11 @@ async function handleFile(file) {
 
   try {
     const arrayBuffer = await file.arrayBuffer();
-    pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer, disableWorker: true }).promise;
+    // Worker ON kar diya hai taaki GitHub Pages par 55+ pages bhi smooth load hon
+    pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     totalPages = pdfDoc.numPages;
     document.getElementById('pageCount').textContent = totalPages;
+    
     await renderThumbnails();
     hideStatus();
     updateLivePreview();
@@ -198,45 +201,54 @@ async function handleFile(file) {
     console.error('PDF.js error:', err);
     totalPages = 1; 
     document.getElementById('pageCount').textContent = '?';
-    
     setMode('manual');
-    document.getElementById('thumbnails').innerHTML = '<div style="color:#fca5a5; padding:20px; text-align:center; grid-column:1/-1;">Visual blocked by browser. Use Manual mode.</div>';
-    showStatus('error', '⚠️ Visual preview blocked. Automatically switched to Manual mode.');
+    document.getElementById('thumbnails').innerHTML = '<div style="color:#fca5a5; padding:20px; text-align:center; grid-column:1/-1;">Visual preview failed. Use Manual mode.</div>';
+    showStatus('error', '⚠️ Visual preview failed. Use Manual mode.');
   }
 }
 
-// 🟢 FIXED BLANK THUMBNAILS (Added delay & smaller scale)
+// 🟢 NAYA RENDER LOGIC: Blank pages fix karne ke liye
 async function renderThumbnails() {
   const container = document.getElementById('thumbnails');
   container.innerHTML = '';
+  
   for (let i = 1; i <= totalPages; i++) {
     try {
-      const page = await pdfDoc.getPage(i);
-      // Chhota scale (0.4) taaki memory kam lage aur blank na ho
-      const viewport = page.getViewport({ scale: 0.4 });
-      const canvas = document.createElement('canvas');
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
-      
-      // White background taaki blank na dikhe
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      await page.render({ canvasContext: ctx, viewport }).promise;
-
+      // 1. Pehle khaali box aur number banao
       const div = document.createElement('div');
       div.className = 'page-thumb';
       div.dataset.page = i;
+      
+      const canvas = document.createElement('canvas');
       div.appendChild(canvas);
+      
       div.innerHTML += `<div class="check">✓</div><div class="page-num">${i}</div>`;
       div.addEventListener('click', () => togglePage(i, div));
+      
+      // 2. Screen par add karo
       container.appendChild(div);
+
+      // 3. Ab photo draw karo
+      const page = await pdfDoc.getPage(i);
+      const viewport = page.getViewport({ scale: 0.6 }); // Thoda bada scale
       
-      // 🟢 DELAY: Browser ko saans lene do taaki photo render ho sake
-      await new Promise(resolve => setTimeout(resolve, 50));
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
       
-    } catch (e) { console.error('Page render error:', i, e); }
+      const ctx = canvas.getContext('2d');
+      // Peeche safed rang lagao
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // 4. Photo render karo
+      await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+      // 5. Browser ko saans lene do (Memory crash rokne ke liye)
+      await new Promise(resolve => setTimeout(resolve, 15));
+      
+    } catch (e) { 
+        console.error('Page render error:', i, e); 
+    }
   }
   updateSelectedCount();
 }
@@ -259,7 +271,7 @@ function clearAll() {
 
 function updateSelectedCount() { 
     document.getElementById('selectedCount').textContent = selectedPages.size; 
-    updateLivePreview(); // Call preview update on every click
+    updateLivePreview();
 }
 
 function setMode(mode) {
@@ -308,7 +320,6 @@ function updateLivePreview() {
   const fixedPrev = document.getElementById('fixedPreview');
   const max = totalPages || 10000;
 
-  // Visual Mode Update
   if (currentMode === 'custom') {
     if (selectedPages.size === 0) { 
         visualPrev.innerHTML = `<span style="color:#fca5a5;">Select at least 1 page</span>`; 
@@ -317,7 +328,6 @@ function updateLivePreview() {
     }
   }
 
-  // Manual Mode Update
   if (currentMode === 'manual') {
     const input = document.getElementById('manualRanges').value.trim();
     if (!input) { 
@@ -332,7 +342,6 @@ function updateLivePreview() {
     }
   }
 
-  // Fixed Mode Update
   if (currentMode === 'fixed') {
     const sizeInput = parseInt(document.getElementById('fixedSize').value, 10);
     if (isNaN(sizeInput) || sizeInput < 1) { 
