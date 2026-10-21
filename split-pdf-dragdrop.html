@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Split PDF - Bharat24Tools</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<!-- Purana reliable PDF.js (Bina Worker issue ke) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Arial,sans-serif; }
   body { background: linear-gradient(135deg,#0f0f1e,#533483); min-height:100vh; color:#fff; padding:20px; }
@@ -229,18 +230,20 @@ async function handleFile(file) {
 
   try {
     const arrayBuffer = await file.arrayBuffer();
-    // 🟢 MAIN FIX: Disable worker for local CORS issue
-    pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer, disableWorker: true }).promise;
+    // Using standard configuration (v2 works perfectly)
+    pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     totalPages = pdfDoc.numPages;
     document.getElementById('pageCount').textContent = totalPages;
     await renderThumbnails();
     hideStatus();
   } catch (err) {
     console.error('PDF.js error:', err);
+    
+    // Agar file lock hai ya corrupt hai, toh manual mode enable rakho
     totalPages = 1; 
     document.getElementById('pageCount').textContent = '?';
-    document.getElementById('thumbnails').innerHTML = '<div style="color:#fca5a5; padding:20px; text-align:center; grid-column:1/-1;">Preview failed. Use Manual/Fixed mode.</div>';
-    showStatus('info', '⚠️ Preview failed. Use Manual or Fixed tab.');
+    document.getElementById('thumbnails').innerHTML = '<div style="color:#fca5a5; padding:20px; text-align:center; grid-column:1/-1;">PDF password protected or corrupted. Please use Manual or Fixed mode.</div>';
+    showStatus('info', '⚠️ Visual preview unavailable. Please use <b>Manual Type</b> or <b>Fixed</b> mode.');
   }
 }
 
