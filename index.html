@@ -112,8 +112,9 @@
         }
         .float-icon {
             position: absolute;
-            color: rgba(255, 255, 255, 0.25); /* White transparent */
-            animation: floatUp 5s infinite ease-in-out alternate;
+            color: rgba(255, 255, 255, 0.4); /* Original visibility */
+            font-size: 3rem;
+            animation: floatUp 4s infinite ease-in-out alternate;
         }
         @keyframes floatUp { 
             from { transform: translateY(0); } 
@@ -354,6 +355,9 @@
 
         /* ✅ Hamburger Menu Default Hidden (Desktop) */
         .menu-btn { display: none; }
+        
+        /* ✅ Menu Checkbox Trick (No JS required) */
+        #menu-toggle { display: none; }
 
         /* ===== TABLET (768px - 1024px) ===== */
         @media (max-width: 1024px) {
@@ -365,7 +369,7 @@
 
         /* ===== TABLET & SMALL LAPTOPS ===== */
         @media (max-width: 1100px) {
-            .navbar { padding: 12px 20px; gap: 10px; flex-wrap: nowrap; }
+            .navbar { padding: 12px 20px; gap: 10px; flex-wrap: nowrap; position: relative; z-index: 1000; }
             .menu { gap: 10px; }
             .menu a { font-size: 0.85rem; padding: 6px 8px; }
             .hero { padding: 40px 20px; }
@@ -379,6 +383,8 @@
                 padding: 12px 16px; 
                 flex-wrap: nowrap; 
                 justify-content: space-between;
+                position: relative; /* Needed for menu dropdown */
+                z-index: 1000;
             }
             
             /* 3-line button properly visible */
@@ -388,6 +394,7 @@
                 color: var(--text-primary); 
                 cursor: pointer; 
                 margin-right: 0; 
+                z-index: 1001;
             }
             
             /* Dropdown menu */
@@ -404,7 +411,9 @@
                 z-index: 999;
                 border-bottom: 1px solid var(--border-color);
             }
-            .menu.active { display: flex; }
+            
+            /* CSS Checkbox Trick to Open Menu */
+            #menu-toggle:checked ~ .menu { display: flex; }
             .menu li { margin: 10px 0; }
             
             .mobile-bottom-nav { display: flex; }
@@ -416,8 +425,8 @@
             /* Clock visible on mobile */
             .live-clock { display: flex !important; font-size: 0.75rem !important; padding: 4px 8px !important; margin-right: 5px; align-items: center; gap: 4px; }
 
-            /* Floating icons mobile me visible */
-            .floating-icons { display: block !important; opacity: 0.15; }
+            /* 🟢 FLOATING ICONS FIX: Original look on mobile */
+            .floating-icons { display: block !important; opacity: 0.3; }
             .float-icon { font-size: 2.5rem !important; }
 
             .hero h1 { font-size: 2.2rem !important; }
@@ -459,7 +468,7 @@
 
         body.dark .menu-btn,
         body.dark .nav-icon-btn { background: var(--bg-card) !important; color: var(--text-primary) !important; }
-        body.dark .filter-tab { background: var(--bg-card) !important; color: var(--text-primary) !important; }
+        body.dark .filter-tab { background: var(--bg-card) !important; color: var(--text-muted) !important; }
         body.dark .filter-tab.active { background: var(--primary) !important; color: white !important; }
     </style>
 </head>
@@ -471,10 +480,12 @@
     <div id="toast" class="toast"></div>
 
     <nav class="navbar">
-        <!-- 🟢 FIX 1: Menu Btn ab pura kaam karega -->
-        <div class="menu-btn" onclick="document.querySelector('.menu').classList.toggle('active')">
+        <!-- 🟢 CSS CHECKBOX TRICK FOR MENU -->
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-btn">
             <i class="fa-solid fa-bars"></i>
-        </div>
+        </label>
+        
         <div class="logo"><i class="fa-solid fa-bolt"></i><span>Bharat24Tools</span></div>
         <ul class="menu">
             <li><a href="index.html">Home</a></li>
@@ -491,7 +502,7 @@
     </nav>
 
     <section class="hero">
-        <!-- 🟢 FIX 2: Floating Icons wapas on -->
+        <!-- 🟢 FLOATING ICONS WAPAS ON -->
         <div class="floating-icons">
             <i class="fa-solid fa-image float-icon" style="top:15%;left:8%;animation-delay:0s;"></i>
             <i class="fa-solid fa-file-pdf float-icon" style="top:25%;right:10%;animation-delay:1s;"></i>
@@ -1481,7 +1492,7 @@
                 });
             }
 
-            // 🟢 FIX 3: CLOCK LOGIC (Time update karne ke liye)
+            // 🟢 CLOCK LOGIC
             function updateClock() {
                 const now = new Date();
                 const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
