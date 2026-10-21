@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Split PDF - Bharat24Tools</title>
-    <!-- Fast & Reliable CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <!-- Latest Reliable PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Arial,sans-serif; }
         body { background: linear-gradient(135deg,#0f0f1e,#533483); min-height:100vh; color:#fff; padding:20px; }
@@ -109,7 +109,6 @@
     <div class="thumbnails" id="thumbnails">
       <div style="color:#a5b4fc; padding:20px; text-align:center; grid-column: 1/-1;">Please upload a PDF</div>
     </div>
-    <!-- VISUAL LIVE PREVIEW BOX -->
     <div class="live-preview-box" id="visualPreview">
       <span style="color:#fca5a5;">Select at least 1 page</span>
     </div>
@@ -151,6 +150,9 @@ let selectedPages = new Set();
 let currentMode = 'custom';
 let pdfDoc = null;
 
+// 🟢 SABSE BADA FIX: Worker ko disable karke direct render karna
+pdfjsLib.GlobalWorkerOptions.workerSrc = ''; 
+
 const dropzone = document.getElementById('dropzone');
 const fileInput = document.getElementById('fileInput');
 
@@ -189,8 +191,13 @@ async function handleFile(file) {
 
   try {
     const arrayBuffer = await file.arrayBuffer();
-    // Worker ON kar diya hai taaki GitHub Pages par 55+ pages bhi smooth load hon
-    pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    
+    // 🟢 disableWorker: true lagaya hai taaki GitHub par block na ho
+    pdfDoc = await pdfjsLib.getDocument({ 
+        data: arrayBuffer,
+        disableWorker: true 
+    }).promise;
+    
     totalPages = pdfDoc.numPages;
     document.getElementById('pageCount').textContent = totalPages;
     
@@ -207,14 +214,12 @@ async function handleFile(file) {
   }
 }
 
-// 🟢 NAYA RENDER LOGIC: Blank pages fix karne ke liye
 async function renderThumbnails() {
   const container = document.getElementById('thumbnails');
   container.innerHTML = '';
   
   for (let i = 1; i <= totalPages; i++) {
     try {
-      // 1. Pehle khaali box aur number banao
       const div = document.createElement('div');
       div.className = 'page-thumb';
       div.dataset.page = i;
@@ -224,27 +229,22 @@ async function renderThumbnails() {
       
       div.innerHTML += `<div class="check">✓</div><div class="page-num">${i}</div>`;
       div.addEventListener('click', () => togglePage(i, div));
-      
-      // 2. Screen par add karo
       container.appendChild(div);
 
-      // 3. Ab photo draw karo
       const page = await pdfDoc.getPage(i);
-      const viewport = page.getViewport({ scale: 0.6 }); // Thoda bada scale
+      const viewport = page.getViewport({ scale: 0.6 }); 
       
       canvas.width = viewport.width;
       canvas.height = viewport.height;
       
       const ctx = canvas.getContext('2d');
-      // Peeche safed rang lagao
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // 4. Photo render karo
       await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-
-      // 5. Browser ko saans lene do (Memory crash rokne ke liye)
-      await new Promise(resolve => setTimeout(resolve, 15));
+      
+      // Thoda delay taaki browser crash na kare
+      await new Promise(resolve => setTimeout(resolve, 20));
       
     } catch (e) { 
         console.error('Page render error:', i, e); 
