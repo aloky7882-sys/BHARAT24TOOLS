@@ -112,7 +112,7 @@
         }
         .float-icon {
             position: absolute;
-            color: rgba(255, 255, 255, 0.5); /* Icons clearly visible */
+            color: rgba(255, 255, 255, 0.5);
             font-size: 3rem;
             animation: floatUp 4s infinite ease-in-out alternate;
         }
@@ -125,27 +125,27 @@
             z-index: 10; 
         }
 
-        /* ===== DESKTOP GRID ===== */
+        /* ===== DESKTOP GRID (UPDATED PRO LAYOUT) ===== */
         .container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* ===== CARD ===== */
+        /* ===== CARD (UPDATED PRO SIZE & PADDING) ===== */
         .card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 16px;
+            border-radius: 12px;
+            padding: 20px 16px;
             position: relative;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
-            min-height: 200px;
+            min-height: 220px;
             overflow: hidden;
             cursor: pointer;
         }
@@ -359,11 +359,15 @@
         /* ✅ Menu Checkbox Trick (No JS required) */
         #menu-toggle { display: none; }
 
-        /* ===== TABLET (768px - 1024px) ===== */
+        /* ===== TABLET (768px - 1024px) UPDATED ===== */
         @media (max-width: 1024px) {
             .container {
-                grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-                gap: 10px;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+            .card {
+                min-height: 200px;
+                padding: 16px;
             }
         }
 
@@ -376,7 +380,7 @@
             .hero h1 { font-size: 2.5rem; }
         }
 
-        /* ===== MOBILE (max 768px) ===== */
+        /* ===== MOBILE (max 768px) UPDATED ===== */
         @media (max-width: 768px) {
             
             .navbar { 
@@ -442,8 +446,10 @@
             .hero p { font-size: 0.85rem !important; }
             .stats { gap: 15px; flex-wrap: wrap; }
 
-            .container { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 12px; }
-            .card { padding: 12px; min-height: 180px; border-radius: 8px; }
+            /* Mobile Grid & Card */
+            .container { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 12px; }
+            .card { padding: 12px; min-height: 180px; border-radius: 10px; }
+            
             .card h2 { font-size: 0.78rem; margin-bottom: 3px; }
             .card p { font-size: 0.66rem; line-height: 1.4; margin-bottom: 5px; }
             .tool-icon { font-size: 1.2rem !important; width: 34px !important; height: 34px !important; margin-bottom: 6px; }
@@ -455,6 +461,7 @@
             .card .card-badge { font-size: 0.52rem; padding: 2px 6px; }
             .card .fav-btn { top: 8px; right: 8px; font-size: 0.78rem; }
             .tool-category h2 { font-size: 1.1rem; margin: 20px 0 12px; }
+            
             .popular-grid, .testi-grid { grid-template-columns: 1fr 1fr; }
             .popular-card, .testi-card { padding: 14px; }
             .popular-card .p-icon { font-size: 1.4rem; }
@@ -463,14 +470,16 @@
             .popular-card .p-stat { font-size: 0.62rem; }
         }
 
-        /* ===== SMALL PHONE ===== */
+        /* ===== SMALL PHONE UPDATED ===== */
         @media (max-width: 480px) {
-            .container { gap: 8px; padding: 0 10px; }
+            .container { gap: 10px; padding: 0 10px; }
             .card { padding: 10px; min-height: 170px; }
+            
             .card h2 { font-size: 0.75rem; }
             .card p { font-size: 0.62rem; }
             .tool-icon { font-size: 1.1rem !important; width: 30px !important; height: 30px !important; }
             .card .how-it-works { display: none; }
+            
             .popular-grid { grid-template-columns: 1fr; }
             .testi-grid { grid-template-columns: 1fr; }
         }
