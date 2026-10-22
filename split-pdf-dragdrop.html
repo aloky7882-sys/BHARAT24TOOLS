@@ -3,69 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Split PDF - Bharat24Tools</title>
-    <!-- Latest Reliable PDF.js -->
+    <!-- 🚀 ADVANCED META TAGS -->
+    <title>Advanced Split PDF - Visual, Manual & Fixed | Bharat24Tools</title>
+    <meta name="description" content="Split PDF files into pages effortlessly. Advanced Visual mode, Manual typing, and Fixed chunk splitting with live preview. 100% Free, Fast, and Secure.">
+    <meta name="keywords" content="split pdf, separate pdf pages, extract pdf pages, free pdf splitter, advanced pdf tools">
+    
+    <!-- PDF.js Core -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // 🟢 WORKER CONFIG (Zaroori hai thumbnail load karne ke liye)
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+    </script>
+
     <style>
+        :root {
+            --bg-dark: #0f0f1e;
+            --bg-card: rgba(30, 27, 75, 0.95);
+            --primary: #a855f7;
+            --primary-hover: #9333ea;
+            --accent: #6366f1;
+            --text-main: #ffffff;
+            --text-muted: #a5b4fc;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --success: #86efac;
+            --error: #fca5a5;
+        }
+
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Arial,sans-serif; }
-        body { background: linear-gradient(135deg,#0f0f1e,#533483); min-height:100vh; color:#fff; padding:20px; }
-        .container { max-width:900px; margin:0 auto; background:rgba(30,27,75,0.95); border-radius:20px; padding:30px; border:1px solid rgba(168,85,247,0.3); position:relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        h1 { color:#a855f7; text-align:center; margin-bottom:8px; font-size:1.6rem; }
-        .subtitle { text-align:center; color:#a5b4fc; margin-bottom:25px; font-size:0.9rem; }
+        body { 
+            background: linear-gradient(135deg, var(--bg-dark), #533483); 
+            min-height: 100vh; 
+            color: var(--text-main); 
+            padding: 20px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container { 
+            width: 100%;
+            max-width: 900px; 
+            background: var(--bg-card); 
+            border-radius: 24px; 
+            padding: 35px; 
+            border: 1px solid var(--border-color); 
+            position: relative; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
         
-        .lang-select { position:absolute; top:20px; right:20px; background:#a855f7; color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600; z-index:10; outline:none; font-size:0.9rem; }
+        h1 { color: var(--primary); text-align: center; margin-bottom: 8px; font-size: 1.8rem; font-weight: 800; letter-spacing: 0.5px; }
+        .subtitle { text-align: center; color: var(--text-muted); margin-bottom: 25px; font-size: 0.95rem; }
         
-        .dropzone { border:3px dashed rgba(168,85,247,0.5); border-radius:16px; padding:35px 20px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); }
-        .dropzone:hover, .dropzone.dragover { border-color:#a855f7; background:rgba(168,85,247,0.15); transform:scale(1.01); }
-        .dropzone .icon { font-size:2.5rem; margin-bottom:10px; }
-        .dropzone .text { color:#a5b4fc; font-size:1rem; font-weight:600; }
-        .dropzone .hint { color:#6b7280; font-size:0.8rem; margin-top:8px; }
-        #fileInput { display:none; }
+        .lang-select { 
+            position: absolute; top: 25px; right: 25px; background: var(--primary); color: #fff; 
+            border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; 
+            font-weight: 600; z-index: 10; outline: none; font-size: 0.85rem; 
+            transition: 0.2s;
+        }
+        .lang-select:hover { background: var(--primary-hover); }
+
+        /* 🟢 DROPZONE */
+        .dropzone { 
+            display: block; border: 3px dashed rgba(168, 85, 247, 0.6); 
+            border-radius: 16px; padding: 45px 20px; text-align: center; 
+            cursor: pointer; transition: all 0.3s ease; 
+            background: rgba(99, 102, 241, 0.05); position: relative; overflow: hidden;
+        }
+        .dropzone:hover, .dropzone.dragover { border-color: var(--primary); background: rgba(168,85,247,0.1); transform: scale(1.01); }
         
-        .file-info { margin-top:20px; padding:15px; background:rgba(99,102,241,0.15); border-radius:12px; border-left:4px solid #86efac; display:none; }
-        .file-info.show { display:block; }
-        .file-info .name { color:#86efac; font-weight:600; font-size: 1.1rem; word-break: break-all; }
+        .dropzone .icon { font-size: 3rem; margin-bottom: 15px; display: inline-block; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         
-        .tabs { display:none; gap:8px; margin:20px 0; }
-        .tab { flex:1; padding:12px 8px; background:rgba(99,102,241,0.15); border:2px solid transparent; border-radius:10px; cursor:pointer; text-align:center; font-weight:600; color:#a5b4fc; transition:all 0.2s; font-size:0.9rem; }
-        .tab.active { background:rgba(168,85,247,0.3); border-color:#a855f7; color:#fff; }
+        .dropzone .text { color: var(--text-main); font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; }
+        .dropzone .hint { color: var(--text-muted); font-size: 0.85rem; }
+        #fileInput { display: none; }
         
-        .mode-panel { display:none; margin-top:20px; }
-        .mode-panel.active { display:block; }
+        /* File Info Box */
+        .file-info { margin-top: 20px; padding: 15px 20px; background: rgba(99,102,241,0.15); border-radius: 12px; border-left: 4px solid var(--success); display: none; animation: slideDown 0.3s ease; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .file-info.show { display: block; }
+        .file-info .name { color: var(--success); font-weight: 700; font-size: 1.1rem; word-break: break-all; }
         
-        .thumbnails { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:12px; max-height:500px; overflow-y:auto; padding:10px; background:rgba(0,0,0,0.2); border-radius:12px; }
-        .page-thumb { position:relative; cursor:pointer; border:3px solid transparent; border-radius:8px; overflow:hidden; background:#fff; transition:all 0.2s; aspect-ratio:3/4; display:flex; align-items:center; justify-content:center; }
-        .page-thumb.selected { border-color:#a855f7; box-shadow:0 0 0 3px rgba(168,85,247,0.4); }
-        .page-thumb canvas { width:100%; height:100%; display:block; object-fit:contain; }
-        .page-thumb .page-num { position:absolute; bottom:4px; right:4px; background:rgba(0,0,0,0.75); color:#fff; padding:2px 8px; border-radius:12px; font-size:0.75rem; font-weight:700; }
-        .page-thumb .check { position:absolute; top:6px; left:6px; width:22px; height:22px; border-radius:50%; background:rgba(255,255,255,0.9); border:2px solid #a855f7; display:flex; align-items:center; justify-content:center; font-size:12px; color:#a855f7; font-weight:900; opacity:0; transition:opacity 0.2s; }
-        .page-thumb.selected .check { background:#a855f7; color:#fff; opacity:1; }
+        /* Tabs */
+        .tabs { display: none; gap: 10px; margin: 25px 0; }
+        .tab { 
+            flex: 1; padding: 14px 10px; background: rgba(99,102,241,0.1); 
+            border: 2px solid transparent; border-radius: 12px; cursor: pointer; 
+            text-align: center; font-weight: 700; color: var(--text-muted); 
+            transition: all 0.3s ease; font-size: 0.95rem; 
+        }
+        .tab:hover { background: rgba(99,102,241,0.2); }
+        .tab.active { background: rgba(168,85,247,0.2); border-color: var(--primary); color: #fff; box-shadow: 0 4px 15px rgba(168,85,247,0.2); }
         
-        .controls { display:flex; gap:10px; margin:15px 0; flex-wrap:wrap; align-items:center; }
-        .btn { padding:10px 18px; border:none; border-radius:8px; cursor:pointer; font-weight:600; font-size:0.9rem; transition:all 0.2s; }
-        .btn-secondary { background:rgba(99,102,241,0.3); color:#a5b4fc; border:1px solid rgba(99,102,241,0.5); }
-        .btn-secondary:hover { background:rgba(99,102,241,0.5); color:#fff; }
+        /* Panels */
+        .mode-panel { display: none; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .mode-panel.active { display: block; }
         
-        .input-group { margin:15px 0; }
-        .input-group label { display:block; color:#a5b4fc; margin-bottom:6px; font-size:0.9rem; font-weight:600; }
-        .input-group input { width:100%; padding:14px; background:rgba(0,0,0,0.3); border:2px solid rgba(168,85,247,0.3); border-radius:8px; color:#fff; font-size:1rem; font-family:'Courier New',monospace; letter-spacing:0.5px; }
-        .input-group input:focus { outline:none; border-color:#a855f7; box-shadow:0 0 0 3px rgba(168,85,247,0.2); }
-        .example { color:#6b7280; font-size:0.8rem; margin-top:8px; }
+        /* Visual Mode */
+        .thumbnails { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 15px; max-height: 450px; overflow-y: auto; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); }
         
-        .live-preview-box { margin-top:15px; padding:15px; border-radius:10px; background:rgba(0,0,0,0.4); border:1px solid rgba(168,85,247,0.3); font-size:1rem; font-weight:600; text-align:center; transition: all 0.3s; }
+        /* 🟢 PAGE THUMBNAIL FIX */
+        .page-thumb { 
+            position: relative; cursor: pointer; border: 3px solid transparent; 
+            border-radius: 10px; overflow: hidden; background: #fff; /* White background */
+            transition: all 0.2s; aspect-ratio: 3/4; display: flex; align-items: center; justify-content: center; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+            min-height: 140px; /* Ensure it has height before render */
+        }
+        .page-thumb:hover { transform: translateY(-3px); }
+        .page-thumb.selected { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(168,85,247,0.4); transform: scale(0.95); }
+        .page-thumb canvas { width: 100%; height: 100%; display: block; object-fit: contain; }
         
-        .split-btn { width:100%; padding:16px; background:linear-gradient(135deg,#a855f7,#6366f1); color:#fff; border:none; border-radius:12px; font-size:1.1rem; font-weight:700; cursor:pointer; margin-top:20px; transition:all 0.2s; display:flex; justify-content:center; align-items:center; gap:8px;}
-        .split-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 8px 20px rgba(168,85,247,0.4); }
-        .split-btn:disabled { opacity:0.5; cursor:not-allowed; }
+        .page-thumb .page-num { position: absolute; bottom: 6px; right: 6px; background: rgba(0,0,0,0.8); color: #fff; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; z-index: 2; }
+        .page-thumb .check { position: absolute; top: 6px; left: 6px; width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.9); border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--primary); font-weight: 900; opacity: 0; transition: 0.2s; z-index: 2; }
+        .page-thumb.selected .check { background: var(--primary); color: #fff; opacity: 1; }
         
-        .status { margin-top:15px; padding:15px; border-radius:8px; font-size:0.95rem; display:none; line-height:1.5; text-align:center; }
-        .status.show { display:block; }
-        .status.info { background:rgba(99,102,241,0.2); color:#a5b4fc; }
-        .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; }
-        .status.success { background:rgba(34,197,94,0.2); color:#86efac; }
-        .spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; margin-right:5px; vertical-align:middle;}
-        @keyframes spin { to { transform:rotate(360deg); } }
+        /* Loading Spinner inside Thumbnail */
+        .thumb-loading { position: absolute; width: 20px; height: 20px; border: 2px solid #ccc; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+
+        /* Controls & Inputs */
+        .controls { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; align-items: center; }
+        .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: 0.2s; }
+        .btn-secondary { background: rgba(99,102,241,0.2); color: var(--text-muted); border: 1px solid rgba(99,102,241,0.4); }
+        .btn-secondary:hover { background: rgba(99,102,241,0.4); color: #fff; }
+        
+        .input-group { margin: 20px 0; }
+        .input-group label { display: block; color: var(--text-muted); margin-bottom: 8px; font-size: 0.95rem; font-weight: 600; }
+        .input-group input { width: 100%; padding: 16px; background: rgba(0,0,0,0.4); border: 2px solid rgba(168,85,247,0.3); border-radius: 12px; color: #fff; font-size: 1.1rem; font-family: 'Courier New', monospace; transition: 0.3s; }
+        .input-group input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(168,85,247,0.2); }
+        
+        .live-preview-box { margin-top: 15px; padding: 18px; border-radius: 12px; background: rgba(0,0,0,0.4); border: 1px solid rgba(168,85,247,0.2); font-size: 1rem; font-weight: 600; text-align: center; transition: 0.3s; }
+        
+        /* Action Button */
+        .split-btn { width: 100%; padding: 18px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; border: none; border-radius: 14px; font-size: 1.15rem; font-weight: 800; cursor: pointer; margin-top: 25px; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 10px 25px rgba(168,85,247,0.3); }
+        .split-btn:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(168,85,247,0.5); }
+        .split-btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+        
+        /* Status Alert */
+        .status { margin-top: 20px; padding: 16px; border-radius: 12px; font-size: 0.95rem; display: none; line-height: 1.5; text-align: center; font-weight: 600; animation: fadeIn 0.3s ease; }
+        .status.show { display: block; }
+        .status.info { background: rgba(99,102,241,0.15); color: var(--text-muted); border: 1px solid rgba(99,102,241,0.3); }
+        .status.error { background: rgba(239,68,68,0.15); color: var(--error); border: 1px solid rgba(239,68,68,0.3); }
+        .status.success { background: rgba(34,197,94,0.15); color: var(--success); border: 1px solid rgba(34,197,94,0.3); }
+        
+        .spinner { display: inline-block; width: 18px; height: 18px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -79,16 +167,16 @@
   <h1>✂️ Split PDF</h1>
   <p class="subtitle">Split PDF into pages — Visual, Manual or Fixed</p>
 
-  <div class="dropzone" id="dropzone">
+  <label class="dropzone" id="dropzone">
     <div class="icon">📄</div>
     <div class="text" data-i18n="dropText">Drop file here or click to browse</div>
     <div class="hint" data-i18n="dropHint">Max 20MB • PDF only</div>
     <input type="file" id="fileInput" accept=".pdf,application/pdf">
-  </div>
+  </label>
 
   <div class="file-info" id="fileInfo">
     <div class="name" id="fileName">-</div>
-    <div style="color:#a5b4fc; font-size:0.85rem; margin-top:4px;">
+    <div style="color:var(--text-muted); font-size:0.85rem; margin-top:4px;">
       <span id="pageCount">-</span> <span data-i18n="pages">pages</span> • <span id="fileSize">-</span>
     </div>
   </div>
@@ -104,13 +192,13 @@
     <div class="controls">
       <button class="btn btn-secondary" onclick="selectAll()">Select All</button>
       <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
-      <span style="margin-left:auto; padding-top:10px;"><span id="selectedCount" style="color:#86efac; font-weight:700;">0</span> selected</span>
+      <span style="margin-left:auto; padding-top:10px;"><span id="selectedCount" style="color:var(--success); font-weight:800; font-size:1.1rem;">0</span> selected</span>
     </div>
     <div class="thumbnails" id="thumbnails">
-      <div style="color:#a5b4fc; padding:20px; text-align:center; grid-column: 1/-1;">Please upload a PDF</div>
+      <div style="color:var(--text-muted); padding:30px; text-align:center; grid-column: 1/-1;">Please upload a PDF to see pages</div>
     </div>
     <div class="live-preview-box" id="visualPreview">
-      <span style="color:#fca5a5;">Select at least 1 page</span>
+      <span style="color:var(--error);">Select at least 1 page</span>
     </div>
   </div>
 
@@ -141,7 +229,6 @@
 </div>
 
 <script>
-// ✅ Aapka Backend URL yahan fix hai
 const API_URL = "https://bharat24tools-api.onrender.com/split-pdf"; 
 
 let currentFile = null;
@@ -150,16 +237,19 @@ let selectedPages = new Set();
 let currentMode = 'custom';
 let pdfDoc = null;
 
-// 🟢 SABSE BADA FIX: Worker ko disable karke direct render karna
-pdfjsLib.GlobalWorkerOptions.workerSrc = ''; 
-
 const dropzone = document.getElementById('dropzone');
 const fileInput = document.getElementById('fileInput');
 
-dropzone.addEventListener('click', () => fileInput.click());
 dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
 dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
-dropzone.addEventListener('drop', e => { e.preventDefault(); dropzone.classList.remove('dragover'); if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]); });
+dropzone.addEventListener('drop', e => { 
+    e.preventDefault(); 
+    dropzone.classList.remove('dragover'); 
+    if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        handleFile(e.dataTransfer.files[0]); 
+    }
+});
 fileInput.addEventListener('change', e => { if (e.target.files.length) handleFile(e.target.files[0]); });
 
 function resetUI() {
@@ -168,6 +258,12 @@ function resetUI() {
     document.getElementById('fixedSize').value = '1';
     document.getElementById('thumbnails').innerHTML = '';
     document.getElementById('selectedCount').textContent = '0';
+    document.getElementById('fileInfo').classList.remove('show');
+    document.getElementById('tabs').style.display = 'none';
+    document.getElementById('splitBtn').disabled = true;
+    document.getElementById('manualPreview').innerHTML = `<span style="color:#6b7280;">Type page numbers to see preview...</span>`;
+    document.getElementById('fixedPreview').innerHTML = `<span style="color:#6b7280;">Enter number to see preview...</span>`;
+    document.getElementById('visualPreview').innerHTML = `<span style="color:var(--error);">Select at least 1 page</span>`;
     hideStatus();
 }
 
@@ -175,7 +271,7 @@ async function handleFile(file) {
   if (!file.name.toLowerCase().endsWith('.pdf')) return showStatus('error', 'Only PDF files allowed!');
   if (file.size > 20 * 1024 * 1024) return showStatus('error', 'File too large (max 20MB)');
 
-  resetUI();
+  resetUI(); // Auto Cleanup
   currentFile = file;
   pdfDoc = null;
   totalPages = 0;
@@ -186,17 +282,14 @@ async function handleFile(file) {
   document.getElementById('tabs').style.display = 'flex';
   document.getElementById('splitBtn').disabled = false;
   
-  document.getElementById('thumbnails').innerHTML = `<div style="color:#a5b4fc; padding:20px; text-align:center; grid-column:1/-1;"><span class="spinner"></span> Loading pages... (Please wait)</div>`;
+  document.getElementById('thumbnails').innerHTML = `<div style="color:var(--text-muted); padding:30px; text-align:center; grid-column:1/-1;"><span class="spinner"></span> Loading PDF...</div>`;
   showStatus('info', 'Loading PDF pages...');
 
   try {
     const arrayBuffer = await file.arrayBuffer();
     
-    // 🟢 disableWorker: true lagaya hai taaki GitHub par block na ho
-    pdfDoc = await pdfjsLib.getDocument({ 
-        data: arrayBuffer,
-        disableWorker: true 
-    }).promise;
+    // Standard rendering config (Most reliable)
+    pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     
     totalPages = pdfDoc.numPages;
     document.getElementById('pageCount').textContent = totalPages;
@@ -209,45 +302,60 @@ async function handleFile(file) {
     totalPages = 1; 
     document.getElementById('pageCount').textContent = '?';
     setMode('manual');
-    document.getElementById('thumbnails').innerHTML = '<div style="color:#fca5a5; padding:20px; text-align:center; grid-column:1/-1;">Visual preview failed. Use Manual mode.</div>';
+    document.getElementById('thumbnails').innerHTML = '<div style="color:var(--error); padding:30px; text-align:center; grid-column:1/-1;">Visual preview failed. Use Manual mode.</div>';
     showStatus('error', '⚠️ Visual preview failed. Use Manual mode.');
   }
 }
 
+// 🟢 ULTIMATE RENDER LOGIC (Fixes Blank Pages)
 async function renderThumbnails() {
   const container = document.getElementById('thumbnails');
   container.innerHTML = '';
   
   for (let i = 1; i <= totalPages; i++) {
+    const div = document.createElement('div');
+    div.className = 'page-thumb';
+    div.dataset.page = i;
+    
+    // Add Loading Spinner in the center
+    const spinner = document.createElement('div');
+    spinner.className = 'thumb-loading';
+    div.appendChild(spinner);
+    
+    // Add Elements
+    div.innerHTML += `<div class="check">✓</div><div class="page-num">${i}</div>`;
+    div.addEventListener('click', () => togglePage(i, div));
+    container.appendChild(div);
+
     try {
-      const div = document.createElement('div');
-      div.className = 'page-thumb';
-      div.dataset.page = i;
+      const page = await pdfDoc.getPage(i);
+      const viewport = page.getViewport({ scale: 1.0 }); // Higher scale = better quality
       
       const canvas = document.createElement('canvas');
-      div.appendChild(canvas);
-      
-      div.innerHTML += `<div class="check">✓</div><div class="page-num">${i}</div>`;
-      div.addEventListener('click', () => togglePage(i, div));
-      container.appendChild(div);
-
-      const page = await pdfDoc.getPage(i);
-      const viewport = page.getViewport({ scale: 0.6 }); 
+      const ctx = canvas.getContext('2d');
       
       canvas.width = viewport.width;
       canvas.height = viewport.height;
       
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = "#ffffff";
+      // Force white background
+      ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+      // Draw PDF on canvas
       await page.render({ canvasContext: ctx, viewport: viewport }).promise;
       
-      // Thoda delay taaki browser crash na kare
-      await new Promise(resolve => setTimeout(resolve, 20));
+      // Remove spinner and insert canvas
+      spinner.remove();
+      div.insertBefore(canvas, div.firstChild);
       
-    } catch (e) { 
-        console.error('Page render error:', i, e); 
+      // 10ms delay so browser doesn't freeze on 50+ pages
+      await new Promise(r => setTimeout(r, 10));
+      
+    } catch (e) {
+      console.error('Error on page:', i, e);
+      spinner.remove();
+      // Show error icon if a specific page fails
+      div.innerHTML = '<span style="color:red;font-size:10px;text-align:center;">Error<br>Loading</span>' + div.innerHTML;
     }
   }
   updateSelectedCount();
@@ -321,36 +429,27 @@ function updateLivePreview() {
   const max = totalPages || 10000;
 
   if (currentMode === 'custom') {
-    if (selectedPages.size === 0) { 
-        visualPrev.innerHTML = `<span style="color:#fca5a5;">Select at least 1 page</span>`; 
-    } else {
-        visualPrev.innerHTML = `<span style="color:#86efac;">✅ Will extract ${selectedPages.size} pages → <b>${buildRangesFromSet(selectedPages)}</b></span>`;
-    }
+    if (selectedPages.size === 0) { visualPrev.innerHTML = `<span style="color:var(--error);">Select at least 1 page</span>`; }
+    else { visualPrev.innerHTML = `<span style="color:var(--success);">✅ Will extract ${selectedPages.size} pages → <b>${buildRangesFromSet(selectedPages)}</b></span>`; }
   }
 
   if (currentMode === 'manual') {
     const input = document.getElementById('manualRanges').value.trim();
-    if (!input) { 
-        manualPrev.innerHTML = `<span style="color:#6b7280;">Type page numbers to see preview...</span>`; 
-    } else {
+    if (!input) { manualPrev.innerHTML = `<span style="color:#6b7280;">Type page numbers to see preview...</span>`; }
+    else {
       const pages = parseRanges(input, max);
-      if (pages.size === 0) { 
-          manualPrev.innerHTML = `<span style="color:#fca5a5;">❌ Invalid pages or out of range!</span>`; 
-      } else {
-        manualPrev.innerHTML = `<span style="color:#86efac;">✅ Will extract ${pages.size} pages → <b>${buildRangesFromSet(pages)}</b></span>`;
-      }
+      if (pages.size === 0) { manualPrev.innerHTML = `<span style="color:var(--error);">❌ Invalid pages or out of range!</span>`; }
+      else { manualPrev.innerHTML = `<span style="color:var(--success);">✅ Will extract ${pages.size} pages → <b>${buildRangesFromSet(pages)}</b></span>`; }
     }
   }
 
   if (currentMode === 'fixed') {
     const sizeInput = parseInt(document.getElementById('fixedSize').value, 10);
-    if (isNaN(sizeInput) || sizeInput < 1) { 
-        fixedPrev.innerHTML = `<span style="color:#fca5a5;">❌ Invalid number</span>`; 
-    } else if (!totalPages) { 
-        fixedPrev.innerHTML = `<span style="color:#6b7280;">Upload PDF to see preview...</span>`; 
-    } else {
+    if (isNaN(sizeInput) || sizeInput < 1) { fixedPrev.innerHTML = `<span style="color:var(--error);">❌ Invalid number</span>`; }
+    else if (!totalPages) { fixedPrev.innerHTML = `<span style="color:#6b7280;">Upload PDF to see preview...</span>`; }
+    else {
       const numFiles = Math.ceil(totalPages / sizeInput);
-      let html = `<span style="color:#86efac;">✅ Will create ${numFiles} PDF files</span><br>`;
+      let html = `<span style="color:var(--success);">✅ Will create ${numFiles} PDF files</span><br>`;
       let previewText = [];
       for (let i = 0; i < Math.min(numFiles, 3); i++) {
         let start = (i * sizeInput) + 1;
@@ -358,7 +457,7 @@ function updateLivePreview() {
         previewText.push(`File ${i + 1}: Pages ${start} to ${end}`);
       }
       if (numFiles > 3) previewText.push("...and more");
-      html += `<div style="font-size:0.8rem; color:#a5b4fc; margin-top:4px;">${previewText.join('<br>')}</div>`;
+      html += `<div style="font-size:0.85rem; color:var(--text-muted); margin-top:8px;">${previewText.join('<br>')}</div>`;
       fixedPrev.innerHTML = html;
     }
   }
@@ -389,7 +488,7 @@ async function doSplit() {
 
   const btn = document.getElementById('splitBtn');
   btn.disabled = true;
-  showStatus('info', '<span class="spinner"></span> Uploading and splitting (Please wait 30-50s)...');
+  showStatus('info', '<span class="spinner"></span> Uploading and splitting...');
 
   try {
     const res = await fetch(API_URL, { method: 'POST', body: formData });
