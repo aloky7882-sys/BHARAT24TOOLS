@@ -40,7 +40,7 @@
     <meta name="twitter:description" content="50+ free online tools for images, PDFs, calculations and more.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-    <!-- 🛠️ Schema Markup (UPDATED: Removed URL from alternateName) -->
+    <!-- 🛠️ Schema Markup -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -48,18 +48,6 @@
         "name": "Bharat24Tools",
         "alternateName": ["Bharat 24 Tools", "Bharat24Tools AI"],
         "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/"
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            { "@type": "Question", "name": "Is Bharat24Tools free to use?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, every tool on Bharat24Tools is completely free. No signup, no hidden charges, no watermark." } },
-            { "@type": "Question", "name": "Are my files uploaded to a server?", "acceptedAnswer": { "@type": "Answer", "text": "Most tools run 100% in your browser. Heavy tools use a secure server and files are auto-deleted within 30 seconds." } },
-            { "@type": "Question", "name": "Do I need to install any software?", "acceptedAnswer": { "@type": "Answer", "text": "No installation required. Works in any modern browser on desktop, laptop and mobile." } }
-        ]
     }
     </script>
 
@@ -71,8 +59,8 @@
 
     <style>
         :root {
-            --bg-primary: #ffffff;
-            --bg-card: rgba(255, 255, 255, 0.65); /* Glassmorphism Base */
+            --bg-primary: #f8fafc; /* Light gray base */
+            --bg-card: rgba(255, 255, 255, 0.6); /* Glassmorphism Base */
             --text-primary: #1a1a1a;
             --text-muted: #6b7280;
             --border-color: rgba(255, 255, 255, 0.8); /* Glass Border */
@@ -97,7 +85,32 @@
             color: var(--text-primary); 
             transition: background 0.3s, color 0.3s; 
             width: 100%;
+            position: relative;
+            z-index: 0;
         }
+
+        /* 🟢 NEON GLOW BACKGROUND FOR GLASSMORPHISM 🟢 */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        body::before {
+            top: -10%; left: -10%;
+            width: 50vw; height: 50vw;
+            background: rgba(168, 85, 247, 0.4); /* Purple Glow */
+        }
+        body::after {
+            bottom: -10%; right: -10%;
+            width: 50vw; height: 50vw;
+            background: rgba(13, 110, 253, 0.4); /* Blue Glow */
+        }
+        body.dark::before { background: rgba(168, 85, 247, 0.2); opacity: 0.8; }
+        body.dark::after { background: rgba(13, 110, 253, 0.2); opacity: 0.8; }
 
         /* ===== HERO SECTION & FLOATING ICONS FIX ===== */
         .hero { 
@@ -135,13 +148,13 @@
             padding: 0 20px;
         }
 
-        /* ===== CARD (NEON GLASSMORPHISM APPLIED) ===== */
+        /* ===== CARD (NEON GLASSMORPHISM) ===== */
         .card {
             background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border-color);
-            border-radius: 16px; /* Thoda zyada rounded premium look ke liye */
+            border-radius: 16px;
             padding: 20px 16px;
             position: relative;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -150,6 +163,7 @@
             min-height: 220px;
             overflow: hidden;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
         .card::before {
@@ -199,10 +213,11 @@
             justify-content: center !important;
             border-radius: 8px;
             margin-bottom: 8px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,255,0.2);
         }
-        body.dark .tool-icon { background: rgba(0, 0, 0, 0.2); }
+        body.dark .tool-icon { background: rgba(0, 0, 0, 0.2); border-color: rgba(255,255,255,0.05); }
         
         .tool-category[data-category="image"] .tool-icon { background: rgba(168,85,247,0.15); }
         .tool-category[data-category="pdf"] .tool-icon { background: rgba(239,68,68,0.15); }
@@ -307,7 +322,8 @@
         .popular-tools .sub { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 18px; }
         .popular-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
         .popular-card {
-            background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(13,110,253,0.08));
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 14px;
@@ -315,7 +331,7 @@
             transition: all 0.25s;
             text-decoration: none;
             color: var(--text-primary);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
         .popular-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--primary); }
         .popular-card .p-icon { font-size: 1.3rem; margin-bottom: 6px; }
@@ -334,7 +350,15 @@
         .testimonials h2 { text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
         .testimonials .sub { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 30px; }
         .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .testi-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; transition: all 0.25s; backdrop-filter: blur(10px); }
+        .testi-card { 
+            background: var(--bg-card); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid var(--border-color); 
+            border-radius: 14px; 
+            padding: 22px; 
+            transition: all 0.25s; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
         .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
         .testi-card .t-stars { color: #fbbf24; margin-bottom: 10px; font-size: 0.9rem; }
         .testi-card .t-text { font-size: 0.85rem; color: var(--text-primary); line-height: 1.6; margin-bottom: 16px; font-style: italic; }
@@ -352,7 +376,7 @@
 
         /* ===== SEARCH DROPDOWN ===== */
         .search-wrapper { position: relative; }
-        .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-height: 400px; overflow-y: auto; z-index: 1000; display: none; margin-top: 8px; backdrop-filter: blur(15px); }
+        .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-height: 400px; overflow-y: auto; z-index: 1000; display: none; margin-top: 8px; backdrop-filter: blur(20px); }
         .search-dropdown.active { display: block; }
         .search-item { padding: 12px 16px; cursor: pointer; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; color: var(--text-primary); text-decoration: none; }
         .search-item:hover { background: rgba(13,110,253,0.08); }
@@ -367,11 +391,11 @@
         .recently-used.active, .my-favorites.active { display: block; }
         .recently-used h3, .my-favorites h3 { font-size: 1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         .recent-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-        .recent-chip { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 6px 14px; font-size: 0.78rem; color: var(--text-primary); text-decoration: none; transition: all 0.2s; backdrop-filter: blur(5px); }
+        .recent-chip { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 6px 14px; font-size: 0.78rem; color: var(--text-primary); text-decoration: none; transition: all 0.2s; backdrop-filter: blur(10px); }
         .recent-chip:hover { background: var(--primary); color: white; transform: translateY(-2px); }
 
         /* ===== MOBILE BOTTOM NAV ===== */
-        .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-card); border-top: 1px solid var(--border-color); padding: 8px 0; z-index: 998; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); backdrop-filter: blur(15px); }
+        .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-card); border-top: 1px solid var(--border-color); padding: 8px 0; z-index: 998; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); backdrop-filter: blur(20px); }
         .mobile-bottom-nav a { flex: 1; text-align: center; color: var(--text-muted); text-decoration: none; font-size: 0.65rem; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 0; }
         .mobile-bottom-nav a i { font-size: 1.1rem; }
         .mobile-bottom-nav a.active { color: var(--primary); }
@@ -430,12 +454,12 @@
                 left: 0;
                 width: 100%;
                 background: var(--bg-card) !important;
+                backdrop-filter: blur(20px);
                 flex-direction: column;
                 padding: 20px;
                 box-shadow: 0 10px 20px rgba(0,0,0,0.1);
                 z-index: 999;
                 border-bottom: 1px solid var(--border-color);
-                backdrop-filter: blur(15px);
             }
             
             #menu-toggle:checked ~ .menu { display: flex; }
@@ -450,10 +474,12 @@
             }
             
             .mobile-bottom-nav { display: flex; }
-            body { padding-bottom: 70px; }
+            /* 🟢 FIX: Mobile pe neeche extra space taaki float buttons cards ko na dhakein */
+            body { padding-bottom: 90px; } 
 
-            .whatsapp-float { bottom: 85px !important; right: 15px !important; width: 45px !important; height: 45px !important; font-size: 22px !important; }
-            .chatbot-toggle { bottom: 145px !important; right: 15px !important; width: 45px !important; height: 45px !important; font-size: 22px !important; }
+            /* 🟢 FIX: Float Buttons ki position thodi aur neeche shift ki */
+            .whatsapp-float { bottom: 80px !important; right: 15px !important; width: 45px !important; height: 45px !important; font-size: 22px !important; }
+            .chatbot-toggle { bottom: 135px !important; right: 15px !important; width: 45px !important; height: 45px !important; font-size: 22px !important; }
 
             .live-clock { display: flex !important; font-size: 0.75rem !important; padding: 4px 8px !important; margin-right: 5px; align-items: center; gap: 4px; }
 
@@ -547,7 +573,6 @@
 
         <div class="hero-content">
             <span class="badge">🚀 India's Fast Growing Tool Website</span>
-            <!-- UPDATED: H1 Tag me Bharat24Tools Add kiya gaya hai SEO fix ke liye -->
             <h1>Bharat24Tools - Free Online <span id="typed-text" class="typed-text"></span></h1>
             <p>
                 Compress Images, Merge PDF, Convert Files, Generate QR Codes,
