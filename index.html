@@ -40,13 +40,13 @@
     <meta name="twitter:description" content="50+ free online tools for images, PDFs, calculations and more.">
     <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
-    <!-- 🛠️ Schema Markup -->
+    <!-- 🛠️ Schema Markup (UPDATED: Removed URL from alternateName) -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "Bharat24Tools",
-        "alternateName": ["Bharat 24 Tools", "Bharat24Tools AI", "aloky7882-sys.github.io"],
+        "alternateName": ["Bharat 24 Tools", "Bharat24Tools AI"],
         "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/"
     }
     </script>
@@ -72,19 +72,19 @@
     <style>
         :root {
             --bg-primary: #ffffff;
-            --bg-card: #ffffff;
+            --bg-card: rgba(255, 255, 255, 0.65); /* Glassmorphism Base */
             --text-primary: #1a1a1a;
             --text-muted: #6b7280;
-            --border-color: #e5e7eb;
+            --border-color: rgba(255, 255, 255, 0.8); /* Glass Border */
             --primary: #0d6efd;
             --shadow-hover: 0 8px 24px rgba(13,110,253,0.15);
         }
         body.dark {
             --bg-primary: #0f0f1e;
-            --bg-card: #1e1b4b;
+            --bg-card: rgba(30, 27, 75, 0.5); /* Dark Glassmorphism */
             --text-primary: #e0e7ff;
             --text-muted: #8b95b8;
-            --border-color: #2a2a4a;
+            --border-color: rgba(255, 255, 255, 0.1); /* Dark Glass Border */
             --shadow-hover: 0 8px 24px rgba(168,85,247,0.25);
         }
         
@@ -125,7 +125,7 @@
             z-index: 10; 
         }
 
-        /* ===== DESKTOP GRID (UPDATED PRO LAYOUT) ===== */
+        /* ===== DESKTOP GRID ===== */
         .container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -135,14 +135,16 @@
             padding: 0 20px;
         }
 
-        /* ===== CARD (UPDATED PRO SIZE & PADDING) ===== */
+        /* ===== CARD (NEON GLASSMORPHISM APPLIED) ===== */
         .card {
             background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 16px; /* Thoda zyada rounded premium look ke liye */
             padding: 20px 16px;
             position: relative;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             min-height: 220px;
@@ -158,16 +160,33 @@
             right: 0;
             height: 3px;
             background: var(--primary);
+            opacity: 0.9;
         }
         .tool-category[data-category="image"] .card::before { background: linear-gradient(90deg, #a855f7, #ec4899); }
         .tool-category[data-category="pdf"] .card::before { background: linear-gradient(90deg, #ef4444, #f97316); }
         .tool-category[data-category="design"] .card::before { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
         .tool-category[data-category="calculator"] .card::before { background: linear-gradient(90deg, #22c55e, #10b981); }
 
+        /* Neon Glow Hover Effects */
         .card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .tool-category[data-category="image"] .card:hover {
+            border-color: rgba(168, 85, 247, 0.6);
+            box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.5), 0 0 15px rgba(168, 85, 247, 0.2);
+        }
+        .tool-category[data-category="pdf"] .card:hover {
+            border-color: rgba(239, 68, 68, 0.6);
+            box-shadow: 0 10px 30px -10px rgba(239, 68, 68, 0.5), 0 0 15px rgba(239, 68, 68, 0.2);
+        }
+        .tool-category[data-category="design"] .card:hover {
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.5), 0 0 15px rgba(59, 130, 246, 0.2);
+        }
+        .tool-category[data-category="calculator"] .card:hover {
+            border-color: rgba(34, 197, 94, 0.6);
+            box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.5), 0 0 15px rgba(34, 197, 94, 0.2);
         }
 
         .tool-icon {
@@ -180,12 +199,15 @@
             justify-content: center !important;
             border-radius: 8px;
             margin-bottom: 8px;
-            background: rgba(13,110,253,0.08);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
         }
-        .tool-category[data-category="image"] .tool-icon { background: rgba(168,85,247,0.1); }
-        .tool-category[data-category="pdf"] .tool-icon { background: rgba(239,68,68,0.1); }
-        .tool-category[data-category="design"] .tool-icon { background: rgba(59,130,246,0.1); }
-        .tool-category[data-category="calculator"] .tool-icon { background: rgba(34,197,94,0.1); }
+        body.dark .tool-icon { background: rgba(0, 0, 0, 0.2); }
+        
+        .tool-category[data-category="image"] .tool-icon { background: rgba(168,85,247,0.15); }
+        .tool-category[data-category="pdf"] .tool-icon { background: rgba(239,68,68,0.15); }
+        .tool-category[data-category="design"] .tool-icon { background: rgba(59,130,246,0.15); }
+        .tool-category[data-category="calculator"] .tool-icon { background: rgba(34,197,94,0.15); }
 
         .card h2 {
             font-size: 0.85rem;
@@ -287,12 +309,13 @@
         .popular-card {
             background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(13,110,253,0.08));
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 14px;
             position: relative;
             transition: all 0.25s;
             text-decoration: none;
             color: var(--text-primary);
+            backdrop-filter: blur(10px);
         }
         .popular-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--primary); }
         .popular-card .p-icon { font-size: 1.3rem; margin-bottom: 6px; }
@@ -311,7 +334,7 @@
         .testimonials h2 { text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
         .testimonials .sub { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 30px; }
         .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .testi-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; transition: all 0.25s; }
+        .testi-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; transition: all 0.25s; backdrop-filter: blur(10px); }
         .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
         .testi-card .t-stars { color: #fbbf24; margin-bottom: 10px; font-size: 0.9rem; }
         .testi-card .t-text { font-size: 0.85rem; color: var(--text-primary); line-height: 1.6; margin-bottom: 16px; font-style: italic; }
@@ -321,7 +344,7 @@
         .testi-card .t-loc { font-size: 0.72rem; color: var(--text-muted); }
 
         /* ===== TRUST STATS ===== */
-        .trust-stats { background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(13,110,253,0.08)); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 22px 20px; margin: 30px 0; }
+        .trust-stats { background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(13,110,253,0.08)); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 22px 20px; margin: 30px 0; backdrop-filter: blur(10px); }
         .trust-stats-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px; }
         .trust-stat { text-align: center; }
         .trust-stat .num { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, #a855f7, #0d6efd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
@@ -329,7 +352,7 @@
 
         /* ===== SEARCH DROPDOWN ===== */
         .search-wrapper { position: relative; }
-        .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-height: 400px; overflow-y: auto; z-index: 1000; display: none; margin-top: 8px; }
+        .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-height: 400px; overflow-y: auto; z-index: 1000; display: none; margin-top: 8px; backdrop-filter: blur(15px); }
         .search-dropdown.active { display: block; }
         .search-item { padding: 12px 16px; cursor: pointer; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; color: var(--text-primary); text-decoration: none; }
         .search-item:hover { background: rgba(13,110,253,0.08); }
@@ -344,11 +367,11 @@
         .recently-used.active, .my-favorites.active { display: block; }
         .recently-used h3, .my-favorites h3 { font-size: 1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         .recent-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-        .recent-chip { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 6px 14px; font-size: 0.78rem; color: var(--text-primary); text-decoration: none; transition: all 0.2s; }
+        .recent-chip { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 6px 14px; font-size: 0.78rem; color: var(--text-primary); text-decoration: none; transition: all 0.2s; backdrop-filter: blur(5px); }
         .recent-chip:hover { background: var(--primary); color: white; transform: translateY(-2px); }
 
         /* ===== MOBILE BOTTOM NAV ===== */
-        .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-card); border-top: 1px solid var(--border-color); padding: 8px 0; z-index: 998; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); }
+        .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-card); border-top: 1px solid var(--border-color); padding: 8px 0; z-index: 998; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); backdrop-filter: blur(15px); }
         .mobile-bottom-nav a { flex: 1; text-align: center; color: var(--text-muted); text-decoration: none; font-size: 0.65rem; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 0; }
         .mobile-bottom-nav a i { font-size: 1.1rem; }
         .mobile-bottom-nav a.active { color: var(--primary); }
@@ -359,7 +382,7 @@
         /* ✅ Menu Checkbox Trick (No JS required) */
         #menu-toggle { display: none; }
 
-        /* ===== TABLET (768px - 1024px) UPDATED ===== */
+        /* ===== TABLET (768px - 1024px) ===== */
         @media (max-width: 1024px) {
             .container {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -380,18 +403,17 @@
             .hero h1 { font-size: 2.5rem; }
         }
 
-        /* ===== MOBILE (max 768px) UPDATED ===== */
+        /* ===== MOBILE (max 768px) ===== */
         @media (max-width: 768px) {
             
             .navbar { 
                 padding: 12px 16px; 
                 flex-wrap: nowrap; 
                 justify-content: space-between;
-                position: relative; /* Needed for menu dropdown */
+                position: relative;
                 z-index: 1000;
             }
             
-            /* 3-line button properly visible */
             .menu-btn { 
                 display: block; 
                 font-size: 1.5rem; 
@@ -401,28 +423,26 @@
                 z-index: 1001;
             }
             
-            /* Dropdown menu */
             .menu {
                 display: none;
                 position: absolute;
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background: var(--bg-card) !important; /* Force white in light mode */
+                background: var(--bg-card) !important;
                 flex-direction: column;
                 padding: 20px;
                 box-shadow: 0 10px 20px rgba(0,0,0,0.1);
                 z-index: 999;
                 border-bottom: 1px solid var(--border-color);
+                backdrop-filter: blur(15px);
             }
             
-            /* CSS Checkbox Trick to Open Menu */
             #menu-toggle:checked ~ .menu { display: flex; }
             
-            /* FIX: Links ka color force karna taaki light mode me white on white na ho */
             .menu li { margin: 10px 0; }
             .menu a {
-                color: var(--text-primary) !important; /* Forces black text in light, white in dark */
+                color: var(--text-primary) !important;
                 font-size: 1rem !important;
                 font-weight: 600 !important;
                 display: block;
@@ -435,10 +455,8 @@
             .whatsapp-float { bottom: 85px !important; right: 15px !important; width: 45px !important; height: 45px !important; font-size: 22px !important; }
             .chatbot-toggle { bottom: 145px !important; right: 15px !important; width: 45px !important; height: 45px !important; font-size: 22px !important; }
 
-            /* Clock visible on mobile */
             .live-clock { display: flex !important; font-size: 0.75rem !important; padding: 4px 8px !important; margin-right: 5px; align-items: center; gap: 4px; }
 
-            /* FLOATING ICONS: Force display */
             .floating-icons { display: block !important; opacity: 0.3 !important; }
             .float-icon { font-size: 2.5rem !important; color: #ffffff !important; }
 
@@ -446,9 +464,8 @@
             .hero p { font-size: 0.85rem !important; }
             .stats { gap: 15px; flex-wrap: wrap; }
 
-            /* Mobile Grid & Card */
             .container { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 12px; }
-            .card { padding: 12px; min-height: 180px; border-radius: 10px; }
+            .card { padding: 12px; min-height: 180px; border-radius: 12px; }
             
             .card h2 { font-size: 0.78rem; margin-bottom: 3px; }
             .card p { font-size: 0.66rem; line-height: 1.4; margin-bottom: 5px; }
@@ -470,7 +487,7 @@
             .popular-card .p-stat { font-size: 0.62rem; }
         }
 
-        /* ===== SMALL PHONE UPDATED ===== */
+        /* ===== SMALL PHONE ===== */
         @media (max-width: 480px) {
             .container { gap: 10px; padding: 0 10px; }
             .card { padding: 10px; min-height: 170px; }
@@ -498,7 +515,6 @@
     <div id="toast" class="toast"></div>
 
     <nav class="navbar">
-        <!-- 🟢 CSS CHECKBOX TRICK FOR MENU -->
         <input type="checkbox" id="menu-toggle">
         <label for="menu-toggle" class="menu-btn">
             <i class="fa-solid fa-bars"></i>
@@ -520,7 +536,6 @@
     </nav>
 
     <section class="hero">
-        <!-- 🟢 FLOATING ICONS WAPAS ON -->
         <div class="floating-icons">
             <i class="fa-solid fa-image float-icon" style="top:15%;left:8%;animation-delay:0s;"></i>
             <i class="fa-solid fa-file-pdf float-icon" style="top:25%;right:10%;animation-delay:1s;"></i>
@@ -532,7 +547,8 @@
 
         <div class="hero-content">
             <span class="badge">🚀 India's Fast Growing Tool Website</span>
-            <h1>Free Online <span id="typed-text" class="typed-text"></span></h1>
+            <!-- UPDATED: H1 Tag me Bharat24Tools Add kiya gaya hai SEO fix ke liye -->
+            <h1>Bharat24Tools - Free Online <span id="typed-text" class="typed-text"></span></h1>
             <p>
                 Compress Images, Merge PDF, Convert Files, Generate QR Codes,
                 Calculate EMI, Password Generator and much more...
