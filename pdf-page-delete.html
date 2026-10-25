@@ -33,6 +33,9 @@
     }
     </script>
 
+    <!-- 🟢 PDF-LIB (Client-side PDF Editing Library) -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -196,13 +199,13 @@
 
 <main>
     <h1>🗑️ PDF Page Delete</h1>
-    <p class="subtitle">Delete specific pages from your PDF instantly</p>
+    <p class="subtitle">Delete specific pages from your PDF instantly (100% Private)</p>
 
     <div class="card">
         <div class="upload-zone" id="uploadZone">
             <div class="upload-icon"><i class="fas fa-file-pdf"></i></div>
             <p><span class="highlight">Click or Drag</span></p>
-            <p>PDF file — max 15MB</p>
+            <p>PDF file — max 20MB</p>
         </div>
         <input type="file" id="fileInput" accept=".pdf,application/pdf">
 
@@ -245,7 +248,7 @@
         <div class="step-card" data-step="1">
             <div class="step-icon"><i class="fas fa-cloud-upload-alt"></i></div>
             <h3>Upload PDF</h3>
-            <p>Click on the upload box or drag & drop your PDF file. (Max 15MB)</p>
+            <p>Click on the upload box or drag & drop your PDF file. (Max 20MB)</p>
         </div>
         <div class="step-card" data-step="2">
             <div class="step-icon"><i class="fas fa-keyboard"></i></div>
@@ -261,8 +264,7 @@
 </section>
 
 <script>
-    // 🛑 APNA RENDER URL YAHAN HAI
-    const API_URL = 'https://bharat24tools-api.onrender.com';
+    const { PDFDocument } = PDFLib;
 
     const uploadZone = document.getElementById('uploadZone');
     const fileInput = document.getElementById('fileInput');
@@ -308,13 +310,12 @@
     });
 
     function handleFile(file) {
-        resetUI(); // Auto Cleanup pehle
-
+        resetUI();
         if (!file.name.toLowerCase().endsWith('.pdf')) {
             showStatus('❌ Please select a valid PDF file.', 'error'); return;
         }
-        if (file.size > 15 * 1024 * 1024) {
-            showStatus('❌ File is larger than 15MB.', 'error'); return;
+        if (file.size > 20 * 1024 * 1024) {
+            showStatus('❌ File is larger than 20MB.', 'error'); return;
         }
 
         selectedFile = file;
@@ -325,72 +326,83 @@
         controls.style.display = 'block';
     }
 
-    // 🚀 Delete Logic with Smart Server Wakeup
+    // 🚀 100% Client-Side Delete Logic
     deleteBtn.addEventListener('click', async () => {
         if (!selectedFile) return;
 
-        const pages = pagesInput.value.trim();
-        if (!pages) {
+        const pagesInputValue = pagesInput.value.trim();
+        if (!pagesInputValue) {
             showStatus('❌ Please enter page numbers to delete.', 'error');
             return;
         }
 
         deleteBtn.disabled = true;
-        deleteBtn.innerHTML = '<span class="spinner"></span> Waking up server...';
-        showStatus('<span class="spinner"></span> Checking server connection... (This may take 30s if server is asleep)', 'loading');
+        deleteBtn.innerHTML = '<span class="spinner"></span> Processing...';
+        showStatus('<span class="spinner"></span> Deleting pages (100% on your device)...', 'loading');
 
         try {
-            // 🟢 STEP 1: PING SERVER TO WAKE IT UP
-            let serverAwake = false;
-            for(let i=0; i<3; i++) {
-                try {
-                    const ping = await fetch(API_URL + '/health', { method: 'GET' });
-                    if (ping.ok) { serverAwake = true; break; }
-                } catch (e) {} // Ignore error, wait and retry
-                await new Promise(r => setTimeout(r, 3000));
+            // 1. Read File as ArrayBuffer
+            const arrayBuffer = await selectedFile.arrayBuffer();
+            
+            // 2. Load PDF using pdf-lib
+            const originalDoc = await PDFDocument.load(arrayBuffer);
+            const totalPages = originalDoc.getPageCount();
+
+            // 3. Parse user input for pages
+            const pagesToDelete = new Set();
+            const parts = pagesInputValue.split(',');
+            
+            for (let part of parts) {
+                part = part.trim();
+                if (!part) continue;
+                if (part.includes('-')) {
+                    const [startStr, endStr] = part.split('-');
+                    const start = parseInt(startStr.trim(), 10);
+                    const end = parseInt(endStr.trim(), 10);
+                    if (!isNaN(start) && !isNaN(end)) {
+                        const min = Math.max(1, Math.min(start, end));
+                        const max = Math.min(totalPages, Math.max(start, end));
+                        for (let i = min; i <= max; i++) pagesToDelete.add(i - 1); // 0-indexed
+                    }
+                } else {
+                    const page = parseInt(part, 10);
+                    if (!isNaN(page) && page >= 1 && page <= totalPages) {
+                        pagesToDelete.add(page - 1); // 0-indexed
+                    }
+                }
             }
 
-            if (!serverAwake) throw new Error("Server took too long to wake up. Please try again now (it should be awake).");
-
-            // 🟢 STEP 2: UPLOAD FILE
-            deleteBtn.innerHTML = '<span class="spinner"></span> Deleting pages...';
-            showStatus('<span class="spinner"></span> Processing PDF on server...', 'loading');
-
-            const formData = new FormData();
-            formData.append('file', selectedFile);
-            formData.append('pages', pages);
-
-            // 120 Seconds Timeout
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 120000);
-
-            const res = await fetch(API_URL + '/pdf-page-delete', {
-                method: 'POST',
-                body: formData,
-                signal: controller.signal
-            });
-            clearTimeout(timeoutId);
-
-            if (!res.ok) {
-                const errText = await res.text();
-                throw new Error(errText || 'Server error ' + res.status);
+            if (pagesToDelete.size === 0) {
+                throw new Error("No valid pages found in the range. Check total pages.");
+            }
+            if (pagesToDelete.size >= totalPages) {
+                throw new Error("You cannot delete all pages from the PDF.");
             }
 
-            resultBlob = await res.blob();
+            // 4. Create new PDF document
+            const newDoc = await PDFDocument.create();
+            
+            // 5. Copy pages (except deleted ones)
+            for (let i = 0; i < totalPages; i++) {
+                if (!pagesToDelete.has(i)) {
+                    const [copiedPage] = await newDoc.copyPages(originalDoc, [i]);
+                    newDoc.addPage(copiedPage);
+                }
+            }
+
+            // 6. Save and Create Blob
+            const pdfBytes = await newDoc.save();
+            resultBlob = new Blob([pdfBytes], { type: 'application/pdf' });
 
             showStatus('🎉 Pages deleted successfully! Click below to download.', 'success');
-            
-            // Switch Buttons
             downloadBtn.style.display = 'flex';
             resetBtn.style.display = 'flex';
             deleteBtn.style.display = 'none';
 
         } catch (err) {
             console.error(err);
-            let msg = err.name === 'AbortError' ? 'Timeout: Server took too long to process. Try a smaller file.' : err.message;
-            if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
-                msg = "Network error. Server was sleeping. Please click again now.";
-            }
+            let msg = err.message;
+            if (msg.includes('encrypted')) msg = "This PDF is password protected. Please unlock it first.";
             showStatus('❌ Error: ' + msg, 'error');
             deleteBtn.disabled = false;
             deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete Pages';
