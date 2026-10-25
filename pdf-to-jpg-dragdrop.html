@@ -1,61 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-
-    <title>PDF to JPG Converter - Convert PDF Pages to Images Free | Bharat24Tools</title>
-    <meta name="description" content="Convert PDF pages into high-quality JPG images online. Free PDF to JPG converter with quality control, downloads as ZIP. No signup, no watermark.">
-    <meta name="keywords" content="pdf to jpg, convert pdf to jpg, pdf to image, pdf to png, free pdf to jpg converter, pdf page to image">
-    <meta name="author" content="Alok">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#0d6efd">
-    <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/pdf-to-jpg-dragdrop.html">
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/pdf-to-jpg-dragdrop.html">
-    <meta property="og:title" content="PDF to JPG Converter - Convert PDF Pages to Images Free | Bharat24Tools">
-    <meta property="og:description" content="Convert PDF pages into high-quality JPG images online. Free, downloads as ZIP.">
-    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
-    <meta property="og:site_name" content="Bharat24Tools">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="PDF to JPG Converter - Convert PDF Pages to Images Free | Bharat24Tools">
-    <meta name="twitter:description" content="Convert PDF pages into high-quality JPG images online. Free, downloads as ZIP.">
-    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "PDF to JPG Converter",
-        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/pdf-to-jpg-dragdrop.html",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Web Browser",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
-    }
-    </script>
-
+    <title>PDF to JPG Converter - Advanced | Bharat24Tools</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-        body { min-height:100vh; background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); padding:30px 16px 60px; color:#e0e7ff; }
-
-        header { background:rgba(15,15,30,0.95); padding:16px 24px; display:flex; align-items:center; gap:20px; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; margin:-30px -16px 30px; }
-        header a { color:#cbd5e1; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:6px; transition:all 0.3s; }
-        header a:hover { color:#a855f7; background:rgba(168,85,247,0.1); }
-        .brand { font-weight:800; font-size:1.3rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; flex:1; }
-
-        main { max-width:750px; margin:0 auto; }
+        body { min-height:100vh; background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); padding:30px 16px 60px; color:#e0e7ff; display: flex; justify-content: center; align-items: center; }
+        
+        .main-container { width: 100%; max-width: 750px; position: relative; }
+        
+        .lang-selector { position: absolute; top: -10px; right: 0; background: rgba(168,85,247,0.2); border: 1px solid rgba(168,85,247,0.4); color: #fff; padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; outline: none; cursor: pointer; z-index: 10; }
+        
         h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
         .subtitle { text-align:center; color:#a5b4fc; margin-bottom:30px; font-size:0.95rem; }
 
-        .card { background:rgba(30,27,75,0.9); border-radius:20px; padding:36px; border:1px solid rgba(168,85,247,0.3); box-shadow:0 20px 60px rgba(0,0,0,0.4); }
+        .card { background:rgba(30,27,75,0.7); backdrop-filter: blur(12px); border-radius:20px; padding:36px; border:1px solid rgba(168,85,247,0.3); box-shadow:0 20px 60px rgba(0,0,0,0.4); }
 
         .upload-zone { border:3px dashed rgba(168,85,247,0.6); border-radius:16px; padding:50px 25px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); }
         .upload-zone:hover, .upload-zone.active { border-color:#a855f7; background:rgba(168,85,247,0.15); transform:translateY(-2px); }
@@ -74,10 +36,10 @@
         .file-info .size { color:#a855f7; font-weight:700; white-space:nowrap; }
 
         .controls label { display:block; font-weight:700; font-size:0.85rem; color:#cbd5e1; margin-bottom:8px; margin-top:14px; }
-        .controls select { width:100%; padding:12px; background:rgba(15,15,30,0.8); border:2px solid rgba(168,85,247,0.4); border-radius:10px; color:#e0e7ff; font-family:inherit; font-weight:600; font-size:0.9rem; }
-        .controls select:focus { outline:none; border-color:#a855f7; }
+        .controls select { width:100%; padding:12px; background:rgba(15,15,30,0.8); border:2px solid rgba(168,85,247,0.4); border-radius:10px; color:#e0e7ff; font-family:inherit; font-weight:600; font-size:0.9rem; outline: none; }
+        .controls select:focus { border-color:#a855f7; }
 
-        button.primary-btn { width:100%; padding:16px; background:linear-gradient(135deg,#a855f7,#ec4899); border:none; border-radius:12px; color:#fff; font-weight:700; font-size:1.05rem; cursor:pointer; font-family:inherit; transition:all 0.3s; margin-top:18px; }
+        button.primary-btn { width:100%; padding:16px; background:linear-gradient(135deg,#a855f7,#ec4899); border:none; border-radius:12px; color:#fff; font-weight:700; font-size:1.05rem; cursor:pointer; font-family:inherit; transition:all 0.3s; margin-top:18px; display: flex; justify-content: center; align-items: center; gap: 8px; }
         button.primary-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 30px rgba(168,85,247,0.4); }
         button.primary-btn:disabled { opacity:0.6; cursor:not-allowed; }
 
@@ -89,6 +51,9 @@
         .status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
         .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
 
+        .spinner { display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
         .info-box { background:rgba(99,102,241,0.1); border-left:4px solid #a855f7; padding:16px; border-radius:10px; margin-top:22px; font-size:0.85rem; color:#a5b4fc; line-height:1.7; }
         .info-box strong { color:#e0e7ff; }
 
@@ -97,24 +62,32 @@
 </head>
 <body>
 
-<header>
-    <a href="index.html">← Back</a>
-    <div class="brand">⚡ Bharat24Tools</div>
-</header>
+<div class="main-container">
+    <select class="lang-selector" id="langSelect">
+        <option value="en">🇬🇧 English</option>
+        <option value="hi">🇮🇳 हिंदी</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="fr">🇫🇷 Français</option>
+        <option value="de">🇩🇪 Deutsch</option>
+        <option value="pt">🇵🇹 Português</option>
+        <option value="ru">🇷🇺 Русский</option>
+        <option value="ja">🇯🇵 日本語</option>
+        <option value="zh">🇨🇳 中文</option>
+        <option value="ar">🇸🇦 العربية</option>
+    </select>
 
-<main>
-    <h1>🖼️ PDF to JPG</h1>
-    <p class="subtitle">PDF के सभी pages को high-quality JPG में बदलो — Server-powered</p>
+    <h1 data-i18n="title">🖼️ PDF to JPG</h1>
+    <p class="subtitle" data-i18n="subtitle">Convert all PDF pages to high-quality JPG — Server-powered</p>
 
     <div class="card">
         <div class="upload-zone" id="uploadZone">
             <div class="upload-icon">📤</div>
-            <p><span class="highlight">Click करो या Drag करो</span></p>
-            <p>PDF file (max 15MB)</p>
+            <p><span class="highlight" data-i18n="clickDrag">Click or Drag</span></p>
+            <p data-i18n="maxSize">PDF file (max 15MB)</p>
             <div class="badge-row">
-                <span class="badge">⚡ Fast</span>
-                <span class="badge">🔒 Private</span>
-                <span class="badge">📦 ZIP Output</span>
+                <span class="badge" data-i18n="fast">⚡ Fast</span>
+                <span class="badge" data-i18n="private">🔒 Private</span>
+                <span class="badge" data-i18n="zipOutput">📦 ZIP Output</span>
             </div>
         </div>
         <input type="file" id="fileInput" accept=".pdf,application/pdf">
@@ -125,28 +98,50 @@
                 <span class="size" id="fileSize">-</span>
             </div>
 
-            <label>🎨 Image Quality:</label>
+            <label data-i18n="qualityLabel">🎨 Image Quality:</label>
             <select id="qualitySelect">
-                <option value="150">Medium (150 DPI)</option>
-                <option value="200" selected>High (200 DPI) — Recommended</option>
-                <option value="300">Ultra (300 DPI) — Slow</option>
+                <option value="150" data-i18n="qualityMed">Medium (150 DPI)</option>
+                <option value="200" selected data-i18n="qualityHigh">High (200 DPI) — Recommended</option>
+                <option value="300" data-i18n="qualityUltra">Ultra (300 DPI) — Slow</option>
             </select>
 
-            <button class="primary-btn" id="convertBtn">🖼️ Convert to JPG</button>
+            <button class="primary-btn" id="convertBtn">
+                <span id="btnText" data-i18n="convertBtn">🖼️ Convert to JPG</span>
+            </button>
             <div class="progress-bar" id="progressBar"><div class="fill" id="progressFill"></div></div>
         </div>
 
         <div class="status" id="status"></div>
 
         <div class="info-box">
-            <strong>💡 कैसे काम करता है:</strong> तुम्हारी PDF हमारे सुरक्षित server पर Ghostscript से process होती है। हर page JPG में बदल जाती है और एक ZIP file में download होती है।
+            <strong data-i18n="howItWorks">💡 How it works:</strong> 
+            <span data-i18n="infoText">Your PDF is processed securely on our server using Ghostscript. Each page is converted to JPG and downloaded as a ZIP file.</span>
         </div>
     </div>
-</main>
+</div>
 
 <script>
+// ✅ AAPKA BACKEND URL YAHAN HAI
 const API_URL = 'https://bharat24tools-api.onrender.com';
 
+// 🌍 MULTI-LANGUAGE DICTIONARY
+const i18n = {
+    en: { title: "🖼️ PDF to JPG", subtitle: "Convert all PDF pages to high-quality JPG — Server-powered", clickDrag: "Click or Drag", maxSize: "PDF file (max 15MB)", fast: "⚡ Fast", private: "🔒 Private", zipOutput: "📦 ZIP Output", qualityLabel: "🎨 Image Quality:", qualityMed: "Medium (150 DPI)", qualityHigh: "High (200 DPI) — Recommended", qualityUltra: "Ultra (300 DPI) — Slow", convertBtn: "🖼️ Convert to JPG", howItWorks: "💡 How it works:", infoText: "Your PDF is processed securely on our server using Ghostscript. Each page is converted to JPG and downloaded as a ZIP file.", errPdf: "❌ Please select a PDF file.", errSize: "❌ File is larger than 15MB.", ready: "✅ File ready:", waking: "⏳ Waking up server... (Takes 30-50s on Free Tier)", uploading: "⏳ Uploading PDF...", converting: "⏳ Converting pages to JPG...", success: "🎉 Converted successfully!", errNetwork: "Server is waking up. Please wait 1 minute and try again." },
+    hi: { title: "🖼️ PDF से JPG", subtitle: "सभी PDF पेजों को हाई-क्वालिटी JPG में बदलें", clickDrag: "क्लिक करें या ड्रैग करें", maxSize: "PDF फ़ाइल (अधिकतम 15MB)", fast: "⚡ तेज़", private: "🔒 सुरक्षित", zipOutput: "📦 ZIP आउटपुट", qualityLabel: "🎨 इमेज क्वालिटी:", qualityMed: "मीडियम (150 DPI)", qualityHigh: "हाई (200 DPI) — सुझावित", qualityUltra: "अल्ट्रा (300 DPI)", convertBtn: "🖼️ JPG में बदलें", howItWorks: "💡 यह कैसे काम करता है:", infoText: "आपकी PDF हमारे सर्वर पर Ghostscript से प्रोसेस होती है। हर पेज JPG में बदलकर ZIP में डाउनलोड होता है।", errPdf: "❌ कृपया PDF फ़ाइल चुनें।", errSize: "❌ फ़ाइल 15MB से बड़ी है।", ready: "✅ फ़ाइल तैयार:", waking: "⏳ सर्वर जाग रहा है... (30-50 सेकंड लग सकते हैं)", uploading: "⏳ PDF अपलोड हो रही है...", converting: "⏳ पेज JPG में बदल रहे हैं...", success: "🎉 सफलतापूर्वक बदल गया!", errNetwork: "सर्वर जाग रहा है। कृपया 1 मिनट बाद प्रयास करें।" },
+    es: { title: "🖼️ PDF a JPG", subtitle: "Convierte todas las páginas a JPG de alta calidad", clickDrag: "Haz clic o arrastra", maxSize: "Archivo PDF (máx 15MB)", fast: "⚡ Rápido", private: "🔒 Privado", zipOutput: "📦 Salida ZIP", qualityLabel: "🎨 Calidad:", qualityMed: "Media (150 DPI)", qualityHigh: "Alta (200 DPI) — Recomendado", qualityUltra: "Ultra (300 DPI)", convertBtn: "🖼️ Convertir a JPG", howItWorks: "💡 Cómo funciona:", infoText: "Tu PDF se procesa de forma segura en nuestro servidor. Cada página se convierte a JPG y se descarga como ZIP.", errPdf: "❌ Por favor selecciona un PDF.", errSize: "❌ El archivo supera los 15MB.", ready: "✅ Archivo listo:", waking: "⏳ Despertando servidor...", uploading: "⏳ Subiendo PDF...", converting: "⏳ Convirtiendo páginas...", success: "🎉 ¡Conversión exitosa!", errNetwork: "El servidor está despertando. Espera 1 minuto." },
+    fr: { title: "🖼️ PDF en JPG", subtitle: "Convertissez toutes les pages en JPG haute qualité", clickDrag: "Cliquez ou glissez", maxSize: "Fichier PDF (max 15MB)", fast: "⚡ Rapide", private: "🔒 Privé", zipOutput: "📦 Sortie ZIP", qualityLabel: "🎨 Qualité:", qualityMed: "Moyenne (150 DPI)", qualityHigh: "Haute (200 DPI) — Recommandé", qualityUltra: "Ultra (300 DPI)", convertBtn: "🖼️ Convertir en JPG", howItWorks: "💡 Comment ça marche :", infoText: "Votre PDF est traité en toute sécurité sur notre serveur. Chaque page est convertie en JPG et téléchargée en ZIP.", errPdf: "❌ Veuillez sélectionner un PDF.", errSize: "❌ Fichier supérieur à 15MB.", ready: "✅ Fichier prêt :", waking: "⏳ Réveil du serveur...", uploading: "⏳ Téléchargement du PDF...", converting: "⏳ Conversion des pages...", success: "🎉 Conversion réussie !", errNetwork: "Le serveur se réveille. Veuillez patienter 1 minute." },
+    de: { title: "🖼️ PDF zu JPG", subtitle: "Konvertieren Sie alle Seiten in hochwertiges JPG", clickDrag: "Klicken oder ziehen", maxSize: "PDF-Datei (max. 15MB)", fast: "⚡ Schnell", private: "🔒 Privat", zipOutput: "📦 ZIP-Ausgabe", qualityLabel: "🎨 Bildqualität:", qualityMed: "Mittel (150 DPI)", qualityHigh: "Hoch (200 DPI) — Empfohlen", qualityUltra: "Ultra (300 DPI)", convertBtn: "🖼️ In JPG konvertieren", howItWorks: "💡 So funktioniert es:", infoText: "Ihr PDF wird sicher auf unserem Server verarbeitet. Jede Seite wird in JPG konvertiert und als ZIP heruntergeladen.", errPdf: "❌ Bitte wählen Sie ein PDF.", errSize: "❌ Datei größer als 15MB.", ready: "✅ Datei bereit:", waking: "⏳ Server wacht auf...", uploading: "⏳ PDF wird hochgeladen...", converting: "⏳ Seiten werden konvertiert...", success: "🎉 Erfolgreich konvertiert!", errNetwork: "Server wacht auf. Bitte warten Sie 1 Minute." },
+    pt: { title: "🖼️ PDF para JPG", subtitle: "Converta todas as páginas para JPG de alta qualidade", clickDrag: "Clique ou arraste", maxSize: "Arquivo PDF (máx 15MB)", fast: "⚡ Rápido", private: "🔒 Privado", zipOutput: "📦 Saída ZIP", qualityLabel: "🎨 Qualidade:", qualityMed: "Média (150 DPI)", qualityHigh: "Alta (200 DPI) — Recomendado", qualityUltra: "Ultra (300 DPI)", convertBtn: "🖼️ Converter para JPG", howItWorks: "💡 Como funciona:", infoText: "Seu PDF é processado com segurança em nosso servidor. Cada página é convertida em JPG e baixada como ZIP.", errPdf: "❌ Selecione um PDF.", errSize: "❌ Arquivo maior que 15MB.", ready: "✅ Arquivo pronto:", waking: "⏳ Acordando servidor...", uploading: "⏳ Enviando PDF...", converting: "⏳ Convertendo páginas...", success: "🎉 Conversão concluída!", errNetwork: "O servidor está acordando. Aguarde 1 minuto." },
+    ru: { title: "🖼️ PDF в JPG", subtitle: "Конвертируйте все страницы PDF в качественные JPG", clickDrag: "Нажмите или перетащите", maxSize: "PDF файл (макс. 15MB)", fast: "⚡ Быстро", private: "🔒 Приватно", zipOutput: "📦 ZIP архив", qualityLabel: "🎨 Качество:", qualityMed: "Среднее (150 DPI)", qualityHigh: "Высокое (200 DPI) — Рекомендуется", qualityUltra: "Ультра (300 DPI)", convertBtn: "🖼️ Конвертировать в JPG", howItWorks: "💡 Как это работает:", infoText: "Ваш PDF безопасно обрабатывается на нашем сервере. Каждая страница конвертируется в JPG и скачивается как ZIP.", errPdf: "❌ Пожалуйста, выберите PDF.", errSize: "❌ Файл больше 15MB.", ready: "✅ Файл готов:", waking: "⏳ Сервер просыпается...", uploading: "⏳ Загрузка PDF...", converting: "⏳ Конвертация страниц...", success: "🎉 Успешно конвертировано!", errNetwork: "Сервер просыпается. Подождите 1 минуту." },
+    ja: { title: "🖼️ PDFからJPG", subtitle: "すべてのPDFページを高品質のJPGに変換", clickDrag: "クリックまたはドラッグ", maxSize: "PDFファイル（最大15MB）", fast: "⚡ 高速", private: "🔒 プライベート", zipOutput: "📦 ZIP出力", qualityLabel: "🎨 画質:", qualityMed: "中 (150 DPI)", qualityHigh: "高 (200 DPI) — 推奨", qualityUltra: "超高 (300 DPI)", convertBtn: "🖼️ JPGに変換", howItWorks: "💡 仕組み:", infoText: "PDFはサーバーで安全に処理されます。各ページはJPGに変換され、ZIPとしてダウンロードされます。", errPdf: "❌ PDFを選択してください。", errSize: "❌ ファイルが15MBを超えています。", ready: "✅ 準備完了:", waking: "⏳ サーバー起動中...", uploading: "⏳ PDFをアップロード中...", converting: "⏳ ページを変換中...", success: "🎉 変換完了！", errNetwork: "サーバー起動中です。1分後にお試しください。" },
+    zh: { title: "🖼️ PDF转JPG", subtitle: "将所有PDF页面转换为高质量JPG", clickDrag: "点击或拖拽", maxSize: "PDF文件（最大15MB）", fast: "⚡ 快速", private: "🔒 私密", zipOutput: "📦 ZIP输出", qualityLabel: "🎨 图像质量:", qualityMed: "中 (150 DPI)", qualityHigh: "高 (200 DPI) — 推荐", qualityUltra: "超高 (300 DPI)", convertBtn: "🖼️ 转换为JPG", howItWorks: "💡 工作原理:", infoText: "您的PDF在我们的服务器上安全处理。每页转换为JPG并打包为ZIP下载。", errPdf: "❌ 请选择一个PDF文件。", errSize: "❌ 文件大于15MB。", ready: "✅ 文件已就绪:", waking: "⏳ 唤醒服务器...", uploading: "⏳ 上传PDF中...", converting: "⏳ 转换页面中...", success: "🎉 转换成功！", errNetwork: "服务器正在唤醒。请等待1分钟。" },
+    ar: { title: "🖼️ تحويل PDF إلى JPG", subtitle: "تحويل جميع صفحات PDF إلى صور JPG عالية الجودة", clickDrag: "انقر أو اسحب", maxSize: "ملف PDF (بحد أقصى 15 ميجابايت)", fast: "⚡ سريع", private: "🔒 خاص", zipOutput: "📦 إخراج ZIP", qualityLabel: "🎨 جودة الصورة:", qualityMed: "متوسطة (150 DPI)", qualityHigh: "عالية (200 DPI) — موصى به", qualityUltra: "فائقة (300 DPI)", convertBtn: "🖼️ تحويل إلى JPG", howItWorks: "💡 كيف يعمل:", infoText: "تتم معالجة ملف PDF الخاص بك بأمان على خادمنا. يتم تحويل كل صفحة إلى JPG وتنزيلها كملف ZIP.", errPdf: "❌ يرجى تحديد ملف PDF.", errSize: "❌ الملف أكبر من 15 ميجابايت.", ready: "✅ الملف جاهز:", waking: "⏳ جاري إيقاظ الخادم...", uploading: "⏳ جاري تحميل PDF...", converting: "⏳ جاري تحويل الصفحات...", success: "🎉 تم التحويل بنجاح!", errNetwork: "الخادم يستيقظ. يرجى الانتظار دقيقة واحدة." }
+};
+
+let currentLang = 'en';
+let selectedFile = null;
+
+// DOM Elements
 const uploadZone = document.getElementById('uploadZone');
 const fileInput = document.getElementById('fileInput');
 const controls = document.getElementById('controls');
@@ -157,15 +152,34 @@ const qualitySelect = document.getElementById('qualitySelect');
 const progressBar = document.getElementById('progressBar');
 const progressFill = document.getElementById('progressFill');
 const status = document.getElementById('status');
+const langSelect = document.getElementById('langSelect');
 
-let selectedFile = null;
+// 🌍 Language Engine
+function changeLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    if (lang === 'ar') { document.documentElement.dir = 'rtl'; } else { document.documentElement.dir = 'ltr'; }
+    
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[lang] && i18n[lang][key]) { el.innerHTML = i18n[lang][key]; }
+    });
+    localStorage.setItem('b24_lang', lang);
+}
 
+langSelect.addEventListener('change', (e) => changeLanguage(e.target.value));
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('b24_lang') || 'en';
+    langSelect.value = saved;
+    changeLanguage(saved);
+});
+
+// 📂 File Handling
 uploadZone.addEventListener('click', () => fileInput.click());
 uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
 uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
 uploadZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    uploadZone.classList.remove('active');
+    e.preventDefault(); uploadZone.classList.remove('active');
     if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
 });
 fileInput.addEventListener('change', (e) => {
@@ -174,45 +188,64 @@ fileInput.addEventListener('change', (e) => {
 
 function handleFile(file) {
     if (!file.name.toLowerCase().endsWith('.pdf')) {
-        showStatus('❌ कृपया PDF file चुनें', 'error');
-        return;
+        showStatus(i18n[currentLang].errPdf, 'error'); return;
     }
     if (file.size > 15 * 1024 * 1024) {
-        showStatus('❌ File 15MB से बड़ी है। कृपया छोटी PDF चुनें।', 'error');
-        return;
+        showStatus(i18n[currentLang].errSize, 'error'); return;
     }
     selectedFile = file;
     fileNameEl.textContent = file.name.length > 30 ? file.name.substring(0, 30) + '...' : file.name;
     fileSizeEl.textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
     controls.style.display = 'block';
-    showStatus(`✅ File ready: ${(file.size / 1024 / 1024).toFixed(2)} MB`, 'success');
+    showStatus(`${i18n[currentLang].ready} ${(file.size / 1024 / 1024).toFixed(2)} MB`, 'success');
 }
 
+// 🚀 Convert Logic (With Server Wakeup Ping)
 convertBtn.addEventListener('click', async () => {
     if (!selectedFile) return;
 
     convertBtn.disabled = true;
     progressBar.style.display = 'block';
-    progressFill.style.width = '20%';
-    showStatus('⏳ Uploading to server... (if server was sleeping, wait 30s)', 'loading');
-
-    setTimeout(() => {
-        if (convertBtn.disabled) {
-            progressFill.style.width = '60%';
-            showStatus('⏳ Converting PDF pages on server...', 'loading');
-        }
-    }, 5000);
+    progressFill.style.width = '10%';
+    showStatus(`<span class="spinner"></span> ${i18n[currentLang].waking}`, 'loading');
 
     try {
+        // 🟢 STEP 1: WAKE UP SERVER
+        let serverAwake = false;
+        for(let i=0; i<3; i++) {
+            try {
+                const ping = await fetch(API_URL + '/health', { method: 'GET' });
+                if (ping.ok) { serverAwake = true; break; }
+            } catch (e) {
+                // Ignore error, wait and retry
+            }
+            await new Promise(r => setTimeout(r, 3000)); // wait 3s before retry
+        }
+
+        if (!serverAwake) {
+            throw new Error(i18n[currentLang].errNetwork);
+        }
+
+        // 🟢 STEP 2: UPLOAD FILE
+        progressFill.style.width = '40%';
+        showStatus(`<span class="spinner"></span> ${i18n[currentLang].uploading}`, 'loading');
+
         const formData = new FormData();
         formData.append('file', selectedFile);
 
+        // Ab request bhejo (Timeout 2 minute)
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 120000);
+
         const res = await fetch(API_URL + '/pdf-to-jpg', {
             method: 'POST',
-            body: formData
+            body: formData,
+            signal: controller.signal
         });
+        clearTimeout(timeoutId);
 
-        progressFill.style.width = '90%';
+        progressFill.style.width = '80%';
+        showStatus(`<span class="spinner"></span> ${i18n[currentLang].converting}`, 'loading');
 
         if (!res.ok) {
             const errText = await res.text();
@@ -222,36 +255,32 @@ convertBtn.addEventListener('click', async () => {
         const blob = await res.blob();
         progressFill.style.width = '100%';
 
+        // File download trigger
         const contentType = res.headers.get('Content-Type') || '';
         let downloadName = 'pages.zip';
-        if (contentType.includes('image/jpeg')) {
-            downloadName = 'page.jpg';
-        } else if (contentType.includes('zip')) {
-            downloadName = selectedFile.name.replace(/\.pdf$/i, '') + '-pages.zip';
-        }
+        if (contentType.includes('image/jpeg')) downloadName = 'page.jpg';
+        else if (contentType.includes('zip')) downloadName = selectedFile.name.replace(/\.pdf$/i, '') + '-pages.zip';
 
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
-        link.href = url;
-        link.download = downloadName;
+        link.href = url; link.download = downloadName;
         link.click();
         setTimeout(() => URL.revokeObjectURL(url), 5000);
 
-        showStatus(`🎉 Converted successfully! Downloaded as ${downloadName}`, 'success');
+        showStatus(`🎉 ${i18n[currentLang].success} (${downloadName})`, 'success');
+
     } catch (err) {
         console.error(err);
-        showStatus('❌ Error: ' + err.message, 'error');
+        const msg = err.name === 'AbortError' ? 'Timeout: Server took too long.' : err.message;
+        showStatus('❌ Error: ' + msg, 'error');
+    } finally {
+        convertBtn.disabled = false;
+        setTimeout(() => { progressBar.style.display = 'none'; progressFill.style.width = '0%'; }, 4000);
     }
-
-    convertBtn.disabled = false;
-    setTimeout(() => {
-        progressBar.style.display = 'none';
-        progressFill.style.width = '0%';
-    }, 4000);
 });
 
 function showStatus(msg, type) {
-    status.textContent = msg;
+    status.innerHTML = msg;
     status.className = 'status ' + type;
 }
 </script>
