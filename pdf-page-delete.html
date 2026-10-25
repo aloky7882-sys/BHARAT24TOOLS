@@ -5,25 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
+    <!-- 🚀 SEO Meta Tags -->
     <title>PDF Page Delete - Remove Pages from PDF Free | Bharat24Tools</title>
-    <meta name="description" content="Delete pages from PDF online. Free PDF page remover, choose which pages to remove. Works worldwide, no signup, no watermark.">
-    <meta name="keywords" content="pdf page delete, remove pdf pages, delete pages from pdf, pdf page remover, free pdf editor, pdf page delete online">
+    <meta name="description" content="Delete pages from PDF online for free. Remove unwanted pages from any PDF document instantly. No signup, no watermark, 100% secure.">
+    <meta name="keywords" content="pdf page delete, remove pdf pages, delete pages from pdf, pdf page remover, free pdf editor">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#0d6efd">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/pdf-page-delete.html">
 
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/pdf-page-delete.html">
     <meta property="og:title" content="PDF Page Delete - Remove Pages from PDF Free | Bharat24Tools">
-    <meta property="og:description" content="Delete pages from PDF online. Free, choose which pages to remove.">
+    <meta property="og:description" content="Delete specific pages from your PDF instantly. Free and secure.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
-    <meta property="og:site_name" content="Bharat24Tools">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="PDF Page Delete - Remove Pages from PDF Free | Bharat24Tools">
-    <meta name="twitter:description" content="Delete pages from PDF online. Free, choose which pages to remove.">
-    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
 
     <script type="application/ld+json">
     {
@@ -49,6 +45,8 @@
             background-attachment: fixed;
             color: #e0e7ff;
         }
+
+        /* 🟢 HEADER */
         header {
             background: rgba(15, 15, 30, 0.95);
             backdrop-filter: blur(10px);
@@ -69,22 +67,22 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             flex: 1;
         }
-        .lang-select {
-            background: rgba(15, 15, 30, 0.9);
-            border: 2px solid rgba(168, 85, 247, 0.4);
-            color: #e0e7ff; padding: 8px 12px; border-radius: 8px;
-            font-family: inherit; font-weight: 600; font-size: 0.85rem; cursor: pointer;
-        }
-        main { max-width: 1000px; margin: 0 auto; padding: 40px 20px 60px; }
+
+        /* 🟢 MAIN CONTENT */
+        main { max-width: 900px; margin: 0 auto; padding: 40px 20px 60px; }
         h1 { font-size: 2rem; text-align: center; margin-bottom: 8px; font-weight: 800; }
         .subtitle { text-align: center; color: #a5b4fc; margin-bottom: 40px; }
+        
         .card {
-            background: rgba(30, 27, 75, 0.9);
+            background: rgba(30, 27, 75, 0.85);
             backdrop-filter: blur(10px);
             border-radius: 16px; padding: 40px;
             border: 1px solid rgba(168, 85, 247, 0.3);
             margin-bottom: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
+
+        /* Upload Zone */
         .upload-zone {
             border: 3px dashed rgba(168, 85, 247, 0.6);
             border-radius: 16px; padding: 60px 30px; text-align: center;
@@ -94,12 +92,14 @@
         .upload-zone:hover, .upload-zone.active {
             border-color: #a855f7;
             background: rgba(168, 85, 247, 0.15);
+            transform: scale(1.01);
         }
         .upload-icon { font-size: 3rem; color: #a855f7; margin-bottom: 16px; }
         .upload-zone p { color: #cbd5e1; margin: 8px 0; }
         .highlight { color: #e0e7ff; font-weight: 700; }
         input[type="file"] { display: none; }
 
+        /* File Info */
         .file-info {
             display: none;
             margin-top: 20px;
@@ -110,35 +110,25 @@
             color: #cbd5e1;
             justify-content: space-between;
             gap: 10px;
+            border-left: 4px solid #a855f7;
         }
         .file-info .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .file-info .size { color: #a855f7; font-weight: 700; white-space: nowrap; }
 
+        /* Controls */
         .controls { display: none; margin-top: 24px; padding: 24px; background: rgba(20, 20, 40, 0.8); border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.2); }
-
         .control-group { margin-bottom: 18px; }
         .control-group label { display: block; font-weight: 700; font-size: 0.9rem; color: #cbd5e1; margin-bottom: 10px; }
         .control-group input[type="text"] {
-            width: 100%;
-            padding: 14px;
-            background: rgba(15, 15, 30, 0.8);
-            border: 2px solid rgba(168, 85, 247, 0.4);
-            border-radius: 10px;
-            color: #e0e7ff;
-            font-family: inherit;
-            font-weight: 600;
-            font-size: 0.95rem;
+            width: 100%; padding: 14px; background: rgba(15, 15, 30, 0.8);
+            border: 2px solid rgba(168, 85, 247, 0.4); border-radius: 10px;
+            color: #e0e7ff; font-family: inherit; font-weight: 600; font-size: 0.95rem;
         }
-        .control-group input[type="text"]:focus {
-            outline: none;
-            border-color: #a855f7;
-            box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.15);
-        }
+        .control-group input[type="text"]:focus { outline: none; border-color: #a855f7; box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.15); }
         .hint { font-size: 0.78rem; color: #a5b4fc; margin-top: 8px; line-height: 1.5; }
 
-        .button-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
-        @media (max-width: 600px) { .button-group { grid-template-columns: 1fr; } }
-
+        /* Buttons */
+        .button-group { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 16px; }
         button.action-btn {
             width: 100%; padding: 16px; border: none; border-radius: 12px;
             color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer;
@@ -149,15 +139,50 @@
         button.action-btn:disabled { opacity: 0.6; cursor: not-allowed; }
         #deleteBtn { background: linear-gradient(135deg, #a855f7, #ec4899); }
         #downloadBtn { background: linear-gradient(135deg, #198754, #22c55e); display: none; }
-        #resetBtn { background: rgba(220, 53, 69, 0.8); display: none; }
+        #resetBtn { background: rgba(220, 53, 69, 0.8); display: none; margin-top: 12px; }
 
-        .status { display: none; margin-top: 20px; padding: 16px; border-radius: 10px; text-align: center; font-weight: 600; }
+        /* Status */
+        .status { display: none; margin-top: 20px; padding: 16px; border-radius: 10px; text-align: center; font-weight: 600; font-size: 0.95rem; line-height: 1.5; }
         .status.loading { background: rgba(99, 102, 241, 0.2); color: #a5b4fc; display: block; }
         .status.success { background: rgba(34, 197, 94, 0.2); color: #86efac; display: block; }
         .status.error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; display: block; }
+        .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 5px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .info-box { background: rgba(99, 102, 241, 0.1); border-left: 4px solid #a855f7; padding: 16px; border-radius: 8px; margin-top: 20px; font-size: 0.85rem; color: #a5b4fc; line-height: 1.7; }
-        .info-box strong { color: #e0e7ff; }
+        /* 🟢 HOW TO USE (Screenshot Style) */
+        .how-to-use { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        .how-to-use h2 { text-align: center; font-size: 1.6rem; margin-bottom: 30px; color: #fff; }
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .step-card {
+            background: rgba(30, 27, 75, 0.6);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .step-card::before {
+            content: attr(data-step);
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 6rem;
+            font-weight: 800;
+            color: rgba(168, 85, 247, 0.05);
+            z-index: 0;
+        }
+        .step-icon {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(99,102,241,0.2));
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; color: #a855f7;
+            margin: 0 auto 16px;
+            position: relative; z-index: 1;
+        }
+        .step-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: #e0e7ff; position: relative; z-index: 1; }
+        .step-card p { font-size: 0.85rem; color: #a5b4fc; line-height: 1.6; position: relative; z-index: 1; }
 
         @media (max-width: 768px) { .card { padding: 24px; } h1 { font-size: 1.5rem; } .upload-zone { padding: 40px 20px; } }
     </style>
@@ -165,31 +190,19 @@
 <body>
 
 <header>
-    <a href="index.html"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Back</span></a>
+    <a href="index.html"><i class="fas fa-arrow-left"></i> Back</a>
     <div class="brand"><i class="fas fa-microchip"></i> Bharat24Tools</div>
-    <select class="lang-select" id="languageSelect" onchange="setLanguage(this.value)">
-        <option value="en">🇬🇧 English</option>
-        <option value="hi">🇮🇳 हिंदी</option>
-        <option value="es">🇪🇸 Español</option>
-        <option value="pt">🇧🇷 Português</option>
-        <option value="fr">🇫🇷 Français</option>
-        <option value="de">🇩🇪 Deutsch</option>
-        <option value="ar">🇸🇦 العربية</option>
-        <option value="ru">🇷🇺 Русский</option>
-        <option value="id">🇮🇩 Indonesia</option>
-        <option value="zh-CN">🇨🇳 中文</option>
-    </select>
 </header>
 
 <main>
-    <h1 data-i18n="title">🗑️ PDF Page Delete</h1>
-    <p class="subtitle" data-i18n="subtitle">PDF से specific pages delete karo — easy page numbers</p>
+    <h1>🗑️ PDF Page Delete</h1>
+    <p class="subtitle">Delete specific pages from your PDF instantly</p>
 
     <div class="card">
         <div class="upload-zone" id="uploadZone">
             <div class="upload-icon"><i class="fas fa-file-pdf"></i></div>
-            <p><span class="highlight" data-i18n="clickOrDrag">Click करो या Drag करो</span></p>
-            <p data-i18n="formatInfo">PDF file — max 15MB</p>
+            <p><span class="highlight">Click or Drag</span></p>
+            <p>PDF file — max 15MB</p>
         </div>
         <input type="file" id="fileInput" accept=".pdf,application/pdf">
 
@@ -200,9 +213,9 @@
 
         <div class="controls" id="controls">
             <div class="control-group">
-                <label><i class="fas fa-trash"></i> <span data-i18n="pagesLabel">Pages to Delete:</span></label>
+                <label><i class="fas fa-trash"></i> Pages to Delete:</label>
                 <input type="text" id="pagesInput" placeholder="Example: 2, 5, 7-9">
-                <p class="hint" data-i18n="hint">
+                <p class="hint">
                     💡 Enter page numbers separated by commas (e.g., 2, 5, 7-9)<br>
                     Or use ranges (7-9 means pages 7, 8, 9)
                 </p>
@@ -210,63 +223,47 @@
 
             <div class="button-group">
                 <button class="action-btn" id="deleteBtn">
-                    <i class="fas fa-trash"></i> <span data-i18n="deleteBtn">Delete Pages</span>
+                    <i class="fas fa-trash"></i> Delete Pages
                 </button>
                 <button class="action-btn" id="downloadBtn">
-                    <i class="fas fa-download"></i> <span data-i18n="downloadBtn">Download PDF</span>
+                    <i class="fas fa-download"></i> Download New PDF
                 </button>
             </div>
-            <button class="action-btn" id="resetBtn" style="margin-top:12px;">
-                <i class="fas fa-redo"></i> <span data-i18n="resetBtn">Try Another PDF</span>
+            <button class="action-btn" id="resetBtn">
+                <i class="fas fa-redo"></i> Try Another PDF
             </button>
         </div>
 
         <div class="status" id="status"></div>
-
-        <div class="info-box">
-            <strong>💡 <span data-i18n="infoTitle">How it works:</span></strong>
-            <span data-i18n="infoText">Tumhari PDF se specific pages hataata hai aur new PDF banata hai. Baaki pages order same rahenge.</span>
-        </div>
     </div>
 </main>
 
+<!-- 🟢 HOW TO USE SECTION -->
+<section class="how-to-use">
+    <h2>How to Use PDF Page Delete</h2>
+    <div class="steps-grid">
+        <div class="step-card" data-step="1">
+            <div class="step-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+            <h3>Upload PDF</h3>
+            <p>Click on the upload box or drag & drop your PDF file. (Max 15MB)</p>
+        </div>
+        <div class="step-card" data-step="2">
+            <div class="step-icon"><i class="fas fa-keyboard"></i></div>
+            <h3>Enter Pages</h3>
+            <p>Type the page numbers you want to remove. E.g., <b>1, 3, 5-7</b></p>
+        </div>
+        <div class="step-card" data-step="3">
+            <div class="step-icon"><i class="fas fa-download"></i></div>
+            <h3>Delete & Download</h3>
+            <p>Click 'Delete Pages' and download your new PDF instantly.</p>
+        </div>
+    </div>
+</section>
+
 <script>
+    // 🛑 APNA RENDER URL YAHAN HAI
     const API_URL = 'https://bharat24tools-api.onrender.com';
 
-    const translations = {
-        en: { back: "Back", title: "🗑️ PDF Page Delete", subtitle: "Delete specific pages from PDF", clickOrDrag: "Click or Drag", formatInfo: "PDF file — max 15MB", pagesLabel: "Pages to Delete:", hint: "💡 Enter page numbers separated by commas (e.g., 2, 5, 7-9)<br>Or use ranges (7-9 means pages 7, 8, 9)", deleteBtn: "Delete Pages", downloadBtn: "Download PDF", resetBtn: "Try Another PDF", infoTitle: "How it works:", infoText: "Removes specific pages and creates new PDF. Remaining pages keep same order.", loading: "Deleting pages...", success: "Pages deleted successfully!", error: "Error: ", selectFile: "Please select a PDF", tooBig: "File too large (max 15MB)", noPages: "Please enter pages to delete", invalidPages: "Invalid page numbers format" },
-        hi: { back: "वापस", title: "🗑️ PDF Page Delete", subtitle: "PDF से specific pages हटाओ", clickOrDrag: "Click करो या Drag करो", formatInfo: "PDF file — max 15MB", pagesLabel: "कौनसे pages delete करने हैं:", hint: "💡 Page numbers comma से separate करो (e.g., 2, 5, 7-9)<br>Range use kar sakte ho (7-9 = pages 7, 8, 9)", deleteBtn: "Pages Delete करो", downloadBtn: "PDF Download", resetBtn: "दूसरी PDF try करो", infoTitle: "कैसे:", infoText: "Specific pages हटाता है और नई PDF बनाता है।", loading: "Pages delete हो रहे हैं...", success: "Pages delete हो गए!", error: "एरर: ", selectFile: "कृपया PDF चुनें", tooBig: "File 15MB से बड़ी", noPages: "कृपया pages numbers डालें", invalidPages: "Invalid page format" },
-        es: { back: "Atrás", title: "🗑️ Eliminar Páginas PDF", subtitle: "Elimina páginas específicas", clickOrDrag: "Clic o arrastra", formatInfo: "PDF — máx 15MB", pagesLabel: "Páginas a eliminar:", hint: "💡 Ej: 2, 5, 7-9", deleteBtn: "Eliminar Páginas", downloadBtn: "Descargar PDF", resetBtn: "Otro PDF", infoTitle: "Cómo:", infoText: "Elimina páginas específicas.", loading: "Eliminando...", success: "¡Eliminado!", error: "Error: ", selectFile: "Selecciona PDF", tooBig: "Archivo grande", noPages: "Ingresa páginas", invalidPages: "Formato inválido" },
-        pt: { back: "Voltar", title: "🗑️ Excluir Páginas PDF", subtitle: "Exclua páginas específicas", clickOrDrag: "Clique ou arraste", formatInfo: "PDF — máx 15MB", pagesLabel: "Páginas para excluir:", hint: "💡 Ex: 2, 5, 7-9", deleteBtn: "Excluir", downloadBtn: "Baixar PDF", resetBtn: "Outro PDF", infoTitle: "Como:", infoText: "Exclui páginas específicas.", loading: "Excluindo...", success: "Excluído!", error: "Erro: ", selectFile: "Selecione PDF", tooBig: "Arquivo grande", noPages: "Digite páginas", invalidPages: "Formato inválido" },
-        fr: { back: "Retour", title: "🗑️ Supprimer Pages PDF", subtitle: "Supprimez des pages spécifiques", clickOrDrag: "Cliquez ou glissez", formatInfo: "PDF — max 15MB", pagesLabel: "Pages à supprimer:", hint: "💡 Ex: 2, 5, 7-9", deleteBtn: "Supprimer", downloadBtn: "Télécharger PDF", resetBtn: "Autre PDF", infoTitle: "Comment:", infoText: "Supprime des pages spécifiques.", loading: "Suppression...", success: "Supprimé!", error: "Erreur: ", selectFile: "Sélectionnez PDF", tooBig: "Fichier trop grand", noPages: "Entrez les pages", invalidPages: "Format invalide" },
-        de: { back: "Zurück", title: "🗑️ PDF Seiten Löschen", subtitle: "Lösche bestimmte Seiten", clickOrDrag: "Klick oder ziehe", formatInfo: "PDF — max 15MB", pagesLabel: "Zu löschende Seiten:", hint: "💡 Bsp: 2, 5, 7-9", deleteBtn: "Seiten löschen", downloadBtn: "PDF herunterladen", resetBtn: "Andere PDF", infoTitle: "Wie:", infoText: "Löscht bestimmte Seiten.", loading: "Löschen...", success: "Gelöscht!", error: "Fehler: ", selectFile: "PDF wählen", tooBig: "Datei zu groß", noPages: "Seiten eingeben", invalidPages: "Ungültiges Format" },
-        ar: { back: "رجوع", title: "🗑️ حذف صفحات PDF", subtitle: "احذف صفحات محددة", clickOrDrag: "انقر أو اسحب", formatInfo: "PDF — 15MB", pagesLabel: "الصفحات للحذف:", hint: "💡 مثال: 2, 5, 7-9", deleteBtn: "حذف الصفحات", downloadBtn: "تحميل PDF", resetBtn: "ملف آخر", infoTitle: "كيف:", infoText: "يحذف صفحات محددة.", loading: "جاري الحذف...", success: "تم!", error: "خطأ: ", selectFile: "اختر PDF", tooBig: "الملف كبير", noPages: "أدخل الصفحات", invalidPages: "صيغة غير صالحة" },
-        ru: { back: "Назад", title: "🗑️ Удалить Страницы PDF", subtitle: "Удалите определённые страницы", clickOrDrag: "Нажмите или перетащите", formatInfo: "PDF — макс 15MB", pagesLabel: "Удалить страницы:", hint: "💡 Пример: 2, 5, 7-9", deleteBtn: "Удалить", downloadBtn: "Скачать PDF", resetBtn: "Другой PDF", infoTitle: "Как:", infoText: "Удаляет определённые страницы.", loading: "Удаление...", success: "Удалено!", error: "Ошибка: ", selectFile: "Выберите PDF", tooBig: "Файл слишком большой", noPages: "Введите страницы", invalidPages: "Неверный формат" },
-        id: { back: "Kembali", title: "🗑️ Hapus Halaman PDF", subtitle: "Hapus halaman tertentu", clickOrDrag: "Klik atau seret", formatInfo: "PDF — maks 15MB", pagesLabel: "Halaman untuk dihapus:", hint: "💡 Contoh: 2, 5, 7-9", deleteBtn: "Hapus Halaman", downloadBtn: "Unduh PDF", resetBtn: "PDF Lain", infoTitle: "Cara:", infoText: "Hapus halaman tertentu.", loading: "Menghapus...", success: "Berhasil!", error: "Kesalahan: ", selectFile: "Pilih PDF", tooBig: "File besar", noPages: "Masukkan halaman", invalidPages: "Format tidak valid" },
-        "zh-CN": { back: "返回", title: "🗑️ 删除 PDF 页面", subtitle: "删除指定页面", clickOrDrag: "点击或拖拽", formatInfo: "PDF — 最大 15MB", pagesLabel: "要删除的页面:", hint: "💡 示例：2, 5, 7-9", deleteBtn: "删除页面", downloadBtn: "下载 PDF", resetBtn: "换一份", infoTitle: "原理:", infoText: "删除指定页面并生成新 PDF。", loading: "删除中...", success: "成功!", error: "错误: ", selectFile: "请选择 PDF", tooBig: "文件太大", noPages: "请输入页码", invalidPages: "格式无效" }
-    };
-
-    let currentLang = localStorage.getItem('lang') || 'en';
-
-    function setLanguage(lang) {
-        currentLang = lang;
-        localStorage.setItem('lang', lang);
-        applyTranslations();
-    }
-    function applyTranslations() {
-        const t = translations[currentLang] || translations.en;
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (t[key]) el.innerHTML = t[key];
-        });
-        document.getElementById('languageSelect').value = currentLang;
-    }
-    function t(key) {
-        const tr = translations[currentLang] || translations.en;
-        return tr[key] || key;
-    }
-
-    // App Logic
     const uploadZone = document.getElementById('uploadZone');
     const fileInput = document.getElementById('fileInput');
     const fileInfo = document.getElementById('fileInfo');
@@ -282,12 +279,28 @@
     let selectedFile = null;
     let resultBlob = null;
 
+    // 🟢 AUTO CLEANUP LOGIC
+    function resetUI() {
+        selectedFile = null;
+        resultBlob = null;
+        fileInput.value = '';
+        pagesInput.value = '';
+        fileInfo.style.display = 'none';
+        controls.style.display = 'none';
+        status.style.display = 'none';
+        downloadBtn.style.display = 'none';
+        resetBtn.style.display = 'none';
+        deleteBtn.style.display = 'flex';
+        deleteBtn.disabled = false;
+        deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete Pages';
+    }
+
+    // File Handling
     uploadZone.addEventListener('click', () => fileInput.click());
     uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
     uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
     uploadZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        uploadZone.classList.remove('active');
+        e.preventDefault(); uploadZone.classList.remove('active');
         if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
     });
     fileInput.addEventListener('change', (e) => {
@@ -295,68 +308,96 @@
     });
 
     function handleFile(file) {
+        resetUI(); // Auto Cleanup pehle
+
         if (!file.name.toLowerCase().endsWith('.pdf')) {
-            showStatus('❌ ' + t('selectFile'), 'error');
-            return;
+            showStatus('❌ Please select a valid PDF file.', 'error'); return;
         }
         if (file.size > 15 * 1024 * 1024) {
-            showStatus('❌ ' + t('tooBig'), 'error');
-            return;
+            showStatus('❌ File is larger than 15MB.', 'error'); return;
         }
+
         selectedFile = file;
         fileName.textContent = file.name.length > 30 ? file.name.substring(0, 30) + '...' : file.name;
         fileSize.textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+        
         fileInfo.style.display = 'flex';
         controls.style.display = 'block';
-        deleteBtn.style.display = 'flex';
-        downloadBtn.style.display = 'none';
-        resetBtn.style.display = 'none';
-        status.style.display = 'none';
     }
 
+    // 🚀 Delete Logic with Smart Server Wakeup
     deleteBtn.addEventListener('click', async () => {
         if (!selectedFile) return;
 
         const pages = pagesInput.value.trim();
         if (!pages) {
-            showStatus('❌ ' + t('noPages'), 'error');
+            showStatus('❌ Please enter page numbers to delete.', 'error');
             return;
         }
 
         deleteBtn.disabled = true;
-        deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + t('loading');
-        showStatus('⏳ ' + t('loading'), 'loading');
+        deleteBtn.innerHTML = '<span class="spinner"></span> Waking up server...';
+        showStatus('<span class="spinner"></span> Checking server connection... (This may take 30s if server is asleep)', 'loading');
 
         try {
+            // 🟢 STEP 1: PING SERVER TO WAKE IT UP
+            let serverAwake = false;
+            for(let i=0; i<3; i++) {
+                try {
+                    const ping = await fetch(API_URL + '/health', { method: 'GET' });
+                    if (ping.ok) { serverAwake = true; break; }
+                } catch (e) {} // Ignore error, wait and retry
+                await new Promise(r => setTimeout(r, 3000));
+            }
+
+            if (!serverAwake) throw new Error("Server took too long to wake up. Please try again now (it should be awake).");
+
+            // 🟢 STEP 2: UPLOAD FILE
+            deleteBtn.innerHTML = '<span class="spinner"></span> Deleting pages...';
+            showStatus('<span class="spinner"></span> Processing PDF on server...', 'loading');
+
             const formData = new FormData();
             formData.append('file', selectedFile);
             formData.append('pages', pages);
 
+            // 120 Seconds Timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 120000);
+
             const res = await fetch(API_URL + '/pdf-page-delete', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                signal: controller.signal
             });
+            clearTimeout(timeoutId);
 
             if (!res.ok) {
                 const errText = await res.text();
-                throw new Error(errText || 'Server error');
+                throw new Error(errText || 'Server error ' + res.status);
             }
 
             resultBlob = await res.blob();
 
-            showStatus('🎉 ' + t('success'), 'success');
+            showStatus('🎉 Pages deleted successfully! Click below to download.', 'success');
+            
+            // Switch Buttons
             downloadBtn.style.display = 'flex';
             resetBtn.style.display = 'flex';
             deleteBtn.style.display = 'none';
+
         } catch (err) {
             console.error(err);
-            showStatus('❌ ' + t('error') + err.message, 'error');
+            let msg = err.name === 'AbortError' ? 'Timeout: Server took too long to process. Try a smaller file.' : err.message;
+            if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
+                msg = "Network error. Server was sleeping. Please click again now.";
+            }
+            showStatus('❌ Error: ' + msg, 'error');
+            deleteBtn.disabled = false;
+            deleteBtn.innerHTML = '<i class="fas fa-trash"></i> Delete Pages';
         }
-
-        deleteBtn.disabled = false;
-        deleteBtn.innerHTML = '<i class="fas fa-trash"></i> ' + t('deleteBtn');
     });
 
+    // Download Action
     downloadBtn.addEventListener('click', () => {
         if (!resultBlob) return;
         const url = URL.createObjectURL(resultBlob);
@@ -367,23 +408,14 @@
         setTimeout(() => URL.revokeObjectURL(url), 5000);
     });
 
-    resetBtn.addEventListener('click', () => {
-        selectedFile = null;
-        resultBlob = null;
-        fileInput.value = '';
-        pagesInput.value = '';
-        fileInfo.style.display = 'none';
-        controls.style.display = 'none';
-        status.style.display = 'none';
-    });
+    // Reset Action
+    resetBtn.addEventListener('click', resetUI);
 
     function showStatus(msg, type) {
-        status.textContent = msg;
+        status.innerHTML = msg;
         status.className = 'status ' + type;
         status.style.display = 'block';
     }
-
-    applyTranslations();
 </script>
 
 </body>
