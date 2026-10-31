@@ -57,6 +57,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
 
+    <!-- 🌟 ASTRO PANCHANGAM LIBRARY (FOR AUTO FESTIVAL DATES) 🌟 -->
+    <script src="https://cdn.jsdelivr.net/npm/@ishubhamx/panchangam-js@latest/dist/panchangam.min.js"></script>
+
     <style>
         :root {
             --bg-primary: #f8fafc; /* Light gray base */
@@ -782,7 +785,7 @@
                 <div class="tool-icon">📄</div>
                 <h3>Image to Word</h3>
                 <p>Create Word documents with images embedded.</p>
-                <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,500)</span></div>
+                <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,500)</span></div>
                 <div class="usage-counter">📊 15,200+ uses</div>
                 <div class="how-it-works">⚡ Supports captions and page breaks</div>
                 <div class="card-badges"><span class="card-badge badge-offline">⚡ Offline</span></div>
@@ -1422,7 +1425,7 @@
 
     <script>
         (function () {
-            // 🎉 FESTIVAL BACKGROUND LOGIC 🎉
+            // 🎉 LIFETIME AUTOMATIC FESTIVAL BACKGROUND LOGIC 🎉
             function setFestivalBackground() {
                 const festivalBg = document.getElementById('festivalBg');
                 if (!festivalBg) return;
@@ -1432,26 +1435,88 @@
                 const day = String(today.getDate()).padStart(2, '0');
                 const dateStr = `${month}-${day}`; // Format: MM-DD
 
-                // Yahan aap festivals add kar sakte hain (MM-DD format)
-                const festivals = {
+                // 1. Fixed National & Global Holidays
+                const fixedFestivals = {
                     "01-01": "Happy New Year 🎉",
-                    "01-14": "Happy Makar Sankranti 🪁",
                     "01-26": "Happy Republic Day 🇮🇳",
-                    "03-08": "Happy Women's Day 👩",
-                    "03-25": "Happy Holi 🎨", 
-                    "04-14": "Happy Ambedkar Jayanti 🚩",
                     "08-15": "Happy Independence Day 🇮🇳",
                     "10-02": "Happy Gandhi Jayanti 🙏",
-                    "10-31": "Happy Halloween 🎃",
-                    "11-01": "Happy Diwali 🪔", 
                     "12-25": "Merry Christmas 🎄",
                     "12-31": "Happy New Year Eve 🎆"
                 };
 
-                if (festivals[dateStr]) {
-                    festivalBg.innerHTML = festivals[dateStr];
-                } else {
-                    // Default message if no festival today
+                if (fixedFestivals[dateStr]) {
+                    festivalBg.innerHTML = fixedFestivals[dateStr];
+                    return;
+                }
+
+                // 2. Dynamic Hindu Festivals (Using Astronomical Library)
+                if (typeof Panchangam === 'undefined') {
+                    festivalBg.innerHTML = "Welcome to Bharat24Tools";
+                    return;
+                }
+
+                try {
+                    const year = today.getFullYear();
+                    const monthNum = today.getMonth() + 1;
+                    const dayNum = today.getDate();
+
+                    // Calculate Panchang for today (Delhi coordinates for India standard)
+                    const panchang = new Panchangam({ 
+                        year: year, 
+                        month: monthNum, 
+                        day: dayNum, 
+                        latitude: 28.6139, 
+                        longitude: 77.2090,
+                        timezone: 5.5 
+                    });
+
+                    const festivals = panchang.getFestivals(); 
+
+                    if (festivals && festivals.length > 0) {
+                        const festivalName = festivals[0]; // Pick the main festival
+                        
+                        // 3. Emoji Dictionary based on festival names
+                        const emojiMap = {
+                            "diwali": "🪔", "deepavali": "🪔",
+                            "holi": "🎨",
+                            "dussehra": "🏹", "vijayadashami": "🏹",
+                            "navratri": "💃",
+                            "janmashtami": "🦚",
+                            "raksha bandhan": "🧵", "rakhi": "🧵",
+                            "ganesh chaturthi": "🐘",
+                            "makar sankranti": "🪁",
+                            "pongal": "🌾",
+                            "baisakhi": "🌾",
+                            "maha shivratri": "🔱",
+                            "ram navami": "🏹",
+                            "hanuman jayanti": "🐒",
+                            "karwa chauth": "🌕",
+                            "bhai dooj": "🎁",
+                            "chhath puja": "🌅",
+                            "eid": "🌙",
+                            "onam": "🌸",
+                            "akshaya tritiya": "🪙",
+                            "vasant panchami": "📚"
+                        };
+
+                        let emoji = "🎉"; // Default
+                        
+                        const lowerName = festivalName.toLowerCase();
+                        for (const key in emojiMap) {
+                            if (lowerName.includes(key)) {
+                                emoji = emojiMap[key];
+                                break;
+                            }
+                        }
+
+                        festivalBg.innerHTML = `Happy ${festivalName} ${emoji}`;
+                    } else {
+                        festivalBg.innerHTML = "Welcome to Bharat24Tools";
+                    }
+
+                } catch (error) {
+                    console.error("Panchang error:", error);
                     festivalBg.innerHTML = "Welcome to Bharat24Tools";
                 }
             }
