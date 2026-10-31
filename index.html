@@ -112,10 +112,42 @@
         body.dark::before { background: rgba(168, 85, 247, 0.2); opacity: 0.8; }
         body.dark::after { background: rgba(13, 110, 253, 0.2); opacity: 0.8; }
 
+        /* 🎉 FESTIVAL BACKGROUND WATERMARK 🎉 */
+        .festival-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            font-size: 8vw;
+            font-weight: 800;
+            color: #000;
+            opacity: 0.04;
+            z-index: -2;
+            pointer-events: none;
+            text-align: center;
+            white-space: nowrap;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-family: 'Poppins', sans-serif;
+        }
+        body.dark .festival-bg {
+            color: #fff;
+            opacity: 0.05;
+        }
+
         /* ===== HERO SECTION & FLOATING ICONS FIX ===== */
         .hero { 
             position: relative; 
             overflow: hidden; 
+        }
+        /* Fixed Typing Animation Jump */
+        .hero h1 { 
+            min-height: 2.6em; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            font-size: 2.5rem;
         }
         .floating-icons {
             position: absolute;
@@ -137,6 +169,19 @@
             position: relative; 
             z-index: 10; 
         }
+
+        /* Search Trending */
+        .trending-search {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .trending-search span { cursor: pointer; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 20px; transition: 0.2s;}
+        .trending-search span:hover { background: var(--primary); color: white; }
 
         /* ===== DESKTOP GRID ===== */
         .container {
@@ -224,7 +269,8 @@
         .tool-category[data-category="design"] .tool-icon { background: rgba(59,130,246,0.15); }
         .tool-category[data-category="calculator"] .tool-icon { background: rgba(34,197,94,0.15); }
 
-        .card h2 {
+        /* Changed h2 to h3 for SEO */
+        .card h3 {
             font-size: 0.85rem;
             font-weight: 600;
             color: var(--text-primary);
@@ -387,12 +433,34 @@
         .search-empty { padding: 20px; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
 
         /* Recently Used + Favorites */
-        .recently-used, .my-favorites { max-width: 1200px; margin: 0 auto; padding: 12px 20px; display: none; }
-        .recently-used.active, .my-favorites.active { display: block; }
+        .recently-used, .my-favorites { max-width: 1200px; margin: 0 auto; padding: 0 20px; max-height: 0; opacity: 0; overflow: hidden; transition: all 0.3s ease-in-out; }
+        .recently-used.active, .my-favorites.active { max-height: 250px; opacity: 1; padding: 12px 20px; }
         .recently-used h3, .my-favorites h3 { font-size: 1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         .recent-chips { display: flex; gap: 8px; flex-wrap: wrap; }
         .recent-chip { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 6px 14px; font-size: 0.78rem; color: var(--text-primary); text-decoration: none; transition: all 0.2s; backdrop-filter: blur(10px); }
         .recent-chip:hover { background: var(--primary); color: white; transform: translateY(-2px); }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            z-index: 99;
+            box-shadow: 0 4px 15px rgba(13,110,253,0.4);
+            transition: transform 0.2s;
+        }
+        .back-to-top:hover { transform: scale(1.1); }
 
         /* ===== MOBILE BOTTOM NAV ===== */
         .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-card); border-top: 1px solid var(--border-color); padding: 8px 0; z-index: 998; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); backdrop-filter: blur(20px); }
@@ -402,20 +470,12 @@
 
         /* ✅ Hamburger Menu Default Hidden (Desktop) */
         .menu-btn { display: none; }
-        
-        /* ✅ Menu Checkbox Trick (No JS required) */
         #menu-toggle { display: none; }
 
         /* ===== TABLET (768px - 1024px) ===== */
         @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 15px;
-            }
-            .card {
-                min-height: 200px;
-                padding: 16px;
-            }
+            .container { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+            .card { min-height: 200px; padding: 16px; }
         }
 
         /* ===== TABLET & SMALL LAPTOPS ===== */
@@ -424,75 +484,35 @@
             .menu { gap: 10px; }
             .menu a { font-size: 0.85rem; padding: 6px 8px; }
             .hero { padding: 40px 20px; }
-            .hero h1 { font-size: 2.5rem; }
         }
 
         /* ===== MOBILE (max 768px) ===== */
         @media (max-width: 768px) {
-            
-            .navbar { 
-                padding: 12px 16px; 
-                flex-wrap: nowrap; 
-                justify-content: space-between;
-                position: relative;
-                z-index: 1000;
-            }
-            
-            .menu-btn { 
-                display: block; 
-                font-size: 1.5rem; 
-                color: var(--text-primary); 
-                cursor: pointer; 
-                margin-right: 0; 
-                z-index: 1001;
-            }
-            
-            .menu {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--bg-card) !important;
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 20px;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-                z-index: 999;
-                border-bottom: 1px solid var(--border-color);
-            }
-            
+            .navbar { padding: 12px 16px; flex-wrap: nowrap; justify-content: space-between; position: relative; z-index: 1000; }
+            .menu-btn { display: block; font-size: 1.5rem; color: var(--text-primary); cursor: pointer; margin-right: 0; z-index: 1001; }
+            .menu { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-card) !important; backdrop-filter: blur(20px); flex-direction: column; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 999; border-bottom: 1px solid var(--border-color); }
             #menu-toggle:checked ~ .menu { display: flex; }
-            
             .menu li { margin: 10px 0; }
-            .menu a {
-                color: var(--text-primary) !important;
-                font-size: 1rem !important;
-                font-weight: 600 !important;
-                display: block;
-                padding: 8px 0;
-            }
+            .menu a { color: var(--text-primary) !important; font-size: 1rem !important; font-weight: 600 !important; display: block; padding: 8px 0; }
             
             .mobile-bottom-nav { display: flex; }
-            /* 🟢 FIX: Mobile pe neeche extra space taaki float buttons cards ko na dhakein */
             body { padding-bottom: 90px; } 
 
-            /* 🟢 WhatsApp hatane ke baad Chatbot ki position set ki */
             .chatbot-toggle { bottom: 85px !important; right: 15px !important; width: 45px !important; height: 45px !important; font-size: 22px !important; }
-
             .live-clock { display: flex !important; font-size: 0.75rem !important; padding: 4px 8px !important; margin-right: 5px; align-items: center; gap: 4px; }
-
             .floating-icons { display: block !important; opacity: 0.3 !important; }
             .float-icon { font-size: 2.5rem !important; color: #ffffff !important; }
 
-            .hero h1 { font-size: 2.2rem !important; }
+            .hero h1 { font-size: 2.2rem !important; min-height: 3.2em; }
             .hero p { font-size: 0.85rem !important; }
             .stats { gap: 15px; flex-wrap: wrap; }
+            
+            .festival-bg { font-size: 15vw; }
 
             .container { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 12px; }
             .card { padding: 12px; min-height: 180px; border-radius: 12px; }
             
-            .card h2 { font-size: 0.78rem; margin-bottom: 3px; }
+            .card h3 { font-size: 0.78rem; margin-bottom: 3px; }
             .card p { font-size: 0.66rem; line-height: 1.4; margin-bottom: 5px; }
             .tool-icon { font-size: 1.2rem !important; width: 34px !important; height: 34px !important; margin-bottom: 6px; }
             .card .rating-row { font-size: 0.6rem; margin: 2px 0 4px; }
@@ -516,8 +536,7 @@
         @media (max-width: 480px) {
             .container { gap: 10px; padding: 0 10px; }
             .card { padding: 10px; min-height: 170px; }
-            
-            .card h2 { font-size: 0.75rem; }
+            .card h3 { font-size: 0.75rem; }
             .card p { font-size: 0.62rem; }
             .tool-icon { font-size: 1.1rem !important; width: 30px !important; height: 30px !important; }
             .card .how-it-works { display: none; }
@@ -534,6 +553,9 @@
 </head>
 
 <body>
+
+    <!-- 🎉 FESTIVAL BACKGROUND 🎉 -->
+    <div id="festivalBg" class="festival-bg"></div>
 
     <div id="scrollProgress" class="scroll-progress"></div>
     <div class="custom-cursor" id="customCursor"></div>
@@ -584,6 +606,15 @@
                 <button id="voiceSearchBtn" class="voice-btn" title="Voice Search"><i class="fa-solid fa-microphone"></i></button>
                 <div class="search-dropdown" id="searchDropdown"></div>
             </div>
+            
+            <!-- Trending Search -->
+            <div class="trending-search">
+                <span>Trending:</span>
+                <span onclick="document.getElementById('search').value='Image Compress'; document.getElementById('search').dispatchEvent(new Event('input'));">Image Compress</span>
+                <span onclick="document.getElementById('search').value='Merge PDF'; document.getElementById('search').dispatchEvent(new Event('input'));">Merge PDF</span>
+                <span onclick="document.getElementById('search').value='QR Code'; document.getElementById('search').dispatchEvent(new Event('input'));">QR Code</span>
+            </div>
+
             <div class="hero-buttons">
                 <a href="#image-tools" class="primary-btn">Explore Tools</a>
                 <a href="#pdf-tools" class="secondary-btn">PDF Tools</a>
@@ -689,7 +720,7 @@
         <div class="container">
             <div class="card" data-tool="Image Compressor" data-href="image-compressor.html" data-rating="4.9" data-reviews="4520" data-uses="45,200">
                 <div class="tool-icon">🖼</div>
-                <h2>Image Compressor</h2>
+                <h3>Image Compressor</h3>
                 <p>Compress JPG, PNG & WEBP Images without losing quality.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(4,520)</span></div>
                 <div class="usage-counter">📊 45,200+ uses</div>
@@ -699,7 +730,7 @@
             </div>
             <div class="card" data-tool="Image Resizer" data-href="image-resizer.html" data-rating="4.8" data-reviews="2100" data-uses="21,500">
                 <div class="tool-icon">📐</div>
-                <h2>Image Resizer</h2>
+                <h3>Image Resizer</h3>
                 <p>Resize images in custom dimensions instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,100)</span></div>
                 <div class="usage-counter">📊 21,500+ uses</div>
@@ -709,7 +740,7 @@
             </div>
             <div class="card" data-tool="Image Cropper" data-href="image-cropper.html" data-rating="4.7" data-reviews="1800" data-uses="18,300">
                 <div class="tool-icon">✂️</div>
-                <h2>Image Cropper</h2>
+                <h3>Image Cropper</h3>
                 <p>Crop your images with live preview.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,800)</span></div>
                 <div class="usage-counter">📊 18,300+ uses</div>
@@ -719,7 +750,7 @@
             </div>
             <div class="card" data-tool="JPG to PNG" data-href="jpg-to-png.html" data-rating="4.8" data-reviews="3200" data-uses="32,100">
                 <div class="tool-icon">🖼</div>
-                <h2>JPG to PNG</h2>
+                <h3>JPG to PNG</h3>
                 <p>Convert JPG images into PNG format.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(3,200)</span></div>
                 <div class="usage-counter">📊 32,100+ uses</div>
@@ -729,7 +760,7 @@
             </div>
             <div class="card" data-tool="PNG to JPG" data-href="png-to-jpg.html" data-rating="4.8" data-reviews="2900" data-uses="29,400">
                 <div class="tool-icon">🖼</div>
-                <h2>PNG to JPG</h2>
+                <h3>PNG to JPG</h3>
                 <p>Convert PNG images into JPG format.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,900)</span></div>
                 <div class="usage-counter">📊 29,400+ uses</div>
@@ -739,7 +770,7 @@
             </div>
             <div class="card" data-tool="Image to Excel" data-href="image-to-excel.html" data-rating="4.6" data-reviews="980" data-uses="9,800">
                 <div class="tool-icon">📊</div>
-                <h2>Image to Excel</h2>
+                <h3>Image to Excel</h3>
                 <p>Embed images in Excel spreadsheets professionally.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(980)</span></div>
                 <div class="usage-counter">📊 9,800+ uses</div>
@@ -749,7 +780,7 @@
             </div>
             <div class="card" data-tool="Image to Word" data-href="image-to-word.html" data-rating="4.7" data-reviews="1500" data-uses="15,200">
                 <div class="tool-icon">📄</div>
-                <h2>Image to Word</h2>
+                <h3>Image to Word</h3>
                 <p>Create Word documents with images embedded.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,500)</span></div>
                 <div class="usage-counter">📊 15,200+ uses</div>
@@ -759,7 +790,7 @@
             </div>
             <div class="card" data-tool="Batch Image Compress" data-href="batch-image-compress.html" data-rating="4.9" data-reviews="2400" data-uses="24,100">
                 <div class="tool-icon">🗜️</div>
-                <h2>Batch Image Compress</h2>
+                <h3>Batch Image Compress</h3>
                 <p>Compress 50+ images at once with quality control.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(2,400)</span></div>
                 <div class="usage-counter">📊 24,100+ uses</div>
@@ -769,7 +800,7 @@
             </div>
             <div class="card" data-tool="Image Watermark" data-href="image-watermark.html" data-rating="4.7" data-reviews="1200" data-uses="12,300">
                 <div class="tool-icon">💧</div>
-                <h2>Image Watermark</h2>
+                <h3>Image Watermark</h3>
                 <p>Add text or logo watermark on your images.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,200)</span></div>
                 <div class="usage-counter">📊 12,300+ uses</div>
@@ -779,7 +810,7 @@
             </div>
             <div class="card" data-tool="HEIC to JPG" data-href="heic-to-jpg.html" data-rating="4.9" data-reviews="2800" data-uses="22,400">
                 <div class="tool-icon">🍎</div>
-                <h2>HEIC to JPG</h2>
+                <h3>HEIC to JPG</h3>
                 <p>Convert iPhone HEIC images to JPG format.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(2,800)</span></div>
                 <div class="usage-counter">📊 22,400+ uses</div>
@@ -789,7 +820,7 @@
             </div>
             <div class="card" data-tool="Image to PDF (Quality)" data-href="image-to-pdf-quality.html" data-rating="4.8" data-reviews="1900" data-uses="19,500">
                 <div class="tool-icon">📄</div>
-                <h2>Image to PDF (Quality)</h2>
+                <h3>Image to PDF (Quality)</h3>
                 <p>Convert images to PDF with quality & page controls.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,900)</span></div>
                 <div class="usage-counter">📊 19,500+ uses</div>
@@ -799,7 +830,7 @@
             </div>
             <div class="card" data-tool="Image Filter/Editor" data-href="image-filter-editor.html" data-rating="4.6" data-reviews="1400" data-uses="14,100">
                 <div class="tool-icon">🎨</div>
-                <h2>Image Filter & Editor</h2>
+                <h3>Image Filter & Editor</h3>
                 <p>Edit images with filters, brightness & effects.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(1,400)</span></div>
                 <div class="usage-counter">📊 14,100+ uses</div>
@@ -809,7 +840,7 @@
             </div>
             <div class="card" data-tool="Background Remover" data-href="background-remover.html" data-rating="4.9" data-reviews="3900" data-uses="32,100">
                 <div class="tool-icon">🎭</div>
-                <h2>Background Remover</h2>
+                <h3>Background Remover</h3>
                 <p>Remove photo background using AI — transparent PNG.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(3,900)</span></div>
                 <div class="usage-counter">📊 32,100+ uses</div>
@@ -819,7 +850,7 @@
             </div>
             <div class="card" data-tool="WebP to JPG" data-href="webp-to-jpg.html" data-rating="4.8" data-reviews="1700" data-uses="17,200">
                 <div class="tool-icon">🌐</div>
-                <h2>WebP to JPG</h2>
+                <h3>WebP to JPG</h3>
                 <p>Convert WebP images to JPG — batch conversion.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,700)</span></div>
                 <div class="usage-counter">📊 17,200+ uses</div>
@@ -829,7 +860,7 @@
             </div>
             <div class="card" data-tool="AI Image Upscaler" data-href="image-upscaler.html" data-rating="4.8" data-reviews="2600" data-uses="26,500">
                 <div class="tool-icon">🔍</div>
-                <h2>AI Image Upscaler</h2>
+                <h3>AI Image Upscaler</h3>
                 <p>Upscale images 2x, 3x, 4x with AI sharpening.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,600)</span></div>
                 <div class="usage-counter">📊 26,500+ uses</div>
@@ -839,7 +870,7 @@
             </div>
             <div class="card" data-tool="AVIF to JPG" data-href="avif-to-jpg.html" data-rating="4.7" data-reviews="1100" data-uses="11,200">
                 <div class="tool-icon">🎨</div>
-                <h2>AVIF to JPG</h2>
+                <h3>AVIF to JPG</h3>
                 <p>Convert AVIF images to JPG — batch conversion.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,100)</span></div>
                 <div class="usage-counter">📊 11,200+ uses</div>
@@ -849,7 +880,7 @@
             </div>
             <div class="card" data-tool="Image to Sketch" data-href="image-to-sketch.html" data-rating="4.7" data-reviews="1600" data-uses="16,300">
                 <div class="tool-icon">✏️</div>
-                <h2>Image to Sketch</h2>
+                <h3>Image to Sketch</h3>
                 <p>Convert photos to sketch — 6 styles with intensity control.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,600)</span></div>
                 <div class="usage-counter">📊 16,300+ uses</div>
@@ -866,7 +897,7 @@
         <div class="container">
             <div class="card" data-tool="JPG to PDF" data-href="jpg-to-pdf-dragdrop.html" data-rating="4.8" data-reviews="3100" data-uses="30,200">
                 <div class="tool-icon">📄</div>
-                <h2>JPG to PDF</h2>
+                <h3>JPG to PDF</h3>
                 <p>Convert JPG images into PDF documents.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(3,100)</span></div>
                 <div class="usage-counter">📊 30,200+ uses</div>
@@ -876,7 +907,7 @@
             </div>
             <div class="card" data-tool="PDF to JPG" data-href="pdf-to-jpg-dragdrop.html" data-rating="4.8" data-reviews="2400" data-uses="23,500">
                 <div class="tool-icon">🖼</div>
-                <h2>PDF to JPG</h2>
+                <h3>PDF to JPG</h3>
                 <p>Convert PDF pages into high-quality JPG images.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,400)</span></div>
                 <div class="usage-counter">📊 23,500+ uses</div>
@@ -886,7 +917,7 @@
             </div>
             <div class="card" data-tool="Excel to PDF" data-href="excel-to-pdf-dragdrop.html" data-rating="4.9" data-reviews="2700" data-uses="26,100">
                 <div class="tool-icon">📊</div>
-                <h2>Excel to PDF</h2>
+                <h3>Excel to PDF</h3>
                 <p>Convert Excel spreadsheets into PDF documents instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(2,700)</span></div>
                 <div class="usage-counter">📊 26,100+ uses</div>
@@ -896,7 +927,7 @@
             </div>
             <div class="card" data-tool="Merge PDF" data-href="merge-pdf-dragdrop.html" data-rating="4.8" data-reviews="2900" data-uses="28,300">
                 <div class="tool-icon">📑</div>
-                <h2>Merge PDF</h2>
+                <h3>Merge PDF</h3>
                 <p>Combine multiple PDF files into one.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,900)</span></div>
                 <div class="usage-counter">📊 28,300+ uses</div>
@@ -906,7 +937,7 @@
             </div>
             <div class="card" data-tool="Split PDF" data-href="split-pdf-dragdrop.html" data-rating="4.7" data-reviews="1900" data-uses="19,100">
                 <div class="tool-icon">✂️</div>
-                <h2>Split PDF</h2>
+                <h3>Split PDF</h3>
                 <p>Extract or split pages from any PDF file.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,900)</span></div>
                 <div class="usage-counter">📊 19,100+ uses</div>
@@ -916,7 +947,7 @@
             </div>
             <div class="card" data-tool="Word to PDF" data-href="word-to-pdf.html" data-rating="4.8" data-reviews="2500" data-uses="24,800">
                 <div class="tool-icon">📃</div>
-                <h2>Word to PDF</h2>
+                <h3>Word to PDF</h3>
                 <p>Convert Word (.docx) documents into PDF instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,500)</span></div>
                 <div class="usage-counter">📊 24,800+ uses</div>
@@ -926,7 +957,7 @@
             </div>
             <div class="card" data-tool="Images to PDF" data-href="images-to-pdf.html" data-rating="4.8" data-reviews="2200" data-uses="21,900">
                 <div class="tool-icon">📸</div>
-                <h2>Images to PDF</h2>
+                <h3>Images to PDF</h3>
                 <p>Combine multiple images into a single PDF document.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,200)</span></div>
                 <div class="usage-counter">📊 21,900+ uses</div>
@@ -936,7 +967,7 @@
             </div>
             <div class="card" data-tool="Excel to Image" data-href="excel-to-image.html" data-rating="4.7" data-reviews="1300" data-uses="12,500">
                 <div class="tool-icon">📊</div>
-                <h2>Excel to Image</h2>
+                <h3>Excel to Image</h3>
                 <p>Convert Excel spreadsheets to PNG, JPG, or WebP images.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,300)</span></div>
                 <div class="usage-counter">📊 12,500+ uses</div>
@@ -946,7 +977,7 @@
             </div>
             <div class="card" data-tool="Word to Image" data-href="word-to-image.html" data-rating="4.6" data-reviews="900" data-uses="8,900">
                 <div class="tool-icon">📄</div>
-                <h2>Word to Image</h2>
+                <h3>Word to Image</h3>
                 <p>Convert Word documents to high-quality images.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(900)</span></div>
                 <div class="usage-counter">📊 8,900+ uses</div>
@@ -956,7 +987,7 @@
             </div>
             <div class="card" data-tool="Compress PDF" data-href="compress-pdf.html" data-rating="4.8" data-reviews="2600" data-uses="25,400">
                 <div class="tool-icon">📉</div>
-                <h2>Compress PDF</h2>
+                <h3>Compress PDF</h3>
                 <p>Reduce PDF file size without losing quality.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,600)</span></div>
                 <div class="usage-counter">📊 25,400+ uses</div>
@@ -966,7 +997,7 @@
             </div>
             <div class="card" data-tool="Protect PDF" data-href="protect-pdf.html" data-rating="4.7" data-reviews="1400" data-uses="13,700">
                 <div class="tool-icon">🔒</div>
-                <h2>Protect PDF</h2>
+                <h3>Protect PDF</h3>
                 <p>Add password protection to your PDF files.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,400)</span></div>
                 <div class="usage-counter">📊 13,700+ uses</div>
@@ -976,7 +1007,7 @@
             </div>
             <div class="card" data-tool="Rotate PDF" data-href="rotate-pdf.html" data-rating="4.7" data-reviews="1200" data-uses="11,900">
                 <div class="tool-icon">🔄</div>
-                <h2>Rotate PDF</h2>
+                <h3>Rotate PDF</h3>
                 <p>Rotate PDF pages to 90°, 180° or 270°.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,200)</span></div>
                 <div class="usage-counter">📊 11,900+ uses</div>
@@ -986,7 +1017,7 @@
             </div>
             <div class="card" data-tool="Unlock PDF" data-href="unlock-pdf.html" data-rating="4.8" data-reviews="1800" data-uses="17,800">
                 <div class="tool-icon">🔓</div>
-                <h2>Unlock PDF</h2>
+                <h3>Unlock PDF</h3>
                 <p>Remove password from your protected PDF.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,800)</span></div>
                 <div class="usage-counter">📊 17,800+ uses</div>
@@ -996,7 +1027,7 @@
             </div>
             <div class="card" data-tool="PDF to Word" data-href="pdf-to-word.html" data-rating="4.9" data-reviews="4100" data-uses="38,600">
                 <div class="tool-icon">📝</div>
-                <h2>PDF to Word</h2>
+                <h3>PDF to Word</h3>
                 <p>Convert PDF text into editable Word document.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(4,100)</span></div>
                 <div class="usage-counter">📊 38,600+ uses</div>
@@ -1006,7 +1037,7 @@
             </div>
             <div class="card" data-tool="PDF to Excel" data-href="pdf-to-excel.html" data-rating="4.9" data-reviews="3500" data-uses="33,200">
                 <div class="tool-icon">📊</div>
-                <h2>PDF to Excel</h2>
+                <h3>PDF to Excel</h3>
                 <p>Convert PDF text into editable Excel file.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(3,500)</span></div>
                 <div class="usage-counter">📊 33,200+ uses</div>
@@ -1016,7 +1047,7 @@
             </div>
             <div class="card" data-tool="PDF Watermark" data-href="pdf-watermark.html" data-rating="4.7" data-reviews="1100" data-uses="10,800">
                 <div class="tool-icon">💧</div>
-                <h2>PDF Watermark</h2>
+                <h3>PDF Watermark</h3>
                 <p>Add text watermark to PDF — opacity control.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,100)</span></div>
                 <div class="usage-counter">📊 10,800+ uses</div>
@@ -1026,7 +1057,7 @@
             </div>
             <div class="card" data-tool="PDF Page Delete" data-href="pdf-page-delete.html" data-rating="4.7" data-reviews="1300" data-uses="12,700">
                 <div class="tool-icon">🗑️</div>
-                <h2>PDF Page Delete</h2>
+                <h3>PDF Page Delete</h3>
                 <p>Delete specific pages from your PDF file.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,300)</span></div>
                 <div class="usage-counter">📊 12,700+ uses</div>
@@ -1036,7 +1067,7 @@
             </div>
             <div class="card" data-tool="OCR (Image to Text)" data-href="ocr.html" data-rating="4.8" data-reviews="2100" data-uses="20,300">
                 <div class="tool-icon">🔎</div>
-                <h2>OCR (Image to Text)</h2>
+                <h3>OCR (Image to Text)</h3>
                 <p>Extract text from image — 100+ languages.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,100)</span></div>
                 <div class="usage-counter">📊 20,300+ uses</div>
@@ -1046,7 +1077,7 @@
             </div>
             <div class="card" data-tool="GIF Maker" data-href="gif-maker.html" data-rating="4.6" data-reviews="1000" data-uses="9,900">
                 <div class="tool-icon">🎬</div>
-                <h2>GIF Maker</h2>
+                <h3>GIF Maker</h3>
                 <p>Create animated GIF from multiple images.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(1,000)</span></div>
                 <div class="usage-counter">📊 9,900+ uses</div>
@@ -1063,7 +1094,7 @@
         <div class="container">
             <div class="card" data-tool="CSS Gradient Generator" data-href="css-gradient-generator.html" data-rating="4.7" data-reviews="1100" data-uses="10,500">
                 <div class="tool-icon">🎨</div>
-                <h2>CSS Gradient Generator</h2>
+                <h3>CSS Gradient Generator</h3>
                 <p>Build multi-color gradients visually and copy ready-to-use CSS.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,100)</span></div>
                 <div class="usage-counter">📊 10,500+ uses</div>
@@ -1072,7 +1103,7 @@
             </div>
             <div class="card" data-tool="QR Code with Logo" data-href="qr-code-logo.html" data-rating="4.8" data-reviews="1500" data-uses="14,700">
                 <div class="tool-icon">📱</div>
-                <h2>QR Code with Logo</h2>
+                <h3>QR Code with Logo</h3>
                 <p>Create a custom QR code with your logo embedded in the center.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,500)</span></div>
                 <div class="usage-counter">📊 14,700+ uses</div>
@@ -1081,7 +1112,7 @@
             </div>
             <div class="card" data-tool="Text Diff Checker" data-href="text-diff-checker.html" data-rating="4.6" data-reviews="800" data-uses="7,900">
                 <div class="tool-icon">🔍</div>
-                <h2>Text Diff Checker</h2>
+                <h3>Text Diff Checker</h3>
                 <p>Compare two texts and instantly see what changed.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(800)</span></div>
                 <div class="usage-counter">📊 7,900+ uses</div>
@@ -1090,7 +1121,7 @@
             </div>
             <div class="card" data-tool="Unit Converter" data-href="unit-converter.html" data-rating="4.7" data-reviews="1200" data-uses="11,800">
                 <div class="tool-icon">🔁</div>
-                <h2>Unit Converter</h2>
+                <h3>Unit Converter</h3>
                 <p>Convert length, weight, temperature, speed and data storage.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,200)</span></div>
                 <div class="usage-counter">📊 11,800+ uses</div>
@@ -1099,7 +1130,7 @@
             </div>
             <div class="card" data-tool="JSON Formatter" data-href="json-formatter.html" data-rating="4.7" data-reviews="1000" data-uses="9,600">
                 <div class="tool-icon">{ }</div>
-                <h2>JSON Formatter</h2>
+                <h3>JSON Formatter</h3>
                 <p>Format, validate and minify JSON with syntax highlighting.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,000)</span></div>
                 <div class="usage-counter">📊 9,600+ uses</div>
@@ -1108,7 +1139,7 @@
             </div>
             <div class="card" data-tool="Color Palette Generator" data-href="color-palette-generator.html" data-rating="4.8" data-reviews="1400" data-uses="13,900">
                 <div class="tool-icon">🎨</div>
-                <h2>Color Palette Generator</h2>
+                <h3>Color Palette Generator</h3>
                 <p>Generate complementary, analogous and triadic color palettes.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,400)</span></div>
                 <div class="usage-counter">📊 13,900+ uses</div>
@@ -1117,7 +1148,7 @@
             </div>
             <div class="card" data-tool="Favicon Generator" data-href="favicon-generator.html" data-rating="4.8" data-reviews="1300" data-uses="12,800">
                 <div class="tool-icon">⭐</div>
-                <h2>Favicon Generator</h2>
+                <h3>Favicon Generator</h3>
                 <p>Turn one image into every favicon size you need, as a ZIP.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,300)</span></div>
                 <div class="usage-counter">📊 12,800+ uses</div>
@@ -1126,7 +1157,7 @@
             </div>
             <div class="card" data-tool="Base64 Encoder/Decoder" data-href="base64-tool.html" data-rating="4.7" data-reviews="900" data-uses="8,800">
                 <div class="tool-icon">🔤</div>
-                <h2>Base64 Encoder/Decoder</h2>
+                <h3>Base64 Encoder/Decoder</h3>
                 <p>Convert text or files to Base64, or decode Base64 back.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(900)</span></div>
                 <div class="usage-counter">📊 8,800+ uses</div>
@@ -1135,7 +1166,7 @@
             </div>
             <div class="card" data-tool="Meme Generator" data-href="meme-generator.html" data-rating="4.6" data-reviews="1600" data-uses="15,300">
                 <div class="tool-icon">😂</div>
-                <h2>Meme Generator</h2>
+                <h3>Meme Generator</h3>
                 <p>Add top and bottom text to any image and download your meme.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(1,600)</span></div>
                 <div class="usage-counter">📊 15,300+ uses</div>
@@ -1144,7 +1175,7 @@
             </div>
             <div class="card" data-tool="Voice to Text" data-href="voice-to-text.html" data-rating="4.7" data-reviews="1800" data-uses="17,500">
                 <div class="tool-icon">🎙️</div>
-                <h2>Voice to Text</h2>
+                <h3>Voice to Text</h3>
                 <p>Speak and get instant text, supports Hindi and English.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,800)</span></div>
                 <div class="usage-counter">📊 17,500+ uses</div>
@@ -1154,7 +1185,7 @@
             </div>
             <div class="card" data-tool="Text to Voice" data-href="text-to-voice.html" data-rating="4.6" data-reviews="1100" data-uses="10,700">
                 <div class="tool-icon">🔊</div>
-                <h2>Text to Voice</h2>
+                <h3>Text to Voice</h3>
                 <p>Convert any text into natural sounding speech instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(1,100)</span></div>
                 <div class="usage-counter">📊 10,700+ uses</div>
@@ -1163,7 +1194,7 @@
             </div>
             <div class="card" data-tool="Text Tone Checker" data-href="text-tone-checker.html" data-rating="4.6" data-reviews="700" data-uses="6,800">
                 <div class="tool-icon">💬</div>
-                <h2>Text Tone Checker</h2>
+                <h3>Text Tone Checker</h3>
                 <p>Check if your message sounds rude before you post it.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(700)</span></div>
                 <div class="usage-counter">📊 6,800+ uses</div>
@@ -1180,7 +1211,7 @@
         <div class="container">
             <div class="card" data-tool="QR Code Generator" data-href="qr-generator.html" data-rating="4.8" data-reviews="2400" data-uses="23,900">
                 <div class="tool-icon">📱</div>
-                <h2>QR Code Generator</h2>
+                <h3>QR Code Generator</h3>
                 <p>Create QR codes instantly for links, text and more.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,400)</span></div>
                 <div class="usage-counter">📊 23,900+ uses</div>
@@ -1190,7 +1221,7 @@
             </div>
             <div class="card" data-tool="Password Generator" data-href="password-generator.html" data-rating="4.9" data-reviews="3100" data-uses="30,600">
                 <div class="tool-icon">🔐</div>
-                <h2>Password Generator</h2>
+                <h3>Password Generator</h3>
                 <p>Create strong and secure passwords instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.9</span><span class="rating-count">(3,100)</span></div>
                 <div class="usage-counter">📊 30,600+ uses</div>
@@ -1200,7 +1231,7 @@
             </div>
             <div class="card" data-tool="Word Counter" data-href="word-counter.html" data-rating="4.7" data-reviews="1500" data-uses="14,800">
                 <div class="tool-icon">📝</div>
-                <h2>Word Counter</h2>
+                <h3>Word Counter</h3>
                 <p>Count words, characters and paragraphs easily.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,500)</span></div>
                 <div class="usage-counter">📊 14,800+ uses</div>
@@ -1209,7 +1240,7 @@
             </div>
             <div class="card" data-tool="Age Calculator" data-href="age-calculator.html" data-rating="4.6" data-reviews="1300" data-uses="12,600">
                 <div class="tool-icon">🎂</div>
-                <h2>Age Calculator</h2>
+                <h3>Age Calculator</h3>
                 <p>Calculate your exact age in seconds.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.6</span><span class="rating-count">(1,300)</span></div>
                 <div class="usage-counter">📊 12,600+ uses</div>
@@ -1218,7 +1249,7 @@
             </div>
             <div class="card" data-tool="EMI Calculator" data-href="emi-calculator.html" data-rating="4.8" data-reviews="2100" data-uses="20,700">
                 <div class="tool-icon">💰</div>
-                <h2>EMI Calculator</h2>
+                <h3>EMI Calculator</h3>
                 <p>Calculate your monthly loan EMI instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(2,100)</span></div>
                 <div class="usage-counter">📊 20,700+ uses</div>
@@ -1228,7 +1259,7 @@
             </div>
             <div class="card" data-tool="Scientific Calculator" data-href="scientific-calculator.html" data-rating="4.7" data-reviews="1400" data-uses="13,700">
                 <div class="tool-icon">🧮</div>
-                <h2>Scientific Calculator</h2>
+                <h3>Scientific Calculator</h3>
                 <p>Perform advanced mathematical calculations.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.7</span><span class="rating-count">(1,400)</span></div>
                 <div class="usage-counter">📊 13,700+ uses</div>
@@ -1237,7 +1268,7 @@
             </div>
             <div class="card" data-tool="GST Calculator" data-href="gst-calculator.html" data-rating="4.8" data-reviews="1800" data-uses="17,900">
                 <div class="tool-icon">🧾</div>
-                <h2>GST Calculator</h2>
+                <h3>GST Calculator</h3>
                 <p>Add or remove GST from any amount instantly.</p>
                 <div class="rating-row"><span class="stars">★★★★★</span><span>4.8</span><span class="rating-count">(1,800)</span></div>
                 <div class="usage-counter">📊 17,900+ uses</div>
@@ -1331,7 +1362,7 @@
                     <h4 style="color:#fff;font-size:1rem;margin-bottom:8px;">📧 Newsletter</h4>
                     <div style="display:flex;gap:8px;background:#1a2d44;padding:6px;border-radius:8px;">
                         <input type="email" id="newsletterEmail" placeholder="Your email" style="flex:1;background:transparent;border:none;color:#fff;padding:8px;font-size:0.85rem;outline:none;">
-                        <button id="newsletterBtn" style="background:#0d6efd;color:#fff;border:none;padding:8px 14px;border-radius:6px;font-weight:600;font-size:0.85rem;">Subscribe</button>
+                        <button id="newsletterBtn" style="background:#0d6efd;color:#fff;border:none;padding:8px 14px;border-radius:6px;font-weight:600;font-size:0.85rem;cursor:pointer;">Subscribe</button>
                     </div>
                 </div>
             </div>
@@ -1391,6 +1422,41 @@
 
     <script>
         (function () {
+            // 🎉 FESTIVAL BACKGROUND LOGIC 🎉
+            function setFestivalBackground() {
+                const festivalBg = document.getElementById('festivalBg');
+                if (!festivalBg) return;
+
+                const today = new Date();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+                const dateStr = `${month}-${day}`; // Format: MM-DD
+
+                // Yahan aap festivals add kar sakte hain (MM-DD format)
+                const festivals = {
+                    "01-01": "Happy New Year 🎉",
+                    "01-14": "Happy Makar Sankranti 🪁",
+                    "01-26": "Happy Republic Day 🇮🇳",
+                    "03-08": "Happy Women's Day 👩",
+                    "03-25": "Happy Holi 🎨", 
+                    "04-14": "Happy Ambedkar Jayanti 🚩",
+                    "08-15": "Happy Independence Day 🇮🇳",
+                    "10-02": "Happy Gandhi Jayanti 🙏",
+                    "10-31": "Happy Halloween 🎃",
+                    "11-01": "Happy Diwali 🪔", 
+                    "12-25": "Merry Christmas 🎄",
+                    "12-31": "Happy New Year Eve 🎆"
+                };
+
+                if (festivals[dateStr]) {
+                    festivalBg.innerHTML = festivals[dateStr];
+                } else {
+                    // Default message if no festival today
+                    festivalBg.innerHTML = "Welcome to Bharat24Tools";
+                }
+            }
+            setFestivalBackground();
+
             // Filters
             var tabs = document.querySelectorAll('.filter-tab');
             var categories = document.querySelectorAll('.tool-category');
@@ -1408,6 +1474,12 @@
                     categories.forEach(function (cat) {
                         cat.style.display = (filter === 'all' || cat.getAttribute('data-category') === filter) ? '' : 'none';
                     });
+
+                    // Scroll fix for filter tabs
+                    const toolWrapper = document.querySelector('.tool-wrapper');
+                    if (toolWrapper) {
+                        window.scrollTo({ top: toolWrapper.offsetTop - 120, behavior: 'smooth' });
+                    }
                 });
             });
 
@@ -1549,7 +1621,7 @@
                 });
             }
 
-            // 🟢 CLOCK LOGIC
+            // CLOCK LOGIC
             function updateClock() {
                 const now = new Date();
                 const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
@@ -1560,6 +1632,68 @@
             }
             setInterval(updateClock, 1000);
             updateClock();
+
+            // Back to Top Button Logic
+            const backToTopBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopBtn.style.display = 'flex';
+                } else {
+                    backToTopBtn.style.display = 'none';
+                }
+            });
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Newsletter Button Logic
+            const newsBtn = document.getElementById('newsletterBtn');
+            if(newsBtn) {
+                newsBtn.addEventListener('click', () => {
+                    const email = document.getElementById('newsletterEmail').value;
+                    if(email) {
+                        showToast('✅ Thank you for subscribing!');
+                        document.getElementById('newsletterEmail').value = ''; // Clear input
+                    } else {
+                        showToast('⚠️ Please enter a valid email.');
+                    }
+                });
+            }
+
+            // Chatbot Basic Logic
+            const chatbotInput = document.getElementById('chatbotInput');
+            const chatbotSend = document.getElementById('chatbotSend');
+            const chatbotBody = document.getElementById('chatbotBody');
+
+            function sendChatMessage() {
+                const text = chatbotInput.value.trim();
+                if (!text) return;
+                
+                // User message
+                chatbotBody.innerHTML += `<div class="bot-message" style="background:var(--primary); color:white; align-self:flex-end; margin-left:auto;">${text}</div>`;
+                chatbotInput.value = '';
+
+                // Bot reply (Basic keyword matching)
+                setTimeout(() => {
+                    let reply = "Main abhi seekh raha hoon. Aap search bar ka use karke apna tool dhundh sakte hain!";
+                    const lowerText = text.toLowerCase();
+                    
+                    if(lowerText.includes('pdf')) reply = "Aap PDF Tools section mein jaakar Merge, Split, ya Word to PDF try kar sakte hain.";
+                    else if(lowerText.includes('image') || lowerText.includes('photo')) reply = "Image Tools section mein Image Compressor aur Background Remover bahut popular hain!";
+                    else if(lowerText.includes('qr')) reply = "QR Code Generator Utility Tools section mein hai.";
+                    else if(lowerText.includes('hello') || lowerText.includes('hi') || lowerText.includes('namaste')) reply = "Namaste! Kaise madad kar sakta hoon aaj?";
+                    
+                    chatbotBody.innerHTML += `<div class="bot-message">${reply}</div>`;
+                    chatbotBody.scrollTop = chatbotBody.scrollHeight;
+                }, 800);
+            }
+
+            if(chatbotSend) {
+                chatbotSend.addEventListener('click', sendChatMessage);
+                chatbotInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') sendChatMessage();
+                });
+            }
         })();
     </script>
 
