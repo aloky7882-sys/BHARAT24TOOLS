@@ -85,12 +85,12 @@
         .badge-row { display:flex; gap:6px; justify-content:center; margin-top:12px; flex-wrap:wrap; }
         .badge { background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.65rem; font-weight:600; }
 
-        /* ✅ Editor Area */
+        /* ✅ Editor Area (FIXED CSS for Cropper.js) */
         .editor-area { display:none; margin-top:20px; }
         .editor-area.show { display:block; }
         
-        .image-container { background:#111; border-radius:10px; overflow:hidden; max-height:450px; display:flex; justify-content:center; align-items:center; margin-bottom:16px; border:1px solid rgba(168,85,247,0.3); }
-        .image-container img { max-width:100%; max-height:450px; display:block; }
+        .image-container { background:#111; border-radius:10px; margin-bottom:16px; border:1px solid rgba(168,85,247,0.3); width: 100%; display: block; overflow: hidden; }
+        .image-container img { max-width: 100%; max-height: 60vh; display: block; margin: 0 auto; }
 
         /* ✅ Compact Controls */
         .controls { display:grid; grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:8px; margin-bottom:16px; }
@@ -290,7 +290,7 @@
         revokeAllUrls();
         abortReader();
         if (cropper) {
-            cropper.destroy();
+            try { cropper.destroy(); } catch(e) {}
             cropper = null;
         }
         imageToCrop.src = '';
@@ -331,9 +331,9 @@
         activeReader = reader;
         reader.onload = (e) => {
             activeReader = null;
-            const imgUrl = trackUrl(e.target.result); 
+            // Base64 Data URL direct use karein, objectURL track karne ki zaroorat nahi
+            imageToCrop.src = e.target.result; 
             
-            imageToCrop.src = imgUrl;
             imageToCrop.onload = () => {
                 uploadZone.style.display = 'none';
                 editorArea.classList.add('show');
