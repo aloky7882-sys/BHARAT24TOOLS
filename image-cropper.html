@@ -56,7 +56,7 @@
         .badge-row { display:flex; gap:6px; justify-content:center; margin-top:12px; flex-wrap:wrap; }
         .badge { background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.65rem; font-weight:600; }
 
-        /* ✅ Editor Area - FIXED FOR LAPTOP */
+        /* ✅ Editor Area */
         .editor-area { display:none; margin-top:20px; }
         .editor-area.show { display:block; }
         
@@ -67,21 +67,20 @@
             margin-bottom:16px; 
             border:1px solid rgba(168,85,247,0.3); 
             width: 100%; 
-            display: block; 
-            /* overflow: hidden; - Hata diya taaki crop box laptop pe clip na ho */
-        }
-
-        /* Cropper.js ki container height limit taaki screen se bahar na jaye */
-        .cropper-container {
-            max-height: 60vh !important;
-            width: 100%;
-            margin: 0 auto;
+            /* Laptop par image screen se bahar na jaye iske liye height fix ki hai */
+            height: 60vh; 
+            min-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
         
-        /* Image max-width fix taaki horizontal scroll na aaye */
+        /* Image tag */
         #imageToCrop { 
-            max-width: 100%; 
             display: block; 
+            max-width: 100%; 
+            max-height: 100%;
         }
 
         .controls { display:grid; grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:8px; margin-bottom:16px; }
@@ -116,6 +115,7 @@
             .card { padding:16px; } .header-title h1 { font-size:1.4rem; }
             .action-row { flex-direction:column; }
             .steps-grid { grid-template-columns: 1fr; }
+            .image-container { height: auto; max-height: 60vh; }
         }
     </style>
 </head>
@@ -154,7 +154,6 @@
 
         <div class="editor-area" id="editorArea">
             <div class="image-container">
-                <!-- Image tag without max-height to let Cropper handle it -->
                 <img id="imageToCrop" src="" alt="To Crop">
             </div>
 
@@ -313,23 +312,23 @@
         reader.onload = (e) => {
             activeReader = null;
             
-            // Set the image source
+            // ✅ 1. Container ko pehle dikhao (PC par hidden hone ki wajah se box nahi banta)
+            uploadZone.style.display = 'none';
+            editorArea.classList.add('show');
+            
+            // ✅ 2. Image load karo
             imageToCrop.src = e.target.result; 
             
-            // Add event listener for load to ensure image is fully rendered before Cropper starts
-            imageToCrop.addEventListener('load', function initCropper() {
-                imageToCrop.removeEventListener('load', initCropper); // Prevent multiple fires
-                
-                uploadZone.style.display = 'none';
-                editorArea.classList.add('show');
+            // ✅ 3. Jab image pura load ho jaye tab Cropper banao
+            imageToCrop.onload = () => {
                 showStatus('✅ ' + t.loaded, 'success');
 
-                // Destroy old cropper if exists
+                // Agar pehle se cropper hai toh destroy karo
                 if (cropper) {
                     try { cropper.destroy(); } catch(err) {}
                 }
 
-                // Initialize Cropper.js
+                // Naya Cropper banao
                 cropper = new Cropper(imageToCrop, {
                     viewMode: 1, 
                     dragMode: 'move', 
@@ -342,15 +341,14 @@
                     cropBoxMovable: true, 
                     cropBoxResizable: true, 
                     toggleDragModeOnDblclick: false,
-                    // ✅ THIS FIXES LAPTOP/PC SCREEN GLITCHES
+                    // ✅ Laptop fix: Jab cropper ready ho toh ek baar resize call karo
                     ready: function () {
-                        // Force recalculate dimensions (fixes invisible crop box on PC)
                         setTimeout(() => {
                             if (cropper) cropper.resize();
-                        }, 100);
+                        }, 150);
                     }
                 });
-            }, { once: true });
+            };
         };
         reader.readAsDataURL(file);
     }
@@ -358,10 +356,8 @@
     ratioBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            if (!cropper) {
-                console.log("Cropper not ready yet.");
-                return;
-            }
+            if (!cropper) return; // Agar cropper load nahi hua toh kuch mat karo
+            
             ratioBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const ratio = parseFloat(btn.dataset.ratio);
