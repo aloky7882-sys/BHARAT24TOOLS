@@ -13,38 +13,12 @@
     <meta name="theme-color" content="#0d6efd">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-cropper.html">
 
-    <link rel="alternate" hreflang="en" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-cropper.html">
-    <link rel="alternate" hreflang="x-default" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-cropper.html">
-
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-cropper.html">
     <meta property="og:title" content="Image Cropper - Crop Images Online Free | Bharat24Tools">
     <meta property="og:description" content="Crop JPG, PNG, WebP images online with live preview. Free, no upload.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="Bharat24Tools">
-    <meta property="og:locale" content="en_IN">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Image Cropper - Crop Images Online Free | Bharat24Tools">
-    <meta name="twitter:description" content="Crop JPG, PNG, WebP images online with live preview. Free, no upload.">
-    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Image Cropper",
-        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/image-cropper.html",
-        "applicationCategory": "MultimediaApplication",
-        "operatingSystem": "Web Browser",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-        "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.8", "ratingCount": "1120" },
-        "featureList": ["Visual drag & drop crop", "Aspect ratio presets", "20MB support", "Live preview", "Auto cleanup"]
-    }
-    </script>
-
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -54,7 +28,6 @@
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
         
-        /* ✅ Dark Premium Theme (Compact) */
         body { min-height:100vh; background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); padding:16px; color:#e0e7ff; }
         
         header { background:rgba(15,15,30,0.95); padding:12px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; margin:-16px -16px 24px; border-radius:0 0 10px 10px; }
@@ -62,7 +35,6 @@
         header a:hover { color:#a855f7; }
         .brand { font-weight:800; font-size:1rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; display:flex; align-items:center; gap:6px; }
         
-        /* ✅ Language Selector */
         .lang-select { background: rgba(255,255,255,0.1); border: 1px solid rgba(168,85,247,0.4); color: #e0e7ff; padding: 6px 10px; border-radius: 6px; font-family: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer; outline: none; }
         .lang-select option { background: #1e1b4b; color: #e0e7ff; }
 
@@ -74,7 +46,6 @@
         
         .card { background:rgba(30,27,75,0.9); border-radius:16px; padding:24px; border:1px solid rgba(168,85,247,0.3); box-shadow:0 10px 40px rgba(0,0,0,0.3); }
 
-        /* ✅ Compact Upload Zone */
         .upload-zone { border:2px dashed rgba(168,85,247,0.6); border-radius:12px; padding:30px 20px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); position:relative; overflow:hidden; }
         .upload-zone:hover, .upload-zone.active { border-color:#a855f7; background:rgba(168,85,247,0.15); transform:translateY(-2px); }
         .upload-zone input { position:absolute; inset:0; opacity:0; cursor:pointer; }
@@ -85,14 +56,34 @@
         .badge-row { display:flex; gap:6px; justify-content:center; margin-top:12px; flex-wrap:wrap; }
         .badge { background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.65rem; font-weight:600; }
 
-        /* ✅ Editor Area (FIXED CSS for Cropper.js) */
+        /* ✅ Editor Area - FIXED FOR LAPTOP */
         .editor-area { display:none; margin-top:20px; }
         .editor-area.show { display:block; }
         
-        .image-container { background:#111; border-radius:10px; margin-bottom:16px; border:1px solid rgba(168,85,247,0.3); width: 100%; display: block; overflow: hidden; }
-        .image-container img { max-width: 100%; max-height: 60vh; display: block; margin: 0 auto; }
+        /* Container jahan image load hogi */
+        .image-container { 
+            background:#111; 
+            border-radius:10px; 
+            margin-bottom:16px; 
+            border:1px solid rgba(168,85,247,0.3); 
+            width: 100%; 
+            display: block; 
+            /* overflow: hidden; - Hata diya taaki crop box laptop pe clip na ho */
+        }
 
-        /* ✅ Compact Controls */
+        /* Cropper.js ki container height limit taaki screen se bahar na jaye */
+        .cropper-container {
+            max-height: 60vh !important;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* Image max-width fix taaki horizontal scroll na aaye */
+        #imageToCrop { 
+            max-width: 100%; 
+            display: block; 
+        }
+
         .controls { display:grid; grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:8px; margin-bottom:16px; }
         .btn-control { background:rgba(99,102,241,0.1); border:1px solid rgba(168,85,247,0.3); border-radius:8px; padding:10px 6px; color:#cbd5e1; cursor:pointer; font-family:inherit; font-size:0.75rem; font-weight:600; transition:all 0.3s; display:flex; flex-direction:column; align-items:center; gap:4px; }
         .btn-control:hover, .btn-control.active { background:rgba(168,85,247,0.25); border-color:#a855f7; color:#fff; }
@@ -105,7 +96,6 @@
         .btn-reset { background:rgba(220,53,69,0.8); color:#fff; }
         .btn-reset:hover { background:rgba(220,53,69,1); }
 
-        /* Status & Cleanup */
         .status { display:none; margin-top:16px; padding:12px; border-radius:8px; text-align:center; font-weight:600; font-size:0.85rem; }
         .status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
         .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
@@ -113,7 +103,6 @@
 
         .auto-cleanup-note { background:rgba(34,197,94,0.08); border-left:3px solid #22c55e; padding:10px 14px; border-radius:8px; margin-top:16px; font-size:0.75rem; color:#86efac; line-height:1.5; }
 
-        /* ✅ PDF24 Style "How to Use" Section */
         .how-to-use { margin-top: 30px; padding-top: 24px; border-top: 1px dashed rgba(168,85,247,0.3); }
         .how-to-use h2 { text-align: center; font-size: 1.2rem; color: #e0e7ff; margin-bottom: 20px; font-weight: 700; }
         .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -136,7 +125,6 @@
     <a href="index.html"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Back</span></a>
     <div class="brand"><i class="fas fa-bolt"></i> Bharat24Tools</div>
     
-    <!-- ✅ Language Selector -->
     <select class="lang-select" id="languageSelect" onchange="changeLanguage(this.value)">
         <option value="en">EN</option>
         <option value="hi">HI</option>
@@ -150,7 +138,6 @@
     </div>
 
     <div class="card">
-        <!-- Upload Zone -->
         <div class="upload-zone" id="uploadZone">
             <div class="upload-icon"><i class="fas fa-crop-alt"></i></div>
             <h2 data-i18n="uploadTitle">Click or Drag Image Here</h2>
@@ -165,28 +152,26 @@
 
         <div class="status" id="status"></div>
 
-        <!-- Editor Area -->
         <div class="editor-area" id="editorArea">
-            
             <div class="image-container">
+                <!-- Image tag without max-height to let Cropper handle it -->
                 <img id="imageToCrop" src="" alt="To Crop">
             </div>
 
-            <!-- Tools (Aspect Ratio & Rotate) -->
             <div class="controls">
-                <button class="btn-control active" data-ratio="NaN"><i class="fas fa-expand"></i> <span data-i18n="btnFree">Free</span></button>
-                <button class="btn-control" data-ratio="1"><i class="fas fa-square"></i> 1:1</button>
-                <button class="btn-control" data-ratio="1.777"><i class="fas fa-tv"></i> 16:9</button>
-                <button class="btn-control" data-ratio="1.333"><i class="fas fa-image"></i> 4:3</button>
-                <button class="btn-control" onclick="rotateImage(90)"><i class="fas fa-undo"></i> <span data-i18n="btnRotateL">Rotate L</span></button>
-                <button class="btn-control" onclick="rotateImage(-90)"><i class="fas fa-redo"></i> <span data-i18n="btnRotateR">Rotate R</span></button>
+                <button type="button" class="btn-control active" data-ratio="NaN"><i class="fas fa-expand"></i> <span data-i18n="btnFree">Free</span></button>
+                <button type="button" class="btn-control" data-ratio="1"><i class="fas fa-square"></i> 1:1</button>
+                <button type="button" class="btn-control" data-ratio="1.777"><i class="fas fa-tv"></i> 16:9</button>
+                <button type="button" class="btn-control" data-ratio="1.333"><i class="fas fa-image"></i> 4:3</button>
+                <button type="button" class="btn-control" onclick="rotateImage(90)"><i class="fas fa-undo"></i> <span data-i18n="btnRotateL">Rotate L</span></button>
+                <button type="button" class="btn-control" onclick="rotateImage(-90)"><i class="fas fa-redo"></i> <span data-i18n="btnRotateR">Rotate R</span></button>
             </div>
 
             <div class="action-row">
-                <button class="btn-action btn-download" id="downloadBtn">
+                <button type="button" class="btn-action btn-download" id="downloadBtn">
                     <i class="fas fa-download"></i> <span data-i18n="btnDownload">Crop & Download</span>
                 </button>
-                <button class="btn-action btn-reset" id="resetBtn">
+                <button type="button" class="btn-action btn-reset" id="resetBtn">
                     <i class="fas fa-redo"></i> <span data-i18n="btnReset">Reset</span>
                 </button>
             </div>
@@ -196,7 +181,6 @@
             <strong data-i18n="cleanupTitle">🧹 Auto Cleanup:</strong> <span data-i18n="cleanupText">Object URLs and canvas memory are released automatically. Your image is never uploaded.</span>
         </div>
 
-        <!-- ✅ PDF24 Style How to Use Section -->
         <div class="how-to-use">
             <h2 data-i18n="howToTitle">How to Use</h2>
             <div class="steps-grid">
@@ -220,11 +204,9 @@
     </div>
 </main>
 
-<!-- ✅ Cropper.js Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
 
 <script>
-    // ✅ Translations Dictionary
     const translations = {
         en: {
             back: "Back", title: "✂️ Advanced Image Cropper", subtitle: "Drag & drop the box on the image to crop perfectly.",
@@ -263,7 +245,6 @@
         });
     }
 
-    // 🧹 Core Logic & Auto Cleanup
     const MAX_SIZE = 20 * 1024 * 1024;
     let cropper = null;
     let activeUrls = new Set();
@@ -331,27 +312,56 @@
         activeReader = reader;
         reader.onload = (e) => {
             activeReader = null;
-            // Base64 Data URL direct use karein, objectURL track karne ki zaroorat nahi
+            
+            // Set the image source
             imageToCrop.src = e.target.result; 
             
-            imageToCrop.onload = () => {
+            // Add event listener for load to ensure image is fully rendered before Cropper starts
+            imageToCrop.addEventListener('load', function initCropper() {
+                imageToCrop.removeEventListener('load', initCropper); // Prevent multiple fires
+                
                 uploadZone.style.display = 'none';
                 editorArea.classList.add('show');
                 showStatus('✅ ' + t.loaded, 'success');
 
+                // Destroy old cropper if exists
+                if (cropper) {
+                    try { cropper.destroy(); } catch(err) {}
+                }
+
+                // Initialize Cropper.js
                 cropper = new Cropper(imageToCrop, {
-                    viewMode: 1, dragMode: 'move', aspectRatio: NaN, autoCropArea: 0.8,
-                    restore: false, guides: true, center: true, highlight: false,
-                    cropBoxMovable: true, cropBoxResizable: true, toggleDragModeOnDblclick: false,
+                    viewMode: 1, 
+                    dragMode: 'move', 
+                    aspectRatio: NaN, 
+                    autoCropArea: 0.8,
+                    restore: false, 
+                    guides: true, 
+                    center: true, 
+                    highlight: false,
+                    cropBoxMovable: true, 
+                    cropBoxResizable: true, 
+                    toggleDragModeOnDblclick: false,
+                    // ✅ THIS FIXES LAPTOP/PC SCREEN GLITCHES
+                    ready: function () {
+                        // Force recalculate dimensions (fixes invisible crop box on PC)
+                        setTimeout(() => {
+                            if (cropper) cropper.resize();
+                        }, 100);
+                    }
                 });
-            };
+            }, { once: true });
         };
         reader.readAsDataURL(file);
     }
 
     ratioBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (!cropper) return;
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!cropper) {
+                console.log("Cropper not ready yet.");
+                return;
+            }
             ratioBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const ratio = parseFloat(btn.dataset.ratio);
@@ -397,7 +407,6 @@
         ratioBtns[0].classList.add('active');
     });
 
-    // Initialize language
     window.addEventListener('load', () => {
         changeLanguage('en');
     });
