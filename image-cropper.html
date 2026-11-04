@@ -60,27 +60,26 @@
         .editor-area { display:none; margin-top:20px; }
         .editor-area.show { display:block; }
         
-        /* Container jahan image load hogi */
+        /* ✅ FIX: Removed flex and fixed height. Cropper.js manages this entirely. */
         .image-container { 
             background:#111; 
             border-radius:10px; 
             margin-bottom:16px; 
             border:1px solid rgba(168,85,247,0.3); 
             width: 100%; 
-            /* Laptop par image screen se bahar na jaye iske liye height fix ki hai */
-            height: 60vh; 
-            min-height: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            min-height: 200px;
+            overflow: hidden; /* Prevents image from spilling out before cropper loads */
         }
         
-        /* Image tag */
+        /* ✅ Image max-width to fit screen, no max-height restriction */
         #imageToCrop { 
             display: block; 
             max-width: 100%; 
-            max-height: 100%;
+        }
+
+        /* ✅ Fix for Cropper's own container height on laptops */
+        .cropper-container {
+            max-height: 60vh !important;
         }
 
         .controls { display:grid; grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:8px; margin-bottom:16px; }
@@ -115,7 +114,6 @@
             .card { padding:16px; } .header-title h1 { font-size:1.4rem; }
             .action-row { flex-direction:column; }
             .steps-grid { grid-template-columns: 1fr; }
-            .image-container { height: auto; max-height: 60vh; }
         }
     </style>
 </head>
@@ -154,6 +152,7 @@
 
         <div class="editor-area" id="editorArea">
             <div class="image-container">
+                <!-- Image tag has no inline styles, pure JS handles it -->
                 <img id="imageToCrop" src="" alt="To Crop">
             </div>
 
@@ -312,23 +311,22 @@
         reader.onload = (e) => {
             activeReader = null;
             
-            // ✅ 1. Container ko pehle dikhao (PC par hidden hone ki wajah se box nahi banta)
+            // 1. Dikhado UI ko pehle
             uploadZone.style.display = 'none';
             editorArea.classList.add('show');
             
-            // ✅ 2. Image load karo
+            // 2. Image source set karo
             imageToCrop.src = e.target.result; 
             
-            // ✅ 3. Jab image pura load ho jaye tab Cropper banao
+            // 3. Image load hone ka wait karo
             imageToCrop.onload = () => {
                 showStatus('✅ ' + t.loaded, 'success');
 
-                // Agar pehle se cropper hai toh destroy karo
                 if (cropper) {
                     try { cropper.destroy(); } catch(err) {}
                 }
 
-                // Naya Cropper banao
+                // 4. Cropper Initialize karo
                 cropper = new Cropper(imageToCrop, {
                     viewMode: 1, 
                     dragMode: 'move', 
@@ -341,11 +339,11 @@
                     cropBoxMovable: true, 
                     cropBoxResizable: true, 
                     toggleDragModeOnDblclick: false,
-                    // ✅ Laptop fix: Jab cropper ready ho toh ek baar resize call karo
+                    // 5. Jab ready ho, toh window resize trigger karo taaki box set ho jaye
                     ready: function () {
                         setTimeout(() => {
                             if (cropper) cropper.resize();
-                        }, 150);
+                        }, 200);
                     }
                 });
             };
@@ -356,7 +354,7 @@
     ratioBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            if (!cropper) return; // Agar cropper load nahi hua toh kuch mat karo
+            if (!cropper) return; 
             
             ratioBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
