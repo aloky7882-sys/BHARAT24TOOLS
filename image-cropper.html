@@ -56,30 +56,29 @@
         .badge-row { display:flex; gap:6px; justify-content:center; margin-top:12px; flex-wrap:wrap; }
         .badge { background:rgba(34,197,94,0.15); color:#86efac; padding:4px 10px; border-radius:20px; font-size:0.65rem; font-weight:600; }
 
-        /* ✅ Editor Area */
         .editor-area { display:none; margin-top:20px; }
         .editor-area.show { display:block; }
         
-        /* ✅ FIX: Removed flex and fixed height. Cropper.js manages this entirely. */
+        /* ✅ Simple container, no flex, no fixed height */
         .image-container { 
             background:#111; 
             border-radius:10px; 
             margin-bottom:16px; 
             border:1px solid rgba(168,85,247,0.3); 
             width: 100%; 
-            min-height: 200px;
-            overflow: hidden; /* Prevents image from spilling out before cropper loads */
+            display: block;
         }
         
-        /* ✅ Image max-width to fit screen, no max-height restriction */
         #imageToCrop { 
             display: block; 
             max-width: 100%; 
         }
 
-        /* ✅ Fix for Cropper's own container height on laptops */
+        /* ✅ Limiting Cropper height so it doesn't push buttons away */
         .cropper-container {
-            max-height: 60vh !important;
+            max-height: 60vh !important; 
+            width: 100%;
+            margin: 0 auto;
         }
 
         .controls { display:grid; grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:8px; margin-bottom:16px; }
@@ -152,7 +151,6 @@
 
         <div class="editor-area" id="editorArea">
             <div class="image-container">
-                <!-- Image tag has no inline styles, pure JS handles it -->
                 <img id="imageToCrop" src="" alt="To Crop">
             </div>
 
@@ -308,44 +306,45 @@
 
         const reader = new FileReader();
         activeReader = reader;
+        
         reader.onload = (e) => {
             activeReader = null;
             
-            // 1. Dikhado UI ko pehle
-            uploadZone.style.display = 'none';
-            editorArea.classList.add('show');
-            
-            // 2. Image source set karo
+            // 1. Set Image source
             imageToCrop.src = e.target.result; 
             
-            // 3. Image load hone ka wait karo
+            // 2. Wait for image to fully load in DOM
             imageToCrop.onload = () => {
+                
+                // 3. Now show the UI
+                uploadZone.style.display = 'none';
+                editorArea.classList.add('show');
                 showStatus('✅ ' + t.loaded, 'success');
 
                 if (cropper) {
                     try { cropper.destroy(); } catch(err) {}
                 }
 
-                // 4. Cropper Initialize karo
-                cropper = new Cropper(imageToCrop, {
-                    viewMode: 1, 
-                    dragMode: 'move', 
-                    aspectRatio: NaN, 
-                    autoCropArea: 0.8,
-                    restore: false, 
-                    guides: true, 
-                    center: true, 
-                    highlight: false,
-                    cropBoxMovable: true, 
-                    cropBoxResizable: true, 
-                    toggleDragModeOnDblclick: false,
-                    // 5. Jab ready ho, toh window resize trigger karo taaki box set ho jaye
-                    ready: function () {
-                        setTimeout(() => {
-                            if (cropper) cropper.resize();
-                        }, 200);
-                    }
-                });
+                // 4. THE MAGIC FIX: 50ms delay so browser lays out the DOM properly before Cropper calculates sizes
+                setTimeout(() => {
+                    cropper = new Cropper(imageToCrop, {
+                        viewMode: 1, 
+                        dragMode: 'move', 
+                        aspectRatio: NaN, 
+                        autoCropArea: 0.8,
+                        restore: false, 
+                        guides: true, 
+                        center: true, 
+                        highlight: false,
+                        cropBoxMovable: true, 
+                        cropBoxResizable: true, 
+                        toggleDragModeOnDblclick: false,
+                        ready: function () {
+                            // 5. Force resize just in case it missed the screen size
+                            cropper.resize();
+                        }
+                    });
+                }, 50);
             };
         };
         reader.readAsDataURL(file);
@@ -404,7 +403,6 @@
     window.addEventListener('load', () => {
         changeLanguage('en');
     });
-
 </script>
 </body>
 </html>
