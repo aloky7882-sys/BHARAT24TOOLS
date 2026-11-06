@@ -42,6 +42,12 @@
     </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- ✅ PDFLib (For 100% Client-side Rotation) -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <!-- ✅ PDF.js (For Live Preview) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
         body { min-height:100vh; background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); padding:30px 16px 60px; color:#e0e7ff; }
@@ -116,7 +122,7 @@
 
 <main>
     <h1>🔄 Rotate PDF</h1>
-    <p class="subtitle">PDF के सभी pages को rotate करो — Server-powered</p>
+    <p class="subtitle">PDF के सभी pages को rotate करो — 100% Secure (No Server)</p>
 
     <div class="card">
         <div class="upload-zone" id="uploadZone">
@@ -124,8 +130,8 @@
             <p><span class="highlight">Click करो या Drag करो</span></p>
             <p>PDF file (max 15MB)</p>
             <div class="badge-row">
-                <span class="badge">⚡ Fast</span>
-                <span class="badge">🔒 Private</span>
+                <span class="badge">⚡ Super Fast</span>
+                <span class="badge">🔒 100% Private</span>
                 <span class="badge">👁️ Live Preview</span>
             </div>
         </div>
@@ -168,186 +174,184 @@
                 <canvas id="previewCanvas"></canvas>
             </div>
 
-            <button class="primary-btn" id="rotateBtn">🔄 Rotate PDF</button>
+            <button class="primary-btn" id="rotateBtn">🔄 Rotate PDF & Download</button>
             <div class="progress-bar" id="progressBar"><div class="fill" id="progressFill"></div></div>
         </div>
 
         <div class="status" id="status"></div>
 
         <div class="info-box">
-            <strong>💡 कैसे काम करता है:</strong> तुम्हारी PDF हमारे server पर Ghostscript से rotate होती है। सारे pages एक साथ rotate होंगे।
+            <strong>💡 कैसे काम करता है:</strong> तुम्हारी PDF 100% तुम्हारे ब्राउज़र (Browser) में ही rotate होती है। कोई भी फाइल सर्वर पर अपलोड नहीं होती, इसलिए यह पूरी तरह से सुरक्षित और बहुत तेज़ है।
         </div>
     </div>
 </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
 <script>
-pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    // PDF.js Worker for Preview
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-const API_URL = 'https://bharat24tools-api.onrender.com';
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const controls = document.getElementById('controls');
+    const rotateBtn = document.getElementById('rotateBtn');
+    const fileNameEl = document.getElementById('fileName');
+    const fileSizeEl = document.getElementById('fileSize');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+    const status = document.getElementById('status');
+    const previewBox = document.getElementById('previewBox');
+    const previewCanvas = document.getElementById('previewCanvas');
 
-const uploadZone = document.getElementById('uploadZone');
-const fileInput = document.getElementById('fileInput');
-const controls = document.getElementById('controls');
-const rotateBtn = document.getElementById('rotateBtn');
-const fileNameEl = document.getElementById('fileName');
-const fileSizeEl = document.getElementById('fileSize');
-const progressBar = document.getElementById('progressBar');
-const progressFill = document.getElementById('progressFill');
-const status = document.getElementById('status');
-const previewBox = document.getElementById('previewBox');
-const previewCanvas = document.getElementById('previewCanvas');
+    let selectedFile = null;
+    let selectedAngle = 90;
+    let pdfDoc = null;
+    let firstPageImage = null;
 
-let selectedFile = null;
-let selectedAngle = 90;
-let pdfDoc = null;
-let firstPageImage = null;
-
-document.querySelectorAll('.angle-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.angle-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedAngle = parseInt(btn.dataset.angle);
-        updatePreview();
-    });
-});
-
-uploadZone.addEventListener('click', () => fileInput.click());
-uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
-uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
-uploadZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    uploadZone.classList.remove('active');
-    if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
-});
-fileInput.addEventListener('change', (e) => {
-    if (e.target.files.length > 0) handleFile(e.target.files[0]);
-});
-
-async function handleFile(file) {
-    if (!file.name.toLowerCase().endsWith('.pdf')) {
-        showStatus('❌ कृपया PDF file चुनें', 'error');
-        return;
-    }
-    if (file.size > 15 * 1024 * 1024) {
-        showStatus('❌ File 15MB से बड़ी है', 'error');
-        return;
-    }
-
-    selectedFile = file;
-    fileNameEl.textContent = file.name.length > 30 ? file.name.substring(0, 30) + '...' : file.name;
-    fileSizeEl.textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
-    controls.style.display = 'block';
-    showStatus(`✅ File ready: ${(file.size / 1024 / 1024).toFixed(2)} MB`, 'success');
-
-    try {
-        const arrayBuffer = await file.arrayBuffer();
-        pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer.slice(0) }).promise;
-        const page = await pdfDoc.getPage(1);
-        const viewport = page.getViewport({ scale: 0.5 });
-        previewCanvas.width = viewport.width;
-        previewCanvas.height = viewport.height;
-        const ctx = previewCanvas.getContext('2d');
-        await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-
-        previewBox.style.display = 'block';
-        firstPageImage = previewCanvas.toDataURL();
-        updatePreview();
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-function updatePreview() {
-    if (!firstPageImage) return;
-    const img = new Image();
-    img.onload = () => {
-        const canvas = previewCanvas;
-        const ctx = canvas.getContext('2d');
-        const angle = selectedAngle;
-
-        if (angle === 90 || angle === 270) {
-            canvas.width = img.height;
-            canvas.height = img.width;
-        } else {
-            canvas.width = img.width;
-            canvas.height = img.height;
-        }
-
-        ctx.save();
-        ctx.translate(canvas.width / 2, canvas.height / 2);
-        ctx.rotate((angle * Math.PI) / 180);
-        ctx.drawImage(img, -img.width / 2, -img.height / 2);
-        ctx.restore();
-    };
-    img.src = firstPageImage;
-}
-
-rotateBtn.addEventListener('click', async () => {
-    if (!selectedFile) return;
-
-    if (selectedAngle === 0) {
-        showStatus('❌ कृपया rotation angle चुनें (90°, 180°, 270°)', 'error');
-        return;
-    }
-
-    rotateBtn.disabled = true;
-    progressBar.style.display = 'block';
-    progressFill.style.width = '20%';
-    showStatus('⏳ Uploading to server... (if server was sleeping, wait 30s)', 'loading');
-
-    setTimeout(() => {
-        if (rotateBtn.disabled) {
-            progressFill.style.width = '60%';
-            showStatus('⏳ Rotating PDF on server...', 'loading');
-        }
-    }, 5000);
-
-    try {
-        const formData = new FormData();
-        formData.append('file', selectedFile);
-        formData.append('angle', selectedAngle);
-
-        const res = await fetch(API_URL + '/rotate-pdf', {
-            method: 'POST',
-            body: formData
+    // Angle Buttons Logic
+    document.querySelectorAll('.angle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.angle-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedAngle = parseInt(btn.dataset.angle);
+            updatePreview();
         });
+    });
 
-        progressFill.style.width = '90%';
+    // Upload Triggers
+    uploadZone.addEventListener('click', () => fileInput.click());
+    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('active');
+        if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) handleFile(e.target.files[0]);
+    });
 
-        if (!res.ok) {
-            const errText = await res.text();
-            throw new Error(errText || 'Server error ' + res.status);
+    // File Handler
+    async function handleFile(file) {
+        if (!file.name.toLowerCase().endsWith('.pdf')) {
+            showStatus('❌ कृपया PDF file चुनें', 'error');
+            return;
+        }
+        if (file.size > 15 * 1024 * 1024) {
+            showStatus('❌ File 15MB से बड़ी है', 'error');
+            return;
         }
 
-        const blob = await res.blob();
-        progressFill.style.width = '100%';
+        selectedFile = file;
+        fileNameEl.textContent = file.name.length > 30 ? file.name.substring(0, 30) + '...' : file.name;
+        fileSizeEl.textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+        controls.style.display = 'block';
+        showStatus(`✅ File ready: ${(file.size / 1024 / 1024).toFixed(2)} MB`, 'success');
 
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = selectedFile.name.replace(/\.pdf$/i, '') + '-rotated.pdf';
-        link.click();
-        setTimeout(() => URL.revokeObjectURL(url), 5000);
+        try {
+            // Render preview using pdf.js
+            const arrayBuffer = await file.arrayBuffer();
+            pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer.slice(0) }).promise;
+            const page = await pdfDoc.getPage(1);
+            const viewport = page.getViewport({ scale: 0.5 });
+            previewCanvas.width = viewport.width;
+            previewCanvas.height = viewport.height;
+            const ctx = previewCanvas.getContext('2d');
+            await page.render({ canvasContext: ctx, viewport: viewport }).promise;
 
-        showStatus(`🎉 PDF rotated ${selectedAngle}° successfully!`, 'success');
-    } catch (err) {
-        console.error(err);
-        showStatus('❌ Error: ' + err.message, 'error');
+            previewBox.style.display = 'block';
+            firstPageImage = previewCanvas.toDataURL();
+            updatePreview();
+        } catch (err) {
+            console.error(err);
+            showStatus('❌ Could not load PDF preview. File might be corrupted.', 'error');
+        }
     }
 
-    rotateBtn.disabled = false;
-    setTimeout(() => {
-        progressBar.style.display = 'none';
-        progressFill.style.width = '0%';
-    }, 4000);
-});
+    // Preview Rotator Logic
+    function updatePreview() {
+        if (!firstPageImage) return;
+        const img = new Image();
+        img.onload = () => {
+            const canvas = previewCanvas;
+            const ctx = canvas.getContext('2d');
+            const angle = selectedAngle;
 
-function showStatus(msg, type) {
-    status.textContent = msg;
-    status.className = 'status ' + type;
-}
+            if (angle === 90 || angle === 270) {
+                canvas.width = img.height;
+                canvas.height = img.width;
+            } else {
+                canvas.width = img.width;
+                canvas.height = img.height;
+            }
+
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate((angle * Math.PI) / 180);
+            ctx.drawImage(img, -img.width / 2, -img.height / 2);
+            ctx.restore();
+        };
+        img.src = firstPageImage;
+    }
+
+    // MAIN ROTATION LOGIC (100% CLIENT-SIDE using PDF-lib)
+    rotateBtn.addEventListener('click', async () => {
+        if (!selectedFile) return;
+
+        rotateBtn.disabled = true;
+        progressBar.style.display = 'block';
+        progressFill.style.width = '20%';
+        showStatus('⏳ Processing PDF locally (Fast & Secure)...', 'loading');
+
+        try {
+            // 1. Read file
+            const arrayBuffer = await selectedFile.arrayBuffer();
+            
+            // 2. Load PDF using pdf-lib (ignoreEncryption for safety)
+            const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+            const pages = pdfDoc.getPages();
+            
+            progressFill.style.width = '50%';
+            
+            // 3. Rotate all pages
+            pages.forEach(page => {
+                const currentRotation = page.getRotation().angle;
+                // Add current angle to selected angle to prevent overwriting existing rotations
+                page.setRotation(PDFLib.degrees((currentRotation + selectedAngle) % 360));
+            });
+            
+            progressFill.style.width = '80%';
+            
+            // 4. Save and Download
+            const pdfBytes = await pdfDoc.save();
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = selectedFile.name.replace(/\.pdf$/i, '') + '-rotated.pdf';
+            link.click();
+            
+            setTimeout(() => URL.revokeObjectURL(url), 5000);
+            
+            progressFill.style.width = '100%';
+            showStatus(`🎉 PDF rotated successfully! Check your downloads.`, 'success');
+            
+        } catch (err) {
+            console.error(err);
+            showStatus('❌ Error: ' + (err.message || 'Could not process PDF. It might be password protected.'), 'error');
+        } finally {
+            rotateBtn.disabled = false;
+            setTimeout(() => {
+                progressBar.style.display = 'none';
+                progressFill.style.width = '0%';
+            }, 4000);
+        }
+    });
+
+    function showStatus(msg, type) {
+        status.textContent = msg;
+        status.className = 'status ' + type;
+    }
 </script>
 </body>
 </html>
