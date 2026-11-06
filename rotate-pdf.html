@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ============ SEO META TAGS — Bharat24Tools ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -16,7 +15,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- ✅ PDFLib (Changed to jsDelivr for better reliability) -->
+    <!-- ✅ PDFLib (For Client-Side Rotation) -->
     <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <!-- ✅ PDF.js (For Live Preview) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -36,13 +35,17 @@
 
         .card { background:rgba(30,27,75,0.9); border-radius:20px; padding:36px; border:1px solid rgba(168,85,247,0.3); box-shadow:0 20px 60px rgba(0,0,0,0.4); }
 
-        .upload-zone { border:3px dashed rgba(168,85,247,0.6); border-radius:16px; padding:50px 25px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); }
+        /* ✅ FIX: Position relative so input covers the whole box */
+        .upload-zone { border:3px dashed rgba(168,85,247,0.6); border-radius:16px; padding:50px 25px; text-align:center; cursor:pointer; transition:all 0.3s; background:rgba(99,102,241,0.05); position: relative; overflow: hidden; }
         .upload-zone:hover, .upload-zone.active { border-color:#a855f7; background:rgba(168,85,247,0.15); transform:translateY(-2px); }
+        
+        /* ✅ FIX: Input invisible but covers the entire zone (No JS click needed) */
+        #fileInput { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10; }
+
         .upload-icon { font-size:3rem; margin-bottom:14px; }
         .upload-zone p { color:#cbd5e1; margin:6px 0; }
         .highlight { color:#e0e7ff; font-weight:700; }
-        input[type="file"] { display:none; }
-
+        
         .badge-row { display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
         .badge { background:rgba(34,197,94,0.15); color:#86efac; padding:5px 12px; border-radius:20px; font-size:0.72rem; font-weight:600; }
 
@@ -98,7 +101,9 @@
     <p class="subtitle">PDF के सभी pages को rotate करो — 100% Secure (No Server)</p>
 
     <div class="card">
+        <!-- ✅ Input is INSIDE the upload-zone to guarantee click works on Desktop -->
         <div class="upload-zone" id="uploadZone">
+            <input type="file" id="fileInput" accept=".pdf,application/pdf">
             <div class="upload-icon">🔄</div>
             <p><span class="highlight">Click करो या Drag करो</span></p>
             <p>PDF file (max 15MB)</p>
@@ -108,7 +113,6 @@
                 <span class="badge">👁️ Live Preview</span>
             </div>
         </div>
-        <input type="file" id="fileInput" accept=".pdf,application/pdf">
 
         <div class="controls" id="controls">
             <div class="file-info">
@@ -119,22 +123,22 @@
             <div class="control-group">
                 <label>🎯 Rotation Angle:</label>
                 <div class="angle-grid">
-                    <button class="angle-btn active" data-angle="90">
+                    <button type="button" class="angle-btn active" data-angle="90">
                         <div class="angle-icon">↻</div>
                         <div class="angle-title">90° Right</div>
                         <div class="angle-desc">Clockwise</div>
                     </button>
-                    <button class="angle-btn" data-angle="180">
+                    <button type="button" class="angle-btn" data-angle="180">
                         <div class="angle-icon">⟳</div>
                         <div class="angle-title">180°</div>
                         <div class="angle-desc">Upside down</div>
                     </button>
-                    <button class="angle-btn" data-angle="270">
+                    <button type="button" class="angle-btn" data-angle="270">
                         <div class="angle-icon">↺</div>
                         <div class="angle-title">90° Left</div>
                         <div class="angle-desc">Counter-clockwise</div>
                     </button>
-                    <button class="angle-btn" data-angle="0">
+                    <button type="button" class="angle-btn" data-angle="0">
                         <div class="angle-icon">⭕</div>
                         <div class="angle-title">Reset</div>
                         <div class="angle-desc">No rotation</div>
@@ -147,7 +151,7 @@
                 <canvas id="previewCanvas"></canvas>
             </div>
 
-            <button class="primary-btn" id="rotateBtn">🔄 Rotate PDF & Download</button>
+            <button type="button" class="primary-btn" id="rotateBtn">🔄 Rotate PDF & Download</button>
             <div class="progress-bar" id="progressBar"><div class="fill" id="progressFill"></div></div>
         </div>
 
@@ -187,6 +191,20 @@
         }
     });
 
+    // Drag and Drop logic
+    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('active');
+        if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
+    });
+
+    // File Select logic
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) handleFile(e.target.files[0]);
+    });
+
     // Angle Buttons Logic
     document.querySelectorAll('.angle-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -195,19 +213,6 @@
             selectedAngle = parseInt(btn.dataset.angle);
             updatePreview();
         });
-    });
-
-    // Upload Triggers
-    uploadZone.addEventListener('click', () => fileInput.click());
-    uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
-    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
-    uploadZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        uploadZone.classList.remove('active');
-        if (e.dataTransfer.files.length > 0) handleFile(e.dataTransfer.files[0]);
-    });
-    fileInput.addEventListener('change', (e) => {
-        if (e.target.files.length > 0) handleFile(e.target.files[0]);
     });
 
     // File Handler
@@ -308,7 +313,7 @@
             const blob = new Blob([pdfBytes], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
             
-            // 🔥 DESKTOP DOWNLOAD FIX: Append to DOM before clicking
+            // Desktop Download Fix
             const link = document.createElement('a');
             link.href = url;
             link.download = selectedFile.name.replace(/\.pdf$/i, '') + '-rotated.pdf';
@@ -323,7 +328,6 @@
             
         } catch (err) {
             console.error("Rotation Error:", err);
-            // Handle password protected error specifically
             if (err.message.includes('encrypted')) {
                 showStatus('❌ This PDF is password protected. Please remove the password first.', 'error');
             } else {
