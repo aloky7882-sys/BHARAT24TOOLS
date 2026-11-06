@@ -14,37 +14,10 @@
     <meta name="theme-color" content="#0d6efd">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/rotate-pdf.html">
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/rotate-pdf.html">
-    <meta property="og:title" content="Rotate PDF - Rotate PDF Pages Online Free | Bharat24Tools">
-    <meta property="og:description" content="Rotate PDF pages 90°, 180° or 270° online with live preview. Free, no signup.">
-    <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
-    <meta property="og:site_name" content="Bharat24Tools">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Rotate PDF - Rotate PDF Pages Online Free | Bharat24Tools">
-    <meta name="twitter:description" content="Rotate PDF pages 90°, 180° or 270° online with live preview. Free, no signup.">
-    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
-
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Rotate PDF",
-        "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/rotate-pdf.html",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Web Browser",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
-    }
-    </script>
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- ✅ PDFLib (For 100% Client-side Rotation) -->
-    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <!-- ✅ PDFLib (Changed to jsDelivr for better reliability) -->
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <!-- ✅ PDF.js (For Live Preview) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
@@ -207,6 +180,13 @@
     let pdfDoc = null;
     let firstPageImage = null;
 
+    // Check if PDFLib loaded successfully
+    window.addEventListener('load', () => {
+        if (typeof PDFLib === 'undefined') {
+            showStatus('⚠️ Error: PDF Library failed to load. Please disable AdBlocker and refresh.', 'error');
+        }
+    });
+
     // Angle Buttons Logic
     document.querySelectorAll('.angle-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -248,7 +228,6 @@
         showStatus(`✅ File ready: ${(file.size / 1024 / 1024).toFixed(2)} MB`, 'success');
 
         try {
-            // Render preview using pdf.js
             const arrayBuffer = await file.arrayBuffer();
             pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer.slice(0) }).promise;
             const page = await pdfDoc.getPage(1);
@@ -296,6 +275,11 @@
     // MAIN ROTATION LOGIC (100% CLIENT-SIDE using PDF-lib)
     rotateBtn.addEventListener('click', async () => {
         if (!selectedFile) return;
+        
+        if (typeof PDFLib === 'undefined') {
+            showStatus('❌ PDF Library missing. Please refresh the page.', 'error');
+            return;
+        }
 
         rotateBtn.disabled = true;
         progressBar.style.display = 'block';
@@ -303,33 +287,34 @@
         showStatus('⏳ Processing PDF locally (Fast & Secure)...', 'loading');
 
         try {
-            // 1. Read file
             const arrayBuffer = await selectedFile.arrayBuffer();
             
-            // 2. Load PDF using pdf-lib (ignoreEncryption for safety)
+            // Load PDF
             const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
             const pages = pdfDoc.getPages();
             
             progressFill.style.width = '50%';
             
-            // 3. Rotate all pages
+            // Rotate all pages
             pages.forEach(page => {
                 const currentRotation = page.getRotation().angle;
-                // Add current angle to selected angle to prevent overwriting existing rotations
                 page.setRotation(PDFLib.degrees((currentRotation + selectedAngle) % 360));
             });
             
             progressFill.style.width = '80%';
             
-            // 4. Save and Download
+            // Save and Download
             const pdfBytes = await pdfDoc.save();
             const blob = new Blob([pdfBytes], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
             
+            // 🔥 DESKTOP DOWNLOAD FIX: Append to DOM before clicking
             const link = document.createElement('a');
             link.href = url;
             link.download = selectedFile.name.replace(/\.pdf$/i, '') + '-rotated.pdf';
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
             
             setTimeout(() => URL.revokeObjectURL(url), 5000);
             
@@ -337,8 +322,13 @@
             showStatus(`🎉 PDF rotated successfully! Check your downloads.`, 'success');
             
         } catch (err) {
-            console.error(err);
-            showStatus('❌ Error: ' + (err.message || 'Could not process PDF. It might be password protected.'), 'error');
+            console.error("Rotation Error:", err);
+            // Handle password protected error specifically
+            if (err.message.includes('encrypted')) {
+                showStatus('❌ This PDF is password protected. Please remove the password first.', 'error');
+            } else {
+                showStatus('❌ Error: ' + (err.message || 'Could not process PDF.'), 'error');
+            }
         } finally {
             rotateBtn.disabled = false;
             setTimeout(() => {
