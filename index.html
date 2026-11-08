@@ -57,9 +57,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
 
-    <!-- 🌟 ASTRO PANCHANGAM LIBRARY (FOR AUTO FESTIVAL DATES) 🌟 -->
-    <script src="https://cdn.jsdelivr.net/npm/@ishubhamx/panchangam-js@latest/dist/panchangam.min.js"></script>
-
     <style>
         :root {
             --bg-primary: #f8fafc;
@@ -82,7 +79,6 @@
         html, body {
             max-width: 100vw;
             overflow-x: hidden; 
-            /* Fix for mobile scroll jumping */
             overflow-y: scroll;
         }
         body { 
@@ -117,37 +113,45 @@
         body.dark::before { background: rgba(168, 85, 247, 0.2); opacity: 0.8; }
         body.dark::after { background: rgba(13, 110, 253, 0.2); opacity: 0.8; }
 
-        /* 🎉 FESTIVAL BACKGROUND WATERMARK (Lighter) 🎉 */
+        /* 🎉 FESTIVAL BACKGROUND WATERMARK (100% RESPONSIVE) 🎉 */
         .festival-bg {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) rotate(-15deg);
-            font-size: clamp(4rem, 12vw, 10rem); /* Responsive font size */
+            transform: translate(-50%, -50%) rotate(-10deg);
+            /* Font size scales perfectly on both desktop and mobile */
+            font-size: clamp(2.5rem, 10vw, 8rem);
             font-weight: 800;
             color: #000;
-            opacity: 0.02; /* Bahut zyada light kar diya */
+            opacity: 0.07; /* Clearly visible but still a watermark */
             z-index: -2;
             pointer-events: none;
             text-align: center;
-            white-space: nowrap;
-            letter-spacing: 5px;
+            /* Removed white-space: nowrap so long text wraps on mobile */
+            word-wrap: break-word;
+            line-height: 1.2;
+            width: 90%; /* Keeps it inside the screen */
+            letter-spacing: 3px;
             text-transform: uppercase;
             font-family: 'Poppins', sans-serif;
-            width: 100%;
-            overflow: hidden;
         }
         body.dark .festival-bg {
             color: #fff;
-            opacity: 0.03; /* Dark mode mein bhi bahut light */
+            opacity: 0.08;
         }
 
-        /* Logo Emoji Styling */
+        /* Festival Logo in Navbar */
         #logoIcon {
             font-size: 1.5rem;
-            margin-right: 5px;
+            margin-right: 8px;
             display: inline-block;
             vertical-align: middle;
+            animation: pulse 2s infinite; /* Little heartbeat animation */
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
         }
 
         /* ===== HERO SECTION & FLOATING ICONS FIX ===== */
@@ -156,9 +160,8 @@
             overflow: hidden; 
             min-height: 400px;
         }
-        /* Fixed Typing Animation Jump on Desktop and Mobile */
         .hero h1 { 
-            min-height: 3em; /* Jump fix */
+            min-height: 3em; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -518,13 +521,12 @@
             .floating-icons { display: block !important; opacity: 0.3 !important; }
             .float-icon { font-size: 2.5rem !important; color: #ffffff !important; }
 
-            /* Mobile Hero Fix (No Jump) */
             .hero { min-height: 450px; padding: 30px 15px; }
             .hero h1 { font-size: 2.2rem !important; min-height: 3.2em; }
             .hero p { font-size: 0.85rem !important; }
             .stats { gap: 15px; flex-wrap: wrap; }
             
-            .festival-bg { font-size: 20vw; }
+            .festival-bg { font-size: clamp(2rem, 12vw, 5rem); }
 
             .container { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 12px; }
             .card { padding: 12px; min-height: 180px; border-radius: 12px; }
@@ -1449,97 +1451,63 @@
                 if (!festivalBg) return;
 
                 const today = new Date();
+                // Get local date (YYYY-MM-DD)
+                const year = today.getFullYear();
                 const month = String(today.getMonth() + 1).padStart(2, '0');
                 const day = String(today.getDate()).padStart(2, '0');
-                const dateStr = `${month}-${day}`; // Format: MM-DD
+                const dateStr = `${year}-${month}-${day}`;
 
-                // 1. Fixed National & Global Holidays
-                const fixedFestivals = {
-                    "01-01": { msg: "Happy New Year 🎉", icon: "🎉" },
-                    "01-26": { msg: "Happy Republic Day 🇮🇳", icon: "🇮🇳" },
-                    "08-15": { msg: "Happy Independence Day 🇮🇳", icon: "🇮🇳" },
-                    "10-02": { msg: "Happy Gandhi Jayanti 🙏", icon: "🙏" },
-                    "12-25": { msg: "Merry Christmas 🎄", icon: "🎄" },
-                    "12-31": { msg: "Happy New Year Eve 🎆", icon: "🎆" }
+                // 📌 Hardcoded Festivals List (2026-2028) - Excluding Muslim Festivals
+                const festivalData = {
+                    // --- 2026 ---
+                    "2026-01-01": { msg: "Happy New Year 🎉", icon: "🎉" },
+                    "2026-01-14": { msg: "Happy Makar Sankranti 🪁", icon: "🪁" },
+                    "2026-01-26": { msg: "Happy Republic Day 🇮🇳", icon: "🇮🇳" },
+                    "2026-02-14": { msg: "Happy Valentine's Day ❤️", icon: "❤️" },
+                    "2026-03-03": { msg: "Happy Holi 🎨", icon: "🎨" },
+                    "2026-03-08": { msg: "Happy Women's Day 👩", icon: "👩" },
+                    "2026-04-03": { msg: "Happy Good Friday ✝️", icon: "✝️" },
+                    "2026-04-05": { msg: "Happy Easter 🐰", icon: "🐰" },
+                    "2026-04-14": { msg: "Happy Ambedkar Jayanti 🚩", icon: "🚩" },
+                    "2026-05-10": { msg: "Happy Mother's Day 👩‍👧", icon: "👩‍👧" },
+                    "2026-06-21": { msg: "Happy Father's Day 👨‍👧", icon: "👨‍👧" },
+                    "2026-08-15": { msg: "Happy Independence Day 🇮🇳", icon: "🇮🇳" },
+                    "2026-08-28": { msg: "Happy Raksha Bandhan 🧵", icon: "🧵" },
+                    "2026-09-04": { msg: "Happy Janmashtami 🦚", icon: "🦚" },
+                    "2026-09-14": { msg: "Happy Ganesh Chaturthi 🐘", icon: "🐘" },
+                    "2026-10-02": { msg: "Happy Gandhi Jayanti 🙏", icon: "🙏" },
+                    "2026-10-20": { msg: "Happy Dussehra 🏹", icon: "🏹" },
+                    "2026-10-31": { msg: "Happy Halloween 🎃", icon: "🎃" },
+                    "2026-11-08": { msg: "Happy Diwali 🪔", icon: "🪔" }, // Aaj ka din
+                    "2026-11-10": { msg: "Happy Bhai Dooj 🎁", icon: "🎁" },
+                    "2026-11-26": { msg: "Happy Thanksgiving 🦃", icon: "🦃" },
+                    "2026-12-25": { msg: "Merry Christmas 🎄", icon: "🎄" },
+                    "2026-12-31": { msg: "Happy New Year Eve 🎆", icon: "🎆" },
+
+                    // --- 2027 (Major ones) ---
+                    "2027-01-01": { msg: "Happy New Year 🎉", icon: "🎉" },
+                    "2027-01-26": { msg: "Happy Republic Day 🇮🇳", icon: "🇮🇳" },
+                    "2027-03-22": { msg: "Happy Holi 🎨", icon: "🎨" },
+                    "2027-08-15": { msg: "Happy Independence Day 🇮🇳", icon: "🇮🇳" },
+                    "2027-10-02": { msg: "Happy Gandhi Jayanti 🙏", icon: "🙏" },
+                    "2027-10-29": { msg: "Happy Diwali 🪔", icon: "🪔" },
+                    "2027-12-25": { msg: "Merry Christmas 🎄", icon: "🎄" },
+
+                    // --- 2028 (Major ones) ---
+                    "2028-01-01": { msg: "Happy New Year 🎉", icon: "🎉" },
+                    "2028-01-26": { msg: "Happy Republic Day 🇮🇳", icon: "🇮🇳" },
+                    "2028-08-15": { msg: "Happy Independence Day 🇮🇳", icon: "🇮🇳" },
+                    "2028-10-02": { msg: "Happy Gandhi Jayanti 🙏", icon: "🙏" },
+                    "2028-10-17": { msg: "Happy Diwali 🪔", icon: "🪔" },
+                    "2028-12-25": { msg: "Merry Christmas 🎄", icon: "🎄" }
                 };
 
-                if (fixedFestivals[dateStr]) {
-                    festivalBg.innerHTML = fixedFestivals[dateStr].msg;
-                    if (logoIcon) logoIcon.innerHTML = fixedFestivals[dateStr].icon;
-                    return;
-                }
-
-                // 2. Dynamic Hindu Festivals (Using Astronomical Library)
-                if (typeof Panchangam === 'undefined') {
-                    festivalBg.innerHTML = "Welcome to Bharat24Tools";
-                    if (logoIcon) logoIcon.innerHTML = "⚡";
-                    return;
-                }
-
-                try {
-                    const year = today.getFullYear();
-                    const monthNum = today.getMonth() + 1;
-                    const dayNum = today.getDate();
-
-                    // Calculate Panchang for today (Delhi coordinates for India standard)
-                    const panchang = new Panchangam({ 
-                        year: year, 
-                        month: monthNum, 
-                        day: dayNum, 
-                        latitude: 28.6139, 
-                        longitude: 77.2090,
-                        timezone: 5.5 
-                    });
-
-                    const festivals = panchang.getFestivals(); 
-
-                    if (festivals && festivals.length > 0) {
-                        const festivalName = festivals[0]; // Pick the main festival
-                        
-                        // 3. Emoji Dictionary based on festival names
-                        const emojiMap = {
-                            "diwali": "🪔", "deepavali": "🪔",
-                            "holi": "🎨",
-                            "dussehra": "🏹", "vijayadashami": "🏹",
-                            "navratri": "💃",
-                            "janmashtami": "🦚",
-                            "raksha bandhan": "🧵", "rakhi": "🧵",
-                            "ganesh chaturthi": "🐘",
-                            "makar sankranti": "🪁",
-                            "pongal": "🌾",
-                            "baisakhi": "🌾",
-                            "maha shivratri": "🔱",
-                            "ram navami": "🏹",
-                            "hanuman jayanti": "🐒",
-                            "karwa chauth": "🌕",
-                            "bhai dooj": "🎁",
-                            "chhath puja": "🌅",
-                            "eid": "🌙",
-                            "onam": "🌸",
-                            "akshaya tritiya": "🪙",
-                            "vasant panchami": "📚"
-                        };
-
-                        let currentEmoji = "🎉"; // Default
-                        
-                        const lowerName = festivalName.toLowerCase();
-                        for (const key in emojiMap) {
-                            if (lowerName.includes(key)) {
-                                currentEmoji = emojiMap[key];
-                                break;
-                            }
-                        }
-
-                        // Update Background and Logo
-                        festivalBg.innerHTML = `Happy ${festivalName} ${currentEmoji}`;
-                        if (logoIcon) logoIcon.innerHTML = currentEmoji;
-                    } else {
-                        festivalBg.innerHTML = "Welcome to Bharat24Tools";
-                        if (logoIcon) logoIcon.innerHTML = "⚡";
-                    }
-
-                } catch (error) {
-                    console.error("Panchang error:", error);
+                // Check if today is a festival
+                if (festivalData[dateStr]) {
+                    festivalBg.innerHTML = festivalData[dateStr].msg;
+                    if (logoIcon) logoIcon.innerHTML = festivalData[dateStr].icon;
+                } else {
+                    // Default message if no festival today
                     festivalBg.innerHTML = "Welcome to Bharat24Tools";
                     if (logoIcon) logoIcon.innerHTML = "⚡";
                 }
