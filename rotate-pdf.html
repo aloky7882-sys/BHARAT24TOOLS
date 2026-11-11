@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <!-- Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
@@ -115,7 +115,7 @@
             padding: 15px; 
             text-align: center; 
             margin-bottom: 25px; 
-            min-height: 250px;
+            min-height: 300px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -125,10 +125,11 @@
         }
         .preview-label { font-size: 0.8rem; color: #a5b4fc; margin-bottom: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
         
+        /* Clean Canvas Preview */
         #previewCanvas { max-width: 100%; max-height: 350px; border-radius: 4px; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; }
         
-        /* Native Fallback Object */
-        #nativePreviewObj { display: none; width: 100%; height: 350px; border-radius: 8px; background: #fff; }
+        /* Hidden Toolbar Iframe Fallback */
+        #fallbackIframe { display: none; width: 100%; height: 350px; border: none; border-radius: 4px; background: #fff; }
 
         #fallbackMessage { display: none; color: #fca5a5; font-size: 0.9rem; text-align: center; padding: 20px; }
 
@@ -202,16 +203,14 @@
                 <div class="preview-container">
                     <div class="preview-label">Live Preview</div>
                     
-                    <!-- Standard Canvas Preview -->
                     <canvas id="previewCanvas"></canvas>
                     
-                    <!-- Native Browser Fallback -->
-                    <object id="nativePreviewObj" data="" type="application/pdf"></object>
+                    <!-- Clean Iframe (Toolbar hidden) -->
+                    <iframe id="fallbackIframe"></iframe>
 
-                    <!-- Text Fallback -->
                     <div id="fallbackMessage">
                         <i class="fas fa-file-pdf" style="font-size: 3rem; margin-bottom: 10px; color:#a855f7;"></i><br>
-                        <strong>Preview not available in this browser.</strong><br>
+                        <strong>Preview not available.</strong><br>
                         <span style="font-size: 0.8rem; color:#cbd5e1;">You can still rotate & download safely.</span>
                     </div>
                 </div>
@@ -226,7 +225,7 @@
 
     <script>
         if (typeof pdfjsLib !== 'undefined') {
-            pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+            pdfjsLib.GlobalWorkerOptions.workerSrc = "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
         }
 
         const fileInput = document.getElementById('fileInput');
@@ -236,7 +235,7 @@
         const fileSizeEl = document.getElementById('fileSize');
         const rotateBtn = document.getElementById('rotateBtn');
         const previewCanvas = document.getElementById('previewCanvas');
-        const nativePreviewObj = document.getElementById('nativePreviewObj');
+        const fallbackIframe = document.getElementById('fallbackIframe');
         const fallbackMessage = document.getElementById('fallbackMessage');
 
         let selectedFile = null;
@@ -259,9 +258,8 @@
             uploadLabel.style.display = 'none';
             editorArea.style.display = 'block';
             
-            // Reset previews
             previewCanvas.style.display = 'none';
-            nativePreviewObj.style.display = 'none';
+            fallbackIframe.style.display = 'none';
             fallbackMessage.style.display = 'none';
 
             const arrayBuffer = await file.arrayBuffer();
@@ -272,7 +270,7 @@
             try {
                 if (typeof pdfjsLib === 'undefined') throw new Error("pdf.js not loaded");
 
-                // Try using Canvas (pdf.js) WITHOUT worker to avoid network block
+                // Custom Canvas Preview
                 const dataCopy = arrayBuffer.slice(0);
                 const loadingTask = pdfjsLib.getDocument({ data: dataCopy, disableWorker: true });
                 const pdfDoc = await loadingTask.promise;
@@ -288,25 +286,25 @@
                 firstPageImageData = tempCanvas.toDataURL();
                 
                 previewCanvas.style.display = 'block';
-                nativePreviewObj.style.display = 'none';
+                fallbackIframe.style.display = 'none';
                 fallbackMessage.style.display = 'none';
                 applyRotation();
                 
             } catch (err) {
-                console.warn("Canvas Preview failed, trying native object...", err);
+                console.warn("Canvas Preview failed, using clean iframe...", err);
                 
-                // Fallback to Native Browser Viewer
+                // Clean Iframe Fallback (Hides the ugly toolbar)
                 try {
                     const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
                     const url = URL.createObjectURL(blob);
-                    nativePreviewObj.data = url;
+                    // #toolbar=0 hides the default browser buttons
+                    fallbackIframe.src = url + "#toolbar=0&navpanes=0&scrollbar=0&view=FitH"; 
                     
-                    nativePreviewObj.style.display = 'block';
+                    fallbackIframe.style.display = 'block';
                     previewCanvas.style.display = 'none';
                     fallbackMessage.style.display = 'none';
                 } catch (e) {
-                    // Ultimate Fallback (Text)
-                    nativePreviewObj.style.display = 'none';
+                    fallbackIframe.style.display = 'none';
                     previewCanvas.style.display = 'none';
                     fallbackMessage.style.display = 'block';
                 }
@@ -319,6 +317,8 @@
                 btn.classList.add('active');
                 selectedAngle = parseInt(btn.dataset.angle);
                 if (firstPageImageData) applyRotation();
+                // Note: Iframe won't visually rotate the preview because it's a native browser element,
+                // but the actual PDF WILL rotate when downloaded.
             });
         });
 
@@ -347,7 +347,7 @@
             if (!selectedFile) return;
             
             if (typeof PDFLib === 'undefined') {
-                alert('Error: The PDF library could not load due to network restrictions. Please try on a mobile device or different network.');
+                alert('Error: The PDF library could not load. Please try a different network.');
                 return;
             }
 
