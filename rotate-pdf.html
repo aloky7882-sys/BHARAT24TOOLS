@@ -15,14 +15,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-    <!-- ✅ Standard CDNs directly loaded in head -->
+    <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
         
-        /* Dark Glassmorphism Theme */
         body { 
             min-height:100vh; 
             background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); 
@@ -63,10 +62,7 @@
         h1 { font-size: 2rem; text-align: center; margin-bottom: 10px; color: #ffffff; }
         .subtitle { text-align: center; color: #a5b4fc; font-size: 0.95rem; margin-bottom: 30px; }
 
-        /* ✅ FIX: Input is hidden, Label acts as the button */
-        #fileInput {
-            display: none;
-        }
+        #fileInput { display: none; }
 
         .upload-zone { 
             display: block;
@@ -85,7 +81,6 @@
         .upload-title { font-size: 1.2rem; font-weight: 600; color: #e0e7ff; margin-bottom: 5px; }
         .upload-subtitle { font-size: 0.85rem; color: #a5b4fc; }
 
-        /* Editor Area */
         #editorArea { display: none; }
         
         .file-info { display: flex; justify-content: space-between; padding: 15px; background: rgba(99,102,241,0.1); border: 1px solid rgba(168,85,247,0.2); border-radius: 8px; margin-bottom: 20px; font-weight: 500; color: #cbd5e1; }
@@ -93,7 +88,6 @@
         
         .section-title { font-size: 1rem; font-weight: 600; margin-bottom: 15px; color: #e0e7ff; }
         
-        /* Buttons */
         .angle-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
         .btn-angle { 
             padding: 15px 10px; 
@@ -114,12 +108,11 @@
         .btn-angle.active { background: linear-gradient(135deg, #a855f7, #ec4899); border-color: transparent; color: #fff; box-shadow: 0 4px 15px rgba(168,85,247,0.3); }
         .btn-angle span.icon { font-size: 1.5rem; }
 
-        /* Preview Area */
         .preview-container { 
             background: rgba(15,15,30,0.8); 
             border: 1px solid rgba(168,85,247,0.2); 
             border-radius: 8px; 
-            padding: 25px; 
+            padding: 15px; 
             text-align: center; 
             margin-bottom: 25px; 
             min-height: 250px;
@@ -132,13 +125,13 @@
         }
         .preview-label { font-size: 0.8rem; color: #a5b4fc; margin-bottom: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* Canvas for Preview */
         #previewCanvas { max-width: 100%; max-height: 350px; border-radius: 4px; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; }
         
-        /* Fallback Message */
+        /* Native Fallback Object */
+        #nativePreviewObj { display: none; width: 100%; height: 350px; border-radius: 8px; background: #fff; }
+
         #fallbackMessage { display: none; color: #fca5a5; font-size: 0.9rem; text-align: center; padding: 20px; }
 
-        /* Action Button */
         .btn-primary { 
             width: 100%; 
             padding: 18px; 
@@ -177,7 +170,6 @@
             <h1>🔄 Rotate PDF</h1>
             <p class="subtitle">Rotate all pages in your PDF file securely in your browser.</p>
 
-            <!-- ✅ Label as Upload Zone (100% click works) -->
             <label class="upload-zone" id="uploadLabel">
                 <input type="file" id="fileInput" accept=".pdf,application/pdf">
                 <div class="upload-icon"><i class="fas fa-file-pdf"></i></div>
@@ -185,7 +177,6 @@
                 <div class="upload-subtitle">or drop PDF here (Max 20MB)</div>
             </label>
 
-            <!-- Editor Area -->
             <div id="editorArea">
                 <div class="file-info">
                     <span id="fileName">document.pdf</span>
@@ -210,11 +201,18 @@
 
                 <div class="preview-container">
                     <div class="preview-label">Live Preview</div>
+                    
+                    <!-- Standard Canvas Preview -->
                     <canvas id="previewCanvas"></canvas>
+                    
+                    <!-- Native Browser Fallback -->
+                    <object id="nativePreviewObj" data="" type="application/pdf"></object>
+
+                    <!-- Text Fallback -->
                     <div id="fallbackMessage">
-                        <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
-                        Preview not available for this file (Browser restriction).<br>
-                        <strong>You can still rotate & download safely.</strong>
+                        <i class="fas fa-file-pdf" style="font-size: 3rem; margin-bottom: 10px; color:#a855f7;"></i><br>
+                        <strong>Preview not available in this browser.</strong><br>
+                        <span style="font-size: 0.8rem; color:#cbd5e1;">You can still rotate & download safely.</span>
                     </div>
                 </div>
 
@@ -227,14 +225,9 @@
     </main>
 
     <script>
-        // Check if libraries loaded (if they fail, PDFLib will be undefined)
-        window.onload = function() {
-            if (typeof pdfjsLib === 'undefined' || typeof PDFLib === 'undefined') {
-                console.warn("Libraries might be blocked by network.");
-            } else {
-                pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-            }
-        };
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+        }
 
         const fileInput = document.getElementById('fileInput');
         const uploadLabel = document.getElementById('uploadLabel');
@@ -243,13 +236,13 @@
         const fileSizeEl = document.getElementById('fileSize');
         const rotateBtn = document.getElementById('rotateBtn');
         const previewCanvas = document.getElementById('previewCanvas');
+        const nativePreviewObj = document.getElementById('nativePreviewObj');
         const fallbackMessage = document.getElementById('fallbackMessage');
 
         let selectedFile = null;
         let selectedAngle = 90;
         let firstPageImageData = null;
 
-        // Handle File Upload
         fileInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
@@ -266,27 +259,25 @@
             uploadLabel.style.display = 'none';
             editorArea.style.display = 'block';
             
+            // Reset previews
             previewCanvas.style.display = 'none';
+            nativePreviewObj.style.display = 'none';
             fallbackMessage.style.display = 'none';
 
             const arrayBuffer = await file.arrayBuffer();
-            
-            // Only try to render preview if PDF.js loaded successfully
-            if (typeof pdfjsLib !== 'undefined') {
-                renderPreview(arrayBuffer);
-            } else {
-                fallbackMessage.style.display = 'block';
-            }
+            renderPreview(arrayBuffer);
         });
 
-        // Render Preview
         async function renderPreview(arrayBuffer) {
             try {
+                if (typeof pdfjsLib === 'undefined') throw new Error("pdf.js not loaded");
+
+                // Try using Canvas (pdf.js) WITHOUT worker to avoid network block
                 const dataCopy = arrayBuffer.slice(0);
-                const loadingTask = pdfjsLib.getDocument({ data: dataCopy });
+                const loadingTask = pdfjsLib.getDocument({ data: dataCopy, disableWorker: true });
                 const pdfDoc = await loadingTask.promise;
                 const page = await pdfDoc.getPage(1);
-                const viewport = page.getViewport({ scale: 2.0 }); 
+                const viewport = page.getViewport({ scale: 1.5 }); 
                 
                 const tempCanvas = document.createElement('canvas');
                 tempCanvas.width = viewport.width;
@@ -297,16 +288,31 @@
                 firstPageImageData = tempCanvas.toDataURL();
                 
                 previewCanvas.style.display = 'block';
+                nativePreviewObj.style.display = 'none';
                 fallbackMessage.style.display = 'none';
                 applyRotation();
+                
             } catch (err) {
-                console.warn("Preview Error:", err);
-                previewCanvas.style.display = 'none';
-                fallbackMessage.style.display = 'block';
+                console.warn("Canvas Preview failed, trying native object...", err);
+                
+                // Fallback to Native Browser Viewer
+                try {
+                    const blob = new Blob([arrayBuffer], { type: 'application/pdf' });
+                    const url = URL.createObjectURL(blob);
+                    nativePreviewObj.data = url;
+                    
+                    nativePreviewObj.style.display = 'block';
+                    previewCanvas.style.display = 'none';
+                    fallbackMessage.style.display = 'none';
+                } catch (e) {
+                    // Ultimate Fallback (Text)
+                    nativePreviewObj.style.display = 'none';
+                    previewCanvas.style.display = 'none';
+                    fallbackMessage.style.display = 'block';
+                }
             }
         }
 
-        // Angle Buttons
         document.querySelectorAll('.btn-angle').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.btn-angle').forEach(b => b.classList.remove('active'));
@@ -316,7 +322,6 @@
             });
         });
 
-        // Apply Rotation visually
         function applyRotation() {
             if (!firstPageImageData) return;
             const img = new Image();
@@ -338,7 +343,6 @@
             img.src = firstPageImageData;
         }
 
-        // Rotate & Download
         rotateBtn.addEventListener('click', async () => {
             if (!selectedFile) return;
             
