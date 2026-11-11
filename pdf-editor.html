@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI PDF Editor - Bharat24Tools</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- PDF & Canvas Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+    <style>
+        :root {
+            --bg-main: #0f0f1e;
+            --bg-panel: #1e1b4b;
+            --primary: #a855f7;
+            --primary-hover: #9333ea;
+            --text-main: #e0e7ff;
+            --text-muted: #a5b4fc;
+            --border: rgba(168,85,247,0.3);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+        
+        body { background: var(--bg-main); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        
+        /* Top Navbar */
+        .navbar { 
+            background: rgba(30, 27, 75, 0.9); 
+            padding: 10px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid var(--border);
+            z-index: 10;
+        }
+        .brand { font-weight: 700; font-size: 1.2rem; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+        .nav-actions { display: flex; gap: 10px; }
+        .btn { padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; transition: 0.3s; display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(168,85,247,0.4); }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--border); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+        /* Main Layout */
+        .editor-layout { display: flex; flex: 1; overflow: hidden; }
+
+        /* Left Sidebar (Tools) */
+        .sidebar { width: 260px; background: var(--bg-panel); border-right: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
+        .section-title { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; font-weight: 600; }
+        
+        .tool-btn { 
+            background: rgba(15,15,30,0.6); 
+            color: var(--text-main); 
+            border: 1px solid var(--border); 
+            padding: 12px 15px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            text-align: left; 
+            font-size: 0.9rem; 
+            transition: 0.2s; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+        }
+        .tool-btn:hover { background: rgba(168,85,247,0.2); border-color: var(--primary); }
+        .tool-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .tool-btn i { width: 20px; text-align: center; font-size: 1.1rem; }
+
+        /* Center Workspace */
+        .workspace { flex: 1; background: #111; display: flex; justify-content: center; align-items: flex-start; padding: 30px; overflow: auto; position: relative; }
+        
+        /* Upload Screen */
+        .upload-zone { 
+            width: 100%; max-width: 600px; 
+            border: 3px dashed var(--border); 
+            border-radius: 20px; 
+            padding: 60px 20px; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            margin-top: 50px;
+        }
+        .upload-zone:hover { border-color: var(--primary); background: rgba(168,85,247,0.05); }
+        .upload-zone i { font-size: 4rem; color: var(--primary); margin-bottom: 20px; }
+        .upload-zone h2 { margin-bottom: 10px; }
+        .upload-zone p { color: var(--text-muted); font-size: 0.9rem; }
+        #fileInput { display: none; }
+
+        /* Canvas Wrapper */
+        .canvas-wrapper { position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.5); display: none; }
+        #pdfCanvas { display: block; }
+        .canvas-container { position: absolute !important; top: 0; left: 0; }
+
+        /* Right Sidebar (AI Chat) */
+        .ai-sidebar { width: 320px; background: var(--bg-panel); border-left: 1px solid var(--border); display: flex; flex-direction: column; }
+        .ai-header { padding: 15px 20px; border-bottom: 1px solid var(--border); font-weight: 600; color: #d8b4fe; display: flex; align-items: center; gap: 10px; }
+        .ai-chat { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        
+        .msg { padding: 12px 15px; border-radius: 10px; font-size: 0.85rem; line-height: 1.5; max-width: 90%; word-wrap: break-word; }
+        .msg-ai { background: rgba(168,85,247,0.15); border: 1px solid var(--border); color: var(--text-main); align-self: flex-start; border-bottom-left-radius: 0; }
+        .msg-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 0; }
+
+        .ai-input-area { padding: 15px; border-top: 1px solid var(--border); display: flex; gap: 10px; }
+        .ai-input { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border); background: #0f0f1e; color: white; outline: none; font-family: inherit; }
+        .ai-input:focus { border-color: var(--primary); }
+        .btn-send { background: var(--primary); border: none; color: white; width: 45px; border-radius: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+        .btn-send:hover { background: var(--primary-hover); }
+        .btn-send:disabled { background: #475569; cursor: not-allowed; }
+
+        /* Loader */
+        .loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; flex-direction: column; gap: 20px; }
+        .spinner { width: 50px; height: 50px; border: 5px solid rgba(168,85,247,0.3); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <h3 id="loaderText" style="color: white;">Processing...</h3>
+    </div>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="brand"><i class="fas fa-bolt"></i> AI PDF Editor</div>
+        <div class="nav-actions">
+            <button class="btn btn-secondary" id="resetBtn" style="display: none;"><i class="fas fa-times"></i> Close File</button>
+            <button class="btn btn-primary" id="downloadBtn" style="display: none;"><i class="fas fa-download"></i> Save PDF</button>
+        </div>
+    </div>
+
+    <div class="editor-layout">
+        
+        <!-- Left Tools -->
+        <div class="sidebar" id="toolSidebar">
+            <div class="section-title">Editing Tools</div>
+            <button class="tool-btn active" id="toolSelect"><i class="fas fa-mouse-pointer"></i> Select / Move</button>
+            <button class="tool-btn" id="toolText"><i class="fas fa-font"></i> Add Text</button>
+            <button class="tool-btn" id="toolImage"><i class="fas fa-image"></i> Add Image</button>
+            <button class="tool-btn" id="toolWhiteout"><i class="fas fa-eraser"></i> Whiteout (Hide)</button>
+            <button class="tool-btn" id="toolDraw"><i class="fas fa-pen"></i> Draw / Sign</button>
+            
+            <div class="section-title" style="margin-top: 20px;">Actions</div>
+            <button class="tool-btn" id="toolUndo"><i class="fas fa-undo"></i> Undo</button>
+        </div>
+
+        <!-- Center Workspace -->
+        <div class="workspace" id="workspace">
+            <!-- Upload State -->
+            <div class="upload-zone" id="uploadZone">
+                <input type="file" id="fileInput" accept="application/pdf">
+                <i class="fas fa-file-pdf"></i>
+                <h2>Upload PDF to Edit</h2>
+                <p>Click here to select your PDF</p>
+            </div>
+
+            <!-- Edit State -->
+            <div class="canvas-wrapper" id="canvasWrapper">
+                <canvas id="pdfCanvas"></canvas>
+                <canvas id="editorCanvas"></canvas>
+            </div>
+        </div>
+
+        <!-- Right AI Chat -->
+        <div class="ai-sidebar">
+            <div class="ai-header"><i class="fas fa-robot"></i> AI Assistant</div>
+            <div class="ai-chat" id="aiChat">
+                <div class="msg msg-ai">Hello! Upload a PDF to start editing. Once uploaded, you can ask me to summarize it, extract text, or translate it!</div>
+            </div>
+            <div class="ai-input-area">
+                <input type="text" class="ai-input" id="aiInput" placeholder="Ask AI about this PDF..." disabled>
+                <button class="btn-send" id="aiSend" disabled><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Setup PDF.js Worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+        // State Variables
+        let fabricCanvas = null;
+        let originalPdfBytes = null;
+        let pdfWidth = 0;
+        let pdfHeight = 0;
+        const RENDER_SCALE = 1.5; 
+        const API_URL = 'https://bharat24tools-api.onrender.com'; // Aapka Backend Server
+
+        // Elements
+        const fileInput = document.getElementById('fileInput');
+        const uploadZone = document.getElementById('uploadZone');
+        const canvasWrapper = document.getElementById('canvasWrapper');
+        const pdfCanvas = document.getElementById('pdfCanvas');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const loader = document.getElementById('loader');
+
+        // 1. Handle PDF Upload
+        uploadZone.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file || file.type !== 'application/pdf') return alert("Please upload a valid PDF file.");
+
+            showLoader("Loading PDF...");
+
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                originalPdfBytes = arrayBuffer.slice(0); 
+                
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                const page = await pdf.getPage(1); 
+                const viewport = page.getViewport({ scale: RENDER_SCALE });
+
+                pdfWidth = viewport.width;
+                pdfHeight = viewport.height;
+
+                pdfCanvas.width = pdfWidth;
+                pdfCanvas.height = pdfHeight;
+                const ctx = pdfCanvas.getContext('2d');
+                await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+                uploadZone.style.display = 'none';
+                canvasWrapper.style.display = 'block';
+                downloadBtn.style.display = 'flex';
+                resetBtn.style.display = 'flex';
+                
+                // Enable AI Chat
+                document.getElementById('aiInput').disabled = false;
+                document.getElementById('aiSend').disabled = false;
+
+                initFabricCanvas();
+
+            } catch (err) {
+                console.error(err);
+                alert("Error loading PDF: " + err.message);
+            } finally {
+                hideLoader();
+            }
+        });
+
+        // 2. Setup Fabric Canvas
+        function initFabricCanvas() {
+            if (fabricCanvas) fabricCanvas.dispose();
+            fabricCanvas = new fabric.Canvas('editorCanvas', {
+                width: pdfWidth, height: pdfHeight, backgroundColor: 'transparent'
+            });
+            fabricCanvas.freeDrawingBrush.width = 3;
+            fabricCanvas.freeDrawingBrush.color = '#a855f7';
+        }
+
+        // 3. Tool Logics
+        const tools = ['toolSelect', 'toolText', 'toolImage', 'toolWhiteout', 'toolDraw'];
+        
+        function setActiveTool(toolId) {
+            tools.forEach(id => document.getElementById(id).classList.remove('active'));
+            document.getElementById(toolId).classList.add('active');
+            if (!fabricCanvas) return;
+            fabricCanvas.isDrawingMode = false;
+            fabricCanvas.selection = false;
+            fabricCanvas.forEachObject(obj => obj.selectable = false);
+        }
+
+        document.getElementById('toolSelect').addEventListener('click', () => {
+            setActiveTool('toolSelect');
+            if (!fabricCanvas) return;
+            fabricCanvas.selection = true;
+            fabricCanvas.forEachObject(obj => obj.selectable = true);
+        });
+
+        document.getElementById('toolText').addEventListener('click', () => {
+            if (!fabricCanvas) return alert("Upload PDF first!");
+            setActiveTool('toolText');
+            const text = new fabric.IText('Type here...', { left: 50, top: 50, fontFamily: 'Helvetica', fontSize: 20, fill: '#000000' });
+            fabricCanvas.add(text);
+            fabricCanvas.setActiveObject(text);
+            document.getElementById('toolSelect').click(); 
+        });
+
+        document.getElementById('toolWhiteout').addEventListener('click', () => {
+            if (!fabricCanvas) return alert("Upload PDF first!");
+            setActiveTool('toolWhiteout');
+            const rect = new fabric.Rect({ left: 50, top: 50, fill: '#ffffff', width: 150, height: 40 });
+            fabricCanvas.add(rect);
+            fabricCanvas.setActiveObject(rect);
+            document.getElementById('toolSelect').click();
+        });
+
+        document.getElementById('toolImage').addEventListener('click', () => {
+            if (!fabricCanvas) return alert("Upload PDF first!");
+            const input = document.createElement('input');
+            input.type = 'file'; input.accept = 'image/*';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = (f) => {
+                    fabric.Image.fromURL(f.target.result, (img) => {
+                        img.scaleToWidth(200);
+                        img.set({ left: 50, top: 50 });
+                        fabricCanvas.add(img);
+                        fabricCanvas.setActiveObject(img);
+                    });
+                };
+                reader.readAsDataURL(file);
+            };
+            input.click();
+        });
+
+        document.getElementById('toolDraw').addEventListener('click', () => {
+            if (!fabricCanvas) return alert("Upload PDF first!");
+            setActiveTool('toolDraw');
+            fabricCanvas.isDrawingMode = true;
+        });
+
+        document.getElementById('toolUndo').addEventListener('click', () => {
+            if (!fabricCanvas) return;
+            const activeObj = fabricCanvas.getActiveObject();
+            if (activeObj) fabricCanvas.remove(activeObj);
+            else {
+                const objects = fabricCanvas.getObjects();
+                if (objects.length > 0) fabricCanvas.remove(objects[objects.length - 1]);
+            }
+        });
+
+        // 4. Save & Download Logic
+        downloadBtn.addEventListener('click', async () => {
+            if (!originalPdfBytes) return;
+            showLoader("Merging Edits & Saving...");
+
+            try {
+                const pdfDoc = await PDFLib.PDFDocument.load(originalPdfBytes);
+                const pages = pdfDoc.getPages();
+                const firstPage = pages[0];
+                const objects = fabricCanvas.getObjects();
+
+                for (const obj of objects) {
+                    const scale = RENDER_SCALE;
+                    const objWidth = obj.width * obj.scaleX;
+                    const objHeight = obj.height * obj.scaleY;
+                    const pdfX = obj.left / scale;
+                    const pdfY = (pdfHeight / scale) - (obj.top / scale) - (objHeight / scale);
+
+                    if (obj.type === 'i-text' || obj.type === 'text') {
+                        const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+                        firstPage.drawText(obj.text, {
+                            x: pdfX, y: pdfY, size: obj.fontSize / scale, font: font, color: PDFLib.rgb(0, 0, 0)
+                        });
+                    } else if (obj.type === 'rect') {
+                        firstPage.drawRectangle({
+                            x: pdfX, y: pdfY, width: objWidth / scale, height: objHeight / scale, color: PDFLib.rgb(1, 1, 1),
+                        });
+                    } else if (obj.type === 'image') {
+                        const imgData = obj.toDataURL({ format: 'png' });
+                        const imgBytes = await fetch(imgData).then(res => res.arrayBuffer());
+                        const pdfImage = await pdfDoc.embedPng(imgBytes);
+                        firstPage.drawImage(pdfImage, {
+                            x: pdfX, y: pdfY, width: objWidth / scale, height: objHeight / scale,
+                        });
+                    }
+                }
+
+                const pdfBytes = await pdfDoc.save();
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'Edited-Bharat24Tools.pdf';
+                a.click();
+                setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+            } catch (err) {
+                console.error(err);
+                alert("Error Saving: " + err.message);
+            } finally {
+                hideLoader();
+            }
+        });
+
+        // 5. Reset App
+        resetBtn.addEventListener('click', () => {
+            if (fabricCanvas) { fabricCanvas.dispose(); fabricCanvas = null; }
+            originalPdfBytes = null;
+            fileInput.value = '';
+            uploadZone.style.display = 'block';
+            canvasWrapper.style.display = 'none';
+            downloadBtn.style.display = 'none';
+            resetBtn.style.display = 'none';
+            document.getElementById('aiInput').disabled = true;
+            document.getElementById('aiSend').disabled = true;
+        });
+
+        // Helpers
+        function showLoader(text) {
+            document.getElementById('loaderText').innerText = text;
+            loader.style.display = 'flex';
+        }
+        function hideLoader() { loader.style.display = 'none'; }
+
+        // ==========================================
+        // 6. AI CHAT INTEGRATION (CONNECTED TO PYTHON SERVER)
+        // ==========================================
+        const aiInput = document.getElementById('aiInput');
+        const aiSend = document.getElementById('aiSend');
+        const aiChat = document.getElementById('aiChat');
+
+        aiSend.addEventListener('click', async () => {
+            const text = aiInput.value.trim();
+            if (!text) return;
+            
+            if (!fileInput.files[0]) {
+                return alert("Please upload a PDF first!");
+            }
+
+            // Add user message
+            aiChat.innerHTML += `<div class="msg msg-user">${text}</div>`;
+            aiInput.value = '';
+            aiChat.scrollTop = aiChat.scrollHeight;
+
+            // Add loading message
+            const loadingMsgId = 'loading-' + Date.now();
+            aiChat.innerHTML += `<div class="msg msg-ai" id="${loadingMsgId}"><i class="fas fa-spinner fa-spin"></i> Analyzing PDF...</div>`;
+            aiChat.scrollTop = aiChat.scrollHeight;
+
+            try {
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                formData.append('query', text);
+
+                const response = await fetch(`${API_URL}/chat-pdf`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                
+                document.getElementById(loadingMsgId).remove();
+
+                if (data.error) {
+                    aiChat.innerHTML += `<div class="msg msg-ai" style="color: #fca5a5;">❌ ${data.error}</div>`;
+                } else {
+                    const formattedReply = data.reply.replace(/\n/g, '<br>');
+                    aiChat.innerHTML += `<div class="msg msg-ai">${formattedReply}</div>`;
+                }
+
+            } catch (error) {
+                document.getElementById(loadingMsgId).remove();
+                aiChat.innerHTML += `<div class="msg msg-ai" style="color: #fca5a5;">❌ Network Error: Server might be sleeping. Try again in 30s.</div>`;
+                console.error(error);
+            }
+            
+            aiChat.scrollTop = aiChat.scrollHeight;
+        });
+
+        // Allow Enter key to send message
+        aiInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') aiSend.click();
+        });
+    </script>
+</body>
+</html>
