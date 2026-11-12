@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <title>AI PDF Editor - Edit, Sign & Chat with PDF | Bharat24Tools</title>
-    <meta name="description" content="Advanced AI PDF Editor. Add text, images, whiteout, sign documents, and chat with your PDF using Gemini AI. 100% free, secure, and works in browser.">
-    <meta name="keywords" content="pdf editor, edit pdf online, ai pdf editor, chat with pdf, sign pdf, add text to pdf, free pdf editor">
+    <title>AI PDF Editor - Edit, Sign & Extract Text | Bharat24Tools</title>
+    <meta name="description" content="Advanced 100% Browser-Based PDF Editor. Add text, images, whiteout, sign documents, and extract text securely. No server upload, works offline.">
+    <meta name="keywords" content="pdf editor, edit pdf online, ai pdf editor, extract text from pdf, sign pdf, add text to pdf, free pdf editor">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/pdf-editor.html">
@@ -81,33 +81,32 @@
         /* Upload Zone */
         .upload-zone { 
             width: 100%; max-width: 500px; border: 3px dashed var(--border); border-radius: 15px; 
-            padding: 40px 20px; text-align: center; cursor: pointer; transition: 0.3s; margin-top: 40px; display: block;
+            padding: 40px 20px; text-align: center; cursor: pointer; transition: 0.3s; margin-top: 40px; display: block; position: relative;
         }
         .upload-zone:hover { border-color: var(--primary); background: rgba(168,85,247,0.05); }
         .upload-zone i { font-size: 3rem; color: var(--primary); margin-bottom: 15px; }
         .upload-zone h2 { margin-bottom: 10px; font-size: 1.2rem; }
         .upload-zone p { color: var(--text-muted); font-size: 0.85rem; }
-        #fileInput { display: none; }
+        
+        /* Invisible file input covering the box */
+        #fileInput { position: absolute; top:0; left:0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
         /* Canvas Wrapper */
         .canvas-wrapper { position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; background: white; }
         #pdfCanvas { display: block; max-width: 100%; height: auto; }
         .canvas-container { position: absolute !important; top: 0; left: 0; }
 
-        /* Right Sidebar (AI Chat) */
+        /* Right Sidebar (Extract Text) */
         .ai-sidebar { width: 300px; background: var(--bg-panel); border-left: 1px solid var(--border); display: flex; flex-direction: column; z-index: 5; transition: 0.3s; }
         .ai-header { padding: 12px 15px; border-bottom: 1px solid var(--border); font-weight: 600; color: #d8b4fe; display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
         .ai-chat { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
         
         .msg { padding: 10px 12px; border-radius: 8px; font-size: 0.8rem; line-height: 1.4; max-width: 90%; word-wrap: break-word; }
-        .msg-ai { background: rgba(168,85,247,0.15); border: 1px solid var(--border); color: var(--text-main); align-self: flex-start; border-bottom-left-radius: 0; }
-        .msg-user { background: var(--primary); color: white; align-self: flex-end; border-bottom-right-radius: 0; }
-
-        .ai-input-area { padding: 10px; border-top: 1px solid var(--border); display: flex; gap: 8px; }
-        .ai-input { flex: 1; padding: 10px; border-radius: 6px; border: 1px solid var(--border); background: #0f0f1e; color: white; outline: none; font-family: inherit; font-size: 0.85rem; }
-        .ai-input:focus { border-color: var(--primary); }
-        .btn-send { background: var(--primary); border: none; color: white; width: 40px; border-radius: 6px; cursor: pointer; display: flex; justify-content: center; align-items: center; }
-        .btn-send:disabled { background: #475569; cursor: not-allowed; }
+        .msg-ai { background: rgba(168,85,247,0.15); border: 1px solid var(--border); color: var(--text-main); align-self: flex-start; border-bottom-left-radius: 0; white-space: pre-wrap; user-select: text; }
+        
+        .ai-input-area { padding: 10px; border-top: 1px solid var(--border); display: flex; gap: 8px; flex-direction: column; }
+        .btn-extract { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-extract:disabled { background: #475569; cursor: not-allowed; }
 
         /* Loader */
         .loader { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; flex-direction: column; gap: 15px; }
@@ -139,7 +138,7 @@
     <div class="navbar">
         <div style="display: flex; align-items: center; gap: 10px;">
             <button class="btn-toggle" id="toggleTools"><i class="fas fa-bars"></i></button>
-            <div class="brand"><i class="fas fa-bolt"></i> AI PDF Editor</div>
+            <div class="brand"><i class="fas fa-bolt"></i> PDF Editor</div>
         </div>
         
         <div class="nav-actions">
@@ -149,7 +148,7 @@
             </select>
             <button class="btn btn-secondary" id="resetBtn" style="display: none;"><i class="fas fa-times"></i> Close</button>
             <button class="btn btn-primary" id="downloadBtn" style="display: none;"><i class="fas fa-download"></i> Save PDF</button>
-            <button class="btn-toggle" id="toggleAI"><i class="fas fa-robot"></i></button>
+            <button class="btn-toggle" id="toggleAI"><i class="fas fa-file-alt"></i></button>
         </div>
     </div>
 
@@ -171,12 +170,12 @@
         <!-- Center Workspace -->
         <div class="workspace" id="workspace">
             <!-- Upload State -->
-            <label class="upload-zone" id="uploadLabel">
+            <div class="upload-zone" id="uploadZone">
                 <input type="file" id="fileInput" accept="application/pdf">
                 <i class="fas fa-file-pdf"></i>
                 <h2 data-i18n="uploadTitle">Upload PDF to Edit</h2>
                 <p data-i18n="uploadSubtitle">Click here to select your PDF file</p>
-            </label>
+            </div>
 
             <!-- Edit State -->
             <div class="canvas-wrapper" id="canvasWrapper">
@@ -185,15 +184,14 @@
             </div>
         </div>
 
-        <!-- Right AI Chat -->
+        <!-- Right Sidebar (Text Extraction) -->
         <div class="ai-sidebar" id="aiSidebar">
-            <div class="ai-header"><i class="fas fa-robot"></i> <span data-i18n="aiHeader">AI Assistant</span></div>
+            <div class="ai-header"><i class="fas fa-file-alt"></i> <span data-i18n="aiHeader">Extract Text</span></div>
             <div class="ai-chat" id="aiChat">
-                <div class="msg msg-ai" data-i18n="aiWelcome">Hello! Upload a PDF to start editing. Once uploaded, you can ask me to summarize it!</div>
+                <div class="msg msg-ai" data-i18n="aiWelcome">Upload a PDF to extract its text securely in your browser.</div>
             </div>
             <div class="ai-input-area">
-                <input type="text" class="ai-input" id="aiInput" placeholder="Ask AI..." disabled data-i18n-placeholder="aiPlaceholder">
-                <button class="btn-send" id="aiSend" disabled><i class="fas fa-paper-plane"></i></button>
+                <button class="btn-extract" id="extractBtn" disabled><i class="fas fa-copy"></i> Extract Text</button>
             </div>
         </div>
 
@@ -207,24 +205,22 @@
                 toolImage: "Add Image", toolWhiteout: "Whiteout (Hide)", toolDraw: "Draw / Sign",
                 actionsTitle: "Actions", toolUndo: "Undo",
                 uploadTitle: "Upload PDF to Edit", uploadSubtitle: "Click here to select your PDF file",
-                aiHeader: "AI Assistant", aiWelcome: "Hello! Upload a PDF to start editing. Once uploaded, you can ask me to summarize it!",
-                aiPlaceholder: "Ask AI about this PDF...",
+                aiHeader: "Extract Text", aiWelcome: "Upload a PDF to extract its text securely in your browser.",
                 loadingPdf: "Loading PDF...", errorPdf: "Please upload a valid PDF file.",
                 merging: "Merging Edits & Saving...", errorSave: "Error Saving: ",
-                analyzing: "Analyzing PDF...", errorNetwork: "Network Error. Server might be sleeping.",
-                typeHere: "Type here..."
+                analyzing: "Extracting Text...", 
+                typeHere: "Type here...", copied: "Text copied to clipboard!"
             },
             hi: {
                 toolsTitle: "एडिटिंग टूल्स", toolSelect: "सेलेक्ट / मूव", toolText: "टेक्स्ट जोड़ें",
                 toolImage: "इमेज जोड़ें", toolWhiteout: "व्हाइटआउट (छिपाएं)", toolDraw: "ड्रॉ / साइन",
                 actionsTitle: "एक्शन", toolUndo: "अनडू",
                 uploadTitle: "एडिट करने के लिए PDF अपलोड करें", uploadSubtitle: "अपनी PDF फ़ाइल चुनने के लिए यहां क्लिक करें",
-                aiHeader: "AI असिस्टेंट", aiWelcome: "नमस्ते! एडिट करने के लिए PDF अपलोड करें। अपलोड होने के बाद, आप मुझसे इसका सारांश पूछ सकते हैं!",
-                aiPlaceholder: "इस PDF के बारे में AI से पूछें...",
+                aiHeader: "टेक्स्ट निकालें", aiWelcome: "अपने ब्राउज़र में सुरक्षित रूप से टेक्स्ट निकालने के लिए PDF अपलोड करें।",
                 loadingPdf: "PDF लोड हो रही है...", errorPdf: "कृपया एक वैध PDF फ़ाइल अपलोड करें।",
                 merging: "बदलाव मर्ज और सेव हो रहे हैं...", errorSave: "PDF सेव करने में त्रुटि: ",
-                analyzing: "PDF का विश्लेषण हो रहा है...", errorNetwork: "नेटवर्क त्रुटि। सर्वर स्लीप मोड में हो सकता है।",
-                typeHere: "यहाँ टाइप करें..."
+                analyzing: "टेक्स्ट निकाला जा रहा है...", 
+                typeHere: "यहाँ टाइप करें...", copied: "टेक्स्ट कॉपी हो गया!"
             }
         };
 
@@ -235,10 +231,6 @@
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (t[key]) el.innerHTML = t[key];
-            });
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-                const key = el.getAttribute('data-i18n-placeholder');
-                if (t[key]) el.setAttribute('placeholder', t[key]);
             });
         }
 
@@ -255,30 +247,18 @@
 
         async function initApp() {
             try {
-                // Try 3 different CDNs for PDF.js
                 try { await loadScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"); } 
-                catch(e) { 
-                    try { await loadScript("https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"); }
-                    catch(e2) { await loadScript("https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"); }
-                }
+                catch(e) { await loadScript("https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"); }
                 
-                // Try 3 different CDNs for Fabric.js
                 try { await loadScript("https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"); } 
-                catch(e) { 
-                    try { await loadScript("https://unpkg.com/fabric@5.3.1/dist/fabric.min.js"); }
-                    catch(e2) { await loadScript("https://cdn.jsdelivr.net/npm/fabric@5.3.1/dist/fabric.min.js"); }
-                }
+                catch(e) { await loadScript("https://unpkg.com/fabric@5.3.1/dist/fabric.min.js"); }
 
-                // Try 3 different CDNs for PDF-lib
                 try { await loadScript("https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"); } 
-                catch(e) { 
-                    try { await loadScript("https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"); }
-                    catch(e2) { await loadScript("https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"); }
-                }
+                catch(e) { await loadScript("https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"); }
 
                 startApp();
             } catch (error) {
-                showToast("Network Error: Could not load required tools. Please disable AdBlocker.", "error");
+                showToast("Network Error: Could not load tools. Disable AdBlocker.", "error");
             }
         }
 
@@ -289,8 +269,8 @@
             let originalPdfBytes = null;
             let pdfWidth = 0;
             let pdfHeight = 0;
+            let currentPdfDoc = null;
             const RENDER_SCALE = 1.5; 
-            const API_URL = 'https://bharat24tools-api.onrender.com';
             let activeUrls = new Set();
 
             // Cleanup
@@ -301,11 +281,12 @@
             }
 
             const fileInput = document.getElementById('fileInput');
-            const uploadLabel = document.getElementById('uploadLabel');
+            const uploadZone = document.getElementById('uploadZone');
             const canvasWrapper = document.getElementById('canvasWrapper');
             const pdfCanvas = document.getElementById('pdfCanvas');
             const downloadBtn = document.getElementById('downloadBtn');
             const resetBtn = document.getElementById('resetBtn');
+            const extractBtn = document.getElementById('extractBtn');
             const loader = document.getElementById('loader');
 
             const toggleTools = document.getElementById('toggleTools');
@@ -336,8 +317,8 @@
                     const arrayBuffer = await file.arrayBuffer();
                     originalPdfBytes = arrayBuffer.slice(0); 
                     
-                    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                    const page = await pdf.getPage(1); 
+                    currentPdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    const page = await currentPdfDoc.getPage(1); 
                     const viewport = page.getViewport({ scale: RENDER_SCALE });
 
                     pdfWidth = viewport.width;
@@ -348,14 +329,13 @@
                     const ctx = pdfCanvas.getContext('2d');
                     await page.render({ canvasContext: ctx, viewport: viewport }).promise;
 
-                    uploadLabel.style.display = 'none';
+                    uploadZone.style.display = 'none';
                     canvasWrapper.style.display = 'block';
                     downloadBtn.style.display = 'flex';
                     resetBtn.style.display = 'flex';
+                    extractBtn.disabled = false;
                     
-                    document.getElementById('aiInput').disabled = false;
-                    document.getElementById('aiSend').disabled = false;
-                    document.getElementById('aiChat').innerHTML = `<div class="msg msg-ai">✅ PDF Loaded! What would you like to know about this document?</div>`;
+                    document.getElementById('aiChat').innerHTML = `<div class="msg msg-ai">✅ PDF Loaded! You can now edit it or extract its text.</div>`;
 
                     initFabricCanvas();
 
@@ -508,68 +488,55 @@
                 }
             });
 
+            // Extract Text (100% Client Side)
+            extractBtn.addEventListener('click', async () => {
+                if (!currentPdfDoc) return;
+                extractBtn.disabled = true;
+                const aiChat = document.getElementById('aiChat');
+                aiChat.innerHTML = `<div class="msg msg-ai"><i class="fas fa-spinner fa-spin"></i> ${translations[currentLang].analyzing}</div>`;
+                
+                try {
+                    let fullText = "";
+                    const numPages = Math.min(currentPdfDoc.numPages, 5); // Limit to first 5 pages for speed
+                    
+                    for (let i = 1; i <= numPages; i++) {
+                        const page = await currentPdfDoc.getPage(i);
+                        const textContent = await page.getTextContent();
+                        const pageText = textContent.items.map(item => item.str).join(' ');
+                        fullText += pageText + "\n\n";
+                    }
+                    
+                    if (!fullText.trim()) {
+                        aiChat.innerHTML = `<div class="msg msg-ai">❌ No text found. This PDF might be a scanned image.</div>`;
+                    } else {
+                        aiChat.innerHTML = `<div class="msg msg-ai">${fullText}</div>`;
+                        showToast(translations[currentLang].copied, "success");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    aiChat.innerHTML = `<div class="msg msg-ai">❌ Error extracting text.</div>`;
+                } finally {
+                    extractBtn.disabled = false;
+                }
+            });
+
             // Reset
             resetBtn.addEventListener('click', () => {
                 if (fabricCanvas) { fabricCanvas.dispose(); fabricCanvas = null; }
                 revokeAllUrls();
                 originalPdfBytes = null;
+                currentPdfDoc = null;
                 fileInput.value = '';
-                uploadLabel.style.display = 'block';
+                uploadZone.style.display = 'block';
                 canvasWrapper.style.display = 'none';
                 downloadBtn.style.display = 'none';
                 resetBtn.style.display = 'none';
-                document.getElementById('aiInput').disabled = true;
-                document.getElementById('aiSend').disabled = true;
+                extractBtn.disabled = true;
                 document.getElementById('aiChat').innerHTML = `<div class="msg msg-ai">${translations[currentLang].aiWelcome}</div>`;
             });
 
             function showLoader(text) { document.getElementById('loaderText').innerText = text; loader.style.display = 'flex'; }
             function hideLoader() { loader.style.display = 'none'; }
-
-            // AI Chat
-            const aiInput = document.getElementById('aiInput');
-            const aiSend = document.getElementById('aiSend');
-            const aiChat = document.getElementById('aiChat');
-
-            aiSend.addEventListener('click', async () => {
-                const text = aiInput.value.trim();
-                if (!text || !fileInput.files[0]) return;
-
-                aiChat.innerHTML += `<div class="msg msg-user">${text}</div>`;
-                aiInput.value = '';
-                aiChat.scrollTop = aiChat.scrollHeight;
-
-                const loadingMsgId = 'loading-' + Date.now();
-                aiChat.innerHTML += `<div class="msg msg-ai" id="${loadingMsgId}"><i class="fas fa-spinner fa-spin"></i> ${translations[currentLang].analyzing}</div>`;
-                aiChat.scrollTop = aiChat.scrollHeight;
-
-                try {
-                    const formData = new FormData();
-                    formData.append('file', fileInput.files[0]);
-                    formData.append('query', text);
-
-                    const response = await fetch(`${API_URL}/chat-pdf`, { method: 'POST', body: formData });
-                    const data = await response.json();
-                    
-                    document.getElementById(loadingMsgId).remove();
-
-                    if (data.error) {
-                        aiChat.innerHTML += `<div class="msg msg-ai" style="color: #fca5a5;">❌ ${data.error}</div>`;
-                    } else {
-                        const formattedReply = data.reply.replace(/\n/g, '<br>');
-                        aiChat.innerHTML += `<div class="msg msg-ai">${formattedReply}</div>`;
-                    }
-                } catch (error) {
-                    document.getElementById(loadingMsgId).remove();
-                    aiChat.innerHTML += `<div class="msg msg-ai" style="color: #fca5a5;">❌ ${translations[currentLang].errorNetwork}</div>`;
-                }
-                aiChat.scrollTop = aiChat.scrollHeight;
-            });
-
-            aiInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') aiSend.click();
-            });
-
             window.addEventListener('beforeunload', revokeAllUrls);
         }
 
