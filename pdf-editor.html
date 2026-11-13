@@ -14,10 +14,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-    <!-- ✅ LOCAL LIBRARIES (No more CDN blocking) -->
-    <script src="libs/pdf.min.js"></script>
-    <script src="libs/fabric.min.js"></script>
-    <script src="libs/pdf-lib.min.js"></script>
+    <!-- ✅ Bypass CDNs (statically.io fetches from GitHub and bypasses firewalls) -->
+    <script src="https://cdn.statically.io/gh/mozilla/pdf.js/v3.11.174/build/pdf.min.js"></script>
+    <script src="https://cdn.statically.io/gh/fabricjs/fabric.js/v5.3.1/dist/fabric.min.js"></script>
+    <script src="https://cdn.statically.io/gh/Hopding/pdf-lib/v1.17.1/dist/pdf-lib.min.js"></script>
 
     <style>
         :root {
@@ -201,15 +201,15 @@
     </div>
 
     <script>
-        // 1. Check if libraries loaded from local folder
+        // 1. Check if libraries loaded
         window.onload = function() {
             if (typeof pdfjsLib === 'undefined' || typeof fabric === 'undefined' || typeof PDFLib === 'undefined') {
-                showToast("Error: Local files not found. Check /libs/ folder.", "error");
+                showToast("Error: Tools blocked by network. Use Mobile Hotspot.", "error");
                 return;
             }
             
-            // Setup PDF.js Worker from LOCAL folder
-            pdfjsLib.GlobalWorkerOptions.workerSrc = "libs/pdf.worker.min.js";
+            // Setup PDF.js Worker using statically.io
+            pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.statically.io/gh/mozilla/pdf.js/v3.11.174/build/pdf.worker.min.js";
             
             // Start App
             startApp();
