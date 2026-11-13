@@ -1,23 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ============ SEO META TAGS ============ -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <title>AI PDF Editor - Edit, Sign & Extract Text | Bharat24Tools</title>
     <meta name="description" content="Advanced 100% Browser-Based PDF Editor. Add text, images, whiteout, sign documents, and extract text securely. No server upload, works offline.">
-    <meta name="keywords" content="pdf editor, edit pdf online, ai pdf editor, extract text from pdf, sign pdf, add text to pdf, free pdf editor">
-    <meta name="author" content="Alok">
-    <meta name="robots" content="index, follow">
-
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-
-    <!-- ✅ Bypass CDNs (statically.io fetches from GitHub and bypasses firewalls) -->
-    <script src="https://cdn.statically.io/gh/mozilla/pdf.js/v3.11.174/build/pdf.min.js"></script>
-    <script src="https://cdn.statically.io/gh/fabricjs/fabric.js/v5.3.1/dist/fabric.min.js"></script>
-    <script src="https://cdn.statically.io/gh/Hopding/pdf-lib/v1.17.1/dist/pdf-lib.min.js"></script>
 
     <style>
         :root {
@@ -34,14 +25,6 @@
         
         body { background: var(--bg-main); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* Toast Notification */
-        #toast {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background: #ef4444; color: white; padding: 12px 24px; border-radius: 8px;
-            font-weight: 600; z-index: 99999; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        #toast.success { background: #10b981; }
-
         /* Top Navbar */
         .navbar { 
             background: rgba(30, 27, 75, 0.95); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); z-index: 10; gap: 10px; flex-wrap: wrap;
@@ -82,7 +65,7 @@
         /* Center Workspace */
         .workspace { flex: 1; background: #111; display: flex; justify-content: center; align-items: flex-start; padding: 20px; overflow: auto; position: relative; }
         
-        /* Upload Zone (Label Trick) */
+        /* Upload Zone */
         .upload-zone { 
             width: 100%; max-width: 500px; border: 3px dashed var(--border); border-radius: 15px; 
             padding: 40px 20px; text-align: center; cursor: pointer; transition: 0.3s; margin-top: 40px; display: block; position: relative;
@@ -128,8 +111,6 @@
     </style>
 </head>
 <body>
-
-    <div id="toast">Error message</div>
 
     <!-- Loader -->
     <div class="loader" id="loader">
@@ -201,20 +182,6 @@
     </div>
 
     <script>
-        // 1. Check if libraries loaded
-        window.onload = function() {
-            if (typeof pdfjsLib === 'undefined' || typeof fabric === 'undefined' || typeof PDFLib === 'undefined') {
-                showToast("Error: Tools blocked by network. Use Mobile Hotspot.", "error");
-                return;
-            }
-            
-            // Setup PDF.js Worker using statically.io
-            pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.statically.io/gh/mozilla/pdf.js/v3.11.174/build/pdf.worker.min.js";
-            
-            // Start App
-            startApp();
-        };
-
         // ============ TRANSLATIONS ============
         const translations = {
             en: {
@@ -251,7 +218,59 @@
             });
         }
 
+        // ============ 3. DYNAMIC LOADER (5 Fallbacks) ============
+        async function loadScript(urls) {
+            return new Promise((resolve, reject) => {
+                let index = 0;
+                function tryNext() {
+                    if (index >= urls.length) return reject(new Error("All CDNs failed"));
+                    const script = document.createElement('script');
+                    script.src = urls[index];
+                    script.onload = resolve;
+                    script.onerror = () => {
+                        index++;
+                        tryNext();
+                    };
+                    document.head.appendChild(script);
+                }
+                tryNext();
+            });
+        }
+
+        async function initApp() {
+            try {
+                // 5 different servers for each library
+                await loadScript([
+                    "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js",
+                    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",
+                    "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js",
+                    "https://cdn.statically.io/gh/mozilla/pdf.js/v3.11.174/build/pdf.min.js"
+                ]);
+                
+                await loadScript([
+                    "https://cdn.jsdelivr.net/npm/fabric@5.3.1/dist/fabric.min.js",
+                    "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js",
+                    "https://unpkg.com/fabric@5.3.1/dist/fabric.min.js",
+                    "https://cdn.statically.io/gh/fabricjs/fabric.js/v5.3.1/dist/fabric.min.js"
+                ]);
+
+                await loadScript([
+                    "https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js",
+                    "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js",
+                    "https://cdn.statically.io/gh/Hopding/pdf-lib/v1.17.1/dist/pdf-lib.min.js"
+                ]);
+
+                startApp();
+            } catch (error) {
+                // FAIL SILENTLY (User requested no red error box)
+                console.error("Libraries blocked by strict network.", error);
+            }
+        }
+
         function startApp() {
+            // Fallback worker source
+            pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+
             let fabricCanvas = null;
             let originalPdfBytes = null;
             let pdfWidth = 0;
@@ -475,7 +494,7 @@
                 }
             });
 
-            // Extract Text (100% Client Side)
+            // Extract Text
             extractBtn.addEventListener('click', async () => {
                 if (!currentPdfDoc) return;
                 extractBtn.disabled = true;
@@ -535,6 +554,9 @@
             toast.style.display = 'block';
             setTimeout(() => toast.style.display = 'none', 4000);
         }
+
+        // Start
+        initApp();
     </script>
 </body>
 </html>
