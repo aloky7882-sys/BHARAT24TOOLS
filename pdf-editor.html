@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <title>AI PDF Editor - Edit, Sign & Extract Text | Bharat24Tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+        <title>PDF Editor - Edit, Sign & Extract Text | BharatOS-Tools</title>
     <meta name="description" content="Advanced 100% Browser-Based PDF Editor. Add text, images, whiteout, sign documents, and extract text securely. No server upload, works offline.">
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -63,7 +62,7 @@
         .tool-btn i { width: 18px; text-align: center; }
 
         /* Center Workspace */
-        .workspace { flex: 1; background: #111; display: flex; justify-content: center; align-items: flex-start; padding: 20px; overflow: auto; position: relative; }
+        .workspace { flex: 1; min-width: 0; background: #111; display: flex; justify-content: center; align-items: flex-start; padding: 20px; overflow: auto; position: relative; }
         
         /* Upload Zone */
         .upload-zone { 
@@ -78,8 +77,8 @@
         #fileInput { display: none; }
 
         /* Canvas Wrapper */
-        .canvas-wrapper { position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; background: white; }
-        #pdfCanvas { display: block; max-width: 100%; height: auto; }
+        .canvas-wrapper { position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; background: white; flex-shrink: 0; }
+        #pdfCanvas { display: block; }
         .canvas-container { position: absolute !important; top: 0; left: 0; }
 
         /* Right Sidebar (Extract Text) */
@@ -108,9 +107,20 @@
             .ai-sidebar.show { right: 0; }
             .workspace { padding: 10px; justify-content: center; }
         }
+
+        /* Toast */
+        #toast { display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #b91c1c; color: #fff; padding: 10px 18px; border-radius: 8px; font-size: 0.85rem; z-index: 10000; max-width: 90%; text-align: center; box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+        #toast.success { background: #15803d; }
+        #toast.info { background: #4338ca; }
+        .btn-copy { background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--border); padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 0.85rem; }
+        .btn-copy:disabled { opacity: 0.4; cursor: not-allowed; }
+        #libStatus { color: var(--text-muted); font-size: 0.85rem; margin-top: 10px; }
+        #libStatus.err { color: #fca5a5; }
     </style>
 </head>
 <body>
+
+    <div id="toast" role="status"></div>
 
     <!-- Loader -->
     <div class="loader" id="loader">
@@ -141,14 +151,14 @@
         <!-- Left Tools -->
         <div class="sidebar" id="toolSidebar">
             <div class="section-title" data-i18n="toolsTitle">Editing Tools</div>
-            <button class="tool-btn active" id="toolSelect" data-i18n="toolSelect"><i class="fas fa-mouse-pointer"></i> Select / Move</button>
-            <button class="tool-btn" id="toolText" data-i18n="toolText"><i class="fas fa-font"></i> Add Text</button>
-            <button class="tool-btn" id="toolImage" data-i18n="toolImage"><i class="fas fa-image"></i> Add Image</button>
-            <button class="tool-btn" id="toolWhiteout" data-i18n="toolWhiteout"><i class="fas fa-eraser"></i> Whiteout (Hide)</button>
-            <button class="tool-btn" id="toolDraw" data-i18n="toolDraw"><i class="fas fa-pen"></i> Draw / Sign</button>
+            <button class="tool-btn active" id="toolSelect"><i class="fas fa-mouse-pointer"></i> <span data-i18n="toolSelect">Select / Move</span></button>
+            <button class="tool-btn" id="toolText"><i class="fas fa-font"></i> <span data-i18n="toolText">Add Text</span></button>
+            <button class="tool-btn" id="toolImage"><i class="fas fa-image"></i> <span data-i18n="toolImage">Add Image</span></button>
+            <button class="tool-btn" id="toolWhiteout"><i class="fas fa-eraser"></i> <span data-i18n="toolWhiteout">Whiteout (Hide)</span></button>
+            <button class="tool-btn" id="toolDraw"><i class="fas fa-pen"></i> <span data-i18n="toolDraw">Draw / Sign</span></button>
             
             <div class="section-title" style="margin-top: 15px;" data-i18n="actionsTitle">Actions</div>
-            <button class="tool-btn" id="toolUndo" data-i18n="toolUndo"><i class="fas fa-undo"></i> Undo</button>
+            <button class="tool-btn" id="toolUndo"><i class="fas fa-undo"></i> <span data-i18n="toolUndo">Undo</span></button>
         </div>
 
         <!-- Center Workspace -->
@@ -159,6 +169,7 @@
                 <i class="fas fa-file-pdf"></i>
                 <h2 data-i18n="uploadTitle">Upload PDF to Edit</h2>
                 <p data-i18n="uploadSubtitle">Click here to select your PDF file</p>
+                <p id="libStatus">Loading editor...</p>
             </label>
 
             <!-- Edit State -->
@@ -175,7 +186,8 @@
                 <div class="msg msg-ai" data-i18n="aiWelcome">Upload a PDF to extract its text securely in your browser.</div>
             </div>
             <div class="ai-input-area">
-                <button class="btn-extract" id="extractBtn" disabled><i class="fas fa-copy"></i> Extract Text</button>
+                <button class="btn-extract" id="extractBtn" disabled><i class="fas fa-file-lines"></i> <span data-i18n="extractBtn">Extract Text</span></button>
+                <button class="btn-copy" id="copyBtn" disabled><i class="fas fa-copy"></i> <span data-i18n="copyBtn">Copy Text</span></button>
             </div>
         </div>
 
@@ -193,7 +205,8 @@
                 loadingPdf: "Loading PDF...", errorPdf: "Please upload a valid PDF file.",
                 merging: "Merging Edits & Saving...", errorSave: "Error Saving: ",
                 analyzing: "Extracting Text...", 
-                typeHere: "Type here...", copied: "Text copied to clipboard!"
+                typeHere: "Type here...", copied: "Text copied to clipboard!",
+                extractBtn: "Extract Text", copyBtn: "Copy Text", noText: "No text found. This PDF might be a scanned image.", extractErr: "Error extracting text.", saved: "PDF saved!", uploadFirst: "Upload a PDF first!", loaded: "PDF loaded! You can now edit it or extract its text.", loadErr: "Error loading PDF. File may be corrupted or password protected.", libErr: "Editor libraries could not load. Check your internet and refresh the page.", ready: "Ready", noTextToCopy: "Nothing to copy yet. Extract text first.", imgErr: "Could not load this image.", page1Note: "Note: only page 1 is edited."
             },
             hi: {
                 toolsTitle: "एडिटिंग टूल्स", toolSelect: "सेलेक्ट / मूव", toolText: "टेक्स्ट जोड़ें",
@@ -204,7 +217,8 @@
                 loadingPdf: "PDF लोड हो रही है...", errorPdf: "कृपया एक वैध PDF फ़ाइल अपलोड करें।",
                 merging: "बदलाव मर्ज और सेव हो रहे हैं...", errorSave: "PDF सेव करने में त्रुटि: ",
                 analyzing: "टेक्स्ट निकाला जा रहा है...", 
-                typeHere: "यहाँ टाइप करें...", copied: "टेक्स्ट कॉपी हो गया!"
+                typeHere: "यहाँ टाइप करें...", copied: "टेक्स्ट कॉपी हो गया!",
+                extractBtn: "टेक्स्ट निकालें", copyBtn: "टेक्स्ट कॉपी करें", noText: "कोई टेक्स्ट नहीं मिला। यह PDF स्कैन की हुई इमेज हो सकती है।", extractErr: "टेक्स्ट निकालने में त्रुटि।", saved: "PDF सेव हो गई!", uploadFirst: "पहले PDF अपलोड करें!", loaded: "PDF लोड हो गई! अब एडिट करें या टेक्स्ट निकालें।", loadErr: "PDF लोड करने में त्रुटि। फ़ाइल खराब या पासवर्ड वाली हो सकती है।", libErr: "एडिटर लाइब्रेरी लोड नहीं हुईं। इंटरनेट जांचें और पेज रिफ्रेश करें।", ready: "तैयार", noTextToCopy: "कॉपी करने के लिए कुछ नहीं है। पहले टेक्स्ट निकालें।", imgErr: "यह इमेज लोड नहीं हो सकी।", page1Note: "ध्यान दें: सिर्फ पेज 1 एडिट होता है।"
             }
         };
 
@@ -214,349 +228,456 @@
             const t = translations[lang];
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (t[key]) el.innerHTML = t[key];
+                if (t[key]) el.textContent = t[key];
             });
         }
 
-        // ============ 3. DYNAMIC LOADER (5 Fallbacks) ============
-        async function loadScript(urls) {
+        // ============ UI HELPERS ============
+        let toastTimer = null;
+        function showToast(msg, type) {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.className = type === 'success' ? 'success' : (type === 'info' ? 'info' : '');
+            toast.style.display = 'block';
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => { toast.style.display = 'none'; }, 4000);
+        }
+        function showLoader(text) { document.getElementById('loaderText').textContent = text; document.getElementById('loader').style.display = 'flex'; }
+        function hideLoader() { document.getElementById('loader').style.display = 'none'; }
+
+        // Sidebar toggles work immediately (do not depend on libraries)
+        (function () {
+            const toolSidebar = document.getElementById('toolSidebar');
+            const aiSidebar = document.getElementById('aiSidebar');
+            document.getElementById('toggleTools').addEventListener('click', () => { toolSidebar.classList.toggle('show'); aiSidebar.classList.remove('show'); });
+            document.getElementById('toggleAI').addEventListener('click', () => { aiSidebar.classList.toggle('show'); toolSidebar.classList.remove('show'); });
+        })();
+
+        // ============ LIBRARY LOADER (with CDN fallbacks, loaded in parallel) ============
+        function loadScript(urls, globalName) {
             return new Promise((resolve, reject) => {
-                let index = 0;
+                let i = 0;
                 function tryNext() {
-                    if (index >= urls.length) return reject(new Error("All CDNs failed"));
-                    const script = document.createElement('script');
-                    script.src = urls[index];
-                    script.onload = resolve;
-                    script.onerror = () => {
-                        index++;
-                        tryNext();
+                    if (i >= urls.length) return reject(new Error(globalName + ' could not be loaded from any CDN'));
+                    const url = urls[i++];
+                    const s = document.createElement('script');
+                    let done = false;
+                    let timer = null;
+                    const fail = () => { if (done) return; done = true; clearTimeout(timer); s.remove(); tryNext(); };
+                    timer = setTimeout(fail, 12000);
+                    s.onload = () => {
+                        if (done) return;
+                        if (window[globalName]) { done = true; clearTimeout(timer); resolve(url); } else fail();
                     };
-                    document.head.appendChild(script);
+                    s.onerror = fail;
+                    s.src = url;
+                    document.head.appendChild(s);
                 }
                 tryNext();
             });
         }
 
-        async function initApp() {
+        (async function boot() {
+            const libStatus = document.getElementById('libStatus');
+            const fileInput = document.getElementById('fileInput');
+            fileInput.disabled = true;
             try {
-                // 5 different servers for each library
-                await loadScript([
-                    "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js",
-                    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",
-                    "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js",
-                    "https://cdn.statically.io/gh/mozilla/pdf.js/v3.11.174/build/pdf.min.js"
+                const [pdfjsUrl] = await Promise.all([
+                    loadScript([
+                        "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js",
+                        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",
+                        "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"
+                    ], 'pdfjsLib'),
+                    loadScript([
+                        "https://cdn.jsdelivr.net/npm/fabric@5.3.1/dist/fabric.min.js",
+                        "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js",
+                        "https://unpkg.com/fabric@5.3.1/dist/fabric.min.js"
+                    ], 'fabric'),
+                    loadScript([
+                        "https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js",
+                        "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js",
+                        "https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"
+                    ], 'PDFLib')
                 ]);
-                
-                await loadScript([
-                    "https://cdn.jsdelivr.net/npm/fabric@5.3.1/dist/fabric.min.js",
-                    "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js",
-                    "https://unpkg.com/fabric@5.3.1/dist/fabric.min.js",
-                    "https://cdn.statically.io/gh/fabricjs/fabric.js/v5.3.1/dist/fabric.min.js"
-                ]);
-
-                await loadScript([
-                    "https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js",
-                    "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js",
-                    "https://cdn.statically.io/gh/Hopding/pdf-lib/v1.17.1/dist/pdf-lib.min.js"
-                ]);
-
+                // Worker must come from the same CDN as the main pdf.js build
+                pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsUrl.replace('pdf.min.js', 'pdf.worker.min.js');
                 startApp();
-            } catch (error) {
-                // FAIL SILENTLY (User requested no red error box)
-                console.error("Libraries blocked by strict network.", error);
+                fileInput.disabled = false;
+                libStatus.style.display = 'none';
+            } catch (err) {
+                console.error(err);
+                libStatus.textContent = translations[currentLang].libErr;
+                libStatus.classList.add('err');
+                showToast(translations[currentLang].libErr, 'error');
             }
-        }
+        })();
 
+        // ============ EDITOR ============
         function startApp() {
-            // Fallback worker source
-            pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
-
             let fabricCanvas = null;
             let originalPdfBytes = null;
-            let pdfWidth = 0;
-            let pdfHeight = 0;
+            let originalName = 'document.pdf';
             let currentPdfDoc = null;
-            const RENDER_SCALE = 1.5; 
-            let activeUrls = new Set();
+            let pageW = 0, pageH = 0;      // canvas size in CSS pixels (same for PDF layer and edit layer)
+            let lastText = '';
+            const activeUrls = new Set();
 
-            // Cleanup
             function trackUrl(url) { activeUrls.add(url); return url; }
-            function revokeAllUrls() {
-                activeUrls.forEach(u => { try { URL.revokeObjectURL(u); } catch(e){} });
-                activeUrls.clear();
-            }
+            function revokeAllUrls() { activeUrls.forEach(u => { try { URL.revokeObjectURL(u); } catch (e) {} }); activeUrls.clear(); }
 
             const fileInput = document.getElementById('fileInput');
             const uploadLabel = document.getElementById('uploadLabel');
+            const workspace = document.getElementById('workspace');
             const canvasWrapper = document.getElementById('canvasWrapper');
             const pdfCanvas = document.getElementById('pdfCanvas');
             const downloadBtn = document.getElementById('downloadBtn');
             const resetBtn = document.getElementById('resetBtn');
             const extractBtn = document.getElementById('extractBtn');
-            const loader = document.getElementById('loader');
-
-            const toggleTools = document.getElementById('toggleTools');
-            const toggleAI = document.getElementById('toggleAI');
+            const copyBtn = document.getElementById('copyBtn');
             const toolSidebar = document.getElementById('toolSidebar');
-            const aiSidebar = document.getElementById('aiSidebar');
+            const aiChat = document.getElementById('aiChat');
+            const T = () => translations[currentLang];
 
-            toggleTools.addEventListener('click', () => {
-                toolSidebar.classList.toggle('show');
-                aiSidebar.classList.remove('show');
-            });
-            toggleAI.addEventListener('click', () => {
-                aiSidebar.classList.toggle('show');
-                toolSidebar.classList.remove('show');
-            });
+            function setChat(text, key) {
+                aiChat.textContent = '';
+                const div = document.createElement('div');
+                div.className = 'msg msg-ai';
+                if (key) div.setAttribute('data-i18n', key);
+                div.textContent = text;
+                aiChat.appendChild(div);
+            }
+            function closeMobileSidebar() { if (window.innerWidth <= 900) toolSidebar.classList.remove('show'); }
 
-            // Handle File Upload
+            // ---------- Upload ----------
             fileInput.addEventListener('change', async (e) => {
                 const file = e.target.files[0];
-                if (!file || file.type !== 'application/pdf') {
-                    showToast(translations[currentLang].errorPdf, "error");
+                e.target.value = '';   // allows choosing the same file again
+                if (!file) return;
+                if (!(file.type === 'application/pdf' || /\.pdf$/i.test(file.name))) {
+                    showToast(T().errorPdf, 'error');
                     return;
                 }
-
-                showLoader(translations[currentLang].loadingPdf);
-
+                showLoader(T().loadingPdf);
                 try {
-                    const arrayBuffer = await file.arrayBuffer();
-                    originalPdfBytes = arrayBuffer.slice(0); 
-                    
-                    currentPdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                    const page = await currentPdfDoc.getPage(1); 
-                    const viewport = page.getViewport({ scale: RENDER_SCALE });
+                    const buf = await file.arrayBuffer();
+                    const bytes = buf.slice(0);   // pdf.js detaches the buffer it receives, so keep our own copy
+                    const doc = await pdfjsLib.getDocument({ data: new Uint8Array(buf) }).promise;
+                    const page = await doc.getPage(1);
 
-                    pdfWidth = viewport.width;
-                    pdfHeight = viewport.height;
+                    const base = page.getViewport({ scale: 1 });
+                    const avail = Math.max(240, workspace.clientWidth - (window.innerWidth <= 900 ? 20 : 40));
+                    const scale = Math.min(1.5, Math.max(0.3, avail / base.width));
+                    const viewport = page.getViewport({ scale });
+                    const dpr = Math.min(2, window.devicePixelRatio || 1);
 
-                    pdfCanvas.width = pdfWidth;
-                    pdfCanvas.height = pdfHeight;
+                    pageW = Math.floor(viewport.width);
+                    pageH = Math.floor(viewport.height);
+                    pdfCanvas.width = Math.floor(viewport.width * dpr);
+                    pdfCanvas.height = Math.floor(viewport.height * dpr);
+                    pdfCanvas.style.width = pageW + 'px';
+                    pdfCanvas.style.height = pageH + 'px';
                     const ctx = pdfCanvas.getContext('2d');
-                    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                    ctx.setTransform(1, 0, 0, 1, 0, 0);
+                    ctx.clearRect(0, 0, pdfCanvas.width, pdfCanvas.height);
+                    await page.render({ canvasContext: ctx, viewport, transform: dpr !== 1 ? [dpr, 0, 0, dpr, 0, 0] : null }).promise;
+
+                    originalPdfBytes = bytes;
+                    originalName = file.name.replace(/\.pdf$/i, '') || 'document';
+                    currentPdfDoc = doc;
 
                     uploadLabel.style.display = 'none';
                     canvasWrapper.style.display = 'block';
                     downloadBtn.style.display = 'flex';
                     resetBtn.style.display = 'flex';
                     extractBtn.disabled = false;
-                    
-                    document.getElementById('aiChat').innerHTML = `<div class="msg msg-ai">✅ PDF Loaded! You can now edit it or extract its text.</div>`;
-
+                    setChat('✅ ' + T().loaded, 'loaded');
                     initFabricCanvas();
-
+                    if (doc.numPages > 1) showToast(T().page1Note, 'info');
                 } catch (err) {
                     console.error(err);
-                    showToast("Error loading PDF. File might be corrupted.", "error");
+                    showToast(T().loadErr, 'error');
                 } finally {
                     hideLoader();
                 }
             });
 
             function initFabricCanvas() {
-                if (fabricCanvas) fabricCanvas.dispose();
-                fabricCanvas = new fabric.Canvas('editorCanvas', {
-                    width: pdfWidth, height: pdfHeight, backgroundColor: 'transparent'
+                if (fabricCanvas) { try { fabricCanvas.dispose(); } catch (e) {} fabricCanvas = null; }
+                canvasWrapper.querySelectorAll('.canvas-container').forEach(n => n.remove());
+                const old = document.getElementById('editorCanvas');
+                if (old) old.remove();
+                const el = document.createElement('canvas');
+                el.id = 'editorCanvas';
+                canvasWrapper.appendChild(el);
+
+                fabricCanvas = new fabric.Canvas(el, {
+                    width: pageW, height: pageH,
+                    backgroundColor: 'rgba(0,0,0,0)',
+                    preserveObjectStacking: true,
+                    allowTouchScrolling: true
                 });
                 fabricCanvas.freeDrawingBrush.width = 3;
                 fabricCanvas.freeDrawingBrush.color = '#a855f7';
-            }
-
-            // Tool Logics
-            const tools = ['toolSelect', 'toolText', 'toolImage', 'toolWhiteout', 'toolDraw'];
-            
-            function setActiveTool(toolId) {
-                tools.forEach(id => document.getElementById(id).classList.remove('active'));
-                document.getElementById(toolId).classList.add('active');
-                if (!fabricCanvas) return;
-                fabricCanvas.isDrawingMode = false;
-                fabricCanvas.selection = false;
-                fabricCanvas.forEachObject(obj => obj.selectable = false);
-            }
-
-            document.getElementById('toolSelect').addEventListener('click', () => {
                 setActiveTool('toolSelect');
-                if (!fabricCanvas) return;
-                fabricCanvas.selection = true;
-                fabricCanvas.forEachObject(obj => obj.selectable = true);
-            });
+            }
+
+            // ---------- Tools ----------
+            const tools = ['toolSelect', 'toolText', 'toolImage', 'toolWhiteout', 'toolDraw'];
+            function setActiveTool(id) {
+                tools.forEach(t => document.getElementById(t).classList.remove('active'));
+                document.getElementById(id).classList.add('active');
+                if (fabricCanvas) fabricCanvas.isDrawingMode = (id === 'toolDraw');
+            }
+            function needPdf() {
+                if (fabricCanvas) return false;
+                showToast(T().uploadFirst, 'error');
+                return true;
+            }
+
+            document.getElementById('toolSelect').addEventListener('click', () => { setActiveTool('toolSelect'); closeMobileSidebar(); });
 
             document.getElementById('toolText').addEventListener('click', () => {
-                if (!fabricCanvas) return showToast("Upload PDF first!", "error");
-                setActiveTool('toolText');
-                const text = new fabric.IText(translations[currentLang].typeHere, { left: 50, top: 50, fontFamily: 'Helvetica', fontSize: 20, fill: '#000000' });
+                if (needPdf()) return;
+                setActiveTool('toolSelect');
+                const text = new fabric.IText(T().typeHere, { left: 50, top: 50, fontFamily: 'Helvetica, Arial, sans-serif', fontSize: 20, fill: '#000000' });
                 fabricCanvas.add(text);
                 fabricCanvas.setActiveObject(text);
-                document.getElementById('toolSelect').click(); 
-                if(window.innerWidth <= 900) toolSidebar.classList.remove('show');
+                text.enterEditing();
+                text.selectAll();
+                fabricCanvas.requestRenderAll();
+                closeMobileSidebar();
             });
 
             document.getElementById('toolWhiteout').addEventListener('click', () => {
-                if (!fabricCanvas) return showToast("Upload PDF first!", "error");
-                setActiveTool('toolWhiteout');
-                const rect = new fabric.Rect({ 
-                    left: 50, top: 50, fill: '#ffffff', width: 150, height: 40,
-                    stroke: '#e2e8f0', strokeWidth: 1
-                });
+                if (needPdf()) return;
+                setActiveTool('toolSelect');
+                const rect = new fabric.Rect({ left: 50, top: 50, fill: '#ffffff', width: 150, height: 40, stroke: '#cbd5e1', strokeWidth: 1 });
                 fabricCanvas.add(rect);
                 fabricCanvas.setActiveObject(rect);
-                document.getElementById('toolSelect').click();
-                if(window.innerWidth <= 900) toolSidebar.classList.remove('show');
+                fabricCanvas.requestRenderAll();
+                closeMobileSidebar();
             });
 
             document.getElementById('toolImage').addEventListener('click', () => {
-                if (!fabricCanvas) return showToast("Upload PDF first!", "error");
+                if (needPdf()) return;
+                setActiveTool('toolSelect');
                 const input = document.createElement('input');
-                input.type = 'file'; input.accept = 'image/*';
+                input.type = 'file';
+                input.accept = 'image/*';
                 input.onchange = (e) => {
                     const file = e.target.files[0];
+                    if (!file) return;
+                    if (!file.type.startsWith('image/')) { showToast(T().imgErr, 'error'); return; }
                     const reader = new FileReader();
+                    reader.onerror = () => showToast(T().imgErr, 'error');
                     reader.onload = (f) => {
                         fabric.Image.fromURL(f.target.result, (img) => {
-                            img.scaleToWidth(200);
+                            if (!img || !img.width) { showToast(T().imgErr, 'error'); return; }
+                            img.scaleToWidth(Math.min(200, pageW * 0.6));
                             img.set({ left: 50, top: 50 });
                             fabricCanvas.add(img);
                             fabricCanvas.setActiveObject(img);
+                            fabricCanvas.requestRenderAll();
                         });
                     };
                     reader.readAsDataURL(file);
                 };
                 input.click();
+                closeMobileSidebar();
             });
 
             document.getElementById('toolDraw').addEventListener('click', () => {
-                if (!fabricCanvas) return showToast("Upload PDF first!", "error");
+                if (needPdf()) return;
                 setActiveTool('toolDraw');
-                fabricCanvas.isDrawingMode = true;
-                if(window.innerWidth <= 900) toolSidebar.classList.remove('show');
+                closeMobileSidebar();
             });
 
-            document.getElementById('toolUndo').addEventListener('click', () => {
+            function removeSelectedOrLast() {
                 if (!fabricCanvas) return;
-                const activeObj = fabricCanvas.getActiveObject();
-                if (activeObj) fabricCanvas.remove(activeObj);
-                else {
-                    const objects = fabricCanvas.getObjects();
-                    if (objects.length > 0) fabricCanvas.remove(objects[objects.length - 1]);
+                const active = fabricCanvas.getActiveObject();
+                if (active && active.isEditing) return;
+                if (active) {
+                    if (active.type === 'activeSelection') active.forEachObject(o => fabricCanvas.remove(o));
+                    else fabricCanvas.remove(active);
+                } else {
+                    const objs = fabricCanvas.getObjects();
+                    if (objs.length) fabricCanvas.remove(objs[objs.length - 1]);
                 }
+                fabricCanvas.discardActiveObject();
+                fabricCanvas.requestRenderAll();
+            }
+            document.getElementById('toolUndo').addEventListener('click', removeSelectedOrLast);
+            document.addEventListener('keydown', (e) => {
+                if (!fabricCanvas) return;
+                if (e.key !== 'Delete' && e.key !== 'Backspace') return;
+                const tag = (e.target && e.target.tagName) || '';
+                if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+                const active = fabricCanvas.getActiveObject();
+                if (active && !active.isEditing) { e.preventDefault(); removeSelectedOrLast(); }
             });
 
-            // Save & Download
-            downloadBtn.addEventListener('click', async () => {
-                if (!originalPdfBytes) return;
-                showLoader(translations[currentLang].merging);
-
+            // ---------- Save PDF ----------
+            function toPdfColor(fill, fallback) {
                 try {
-                    const pdfDoc = await PDFLib.PDFDocument.load(originalPdfBytes);
-                    const pages = pdfDoc.getPages();
-                    const firstPage = pages[0];
-                    const objects = fabricCanvas.getObjects();
+                    const c = new fabric.Color(fill).getSource();
+                    return PDFLib.rgb(c[0] / 255, c[1] / 255, c[2] / 255);
+                } catch (e) { return fallback; }
+            }
+            function dataUrlToBytes(dataUrl) {
+                const bin = atob(dataUrl.split(',')[1]);
+                const out = new Uint8Array(bin.length);
+                for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+                return out;
+            }
 
-                    for (const obj of objects) {
-                        const scale = RENDER_SCALE;
-                        const objWidth = obj.width * obj.scaleX;
-                        const objHeight = obj.height * obj.scaleY;
-                        const pdfX = obj.left / scale;
-                        const pdfY = (pdfHeight / scale) - (obj.top / scale) - (objHeight / scale);
+            downloadBtn.addEventListener('click', async () => {
+                if (!originalPdfBytes || !fabricCanvas) return;
+                showLoader(T().merging);
+                try {
+                    fabricCanvas.discardActiveObject();
+                    fabricCanvas.requestRenderAll();
 
-                        if (obj.type === 'i-text' || obj.type === 'text') {
-                            const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-                            firstPage.drawText(obj.text, { x: pdfX, y: pdfY, size: obj.fontSize / scale, font: font, color: PDFLib.rgb(0, 0, 0) });
-                        } else if (obj.type === 'rect') {
-                            firstPage.drawRectangle({ x: pdfX, y: pdfY, width: objWidth / scale, height: objHeight / scale, color: PDFLib.rgb(1, 1, 1) });
-                        } else if (obj.type === 'image') {
-                            const imgData = obj.toDataURL({ format: 'png' });
-                            const imgBytes = await fetch(imgData).then(res => res.arrayBuffer());
-                            const pdfImage = await pdfDoc.embedPng(imgBytes);
-                            firstPage.drawImage(pdfImage, { x: pdfX, y: pdfY, width: objWidth / scale, height: objHeight / scale });
+                    const pdfDoc = await PDFLib.PDFDocument.load(originalPdfBytes, { ignoreEncryption: true });
+                    const page = pdfDoc.getPage(0);
+                    const box = page.getCropBox();                 // same area pdf.js rendered
+                    const sx = box.width / pageW;
+                    const sy = box.height / pageH;
+                    const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+                    const latinOnly = /^[\u0020-\u007E\u00A0-\u00FF\n]*$/;   // what Helvetica can encode
+
+                    for (const obj of fabricCanvas.getObjects()) {
+                        obj.setCoords();
+                        const upright = !obj.angle;
+                        const isText = obj.type === 'i-text' || obj.type === 'text' || obj.type === 'textbox';
+
+                        if (isText && upright && latinOnly.test(obj.text || '')) {
+                            // real (selectable) PDF text
+                            const fs = obj.fontSize * obj.scaleY;
+                            const step = fs * obj.lineHeight * 1.13;
+                            const color = toPdfColor(obj.fill, PDFLib.rgb(0, 0, 0));
+                            String(obj.text).split('\n').forEach((line, i) => {
+                                if (!line) return;
+                                page.drawText(line, {
+                                    x: box.x + obj.left * sx,
+                                    y: box.y + box.height - (obj.top + fs * 0.88 + i * step) * sy,
+                                    size: fs * sy, font, color, opacity: obj.opacity
+                                });
+                            });
+                        } else if (obj.type === 'rect' && upright) {
+                            const w = obj.width * obj.scaleX, h = obj.height * obj.scaleY;
+                            page.drawRectangle({
+                                x: box.x + obj.left * sx, y: box.y + box.height - (obj.top + h) * sy,
+                                width: w * sx, height: h * sy,
+                                color: toPdfColor(obj.fill, PDFLib.rgb(1, 1, 1)), opacity: obj.opacity
+                            });
+                        } else {
+                            // images, drawings/signatures, rotated items, Hindi/other-script text -> exact picture
+                            const r = obj.getBoundingRect(true, true);
+                            if (!r.width || !r.height) continue;
+                            const png = await pdfDoc.embedPng(dataUrlToBytes(obj.toDataURL({ format: 'png', multiplier: 3 })));
+                            page.drawImage(png, {
+                                x: box.x + r.left * sx, y: box.y + box.height - (r.top + r.height) * sy,
+                                width: r.width * sx, height: r.height * sy
+                            });
                         }
                     }
 
                     const pdfBytes = await pdfDoc.save();
-                    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-                    const url = trackUrl(URL.createObjectURL(blob));
-                    
+                    const url = trackUrl(URL.createObjectURL(new Blob([pdfBytes], { type: 'application/pdf' })));
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = 'Edited-Bharat24Tools.pdf';
+                    a.download = 'edited-' + originalName + '.pdf';
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
-                    setTimeout(() => URL.revokeObjectURL(url), 5000);
-                    
-                    showToast("PDF Saved Successfully!", "success");
-
+                    setTimeout(() => { URL.revokeObjectURL(url); activeUrls.delete(url); }, 10000);
+                    showToast(T().saved, 'success');
                 } catch (err) {
                     console.error(err);
-                    showToast(translations[currentLang].errorSave + err.message, "error");
+                    showToast(T().errorSave + (err && err.message ? err.message : ''), 'error');
                 } finally {
                     hideLoader();
                 }
             });
 
-            // Extract Text
+            // ---------- Extract / copy text ----------
             extractBtn.addEventListener('click', async () => {
                 if (!currentPdfDoc) return;
                 extractBtn.disabled = true;
-                const aiChat = document.getElementById('aiChat');
-                aiChat.innerHTML = `<div class="msg msg-ai"><i class="fas fa-spinner fa-spin"></i> ${translations[currentLang].analyzing}</div>`;
-                
+                copyBtn.disabled = true;
+                lastText = '';
+                setChat(T().analyzing, 'analyzing');
                 try {
-                    let fullText = "";
-                    const numPages = Math.min(currentPdfDoc.numPages, 5); 
-                    
-                    for (let i = 1; i <= numPages; i++) {
+                    const total = currentPdfDoc.numPages;
+                    const n = Math.min(total, 100);
+                    let full = '';
+                    let hasText = false;
+                    for (let i = 1; i <= n; i++) {
                         const page = await currentPdfDoc.getPage(i);
-                        const textContent = await page.getTextContent();
-                        const pageText = textContent.items.map(item => item.str).join(' ');
-                        fullText += pageText + "\n\n";
+                        const content = await page.getTextContent();
+                        let t = '';
+                        for (const it of content.items) {
+                            const s = it.str || '';
+                            if (s.trim()) hasText = true;
+                            t += s + (it.hasEOL ? '\n' : ' ');
+                        }
+                        full += (n > 1 ? '--- Page ' + i + ' ---\n' : '') + t.trim() + '\n\n';
                     }
-                    
-                    if (!fullText.trim()) {
-                        aiChat.innerHTML = `<div class="msg msg-ai">❌ No text found. This PDF might be a scanned image.</div>`;
+                    if (!hasText) {
+                        setChat('❌ ' + T().noText, 'noText');
                     } else {
-                        aiChat.innerHTML = `<div class="msg msg-ai">${fullText}</div>`;
-                        showToast(translations[currentLang].copied, "success");
+                        lastText = full.trim();
+                        setChat(lastText + (total > n ? '\n\n(First ' + n + ' pages)' : ''));
+                        copyBtn.disabled = false;
                     }
                 } catch (err) {
                     console.error(err);
-                    aiChat.innerHTML = `<div class="msg msg-ai">❌ Error extracting text.</div>`;
+                    setChat('❌ ' + T().extractErr, 'extractErr');
                 } finally {
                     extractBtn.disabled = false;
                 }
             });
 
-            // Reset
+            copyBtn.addEventListener('click', async () => {
+                if (!lastText) { showToast(T().noTextToCopy, 'error'); return; }
+                try {
+                    await navigator.clipboard.writeText(lastText);
+                } catch (e) {
+                    const ta = document.createElement('textarea');   // fallback for http / older browsers
+                    ta.value = lastText;
+                    ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try { document.execCommand('copy'); } catch (e2) {}
+                    document.body.removeChild(ta);
+                }
+                showToast(T().copied, 'success');
+            });
+
+            // ---------- Close / reset ----------
             resetBtn.addEventListener('click', () => {
-                if (fabricCanvas) { fabricCanvas.dispose(); fabricCanvas = null; }
+                if (fabricCanvas) { try { fabricCanvas.dispose(); } catch (e) {} fabricCanvas = null; }
+                canvasWrapper.querySelectorAll('.canvas-container').forEach(n => n.remove());
+                const old = document.getElementById('editorCanvas');
+                if (old) old.remove();
                 revokeAllUrls();
                 originalPdfBytes = null;
                 currentPdfDoc = null;
+                lastText = '';
                 fileInput.value = '';
                 uploadLabel.style.display = 'block';
                 canvasWrapper.style.display = 'none';
                 downloadBtn.style.display = 'none';
                 resetBtn.style.display = 'none';
                 extractBtn.disabled = true;
-                document.getElementById('aiChat').innerHTML = `<div class="msg msg-ai">${translations[currentLang].aiWelcome}</div>`;
+                copyBtn.disabled = true;
+                setActiveTool('toolSelect');
+                setChat(T().aiWelcome, 'aiWelcome');
             });
 
-            function showLoader(text) { document.getElementById('loaderText').innerText = text; loader.style.display = 'flex'; }
-            function hideLoader() { loader.style.display = 'none'; }
             window.addEventListener('beforeunload', revokeAllUrls);
         }
-
-        // Toast Helper
-        function showToast(msg, type) {
-            const toast = document.getElementById('toast');
-            toast.innerText = msg;
-            toast.className = type === 'success' ? 'success' : '';
-            toast.style.display = 'block';
-            setTimeout(() => toast.style.display = 'none', 4000);
-        }
-
-        // Start
-        initApp();
     </script>
 </body>
 </html>
