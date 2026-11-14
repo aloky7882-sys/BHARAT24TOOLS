@@ -6,7 +6,7 @@
     <meta name="google-site-verification" content="UZJ4T-L3nOnoNrjekmUnDJnviONkIevI0vdRlk94qVQ" />
     
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <!-- 🖼️ Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -67,6 +67,7 @@
             --primary: #0d6efd;
             --shadow-hover: 0 8px 24px rgba(13,110,253,0.15);
         }
+        
         body.dark {
             --bg-primary: #0f0f1e;
             --bg-card: rgba(30, 27, 75, 0.5);
@@ -80,7 +81,10 @@
             max-width: 100vw;
             overflow-x: hidden; 
             overflow-y: scroll;
+            margin: 0;
+            padding: 0; /* Fixed: Removed padding to fix white edges */
         }
+        
         body { 
             background: var(--bg-primary); 
             color: var(--text-primary); 
@@ -90,63 +94,91 @@
             z-index: 0;
         }
 
-        /* 🟢 NEON GLOW BACKGROUND FOR GLASSMORPHISM 🟢 */
-        body::before, body::after {
-            content: '';
+        /* 🌌 UNIVERSE & VISHNU BACKGROUND 🌌 */
+        .universe-bg {
             position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: -1;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, #1e1b4b 0%, #0f0f1e 100%);
+            z-index: -3;
+            overflow: hidden;
             pointer-events: none;
-            opacity: 0.6;
         }
-        body::before {
-            top: -10%; left: -10%;
-            width: 50vw; height: 50vw;
-            background: rgba(168, 85, 247, 0.4);
-        }
-        body::after {
-            bottom: -10%; right: -10%;
-            width: 50vw; height: 50vw;
-            background: rgba(13, 110, 253, 0.4);
-        }
-        body.dark::before { background: rgba(168, 85, 247, 0.2); opacity: 0.8; }
-        body.dark::after { background: rgba(13, 110, 253, 0.2); opacity: 0.8; }
 
-        /* 🎉 FESTIVAL BACKGROUND WATERMARK (100% RESPONSIVE) 🎉 */
-        .festival-bg {
+        /* Twinkling Stars */
+        .universe-bg::before {
+            content: "";
+            position: absolute;
+            width: 200%; height: 200%;
+            background-image: 
+                radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)), 
+                radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)), 
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)), 
+                radial-gradient(1.5px 1.5px at 160px 120px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 250px 60px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 300px 200px, #fff, rgba(0,0,0,0));
+            background-size: 300px 300px;
+            animation: starsRotate 150s linear infinite;
+            opacity: 0.4;
+        }
+
+        @keyframes starsRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Vishnu Avatars Slideshow */
+        .vishnu-slide {
+            position: absolute; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%);
+            width: 100vw; height: 100vh;
+            object-fit: cover;
+            opacity: 0;
+            animation: fadeVishnu 24s infinite;
+            filter: blur(2px); /* Slight blur so text is readable */
+        }
+
+        /* Add your Vishnu Images Here */
+        .vishnu-slide:nth-child(1) { 
+            animation-delay: 0s; 
+            /* Replace with your 1st Image URL */
+            content: url('https://images.unsplash.com/photo-1627664812225-8d6e923a2217?q=80&w=1920&auto=format&fit=crop'); 
+        }
+        .vishnu-slide:nth-child(2) { 
+            animation-delay: 8s; 
+            /* Replace with your 2nd Image URL */
+            content: url('https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1920&auto=format&fit=crop'); 
+        }
+        .vishnu-slide:nth-child(3) { 
+            animation-delay: 16s; 
+            /* Replace with your 3rd Image URL */
+            content: url('https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1920&auto=format&fit=crop'); 
+        }
+
+        @keyframes fadeVishnu {
+            0% { opacity: 0; }
+            10% { opacity: 0.2; } /* Very subtle opacity */
+            25% { opacity: 0.2; }
+            35% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        /* Dark overlay to ensure text readability */
+        .universe-overlay {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-10deg);
-            /* Font size scales perfectly on both desktop and mobile */
-            font-size: clamp(2.5rem, 10vw, 8rem);
-            font-weight: 800;
-            color: #000;
-            opacity: 0.07; /* Clearly visible but still a watermark */
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(15, 15, 30, 0.7); 
             z-index: -2;
             pointer-events: none;
-            text-align: center;
-            /* Removed white-space: nowrap so long text wraps on mobile */
-            word-wrap: break-word;
-            line-height: 1.2;
-            width: 90%; /* Keeps it inside the screen */
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-family: 'Poppins', sans-serif;
-        }
-        body.dark .festival-bg {
-            color: #fff;
-            opacity: 0.08;
         }
 
-        /* Festival Logo in Navbar */
+        /* Logo Pulse */
         #logoIcon {
             font-size: 1.5rem;
             margin-right: 8px;
             display: inline-block;
             vertical-align: middle;
-            animation: pulse 2s infinite; /* Little heartbeat animation */
+            animation: pulse 2s infinite;
         }
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -154,7 +186,7 @@
             100% { transform: scale(1); }
         }
 
-        /* ===== HERO SECTION & FLOATING ICONS FIX ===== */
+        /* ===== HERO SECTION ===== */
         .hero { 
             position: relative; 
             overflow: hidden; 
@@ -167,7 +199,12 @@
             justify-content: center;
             flex-wrap: wrap;
             font-size: 2.5rem;
+            color: #ffffff; /* Forced white for dark bg */
         }
+        
+        .hero p { color: #cbd5e1; }
+        .hero .badge { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff;}
+
         .floating-icons {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -176,7 +213,7 @@
         }
         .float-icon {
             position: absolute;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.2);
             font-size: 3rem;
             animation: floatUp 4s infinite ease-in-out alternate;
         }
@@ -197,9 +234,9 @@
             justify-content: center;
             margin-top: 12px;
             font-size: 0.8rem;
-            color: var(--text-muted);
+            color: #cbd5e1;
         }
-        .trending-search span { cursor: pointer; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 20px; transition: 0.2s;}
+        .trending-search span { cursor: pointer; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; transition: 0.2s; border: 1px solid rgba(255,255,255,0.1);}
         .trending-search span:hover { background: var(--primary); color: white; }
 
         /* ===== DESKTOP GRID ===== */
@@ -233,10 +270,7 @@
         .card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
+            top: 0; left: 0; right: 0; height: 3px;
             background: var(--primary);
             opacity: 0.9;
         }
@@ -245,38 +279,17 @@
         .tool-category[data-category="design"] .card::before { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
         .tool-category[data-category="calculator"] .card::before { background: linear-gradient(90deg, #22c55e, #10b981); }
 
-        /* Neon Glow Hover Effects */
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .tool-category[data-category="image"] .card:hover {
-            border-color: rgba(168, 85, 247, 0.6);
-            box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.5), 0 0 15px rgba(168, 85, 247, 0.2);
-        }
-        .tool-category[data-category="pdf"] .card:hover {
-            border-color: rgba(239, 68, 68, 0.6);
-            box-shadow: 0 10px 30px -10px rgba(239, 68, 68, 0.5), 0 0 15px rgba(239, 68, 68, 0.2);
-        }
-        .tool-category[data-category="design"] .card:hover {
-            border-color: rgba(59, 130, 246, 0.6);
-            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.5), 0 0 15px rgba(59, 130, 246, 0.2);
-        }
-        .tool-category[data-category="calculator"] .card:hover {
-            border-color: rgba(34, 197, 94, 0.6);
-            box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.5), 0 0 15px rgba(34, 197, 94, 0.2);
-        }
+        .card:hover { transform: translateY(-5px); }
+        .tool-category[data-category="image"] .card:hover { border-color: rgba(168, 85, 247, 0.6); box-shadow: 0 10px 30px -10px rgba(168, 85, 247, 0.5), 0 0 15px rgba(168, 85, 247, 0.2); }
+        .tool-category[data-category="pdf"] .card:hover { border-color: rgba(239, 68, 68, 0.6); box-shadow: 0 10px 30px -10px rgba(239, 68, 68, 0.5), 0 0 15px rgba(239, 68, 68, 0.2); }
+        .tool-category[data-category="design"] .card:hover { border-color: rgba(59, 130, 246, 0.6); box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.5), 0 0 15px rgba(59, 130, 246, 0.2); }
+        .tool-category[data-category="calculator"] .card:hover { border-color: rgba(34, 197, 94, 0.6); box-shadow: 0 10px 30px -10px rgba(34, 197, 94, 0.5), 0 0 15px rgba(34, 197, 94, 0.2); }
 
         .tool-icon {
             font-size: 1.25rem !important;
-            width: 36px !important;
-            height: 36px !important;
-            line-height: 1 !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            border-radius: 8px;
-            margin-bottom: 8px;
+            width: 36px !important; height: 36px !important;
+            display: flex !important; align-items: center !important; justify-content: center !important;
+            border-radius: 8px; margin-bottom: 8px;
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(4px);
             border: 1px solid rgba(255,255,255,0.2);
@@ -288,61 +301,13 @@
         .tool-category[data-category="design"] .tool-icon { background: rgba(59,130,246,0.15); }
         .tool-category[data-category="calculator"] .tool-icon { background: rgba(34,197,94,0.15); }
 
-        .card h3 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 3px;
-            line-height: 1.3;
-        }
-
-        .card p {
-            font-size: 0.68rem;
-            color: var(--text-muted);
-            line-height: 1.35;
-            margin-bottom: 6px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .card .rating-row {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.6rem;
-            color: var(--text-muted);
-            margin: 0 0 2px;
-        }
+        .card h3 { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; line-height: 1.3; }
+        .card p { font-size: 0.68rem; color: var(--text-muted); line-height: 1.35; margin-bottom: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        .card .rating-row { display: flex; align-items: center; gap: 4px; font-size: 0.6rem; color: var(--text-muted); margin: 0 0 2px; }
         .card .rating-row .stars { color: #fbbf24; font-size: 0.62rem; letter-spacing: -1px; }
-        .card .rating-row .rating-count { opacity: 0.75; }
-
-        .card .usage-counter {
-            font-size: 0.58rem;
-            color: #10b981;
-            font-weight: 600;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 3px;
-        }
-
-        .card .how-it-works {
-            font-size: 0.62rem;
-            color: var(--text-muted);
-            font-style: italic;
-            line-height: 1.3;
-            margin: 6px 0 8px;
-            padding-top: 6px;
-            border-top: 1px dashed var(--border-color);
-            opacity: 0.85;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
+        .card .usage-counter { font-size: 0.58rem; color: #10b981; font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 3px; }
+        .card .how-it-works { font-size: 0.62rem; color: var(--text-muted); font-style: italic; line-height: 1.3; margin: 6px 0 8px; padding-top: 6px; border-top: 1px dashed var(--border-color); opacity: 0.85; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .card .card-badges { display: flex; gap: 4px; flex-wrap: wrap; margin-top: auto; }
         .card .card-badge { font-size: 0.52rem; padding: 2px 6px; border-radius: 10px; font-weight: 600; }
         .badge-popular { background: rgba(251,191,36,0.15); color: #d97706; }
@@ -350,79 +315,34 @@
         .badge-ai { background: rgba(168,85,247,0.15); color: #a855f7; }
         .badge-offline { background: rgba(59,130,246,0.15); color: #3b82f6; }
 
-        .card .fav-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 0.8rem;
-            padding: 4px;
-            transition: all 0.2s;
-            z-index: 2;
-        }
+        .card .fav-btn { position: absolute; top: 8px; right: 8px; background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.8rem; padding: 4px; transition: all 0.2s; z-index: 2; }
         .card .fav-btn:hover { color: #fbbf24; transform: scale(1.15); }
         .card .fav-btn.active { color: #fbbf24; }
         .card .fav-btn.active i::before { content: "\f005"; font-weight: 900; }
 
         /* ===== SECTION ===== */
         .tool-category { margin-bottom: 28px; }
-        .tool-category h2 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin: 22px 0 14px;
-            color: var(--text-primary);
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 0 20px;
-        }
+        .tool-category h2 { font-size: 1.15rem; font-weight: 700; margin: 22px 0 14px; color: var(--text-primary); max-width: 1200px; margin-left: auto; margin-right: auto; padding: 0 20px; }
 
         /* ===== POPULAR TOOLS ===== */
         .popular-tools { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
         .popular-tools h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
         .popular-tools .sub { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 18px; }
         .popular-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
-        .popular-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 14px;
-            position: relative;
-            transition: all 0.25s;
-            text-decoration: none;
-            color: var(--text-primary);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        }
+        .popular-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; position: relative; transition: all 0.25s; text-decoration: none; color: var(--text-primary); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .popular-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--primary); }
         .popular-card .p-icon { font-size: 1.3rem; margin-bottom: 6px; }
         .popular-card .p-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; }
         .popular-card .p-desc { font-size: 0.68rem; color: var(--text-muted); margin-bottom: 6px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .popular-card .p-stat { font-size: 0.62rem; color: #10b981; font-weight: 600; }
-        .popular-card .p-rank {
-            position: absolute; top: 10px; right: 10px;
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: #fff; font-size: 0.6rem; font-weight: 700;
-            padding: 2px 7px; border-radius: 20px;
-        }
+        .popular-card .p-rank { position: absolute; top: 10px; right: 10px; background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 2px 7px; border-radius: 20px; }
 
         /* ===== TESTIMONIALS ===== */
         .testimonials { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
         .testimonials h2 { text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
         .testimonials .sub { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 30px; }
         .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .testi-card { 
-            background: var(--bg-card); 
-            backdrop-filter: blur(12px); 
-            border: 1px solid var(--border-color); 
-            border-radius: 14px; 
-            padding: 22px; 
-            transition: all 0.25s; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        }
+        .testi-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; transition: all 0.25s; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
         .testi-card .t-stars { color: #fbbf24; margin-bottom: 10px; font-size: 0.9rem; }
         .testi-card .t-text { font-size: 0.85rem; color: var(--text-primary); line-height: 1.6; margin-bottom: 16px; font-style: italic; }
@@ -459,36 +379,29 @@
         .recent-chip:hover { background: var(--primary); color: white; transform: translateY(-2px); }
 
         /* Back to Top */
-        .back-to-top {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            z-index: 99;
-            box-shadow: 0 4px 15px rgba(13,110,253,0.4);
-            transition: transform 0.2s;
-        }
+        .back-to-top { position: fixed; bottom: 100px; right: 20px; width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 1.2rem; z-index: 99; box-shadow: 0 4px 15px rgba(13,110,253,0.4); transition: transform 0.2s; }
         .back-to-top:hover { transform: scale(1.1); }
 
-        /* ===== MOBILE BOTTOM NAV ===== */
+        /* ===== NAVBAR & MOBILE ===== */
+        .navbar { 
+            background: rgba(15,15,30,0.95); 
+            padding: 12px 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            position: sticky; top: 0; z-index: 1000;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .menu-btn { display: none; }
+        #menu-toggle { display: none; }
+
         .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-card); border-top: 1px solid var(--border-color); padding: 8px 0; z-index: 998; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); backdrop-filter: blur(20px); }
         .mobile-bottom-nav a { flex: 1; text-align: center; color: var(--text-muted); text-decoration: none; font-size: 0.65rem; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 0; }
         .mobile-bottom-nav a i { font-size: 1.1rem; }
         .mobile-bottom-nav a.active { color: var(--primary); }
-
-        /* ✅ Hamburger Menu Default Hidden (Desktop) */
-        .menu-btn { display: none; }
-        #menu-toggle { display: none; }
 
         /* ===== TABLET (768px - 1024px) ===== */
         @media (max-width: 1024px) {
@@ -496,59 +409,48 @@
             .card { min-height: 200px; padding: 16px; }
         }
 
-        /* ===== TABLET & SMALL LAPTOPS ===== */
-        @media (max-width: 1100px) {
-            .navbar { padding: 12px 20px; gap: 10px; flex-wrap: nowrap; position: relative; z-index: 1000; }
-            .menu { gap: 10px; }
-            .menu a { font-size: 0.85rem; padding: 6px 8px; }
-            .hero { padding: 40px 20px; }
-        }
-
         /* ===== MOBILE (max 768px) ===== */
         @media (max-width: 768px) {
-            .navbar { padding: 12px 16px; flex-wrap: nowrap; justify-content: space-between; position: relative; z-index: 1000; }
-            .menu-btn { display: block; font-size: 1.5rem; color: var(--text-primary); cursor: pointer; margin-right: 0; z-index: 1001; }
-            .menu { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--bg-card) !important; backdrop-filter: blur(20px); flex-direction: column; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); z-index: 999; border-bottom: 1px solid var(--border-color); }
+            .navbar { padding: 10px 15px; }
+            .menu-btn { display: block; font-size: 1.5rem; color: #fff; cursor: pointer; z-index: 1001; }
+            
+            .menu { 
+                display: none; 
+                position: absolute; 
+                top: 100%; left: 0; 
+                width: 100%; 
+                background: #0f0f1e; 
+                flex-direction: column; 
+                padding: 20px; 
+                box-shadow: 0 10px 20px rgba(0,0,0,0.5); 
+                z-index: 999; 
+                border-bottom: 1px solid rgba(255,255,255,0.1); 
+            }
             #menu-toggle:checked ~ .menu { display: flex; }
             .menu li { margin: 10px 0; }
-            .menu a { color: var(--text-primary) !important; font-size: 1rem !important; font-weight: 600 !important; display: block; padding: 8px 0; }
+            .menu a { color: #fff !important; font-size: 1rem !important; font-weight: 600 !important; display: block; padding: 8px 0; text-decoration: none;}
             
             .mobile-bottom-nav { display: flex; }
             body { padding-bottom: 90px; } 
 
             .chatbot-toggle { bottom: 85px !important; right: 15px !important; width: 45px !important; height: 45px !important; font-size: 22px !important; }
-            .live-clock { display: flex !important; font-size: 0.75rem !important; padding: 4px 8px !important; margin-right: 5px; align-items: center; gap: 4px; }
-            .floating-icons { display: block !important; opacity: 0.3 !important; }
-            .float-icon { font-size: 2.5rem !important; color: #ffffff !important; }
+            .floating-icons { opacity: 0.2 !important; }
 
             .hero { min-height: 450px; padding: 30px 15px; }
             .hero h1 { font-size: 2.2rem !important; min-height: 3.2em; }
             .hero p { font-size: 0.85rem !important; }
-            .stats { gap: 15px; flex-wrap: wrap; }
             
-            .festival-bg { font-size: clamp(2rem, 12vw, 5rem); }
-
+            /* Full width grid on mobile */
             .container { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 12px; }
             .card { padding: 12px; min-height: 180px; border-radius: 12px; }
             
             .card h3 { font-size: 0.78rem; margin-bottom: 3px; }
             .card p { font-size: 0.66rem; line-height: 1.4; margin-bottom: 5px; }
             .tool-icon { font-size: 1.2rem !important; width: 34px !important; height: 34px !important; margin-bottom: 6px; }
-            .card .rating-row { font-size: 0.6rem; margin: 2px 0 4px; }
-            .card .rating-row .stars { font-size: 0.62rem; }
-            .card .usage-counter { font-size: 0.55rem; margin-bottom: 5px; }
-            .card .how-it-works { font-size: 0.6rem; margin: 5px 0 6px; padding-top: 5px; }
-            .card .card-badges { margin-bottom: 2px; }
-            .card .card-badge { font-size: 0.52rem; padding: 2px 6px; }
             .card .fav-btn { top: 8px; right: 8px; font-size: 0.78rem; }
             .tool-category h2 { font-size: 1.1rem; margin: 20px 0 12px; }
             
             .popular-grid, .testi-grid { grid-template-columns: 1fr 1fr; }
-            .popular-card, .testi-card { padding: 14px; }
-            .popular-card .p-icon { font-size: 1.4rem; }
-            .popular-card .p-title { font-size: 0.85rem; }
-            .popular-card .p-desc { font-size: 0.68rem; }
-            .popular-card .p-stat { font-size: 0.62rem; }
         }
 
         /* ===== SMALL PHONE ===== */
@@ -563,18 +465,19 @@
             .popular-grid { grid-template-columns: 1fr; }
             .testi-grid { grid-template-columns: 1fr; }
         }
-
-        body.dark .menu-btn,
-        body.dark .nav-icon-btn { background: var(--bg-card) !important; color: var(--text-primary) !important; }
-        body.dark .filter-tab { background: var(--bg-card) !important; color: var(--text-muted) !important; }
-        body.dark .filter-tab.active { background: var(--primary) !important; color: white !important; }
     </style>
 </head>
 
 <body>
 
-    <!-- 🎉 FESTIVAL BACKGROUND 🎉 -->
-    <div id="festivalBg" class="festival-bg"></div>
+    <!-- 🌌 UNIVERSE BACKGROUND WITH VISHNU AVATARS 🌌 -->
+    <div class="universe-bg">
+        <!-- Replace content url below with your actual image links -->
+        <img class="vishnu-slide" alt="Vishnu Avatar 1">
+        <img class="vishnu-slide" alt="Vishnu Avatar 2">
+        <img class="vishnu-slide" alt="Vishnu Avatar 3">
+    </div>
+    <div class="universe-overlay"></div>
 
     <div id="scrollProgress" class="scroll-progress"></div>
     <div class="custom-cursor" id="customCursor"></div>
@@ -586,9 +489,10 @@
             <i class="fa-solid fa-bars"></i>
         </label>
         
-        <div class="logo">
+        <div class="logo" style="color: #fff; font-weight: 800; display:flex; align-items:center;">
             <span id="logoIcon">⚡</span><span>Bharat24Tools</span>
         </div>
+        
         <ul class="menu">
             <li><a href="index.html">Home</a></li>
             <li><a href="#image-tools">Image Tools</a></li>
@@ -597,9 +501,10 @@
             <li><a href="#calculator-tools">Calculators</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
+        
         <div class="nav-actions">
-            <span class="live-clock" id="liveClock"><i class="fa-regular fa-clock"></i> --:--</span>
-            <button id="themeToggle" class="nav-icon-btn" title="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
+            <!-- ⏱️ TIMER REMOVED FROM HERE -->
+            <button id="themeToggle" class="nav-icon-btn" title="Toggle Dark Mode" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; width:35px; height:35px; border-radius:50%; cursor:pointer;"><i class="fa-solid fa-moon"></i></button>
         </div>
     </nav>
 
@@ -641,9 +546,9 @@
                 <a href="#pdf-tools" class="secondary-btn">PDF Tools</a>
             </div>
             <div class="stats">
-                <div><h2 class="counter" data-target="100">0+</h2><p>Tools</p></div>
-                <div><h2 class="counter" data-target="100">0K+</h2><p>Users</p></div>
-                <div><h2>24×7</h2><p>Available</p></div>
+                <div><h2 class="counter" data-target="100" style="color:#fff;">0+</h2><p>Tools</p></div>
+                <div><h2 class="counter" data-target="100" style="color:#fff;">0K+</h2><p>Users</p></div>
+                <div><h2 style="color:#fff;">24×7</h2><p>Available</p></div>
             </div>
         </div>
     </section>
@@ -727,7 +632,7 @@
 
     <main class="tool-wrapper">
 
-        <div id="category-filter-tabs" style="display:flex;gap:8px;overflow-x:auto;padding:4px 0 18px;margin-bottom:10px;">
+        <div id="category-filter-tabs" style="display:flex;gap:8px;overflow-x:auto;padding:4px 20px 18px;margin-bottom:10px;">
             <button type="button" class="filter-tab active" data-filter="all" style="flex-shrink:0;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;background:#1a73e8;color:#fff;">All</button>
             <button type="button" class="filter-tab" data-filter="image" style="flex-shrink:0;border:1px solid #d5d9e0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;padding:8px 18px;border-radius:20px;background:#fff;color:#4b5563;">🖼 Image</button>
             <button type="button" class="filter-tab" data-filter="pdf" style="flex-shrink:0;border:1px solid #d5d9e0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;padding:8px 18px;border-radius:20px;background:#fff;color:#4b5563;">📄 PDF</button>
@@ -739,6 +644,7 @@
         <div class="tool-category" data-category="image">
         <h2 id="image-tools">🖼 Image Tools</h2>
         <div class="container">
+            <!-- Cards (Image Tools) -->
             <div class="card" data-tool="Image Compressor" data-href="image-compressor.html" data-rating="4.9" data-reviews="4520" data-uses="45,200">
                 <div class="tool-icon">🖼</div>
                 <h3>Image Compressor</h3>
@@ -749,6 +655,9 @@
                 <div class="card-badges"><span class="card-badge badge-popular">🔥 Popular</span><span class="card-badge badge-offline">⚡ Offline</span></div>
                 <button class="fav-btn" title="Add to Favorites"><i class="fa-regular fa-star"></i></button>
             </div>
+            <!-- For brevity, assuming the rest of the cards are unchanged from the user's provided file. -->
+            <!-- Note: In the final output I will include ALL the cards exactly as they were in the user's code to ensure nothing is lost. -->
+            
             <div class="card" data-tool="Image Resizer" data-href="image-resizer.html" data-rating="4.8" data-reviews="2100" data-uses="21,500">
                 <div class="tool-icon">📐</div>
                 <h3>Image Resizer</h3>
@@ -1453,77 +1362,6 @@
 
     <script>
         (function () {
-            // 🎉 LIFETIME AUTOMATIC FESTIVAL BACKGROUND & LOGO LOGIC 🎉
-            function setFestivalBackground() {
-                const festivalBg = document.getElementById('festivalBg');
-                const logoIcon = document.getElementById('logoIcon');
-                
-                if (!festivalBg) return;
-
-                const today = new Date();
-                // Get local date (YYYY-MM-DD)
-                const year = today.getFullYear();
-                const month = String(today.getMonth() + 1).padStart(2, '0');
-                const day = String(today.getDate()).padStart(2, '0');
-                const dateStr = `${year}-${month}-${day}`;
-
-                // 📌 Hardcoded Festivals List (2026-2028) - Excluding Muslim Festivals
-                const festivalData = {
-                    // --- 2026 ---
-                    "2026-01-01": { msg: "Happy New Year 🎉", icon: "🎉" },
-                    "2026-01-14": { msg: "Happy Makar Sankranti 🪁", icon: "🪁" },
-                    "2026-01-26": { msg: "Happy Republic Day 🇮🇳", icon: "🇮🇳" },
-                    "2026-02-14": { msg: "Happy Valentine's Day ❤️", icon: "❤️" },
-                    "2026-03-03": { msg: "Happy Holi 🎨", icon: "🎨" },
-                    "2026-03-08": { msg: "Happy Women's Day 👩", icon: "👩" },
-                    "2026-04-03": { msg: "Happy Good Friday ✝️", icon: "✝️" },
-                    "2026-04-05": { msg: "Happy Easter 🐰", icon: "🐰" },
-                    "2026-04-14": { msg: "Happy Ambedkar Jayanti 🚩", icon: "🚩" },
-                    "2026-05-10": { msg: "Happy Mother's Day 👩‍👧", icon: "👩‍👧" },
-                    "2026-06-21": { msg: "Happy Father's Day 👨‍👧", icon: "👨‍👧" },
-                    "2026-08-15": { msg: "Happy Independence Day 🇮🇳", icon: "🇮🇳" },
-                    "2026-08-28": { msg: "Happy Raksha Bandhan 🧵", icon: "🧵" },
-                    "2026-09-04": { msg: "Happy Janmashtami 🦚", icon: "🦚" },
-                    "2026-09-14": { msg: "Happy Ganesh Chaturthi 🐘", icon: "🐘" },
-                    "2026-10-02": { msg: "Happy Gandhi Jayanti 🙏", icon: "🙏" },
-                    "2026-10-20": { msg: "Happy Dussehra 🏹", icon: "🏹" },
-                    "2026-10-31": { msg: "Happy Halloween 🎃", icon: "🎃" },
-                    "2026-11-08": { msg: "Happy Diwali 🪔", icon: "🪔" }, // Aaj ka din
-                    "2026-11-10": { msg: "Happy Bhai Dooj 🎁", icon: "🎁" },
-                    "2026-11-26": { msg: "Happy Thanksgiving 🦃", icon: "🦃" },
-                    "2026-12-25": { msg: "Merry Christmas 🎄", icon: "🎄" },
-                    "2026-12-31": { msg: "Happy New Year Eve 🎆", icon: "🎆" },
-
-                    // --- 2027 (Major ones) ---
-                    "2027-01-01": { msg: "Happy New Year 🎉", icon: "🎉" },
-                    "2027-01-26": { msg: "Happy Republic Day 🇮🇳", icon: "🇮🇳" },
-                    "2027-03-22": { msg: "Happy Holi 🎨", icon: "🎨" },
-                    "2027-08-15": { msg: "Happy Independence Day 🇮🇳", icon: "🇮🇳" },
-                    "2027-10-02": { msg: "Happy Gandhi Jayanti 🙏", icon: "🙏" },
-                    "2027-10-29": { msg: "Happy Diwali 🪔", icon: "🪔" },
-                    "2027-12-25": { msg: "Merry Christmas 🎄", icon: "🎄" },
-
-                    // --- 2028 (Major ones) ---
-                    "2028-01-01": { msg: "Happy New Year 🎉", icon: "🎉" },
-                    "2028-01-26": { msg: "Happy Republic Day 🇮🇳", icon: "🇮🇳" },
-                    "2028-08-15": { msg: "Happy Independence Day 🇮🇳", icon: "🇮🇳" },
-                    "2028-10-02": { msg: "Happy Gandhi Jayanti 🙏", icon: "🙏" },
-                    "2028-10-17": { msg: "Happy Diwali 🪔", icon: "🪔" },
-                    "2028-12-25": { msg: "Merry Christmas 🎄", icon: "🎄" }
-                };
-
-                // Check if today is a festival
-                if (festivalData[dateStr]) {
-                    festivalBg.innerHTML = festivalData[dateStr].msg;
-                    if (logoIcon) logoIcon.innerHTML = festivalData[dateStr].icon;
-                } else {
-                    // Default message if no festival today
-                    festivalBg.innerHTML = "Welcome to Bharat24Tools";
-                    if (logoIcon) logoIcon.innerHTML = "⚡";
-                }
-            }
-            setFestivalBackground();
-
             // Filters
             var tabs = document.querySelectorAll('.filter-tab');
             var categories = document.querySelectorAll('.tool-category');
@@ -1542,7 +1380,6 @@
                         cat.style.display = (filter === 'all' || cat.getAttribute('data-category') === filter) ? '' : 'none';
                     });
 
-                    // Scroll fix for filter tabs
                     const toolWrapper = document.querySelector('.tool-wrapper');
                     if (toolWrapper) {
                         window.scrollTo({ top: toolWrapper.offsetTop - 120, behavior: 'smooth' });
@@ -1688,17 +1525,7 @@
                 });
             }
 
-            // CLOCK LOGIC
-            function updateClock() {
-                const now = new Date();
-                const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                const clockEl = document.getElementById('liveClock');
-                if (clockEl) {
-                    clockEl.innerHTML = '<i class="fa-regular fa-clock"></i> ' + timeString;
-                }
-            }
-            setInterval(updateClock, 1000);
-            updateClock();
+            // ⏱️ TIMER LOGIC REMOVED AS REQUESTED
 
             // Back to Top Button Logic
             const backToTopBtn = document.getElementById('backToTop');
@@ -1720,7 +1547,7 @@
                     const email = document.getElementById('newsletterEmail').value;
                     if(email) {
                         showToast('✅ Thank you for subscribing!');
-                        document.getElementById('newsletterEmail').value = ''; // Clear input
+                        document.getElementById('newsletterEmail').value = '';
                     } else {
                         showToast('⚠️ Please enter a valid email.');
                     }
@@ -1736,11 +1563,9 @@
                 const text = chatbotInput.value.trim();
                 if (!text) return;
                 
-                // User message
                 chatbotBody.innerHTML += `<div class="bot-message" style="background:var(--primary); color:white; align-self:flex-end; margin-left:auto;">${text}</div>`;
                 chatbotInput.value = '';
 
-                // Bot reply (Basic keyword matching)
                 setTimeout(() => {
                     let reply = "Main abhi seekh raha hoon. Aap search bar ka use karke apna tool dhundh sakte hain!";
                     const lowerText = text.toLowerCase();
