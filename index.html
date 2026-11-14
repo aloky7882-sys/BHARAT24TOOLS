@@ -58,7 +58,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
 
     <style>
-        /* ✅ Universal Reset for Full-Page Layout */
+        /* ✅ FIX 1: Universal Reset & Scrollbar Fix for 100% Full Page */
         * {
             margin: 0;
             padding: 0;
@@ -66,10 +66,24 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        /* Custom Scrollbar to remove white edges */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a855f7; 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0d6efd; 
+        }
+
         :root {
             --bg-primary: #f8fafc;
-            /* ✅ Cards Lightened (Opacity 0.9) */
-            --bg-card: rgba(255, 255, 255, 0.9); 
+            --bg-card: rgba(255, 255, 255, 0.85); /* Light Card */
             --text-primary: #1a1a1a;
             --text-muted: #6b7280;
             --border-color: rgba(255, 255, 255, 0.8);
@@ -79,13 +93,14 @@
         
         body.dark {
             --bg-primary: #0f0f1e;
-            --bg-card: rgba(30, 27, 75, 0.85); /* Dark Cards Lightened */
+            --bg-card: rgba(30, 27, 75, 0.85); /* Dark Card */
             --text-primary: #e0e7ff;
             --text-muted: #8b95b8;
             --border-color: rgba(255, 255, 255, 0.1);
             --shadow-hover: 0 8px 24px rgba(168,85,247,0.25);
         }
         
+        /* ✅ FIX 2: Ensure body takes full width, no horizontal scroll */
         html, body {
             width: 100%;
             max-width: 100%;
@@ -149,21 +164,39 @@
             opacity: 0.08;
         }
 
-        /* ✅ LOGO FIX (Text Visibility) */
+        /* ✅ FIX 3: Premium Logo Styling */
         .logo {
             display: flex;
             align-items: center;
             font-weight: 800;
-            font-size: 1.2rem;
-            color: var(--text-primary); /* Explicitly set color */
+            font-size: 1.3rem;
+            letter-spacing: -0.5px;
             white-space: nowrap;
         }
 
         #logoIcon {
-            font-size: 1.5rem;
-            margin-right: 5px;
+            font-size: 1.6rem;
+            margin-right: 8px;
             display: inline-block;
             animation: pulse 2s infinite;
+            filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.6));
+        }
+        
+        /* Gradient text for Logo */
+        .logo-text {
+            background: linear-gradient(135deg, #0d6efd, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0px 2px 10px rgba(13, 110, 253, 0.2);
+        }
+
+        body.dark .logo-text {
+            background: linear-gradient(135deg, #60a5fa, #d8b4fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0px 2px 10px rgba(168, 85, 247, 0.2);
         }
         
         @keyframes pulse {
@@ -178,6 +211,7 @@
             overflow: hidden; 
             min-height: 400px;
             padding: 20px 0;
+            width: 100%;
         }
         .hero h1 { 
             min-height: 3.6em; 
@@ -231,6 +265,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            width: 100%;
         }
 
         /* ===== CARD (NEON GLASSMORPHISM) ===== */
@@ -254,10 +289,7 @@
         .card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
+            top: 0; left: 0; right: 0; height: 3px;
             background: var(--primary);
             opacity: 0.9;
         }
@@ -371,7 +403,7 @@
 
         /* ===== NAVBAR ===== */
         .navbar { 
-            background: rgba(255, 255, 255, 0.95); /* More solid background for readability */
+            background: rgba(255, 255, 255, 0.95); 
             backdrop-filter: blur(10px);
             padding: 12px 20px; 
             display: flex; 
@@ -495,9 +527,11 @@
             <i class="fa-solid fa-bars"></i>
         </label>
         
+        <!-- ✅ Premium Logo Applied Here -->
         <div class="logo">
-            <span id="logoIcon">⚡</span><span>Bharat24Tools</span>
+            <span id="logoIcon">⚡</span><span class="logo-text">Bharat24Tools</span>
         </div>
+        
         <ul class="menu">
             <li><a href="index.html">Home</a></li>
             <li><a href="#image-tools">Image Tools</a></li>
