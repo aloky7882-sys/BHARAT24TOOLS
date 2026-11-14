@@ -58,7 +58,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
 
     <style>
-        /* ✅ ORIGINAL COLOURS RESTORED */
+        /* ✅ FIX 1: Universal Reset for full-page layout (fixes white borders) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
         :root {
             --bg-primary: #f8fafc;
             --bg-card: rgba(255, 255, 255, 0.6);
@@ -68,7 +75,6 @@
             --primary: #0d6efd;
             --shadow-hover: 0 8px 24px rgba(13,110,253,0.15);
         }
-        
         body.dark {
             --bg-primary: #0f0f1e;
             --bg-card: rgba(30, 27, 75, 0.5);
@@ -82,110 +88,65 @@
             max-width: 100vw;
             overflow-x: hidden; 
             overflow-y: scroll;
-            margin: 0;
-            padding: 0; /* Fixed White Borders */
+            width: 100%;
         }
-        
         body { 
             background: var(--bg-primary); 
             color: var(--text-primary); 
             transition: background 0.3s, color 0.3s; 
-            width: 100%;
             position: relative;
             z-index: 0;
         }
 
-        /* 🟢 NEON GLOW BACKGROUND (Original) 🟢 */
+        /* 🟢 NEON GLOW BACKGROUND FOR GLASSMORPHISM 🟢 */
         body::before, body::after {
             content: '';
             position: fixed;
             border-radius: 50%;
             filter: blur(80px);
-            z-index: -2; /* Moved slightly behind Universe */
+            z-index: -1;
             pointer-events: none;
             opacity: 0.6;
         }
         body::before {
             top: -10%; left: -10%;
             width: 50vw; height: 50vw;
-            background: rgba(168, 85, 247, 0.4); /* Purple Glow */
+            background: rgba(168, 85, 247, 0.4);
         }
         body::after {
             bottom: -10%; right: -10%;
             width: 50vw; height: 50vw;
-            background: rgba(13, 110, 253, 0.4); /* Blue Glow */
+            background: rgba(13, 110, 253, 0.4);
         }
         body.dark::before { background: rgba(168, 85, 247, 0.2); opacity: 0.8; }
         body.dark::after { background: rgba(13, 110, 253, 0.2); opacity: 0.8; }
 
-        /* 🌌 VISHNU UNIVERSE BACKGROUND 🌌 */
-        .universe-bg {
+        /* 🎉 FESTIVAL BACKGROUND WATERMARK (100% RESPONSIVE) 🎉 */
+        .festival-bg {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; /* Behind content, above neon glow */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-10deg);
+            font-size: clamp(2.5rem, 10vw, 8rem);
+            font-weight: 800;
+            color: #000;
+            opacity: 0.07;
+            z-index: -2;
             pointer-events: none;
-            overflow: hidden;
-            opacity: 0.15; /* Subtle so it doesn't ruin the light theme */
-            mix-blend-mode: multiply;
+            text-align: center;
+            word-wrap: break-word;
+            line-height: 1.2;
+            width: 90%;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-family: 'Poppins', sans-serif;
+        }
+        body.dark .festival-bg {
+            color: #fff;
+            opacity: 0.08;
         }
 
-        body.dark .universe-bg {
-            opacity: 0.25;
-            mix-blend-mode: screen;
-        }
-
-        /* Rotating Stars */
-        .universe-bg::before {
-            content: "";
-            position: absolute;
-            width: 200%; height: 200%;
-            background-image: 
-                radial-gradient(1px 1px at 20px 30px, #000, rgba(0,0,0,0)), 
-                radial-gradient(1px 1px at 40px 70px, #000, rgba(0,0,0,0)), 
-                radial-gradient(2px 2px at 90px 40px, #000, rgba(0,0,0,0)), 
-                radial-gradient(1.5px 1.5px at 160px 120px, #000, rgba(0,0,0,0));
-            background-size: 300px 300px;
-            animation: starsRotate 200s linear infinite;
-        }
-
-        @keyframes starsRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Vishnu Avatars Slideshow */
-        .vishnu-slide {
-            position: absolute; 
-            top: 50%; left: 50%; 
-            transform: translate(-50%, -50%);
-            width: 100%; height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            animation: fadeVishnu 24s infinite;
-        }
-
-        .vishnu-slide:nth-child(1) { 
-            animation-delay: 0s; 
-            content: url('https://images.unsplash.com/photo-1627664812225-8d6e923a2217?q=80&w=1920&auto=format&fit=crop'); 
-        }
-        .vishnu-slide:nth-child(2) { 
-            animation-delay: 8s; 
-            content: url('https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1920&auto=format&fit=crop'); 
-        }
-        .vishnu-slide:nth-child(3) { 
-            animation-delay: 16s; 
-            content: url('https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1920&auto=format&fit=crop'); 
-        }
-
-        @keyframes fadeVishnu {
-            0% { opacity: 0; }
-            10% { opacity: 1; }
-            25% { opacity: 1; }
-            35% { opacity: 0; }
-            100% { opacity: 0; }
-        }
-
-        /* Logo Pulse */
+        /* Festival Logo in Navbar */
         #logoIcon {
             font-size: 1.5rem;
             margin-right: 8px;
@@ -199,7 +160,7 @@
             100% { transform: scale(1); }
         }
 
-        /* ===== HERO SECTION ===== */
+        /* ===== HERO SECTION & FLOATING ICONS FIX ===== */
         .hero { 
             position: relative; 
             overflow: hidden; 
@@ -213,7 +174,6 @@
             flex-wrap: wrap;
             font-size: 2.5rem;
         }
-        
         .floating-icons {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -222,9 +182,8 @@
         }
         .float-icon {
             position: absolute;
-            color: var(--text-muted);
+            color: rgba(255, 255, 255, 0.5);
             font-size: 3rem;
-            opacity: 0.3;
             animation: floatUp 4s infinite ease-in-out alternate;
         }
         @keyframes floatUp { 
@@ -246,8 +205,7 @@
             font-size: 0.8rem;
             color: var(--text-muted);
         }
-        .trending-search span { cursor: pointer; background: rgba(0,0,0,0.05); padding: 4px 10px; border-radius: 20px; transition: 0.2s;}
-        body.dark .trending-search span { background: rgba(255,255,255,0.1); }
+        .trending-search span { cursor: pointer; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 20px; transition: 0.2s;}
         .trending-search span:hover { background: var(--primary); color: white; }
 
         /* ===== DESKTOP GRID ===== */
@@ -260,7 +218,7 @@
             padding: 0 20px;
         }
 
-        /* ===== CARD (NEON GLASSMORPHISM) Original ===== */
+        /* ===== CARD (NEON GLASSMORPHISM) ===== */
         .card {
             background: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -281,7 +239,10 @@
         .card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; height: 3px;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
             background: var(--primary);
             opacity: 0.9;
         }
@@ -393,9 +354,8 @@
         .back-to-top { position: fixed; bottom: 100px; right: 20px; width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 1.2rem; z-index: 99; box-shadow: 0 4px 15px rgba(13,110,253,0.4); transition: transform 0.2s; }
         .back-to-top:hover { transform: scale(1.1); }
 
-        /* ===== NAVBAR (Original Color) ===== */
+        /* ===== NAVBAR ===== */
         .navbar { 
-            /* Removed black background, restored glassmorphism */
             background: rgba(255, 255, 255, 0.8); 
             backdrop-filter: blur(10px);
             padding: 12px 20px; 
@@ -405,7 +365,6 @@
             border-bottom: 1px solid var(--border-color); 
             position: sticky; top: 0; z-index: 1000;
             width: 100%;
-            box-sizing: border-box;
             transition: background 0.3s;
         }
 
@@ -416,7 +375,7 @@
         .menu-btn { display: none; }
         #menu-toggle { display: none; }
 
-        .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-card); backdrop-filter: blur(20px); border-top: 1px solid var(--border-color); padding: 8px 0; z-index: 998; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); }
+        .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-card); border-top: 1px solid var(--border-color); padding: 8px 0; z-index: 998; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); backdrop-filter: blur(20px); }
         .mobile-bottom-nav a { flex: 1; text-align: center; color: var(--text-muted); text-decoration: none; font-size: 0.65rem; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 0; }
         .mobile-bottom-nav a i { font-size: 1.1rem; }
         .mobile-bottom-nav a.active { color: var(--primary); }
@@ -453,22 +412,37 @@
             body { padding-bottom: 90px; } 
 
             .chatbot-toggle { bottom: 85px !important; right: 15px !important; width: 45px !important; height: 45px !important; font-size: 22px !important; }
-            .floating-icons { opacity: 0.2 !important; }
+            .floating-icons { opacity: 0.3 !important; }
+            .float-icon { font-size: 2.5rem !important; color: #ffffff !important; }
 
             .hero { min-height: 450px; padding: 30px 15px; }
             .hero h1 { font-size: 2.2rem !important; min-height: 3.2em; }
             .hero p { font-size: 0.85rem !important; }
+            .stats { gap: 15px; flex-wrap: wrap; }
             
+            .festival-bg { font-size: clamp(2rem, 12vw, 5rem); }
+
             .container { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 12px; }
             .card { padding: 12px; min-height: 180px; border-radius: 12px; }
             
             .card h3 { font-size: 0.78rem; margin-bottom: 3px; }
             .card p { font-size: 0.66rem; line-height: 1.4; margin-bottom: 5px; }
             .tool-icon { font-size: 1.2rem !important; width: 34px !important; height: 34px !important; margin-bottom: 6px; }
+            .card .rating-row { font-size: 0.6rem; margin: 2px 0 4px; }
+            .card .rating-row .stars { font-size: 0.62rem; }
+            .card .usage-counter { font-size: 0.55rem; margin-bottom: 5px; }
+            .card .how-it-works { font-size: 0.6rem; margin: 5px 0 6px; padding-top: 5px; }
+            .card .card-badges { margin-bottom: 2px; }
+            .card .card-badge { font-size: 0.52rem; padding: 2px 6px; }
             .card .fav-btn { top: 8px; right: 8px; font-size: 0.78rem; }
             .tool-category h2 { font-size: 1.1rem; margin: 20px 0 12px; }
             
             .popular-grid, .testi-grid { grid-template-columns: 1fr 1fr; }
+            .popular-card, .testi-card { padding: 14px; }
+            .popular-card .p-icon { font-size: 1.4rem; }
+            .popular-card .p-title { font-size: 0.85rem; }
+            .popular-card .p-desc { font-size: 0.68rem; }
+            .popular-card .p-stat { font-size: 0.62rem; }
         }
 
         /* ===== SMALL PHONE ===== */
@@ -483,17 +457,18 @@
             .popular-grid { grid-template-columns: 1fr; }
             .testi-grid { grid-template-columns: 1fr; }
         }
+
+        body.dark .menu-btn,
+        body.dark .nav-icon-btn { background: var(--bg-card) !important; color: var(--text-primary) !important; }
+        body.dark .filter-tab { background: var(--bg-card) !important; color: var(--text-muted) !important; }
+        body.dark .filter-tab.active { background: var(--primary) !important; color: white !important; }
     </style>
 </head>
 
 <body>
 
-    <!-- 🌌 VISHNU UNIVERSE BACKGROUND 🌌 -->
-    <div class="universe-bg">
-        <img class="vishnu-slide" alt="Vishnu Avatar 1">
-        <img class="vishnu-slide" alt="Vishnu Avatar 2">
-        <img class="vishnu-slide" alt="Vishnu Avatar 3">
-    </div>
+    <!-- 🎉 FESTIVAL BACKGROUND 🎉 -->
+    <div id="festivalBg" class="festival-bg"></div>
 
     <div id="scrollProgress" class="scroll-progress"></div>
     <div class="custom-cursor" id="customCursor"></div>
@@ -505,10 +480,9 @@
             <i class="fa-solid fa-bars"></i>
         </label>
         
-        <div class="logo" style="color: var(--text-primary); font-weight: 800; display:flex; align-items:center;">
+        <div class="logo">
             <span id="logoIcon">⚡</span><span>Bharat24Tools</span>
         </div>
-        
         <ul class="menu">
             <li><a href="index.html">Home</a></li>
             <li><a href="#image-tools">Image Tools</a></li>
@@ -517,10 +491,9 @@
             <li><a href="#calculator-tools">Calculators</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
-        
         <div class="nav-actions">
-            <!-- ⏱️ TIMER REMOVED -->
-            <button id="themeToggle" class="nav-icon-btn" title="Toggle Dark Mode" style="background:var(--bg-card); border:1px solid var(--border-color); color:var(--text-primary); width:35px; height:35px; border-radius:50%; cursor:pointer;"><i class="fa-solid fa-moon"></i></button>
+            <!-- ❌ TIMER REMOVED FROM HERE -->
+            <button id="themeToggle" class="nav-icon-btn" title="Toggle Dark Mode"><i class="fa-solid fa-moon"></i></button>
         </div>
     </nav>
 
@@ -535,7 +508,7 @@
         </div>
 
         <div class="hero-content">
-            <span class="badge" style="background:rgba(13,110,253,0.1); border:1px solid rgba(13,110,253,0.2); color:var(--primary);">🚀 India's Fast Growing Tool Website</span>
+            <span class="badge">🚀 India's Fast Growing Tool Website</span>
             <h1>Bharat24Tools - Free Online <span id="typed-text" class="typed-text"></span></h1>
             <p>
                 Compress Images, Merge PDF, Convert Files, Generate QR Codes,
@@ -648,7 +621,7 @@
 
     <main class="tool-wrapper">
 
-        <div id="category-filter-tabs" style="display:flex;gap:8px;overflow-x:auto;padding:4px 20px 18px;margin-bottom:10px;">
+        <div id="category-filter-tabs" style="display:flex;gap:8px;overflow-x:auto;padding:4px 0 18px;margin-bottom:10px;">
             <button type="button" class="filter-tab active" data-filter="all" style="flex-shrink:0;border:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;padding:8px 18px;border-radius:20px;background:#1a73e8;color:#fff;">All</button>
             <button type="button" class="filter-tab" data-filter="image" style="flex-shrink:0;border:1px solid #d5d9e0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;padding:8px 18px;border-radius:20px;background:#fff;color:#4b5563;">🖼 Image</button>
             <button type="button" class="filter-tab" data-filter="pdf" style="flex-shrink:0;border:1px solid #d5d9e0;cursor:pointer;font-family:inherit;font-size:13px;font-weight:500;padding:8px 18px;border-radius:20px;background:#fff;color:#4b5563;">📄 PDF</button>
@@ -1374,6 +1347,68 @@
 
     <script>
         (function () {
+            // 🎉 LIFETIME AUTOMATIC FESTIVAL BACKGROUND & LOGO LOGIC 🎉
+            function setFestivalBackground() {
+                const festivalBg = document.getElementById('festivalBg');
+                const logoIcon = document.getElementById('logoIcon');
+                
+                if (!festivalBg) return;
+
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+                const dateStr = `${year}-${month}-${day}`;
+
+                const festivalData = {
+                    "2026-01-01": { msg: "Happy New Year 🎉", icon: "🎉" },
+                    "2026-01-14": { msg: "Happy Makar Sankranti 🪁", icon: "🪁" },
+                    "2026-01-26": { msg: "Happy Republic Day 🇮🇳", icon: "🇮🇳" },
+                    "2026-02-14": { msg: "Happy Valentine's Day ❤️", icon: "❤️" },
+                    "2026-03-03": { msg: "Happy Holi 🎨", icon: "🎨" },
+                    "2026-03-08": { msg: "Happy Women's Day 👩", icon: "👩" },
+                    "2026-04-03": { msg: "Happy Good Friday ✝️", icon: "✝️" },
+                    "2026-04-05": { msg: "Happy Easter 🐰", icon: "🐰" },
+                    "2026-04-14": { msg: "Happy Ambedkar Jayanti 🚩", icon: "🚩" },
+                    "2026-05-10": { msg: "Happy Mother's Day 👩‍👧", icon: "👩‍👧" },
+                    "2026-06-21": { msg: "Happy Father's Day 👨‍👧", icon: "👨‍👧" },
+                    "2026-08-15": { msg: "Happy Independence Day 🇮🇳", icon: "🇮🇳" },
+                    "2026-08-28": { msg: "Happy Raksha Bandhan 🧵", icon: "🧵" },
+                    "2026-09-04": { msg: "Happy Janmashtami 🦚", icon: "🦚" },
+                    "2026-09-14": { msg: "Happy Ganesh Chaturthi 🐘", icon: "🐘" },
+                    "2026-10-02": { msg: "Happy Gandhi Jayanti 🙏", icon: "🙏" },
+                    "2026-10-20": { msg: "Happy Dussehra 🏹", icon: "🏹" },
+                    "2026-10-31": { msg: "Happy Halloween 🎃", icon: "🎃" },
+                    "2026-11-08": { msg: "Happy Diwali 🪔", icon: "🪔" },
+                    "2026-11-10": { msg: "Happy Bhai Dooj 🎁", icon: "🎁" },
+                    "2026-11-26": { msg: "Happy Thanksgiving 🦃", icon: "🦃" },
+                    "2026-12-25": { msg: "Merry Christmas 🎄", icon: "🎄" },
+                    "2026-12-31": { msg: "Happy New Year Eve 🎆", icon: "🎆" },
+                    "2027-01-01": { msg: "Happy New Year 🎉", icon: "🎉" },
+                    "2027-01-26": { msg: "Happy Republic Day 🇮🇳", icon: "🇮🇳" },
+                    "2027-03-22": { msg: "Happy Holi 🎨", icon: "🎨" },
+                    "2027-08-15": { msg: "Happy Independence Day 🇮🇳", icon: "🇮🇳" },
+                    "2027-10-02": { msg: "Happy Gandhi Jayanti 🙏", icon: "🙏" },
+                    "2027-10-29": { msg: "Happy Diwali 🪔", icon: "🪔" },
+                    "2027-12-25": { msg: "Merry Christmas 🎄", icon: "🎄" },
+                    "2028-01-01": { msg: "Happy New Year 🎉", icon: "🎉" },
+                    "2028-01-26": { msg: "Happy Republic Day 🇮🇳", icon: "🇮🇳" },
+                    "2028-08-15": { msg: "Happy Independence Day 🇮🇳", icon: "🇮🇳" },
+                    "2028-10-02": { msg: "Happy Gandhi Jayanti 🙏", icon: "🙏" },
+                    "2028-10-17": { msg: "Happy Diwali 🪔", icon: "🪔" },
+                    "2028-12-25": { msg: "Merry Christmas 🎄", icon: "🎄" }
+                };
+
+                if (festivalData[dateStr]) {
+                    festivalBg.innerHTML = festivalData[dateStr].msg;
+                    if (logoIcon) logoIcon.innerHTML = festivalData[dateStr].icon;
+                } else {
+                    festivalBg.innerHTML = "Welcome to Bharat24Tools";
+                    if (logoIcon) logoIcon.innerHTML = "⚡";
+                }
+            }
+            setFestivalBackground();
+
             // Filters
             var tabs = document.querySelectorAll('.filter-tab');
             var categories = document.querySelectorAll('.tool-category');
@@ -1537,17 +1572,7 @@
                 });
             }
 
-            // CLOCK LOGIC
-            function updateClock() {
-                const now = new Date();
-                const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-                const clockEl = document.getElementById('liveClock');
-                if (clockEl) {
-                    clockEl.innerHTML = '<i class="fa-regular fa-clock"></i> ' + timeString;
-                }
-            }
-            setInterval(updateClock, 1000);
-            updateClock();
+            // ❌ TIMER LOGIC REMOVED FROM HERE
 
             // Back to Top Button Logic
             const backToTopBtn = document.getElementById('backToTop');
@@ -1569,7 +1594,7 @@
                     const email = document.getElementById('newsletterEmail').value;
                     if(email) {
                         showToast('✅ Thank you for subscribing!');
-                        document.getElementById('newsletterEmail').value = '';
+                        document.getElementById('newsletterEmail').value = ''; // Clear input
                     } else {
                         showToast('⚠️ Please enter a valid email.');
                     }
@@ -1585,9 +1610,11 @@
                 const text = chatbotInput.value.trim();
                 if (!text) return;
                 
+                // User message
                 chatbotBody.innerHTML += `<div class="bot-message" style="background:var(--primary); color:white; align-self:flex-end; margin-left:auto;">${text}</div>`;
                 chatbotInput.value = '';
 
+                // Bot reply (Basic keyword matching)
                 setTimeout(() => {
                     let reply = "Main abhi seekh raha hoon. Aap search bar ka use karke apna tool dhundh sakte hain!";
                     const lowerText = text.toLowerCase();
