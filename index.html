@@ -58,10 +58,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
 
     <style>
+        /* ✅ ORIGINAL COLOURS RESTORED */
         :root {
             --bg-primary: #f8fafc;
-            /* Original Card Color Restored */
-            --bg-card: rgba(255, 255, 255, 0.85); 
+            --bg-card: rgba(255, 255, 255, 0.6);
             --text-primary: #1a1a1a;
             --text-muted: #6b7280;
             --border-color: rgba(255, 255, 255, 0.8);
@@ -71,7 +71,7 @@
         
         body.dark {
             --bg-primary: #0f0f1e;
-            --bg-card: rgba(30, 27, 75, 0.7);
+            --bg-card: rgba(30, 27, 75, 0.5);
             --text-primary: #e0e7ff;
             --text-muted: #8b95b8;
             --border-color: rgba(255, 255, 255, 0.1);
@@ -83,11 +83,11 @@
             overflow-x: hidden; 
             overflow-y: scroll;
             margin: 0;
-            padding: 0; /* Fixed: Removed padding to fix white edges */
-            background-color: #0f0f1e; /* Dark fallback for background */
+            padding: 0; /* Fixed White Borders */
         }
         
         body { 
+            background: var(--bg-primary); 
             color: var(--text-primary); 
             transition: background 0.3s, color 0.3s; 
             width: 100%;
@@ -95,31 +95,57 @@
             z-index: 0;
         }
 
-        /* 🌌 UNIVERSE BACKGROUND WITH VISHNU AVATARS 🌌 */
+        /* 🟢 NEON GLOW BACKGROUND (Original) 🟢 */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -2; /* Moved slightly behind Universe */
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        body::before {
+            top: -10%; left: -10%;
+            width: 50vw; height: 50vw;
+            background: rgba(168, 85, 247, 0.4); /* Purple Glow */
+        }
+        body::after {
+            bottom: -10%; right: -10%;
+            width: 50vw; height: 50vw;
+            background: rgba(13, 110, 253, 0.4); /* Blue Glow */
+        }
+        body.dark::before { background: rgba(168, 85, 247, 0.2); opacity: 0.8; }
+        body.dark::after { background: rgba(13, 110, 253, 0.2); opacity: 0.8; }
+
+        /* 🌌 VISHNU UNIVERSE BACKGROUND 🌌 */
         .universe-bg {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: radial-gradient(circle at center, #1e1b4b 0%, #0f0f1e 100%);
-            z-index: -3;
-            overflow: hidden;
+            z-index: -1; /* Behind content, above neon glow */
             pointer-events: none;
+            overflow: hidden;
+            opacity: 0.15; /* Subtle so it doesn't ruin the light theme */
+            mix-blend-mode: multiply;
         }
 
-        /* Twinkling Stars */
+        body.dark .universe-bg {
+            opacity: 0.25;
+            mix-blend-mode: screen;
+        }
+
+        /* Rotating Stars */
         .universe-bg::before {
             content: "";
             position: absolute;
             width: 200%; height: 200%;
             background-image: 
-                radial-gradient(1px 1px at 20px 30px, #fff, rgba(0,0,0,0)), 
-                radial-gradient(1px 1px at 40px 70px, #fff, rgba(0,0,0,0)), 
-                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)), 
-                radial-gradient(1.5px 1.5px at 160px 120px, #fff, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 250px 60px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 300px 200px, #fff, rgba(0,0,0,0));
+                radial-gradient(1px 1px at 20px 30px, #000, rgba(0,0,0,0)), 
+                radial-gradient(1px 1px at 40px 70px, #000, rgba(0,0,0,0)), 
+                radial-gradient(2px 2px at 90px 40px, #000, rgba(0,0,0,0)), 
+                radial-gradient(1.5px 1.5px at 160px 120px, #000, rgba(0,0,0,0));
             background-size: 300px 300px;
-            animation: starsRotate 150s linear infinite;
-            opacity: 0.6;
+            animation: starsRotate 200s linear infinite;
         }
 
         @keyframes starsRotate {
@@ -132,43 +158,31 @@
             position: absolute; 
             top: 50%; left: 50%; 
             transform: translate(-50%, -50%);
-            width: 100vw; height: 100vh;
+            width: 100%; height: 100%;
             object-fit: cover;
             opacity: 0;
-            animation: fadeVishnu 30s infinite;
+            animation: fadeVishnu 24s infinite;
         }
 
         .vishnu-slide:nth-child(1) { 
             animation-delay: 0s; 
-            /* High Quality Lord Vishnu Image 1 */
             content: url('https://images.unsplash.com/photo-1627664812225-8d6e923a2217?q=80&w=1920&auto=format&fit=crop'); 
         }
         .vishnu-slide:nth-child(2) { 
-            animation-delay: 10s; 
-            /* High Quality Lord Vishnu Image 2 */
+            animation-delay: 8s; 
             content: url('https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1920&auto=format&fit=crop'); 
         }
         .vishnu-slide:nth-child(3) { 
-            animation-delay: 20s; 
-            /* High Quality Lord Vishnu Image 3 */
+            animation-delay: 16s; 
             content: url('https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1920&auto=format&fit=crop'); 
         }
 
         @keyframes fadeVishnu {
             0% { opacity: 0; }
-            10% { opacity: 0.6; } /* Visible but not overpowering */
-            25% { opacity: 0.6; }
+            10% { opacity: 1; }
+            25% { opacity: 1; }
             35% { opacity: 0; }
             100% { opacity: 0; }
-        }
-
-        /* Dark overlay to ensure text readability but keep Vishnu visible */
-        .universe-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(15, 15, 30, 0.4); /* Reduced opacity so God is visible */
-            z-index: -2;
-            pointer-events: none;
         }
 
         /* Logo Pulse */
@@ -192,19 +206,14 @@
             min-height: 400px;
         }
         .hero h1 { 
-            min-height: 3em; 
+            min-height: 3.6em; 
             display: flex;
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
             font-size: 2.5rem;
-            color: #ffffff; /* White text for dark background */
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
         
-        .hero p { color: #e2e8f0; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
-        .hero .badge { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; backdrop-filter: blur(5px);}
-
         .floating-icons {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -213,8 +222,9 @@
         }
         .float-icon {
             position: absolute;
-            color: rgba(255, 255, 255, 0.2);
+            color: var(--text-muted);
             font-size: 3rem;
+            opacity: 0.3;
             animation: floatUp 4s infinite ease-in-out alternate;
         }
         @keyframes floatUp { 
@@ -234,9 +244,10 @@
             justify-content: center;
             margin-top: 12px;
             font-size: 0.8rem;
-            color: #cbd5e1;
+            color: var(--text-muted);
         }
-        .trending-search span { cursor: pointer; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; transition: 0.2s; border: 1px solid rgba(255,255,255,0.2);}
+        .trending-search span { cursor: pointer; background: rgba(0,0,0,0.05); padding: 4px 10px; border-radius: 20px; transition: 0.2s;}
+        body.dark .trending-search span { background: rgba(255,255,255,0.1); }
         .trending-search span:hover { background: var(--primary); color: white; }
 
         /* ===== DESKTOP GRID ===== */
@@ -249,7 +260,7 @@
             padding: 0 20px;
         }
 
-        /* ===== CARD (NEON GLASSMORPHISM) ===== */
+        /* ===== CARD (NEON GLASSMORPHISM) Original ===== */
         .card {
             background: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -264,13 +275,7 @@
             min-height: 220px;
             overflow: hidden;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            /* Ensure card is opaque enough to block background */
-            background-color: #ffffff; 
-        }
-        
-        body.dark .card {
-            background-color: #1e1b4b;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
         .card::before {
@@ -335,13 +340,7 @@
         .popular-tools h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
         .popular-tools .sub { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 18px; }
         .popular-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; }
-        .popular-card { 
-            background: #ffffff; /* White background */
-            backdrop-filter: blur(12px); 
-            border: 1px solid var(--border-color); 
-            border-radius: 12px; padding: 14px; position: relative; transition: all 0.25s; text-decoration: none; color: var(--text-primary); box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-        }
-        body.dark .popular-card { background: #1e1b4b; }
+        .popular-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; position: relative; transition: all 0.25s; text-decoration: none; color: var(--text-primary); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .popular-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--primary); }
         .popular-card .p-icon { font-size: 1.3rem; margin-bottom: 6px; }
         .popular-card .p-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; }
@@ -351,11 +350,10 @@
 
         /* ===== TESTIMONIALS ===== */
         .testimonials { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
-        .testimonials h2 { text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; color: #fff; }
-        .testimonials .sub { text-align: center; color: #cbd5e1; font-size: 0.9rem; margin-bottom: 30px; }
+        .testimonials h2 { text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+        .testimonials .sub { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 30px; }
         .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .testi-card { background: #ffffff; backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; transition: all 0.25s; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        body.dark .testi-card { background: #1e1b4b; }
+        .testi-card { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; transition: all 0.25s; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
         .testi-card .t-stars { color: #fbbf24; margin-bottom: 10px; font-size: 0.9rem; }
         .testi-card .t-text { font-size: 0.85rem; color: var(--text-primary); line-height: 1.6; margin-bottom: 16px; font-style: italic; }
@@ -365,16 +363,15 @@
         .testi-card .t-loc { font-size: 0.72rem; color: var(--text-muted); }
 
         /* ===== TRUST STATS ===== */
-        .trust-stats { background: rgba(30, 27, 75, 0.6); backdrop-filter: blur(10px); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 22px 20px; margin: 30px 0; }
+        .trust-stats { background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(13,110,253,0.08)); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 22px 20px; margin: 30px 0; backdrop-filter: blur(10px); }
         .trust-stats-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px; }
         .trust-stat { text-align: center; }
-        .trust-stat .num { font-size: 1.6rem; font-weight: 800; color: #fff; }
-        .trust-stat .label { font-size: 0.78rem; color: #cbd5e1; margin-top: 2px; }
+        .trust-stat .num { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, #a855f7, #0d6efd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .trust-stat .label { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
 
         /* ===== SEARCH DROPDOWN ===== */
         .search-wrapper { position: relative; }
-        .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: #ffffff; border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-height: 400px; overflow-y: auto; z-index: 1000; display: none; margin-top: 8px; }
-        body.dark .search-dropdown { background: #1e1b4b; }
+        .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); max-height: 400px; overflow-y: auto; z-index: 1000; display: none; margin-top: 8px; backdrop-filter: blur(20px); }
         .search-dropdown.active { display: block; }
         .search-item { padding: 12px 16px; cursor: pointer; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; color: var(--text-primary); text-decoration: none; }
         .search-item:hover { background: rgba(13,110,253,0.08); }
@@ -387,35 +384,40 @@
         /* Recently Used + Favorites */
         .recently-used, .my-favorites { max-width: 1200px; margin: 0 auto; padding: 0 20px; max-height: 0; opacity: 0; overflow: hidden; transition: all 0.3s ease-in-out; }
         .recently-used.active, .my-favorites.active { max-height: 250px; opacity: 1; padding: 12px 20px; }
-        .recently-used h3, .my-favorites h3 { font-size: 1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; color: #fff; }
+        .recently-used h3, .my-favorites h3 { font-size: 1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         .recent-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-        .recent-chip { background: #ffffff; border: 1px solid var(--border-color); border-radius: 20px; padding: 6px 14px; font-size: 0.78rem; color: var(--text-primary); text-decoration: none; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
-        body.dark .recent-chip { background: #1e1b4b; }
+        .recent-chip { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 6px 14px; font-size: 0.78rem; color: var(--text-primary); text-decoration: none; transition: all 0.2s; backdrop-filter: blur(10px); }
         .recent-chip:hover { background: var(--primary); color: white; transform: translateY(-2px); }
 
         /* Back to Top */
         .back-to-top { position: fixed; bottom: 100px; right: 20px; width: 45px; height: 45px; border-radius: 50%; background: var(--primary); color: white; border: none; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 1.2rem; z-index: 99; box-shadow: 0 4px 15px rgba(13,110,253,0.4); transition: transform 0.2s; }
         .back-to-top:hover { transform: scale(1.1); }
 
-        /* ===== NAVBAR & MOBILE ===== */
+        /* ===== NAVBAR (Original Color) ===== */
         .navbar { 
-            background: rgba(15,15,30,0.9); 
+            /* Removed black background, restored glassmorphism */
+            background: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(10px);
             padding: 12px 20px; 
             display: flex; 
             align-items: center; 
             justify-content: space-between;
-            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            border-bottom: 1px solid var(--border-color); 
             position: sticky; top: 0; z-index: 1000;
             width: 100%;
             box-sizing: border-box;
-            backdrop-filter: blur(10px);
+            transition: background 0.3s;
+        }
+
+        body.dark .navbar {
+            background: rgba(15, 15, 30, 0.95);
         }
 
         .menu-btn { display: none; }
         #menu-toggle { display: none; }
 
-        .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15,15,30,0.9); backdrop-filter: blur(20px); border-top: 1px solid var(--border-color); padding: 8px 0; z-index: 998; box-shadow: 0 -4px 12px rgba(0,0,0,0.2); }
-        .mobile-bottom-nav a { flex: 1; text-align: center; color: #cbd5e1; text-decoration: none; font-size: 0.65rem; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 0; }
+        .mobile-bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg-card); backdrop-filter: blur(20px); border-top: 1px solid var(--border-color); padding: 8px 0; z-index: 998; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); }
+        .mobile-bottom-nav a { flex: 1; text-align: center; color: var(--text-muted); text-decoration: none; font-size: 0.65rem; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 0; }
         .mobile-bottom-nav a i { font-size: 1.1rem; }
         .mobile-bottom-nav a.active { color: var(--primary); }
 
@@ -427,24 +429,25 @@
 
         /* ===== MOBILE (max 768px) ===== */
         @media (max-width: 768px) {
-            .navbar { padding: 10px 15px; }
-            .menu-btn { display: block; font-size: 1.5rem; color: #fff; cursor: pointer; z-index: 1001; }
+            .navbar { padding: 12px 16px; }
+            .menu-btn { display: block; font-size: 1.5rem; color: var(--text-primary); cursor: pointer; z-index: 1001; }
             
             .menu { 
                 display: none; 
                 position: absolute; 
                 top: 100%; left: 0; 
                 width: 100%; 
-                background: #0f0f1e; 
+                background: var(--bg-card); 
+                backdrop-filter: blur(20px);
                 flex-direction: column; 
                 padding: 20px; 
-                box-shadow: 0 10px 20px rgba(0,0,0,0.5); 
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
                 z-index: 999; 
-                border-bottom: 1px solid rgba(255,255,255,0.1); 
+                border-bottom: 1px solid var(--border-color); 
             }
             #menu-toggle:checked ~ .menu { display: flex; }
             .menu li { margin: 10px 0; }
-            .menu a { color: #fff !important; font-size: 1rem !important; font-weight: 600 !important; display: block; padding: 8px 0; text-decoration: none;}
+            .menu a { color: var(--text-primary) !important; font-size: 1rem !important; font-weight: 600 !important; display: block; padding: 8px 0; text-decoration: none;}
             
             .mobile-bottom-nav { display: flex; }
             body { padding-bottom: 90px; } 
@@ -463,7 +466,7 @@
             .card p { font-size: 0.66rem; line-height: 1.4; margin-bottom: 5px; }
             .tool-icon { font-size: 1.2rem !important; width: 34px !important; height: 34px !important; margin-bottom: 6px; }
             .card .fav-btn { top: 8px; right: 8px; font-size: 0.78rem; }
-            .tool-category h2 { font-size: 1.1rem; margin: 20px 0 12px; color: #fff; }
+            .tool-category h2 { font-size: 1.1rem; margin: 20px 0 12px; }
             
             .popular-grid, .testi-grid { grid-template-columns: 1fr 1fr; }
         }
@@ -485,13 +488,12 @@
 
 <body>
 
-    <!-- 🌌 UNIVERSE BACKGROUND WITH VISHNU AVATARS 🌌 -->
+    <!-- 🌌 VISHNU UNIVERSE BACKGROUND 🌌 -->
     <div class="universe-bg">
         <img class="vishnu-slide" alt="Vishnu Avatar 1">
         <img class="vishnu-slide" alt="Vishnu Avatar 2">
         <img class="vishnu-slide" alt="Vishnu Avatar 3">
     </div>
-    <div class="universe-overlay"></div>
 
     <div id="scrollProgress" class="scroll-progress"></div>
     <div class="custom-cursor" id="customCursor"></div>
@@ -503,7 +505,7 @@
             <i class="fa-solid fa-bars"></i>
         </label>
         
-        <div class="logo" style="color: #fff; font-weight: 800; display:flex; align-items:center;">
+        <div class="logo" style="color: var(--text-primary); font-weight: 800; display:flex; align-items:center;">
             <span id="logoIcon">⚡</span><span>Bharat24Tools</span>
         </div>
         
@@ -518,7 +520,7 @@
         
         <div class="nav-actions">
             <!-- ⏱️ TIMER REMOVED -->
-            <button id="themeToggle" class="nav-icon-btn" title="Toggle Dark Mode" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; width:35px; height:35px; border-radius:50%; cursor:pointer;"><i class="fa-solid fa-moon"></i></button>
+            <button id="themeToggle" class="nav-icon-btn" title="Toggle Dark Mode" style="background:var(--bg-card); border:1px solid var(--border-color); color:var(--text-primary); width:35px; height:35px; border-radius:50%; cursor:pointer;"><i class="fa-solid fa-moon"></i></button>
         </div>
     </nav>
 
@@ -533,7 +535,7 @@
         </div>
 
         <div class="hero-content">
-            <span class="badge">🚀 India's Fast Growing Tool Website</span>
+            <span class="badge" style="background:rgba(13,110,253,0.1); border:1px solid rgba(13,110,253,0.2); color:var(--primary);">🚀 India's Fast Growing Tool Website</span>
             <h1>Bharat24Tools - Free Online <span id="typed-text" class="typed-text"></span></h1>
             <p>
                 Compress Images, Merge PDF, Convert Files, Generate QR Codes,
@@ -560,9 +562,9 @@
                 <a href="#pdf-tools" class="secondary-btn">PDF Tools</a>
             </div>
             <div class="stats">
-                <div><h2 class="counter" data-target="100" style="color:#fff;">0+</h2><p>Tools</p></div>
-                <div><h2 class="counter" data-target="100" style="color:#fff;">0K+</h2><p>Users</p></div>
-                <div><h2 style="color:#fff;">24×7</h2><p>Available</p></div>
+                <div><h2 class="counter" data-target="100">0+</h2><p>Tools</p></div>
+                <div><h2 class="counter" data-target="100">0K+</h2><p>Users</p></div>
+                <div><h2>24×7</h2><p>Available</p></div>
             </div>
         </div>
     </section>
@@ -577,8 +579,8 @@
     </section>
 
     <section class="popular-tools">
-        <h2 style="color:#fff;">🔥 Most Popular Tools</h2>
-        <p class="sub" style="color:#cbd5e1;">Sabse zyada use hone wale tools — 1 click mein try karo</p>
+        <h2>🔥 Most Popular Tools</h2>
+        <p class="sub">Sabse zyada use hone wale tools — 1 click mein try karo</p>
         <div class="popular-grid">
             <a href="pdf-editor.html" class="popular-card">
                 <span class="p-rank">#1</span>
@@ -656,9 +658,8 @@
 
         <!-- IMAGE TOOLS -->
         <div class="tool-category" data-category="image">
-        <h2 id="image-tools" style="color:#fff;">🖼 Image Tools</h2>
+        <h2 id="image-tools">🖼 Image Tools</h2>
         <div class="container">
-            <!-- Cards (Image Tools) - Kept exactly as before -->
             <div class="card" data-tool="Image Compressor" data-href="image-compressor.html" data-rating="4.9" data-reviews="4520" data-uses="45,200">
                 <div class="tool-icon">🖼</div>
                 <h3>Image Compressor</h3>
@@ -834,7 +835,7 @@
 
         <!-- PDF TOOLS -->
         <div class="tool-category" data-category="pdf">
-        <h2 id="pdf-tools" class="section-title" style="color:#fff;">📄 PDF Tools</h2>
+        <h2 id="pdf-tools" class="section-title">📄 PDF Tools</h2>
         <div class="container">
             <div class="card" data-tool="AI PDF Editor" data-href="pdf-editor.html" data-rating="5.0" data-reviews="1000" data-uses="50,000">
                 <div class="tool-icon">🤖</div>
@@ -1041,7 +1042,7 @@
 
         <!-- DESIGN TOOLS -->
         <div class="tool-category" data-category="design">
-        <h2 id="design-tools" class="section-title" style="color:#fff;">🎨 Design & Developer Tools</h2>
+        <h2 id="design-tools" class="section-title">🎨 Design & Developer Tools</h2>
         <div class="container">
             <div class="card" data-tool="CSS Gradient Generator" data-href="css-gradient-generator.html" data-rating="4.7" data-reviews="1100" data-uses="10,500">
                 <div class="tool-icon">🎨</div>
@@ -1158,7 +1159,7 @@
 
         <!-- UTILITY TOOLS -->
         <div class="tool-category" data-category="calculator">
-        <h2 id="calculator-tools" class="section-title" style="color:#fff;">🧰 Utility Tools</h2>
+        <h2 id="calculator-tools" class="section-title">🧰 Utility Tools</h2>
         <div class="container">
             <div class="card" data-tool="QR Code Generator" data-href="qr-generator.html" data-rating="4.8" data-reviews="2400" data-uses="23,900">
                 <div class="tool-icon">📱</div>
@@ -1269,20 +1270,20 @@
     </section>
 
     <section id="about" style="max-width:900px;margin:0 auto;padding:40px 20px;">
-        <h2 style="color:#fff;">About Bharat24Tools</h2>
-        <p style="color:#cbd5e1;">Bharat24Tools is a free collection of everyday online utilities built for students, professionals and small business owners across India. Instead of downloading heavy software or signing up for paid subscriptions, you can compress an image, convert a file to PDF, generate a QR code or calculate your loan EMI directly inside your web browser.</p>
-        <p style="color:#cbd5e1;">Most tools run entirely on the client side — files are processed on your own device using JavaScript and are never uploaded to a server. Heavy tools like PDF-to-Excel conversion use a secure server, and files are auto-deleted within 30 seconds after processing.</p>
+        <h2>About Bharat24Tools</h2>
+        <p>Bharat24Tools is a free collection of everyday online utilities built for students, professionals and small business owners across India. Instead of downloading heavy software or signing up for paid subscriptions, you can compress an image, convert a file to PDF, generate a QR code or calculate your loan EMI directly inside your web browser.</p>
+        <p>Most tools run entirely on the client side — files are processed on your own device using JavaScript and are never uploaded to a server. Heavy tools like PDF-to-Excel conversion use a secure server, and files are auto-deleted within 30 seconds after processing.</p>
 
-        <h2 style="color:#fff;">How to Use Bharat24Tools</h2>
-        <p style="color:#cbd5e1;">Open any tool from the Image Tools, PDF Tools or Calculators section above, upload or drag-and-drop your file, and click the action button. Your converted file downloads automatically — no signup, no email verification, no account required.</p>
+        <h2>How to Use Bharat24Tools</h2>
+        <p>Open any tool from the Image Tools, PDF Tools or Calculators section above, upload or drag-and-drop your file, and click the action button. Your converted file downloads automatically — no signup, no email verification, no account required.</p>
 
-        <h2 style="color:#fff;">Why Choose Bharat24Tools</h2>
-        <p style="color:#cbd5e1;">Unlike many online converters that limit free usage, add watermarks, or require a paid plan for basic features, Bharat24Tools keeps every tool completely free with no daily limits. The interface is lightweight and mobile-friendly — tools load quickly even on slower connections.</p>
+        <h2>Why Choose Bharat24Tools</h2>
+        <p>Unlike many online converters that limit free usage, add watermarks, or require a paid plan for basic features, Bharat24Tools keeps every tool completely free with no daily limits. The interface is lightweight and mobile-friendly — tools load quickly even on slower connections.</p>
 
-        <h2 style="color:#fff;">Frequently Asked Questions</h2>
-        <details style="margin-bottom:12px;"><summary style="cursor:pointer;font-weight:600; color:#fff;">Is Bharat24Tools free to use?</summary><p style="color:#cbd5e1;">Yes, every tool is completely free. No signup, no hidden charges, no watermark.</p></details>
-        <details style="margin-bottom:12px;"><summary style="cursor:pointer;font-weight:600; color:#fff;">Are my files uploaded to a server?</summary><p style="color:#cbd5e1;">Most tools run 100% in your browser. Heavy tools use a secure server and files are auto-deleted within 30 seconds.</p></details>
-        <details style="margin-bottom:12px;"><summary style="cursor:pointer;font-weight:600; color:#fff;">Do I need to install any software?</summary><p style="color:#cbd5e1;">No installation required. Works in any modern browser on desktop, laptop and mobile.</p></details>
+        <h2>Frequently Asked Questions</h2>
+        <details style="margin-bottom:12px;"><summary style="cursor:pointer;font-weight:600;">Is Bharat24Tools free to use?</summary><p>Yes, every tool is completely free. No signup, no hidden charges, no watermark.</p></details>
+        <details style="margin-bottom:12px;"><summary style="cursor:pointer;font-weight:600;">Are my files uploaded to a server?</summary><p>Most tools run 100% in your browser. Heavy tools use a secure server and files are auto-deleted within 30 seconds.</p></details>
+        <details style="margin-bottom:12px;"><summary style="cursor:pointer;font-weight:600;">Do I need to install any software?</summary><p>No installation required. Works in any modern browser on desktop, laptop and mobile.</p></details>
     </section>
 
     <div style="width:100%; overflow:hidden; line-height:0; background:#eaf3ff;">
