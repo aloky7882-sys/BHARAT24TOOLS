@@ -200,15 +200,18 @@
 </div>
 
 <script>
+// ✅ FIXED API URL (Ensure no trailing slash)
 const API_URL = 'https://bharat24tools-api.onrender.com';
 const MAX_SIZE = 15 * 1024 * 1024;
 const MAX_FILES = 3;
-const TIMEOUT_MS = 300000;
-const MAX_DIM = 1500;
+const INITIAL_TIMEOUT_MS = 300000; // 5 minutes
+const RETRY_TIMEOUT_MS = 600000; // 10 minutes for retry
+const MAX_DIM = 2000; // Increased for better OCR
 
 let selectedFiles = [];
 let previewUrls = [];
 let progressTimer = null;
+let isProcessing = false;
 
 const uploadZone = document.getElementById('uploadZone');
 const fileInput = document.getElementById('fileInput');
@@ -230,7 +233,8 @@ const translations = {
         howToTitle: "How to Use", step1Title: "1. Upload Images", step1Desc: "Select up to 3 images containing tables or invoices.",
         step2Title: "2. AI Processes", step2Desc: "Gemini AI extracts the text and formats it into rows and columns.",
         step3Title: "3. Download", step3Desc: "Download the Excel file or ZIP (if multiple images).",
-        loading: "AI OCR processing...", success: "Downloaded successfully!", errValid: "Please select valid images (JPG, PNG, WebP)", errMax: "Max 3 files allowed", errSize: "File exceeds 15MB limit", ready: "image(s) ready", preparing: "images preparing..."
+        loading: "AI OCR processing...", success: "Downloaded successfully!", errValid: "Please select valid images (JPG, PNG, WebP)", errMax: "Max 3 files allowed", errSize: "File exceeds 15MB limit", ready: "image(s) ready", preparing: "images preparing...",
+        wakingUp: "Waking up AI server (takes 30-60s)...", retrying: "Server took too long. Retrying with longer timeout...", timeoutError: "Server is taking too long. Please try again later."
     },
     hi: {
         back: "वापस", title: "📊 इमेज से एक्सेल (AI)", subtitle: "1-3 इमेज से AI OCR के साथ सही rows और columns में एक्सेल फाइल बनाएं",
@@ -241,7 +245,8 @@ const translations = {
         howToTitle: "इसका उपयोग कैसे करें", step1Title: "1. इमेज अपलोड करें", step1Desc: "टेबल या इनवॉइस वाली 3 इमेज तक चुनें।",
         step2Title: "2. AI प्रोसेस करेगा", step2Desc: "Gemini AI टेक्स्ट निकालकर उसे rows और columns में फॉर्मेट करेगा।",
         step3Title: "3. डाउनलोड करें", step3Desc: "एक्सेल फाइल या ZIP डाउनलोड करें।",
-        loading: "AI OCR प्रोसेस हो रहा है...", success: "सफलतापूर्वक डाउनलोड हो गया!", errValid: "कृपया वैध इमेज चुनें", errMax: "अधिकतम 3 फाइलें", errSize: "फाइल 15MB से बड़ी है", ready: "इमेज तैयार हैं", preparing: "इमेज तैयार हो रही हैं..."
+        loading: "AI OCR प्रोसेस हो रहा है...", success: "सफलतापूर्वक डाउनलोड हो गया!", errValid: "कृपया वैध इमेज चुनें", errMax: "अधिकतम 3 फाइलें", errSize: "फाइल 15MB से बड़ी है", ready: "इमेज तैयार हैं", preparing: "इमेज तैयार हो रही हैं...",
+        wakingUp: "AI सर्वर जगाया जा रहा है (30-60 सेकंड लग सकते हैं)...", retrying: "सर्वर ने बहुत समय लिया। लंबे टाइमआउट के साथ पुनः प्रयास...", timeoutError: "सर्वर बहुत समय ले रहा है। कृपया बाद में पुनः प्रयास करें।"
     }
 };
 
@@ -267,6 +272,7 @@ function fullCleanup() {
     revokeAllPreviews();
     clearProgressTimer();
     selectedFiles = [];
+    isProcessing = false;
 }
 window.addEventListener('beforeunload', fullCleanup);
 window.addEventListener('pagehide', fullCleanup);
@@ -289,27 +295,66 @@ function formatSize(bytes) {
     return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
 }
 
-function resizeImageIfNeeded(file, maxDim) {
+// ✅ IMPROVED: Advanced Image Preprocessing for better OCR accuracy
+function preprocessImage(file) {
     return new Promise((resolve) => {
         const img = new Image();
         const url = URL.createObjectURL(file);
         img.onload = () => {
             URL.revokeObjectURL(url);
-            if (img.width <= maxDim && img.height <= maxDim) { resolve(file); return; }
-            const scale = maxDim / Math.max(img.width, img.height);
-            const w = Math.round(img.width * scale);
-            const h = Math.round(img.height * scale);
+            
+            // 1. Resize for optimal OCR (max dimension 2000px)
+            let width = img.width;
+            let height = img.height;
+            const maxDim = 2000;
+            if (width > maxDim || height > maxDim) {
+                const scale = maxDim / Math.max(width, height);
+                width = Math.round(width * scale);
+                height = Math.round(height * scale);
+            }
+
             const canvas = document.createElement('canvas');
-            canvas.width = w;
-            canvas.height = h;
+            canvas.width = width;
+            canvas.height = height;
             const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, w, h);
+            
+            // 2. Draw image
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            // 3. Apply Image Processing (Grayscale, Contrast, Binarization)
+            const imageData = ctx.getImageData(0, 0, width, height);
+            const data = imageData.data;
+            
+            // Grayscale + Contrast Enhancement
+            const contrast = 1.5; // Increase contrast by 50%
+            const intercept = 128 * (1 - contrast);
+            
+            for (let i = 0; i < data.length; i += 4) {
+                // Grayscale formula
+                let gray = data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114;
+                // Apply contrast
+                gray = gray * contrast + intercept;
+                // Clamp
+                gray = Math.max(0, Math.min(255, gray));
+                
+                // Simple Binarization (Thresholding) - helps separate text from background
+                const threshold = 160; // Adjust if needed (0-255)
+                const val = gray > threshold ? 255 : 0;
+                
+                // Set back to RGB (all same for grayscale/binary)
+                data[i] = val;
+                data[i+1] = val;
+                data[i+2] = val;
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            
             canvas.toBlob((blob) => {
                 try { canvas.width = 0; canvas.height = 0; } catch(e){}
                 if (!blob) { resolve(file); return; }
                 const newFile = new File([blob], file.name, { type: 'image/jpeg' });
                 resolve(newFile);
-            }, 'image/jpeg', 0.88);
+            }, 'image/jpeg', 0.92); // Higher quality for OCR
         };
         img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
         img.src = url;
@@ -330,16 +375,16 @@ async function addFiles(files) {
 
     showStatus('⚙️ ' + t('preparing'), 'loading');
 
-    const resized = [];
+    const processed = [];
     for (const f of valid) {
-        try { resized.push(await resizeImageIfNeeded(f, MAX_DIM)); } 
-        catch (e) { resized.push(f); }
+        try { processed.push(await preprocessImage(f)); } 
+        catch (e) { processed.push(f); }
     }
 
-    selectedFiles = resized;
-    previewUrls = resized.map(f => URL.createObjectURL(f));
+    selectedFiles = processed;
+    previewUrls = processed.map(f => URL.createObjectURL(f));
     renderFileList();
-    showStatus(`✅ ${resized.length} ` + t('ready'), 'success');
+    showStatus(`✅ ${processed.length} ` + t('ready'), 'success');
 }
 
 function renderFileList() {
@@ -377,62 +422,109 @@ function renderFileList() {
     convertBtn.style.display = 'block';
 }
 
+// ✅ FIXED: Timeout & Retry Logic
 convertBtn.addEventListener('click', async () => {
-    if (selectedFiles.length === 0) return;
+    if (selectedFiles.length === 0 || isProcessing) return;
+    isProcessing = true;
     convertBtn.disabled = true;
-    progressBar.style.display = 'block';
-    progressText.style.display = 'block';
-    progressFill.style.width = '10%';
-    progressText.textContent = '10%';
-    showStatus('⏳ ' + t('loading'), 'loading');
+    
+    let attempt = 0;
+    const maxAttempts = 2;
+    let success = false;
 
-    let pct = 10;
-    progressTimer = setInterval(() => {
-        pct = Math.min(pct + 2, 90);
-        progressFill.style.width = pct + '%';
-        progressText.textContent = pct + '%';
-    }, 3000);
+    while (attempt < maxAttempts && !success) {
+        attempt++;
+        const timeoutMs = attempt === 1 ? INITIAL_TIMEOUT_MS : RETRY_TIMEOUT_MS;
+        
+        try {
+            // Show UI
+            progressBar.style.display = 'block';
+            progressText.style.display = 'block';
+            progressFill.style.width = '10%';
+            progressText.textContent = '10%';
+            
+            if (attempt === 1) {
+                showStatus('⏳ ' + t('wakingUp'), 'loading');
+            } else {
+                showStatus('🔄 ' + t('retrying'), 'loading');
+            }
 
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
+            // Simulate progress until response arrives
+            let pct = 10;
+            progressTimer = setInterval(() => {
+                pct = Math.min(pct + 2, 90);
+                progressFill.style.width = pct + '%';
+                progressText.textContent = pct + '%';
+            }, 3000);
 
-    try {
-        const formData = new FormData();
-        selectedFiles.forEach(f => formData.append('files', f));
-        const res = await fetch(API_URL + '/image-to-excel', { method: 'POST', body: formData, signal: controller.signal });
+            // Prepare Data
+            const formData = new FormData();
+            selectedFiles.forEach(f => formData.append('files', f));
 
-        clearTimeout(timeoutId);
-        clearProgressTimer();
-        progressFill.style.width = '100%';
-        progressText.textContent = '100%';
+            // Create AbortController with Dynamic Timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-        if (!res.ok) throw new Error(await res.text() || 'Server error');
+            // ✅ FIXED: Fetch with proper error handling
+            const res = await fetch(API_URL + '/image-to-excel', { 
+                method: 'POST', 
+                body: formData, 
+                signal: controller.signal 
+            });
 
-        const blob = await res.blob();
-        const isZip = selectedFiles.length > 1;
-        const firstName = selectedFiles[0].name.replace(/\.[^.]+$/, '');
-        const ext = isZip ? 'zip' : 'xlsx';
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `Bharat24Tools_${firstName}.${ext}`;
-        a.click();
-        setTimeout(() => URL.revokeObjectURL(url), 5000);
+            clearTimeout(timeoutId);
+            clearProgressTimer();
 
-        showStatus('🎉 ' + t('success'), 'success');
-    } catch (err) {
-        clearTimeout(timeoutId);
-        clearProgressTimer();
-        if (err.name === 'AbortError') showStatus('⏱️ Timeout!', 'error');
-        else showStatus('❌ Error: ' + err.message, 'error');
+            if (!res.ok) {
+                const errorText = await res.text();
+                throw new Error(errorText || `Server Error: ${res.status}`);
+            }
+
+            // Success! Download File
+            progressFill.style.width = '100%';
+            progressText.textContent = '100%';
+            
+            const blob = await res.blob();
+            const isZip = selectedFiles.length > 1;
+            const firstName = selectedFiles[0].name.replace(/\.[^.]+$/, '');
+            const ext = isZip ? 'zip' : 'xlsx';
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Bharat24Tools_${firstName}.${ext}`;
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+            showStatus('🎉 ' + t('success'), 'success');
+            success = true;
+
+        } catch (err) {
+            clearProgressTimer();
+            
+            if (err.name === 'AbortError') {
+                // Timeout occurred
+                if (attempt === maxAttempts) {
+                    showStatus('⏱️ ' + t('timeoutError'), 'error');
+                } else {
+                    // Will loop and retry
+                    console.warn(`Attempt ${attempt} timed out. Retrying...`);
+                }
+            } else {
+                // Other errors (network, server error)
+                showStatus('❌ Error: ' + err.message, 'error');
+                break; // Don't retry on non-timeout errors
+            }
+        }
     }
 
+    // Reset UI
     convertBtn.disabled = false;
+    isProcessing = false;
     setTimeout(() => {
         progressBar.style.display = 'none';
         progressText.style.display = 'none';
         progressFill.style.width = '0%';
-    }, 3000);
+    }, 4000);
 });
 
 function showStatus(msg, type) {
