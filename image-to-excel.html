@@ -3,538 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="manifest" href="site.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta name="theme-color" content="#0d6efd">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Bharat24Tools">
-
-    <title>Image to Excel - OCR Extract Table Data to XLSX Free | Bharat24Tools</title>
-    <meta name="description" content="Extract text and tables from up to 3 images using AI OCR. Get a clean Excel file with proper rows and columns. Free, up to 15MB each.">
-    <meta name="keywords" content="image to excel, ocr image to excel, extract table from image, invoice to excel, bank statement to excel, table to xlsx, hindi ocr">
+    <title>Image to Excel - Convert Table Photo to XLSX with Rows & Columns | Bharat24Tools</title>
+    <meta name="description" content="Convert a photo or screenshot of a table, invoice or statement into Excel. Rows and columns are detected from the real table lines, merged cells included. Preview before you download. Free.">
+    <meta name="keywords" content="image to excel, photo to excel, table image to excel, screenshot to excel, picture to xlsx, ocr table to excel, invoice image to excel">
     <meta name="author" content="Alok">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-excel.html">
-
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-excel.html">
-    <meta property="og:title" content="Image to Excel - OCR Extract Table Data to XLSX | Bharat24Tools">
-    <meta property="og:description" content="Extract tables from up to 3 images using AI OCR. Free, up to 15MB.">
+    <meta property="og:title" content="Image to Excel with Proper Rows & Columns | Bharat24Tools">
+    <meta property="og:description" content="Photo or screenshot of a table to Excel, with preview. Free.">
     <meta property="og:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
     <meta property="og:site_name" content="Bharat24Tools">
-
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Image to Excel - OCR Extract Table Data | Bharat24Tools">
-    <meta name="twitter:description" content="Extract tables from up to 3 images to Excel with AI OCR. Free.">
-    <meta name="twitter:image" content="https://aloky7882-sys.github.io/BHARAT24TOOLS/preview.png">
-
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "Image to Excel (OCR)",
+        "name": "Image to Excel",
         "url": "https://aloky7882-sys.github.io/BHARAT24TOOLS/image-to-excel.html",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Web Browser",
+        "description": "Convert a photo or screenshot of a table into an Excel file with rows and columns kept in place, merged cells included.",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
     }
     </script>
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-        
-        /* ✅ Dark Premium Theme */
-        body { min-height:100vh; background: linear-gradient(135deg, #0f0f1e 0%, #16213e 50%, #533483 100%); padding:16px; color: #e0e7ff; display: flex; flex-direction: column; }
-        
-        header { background:rgba(15,15,30,0.95); padding:12px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid rgba(168,85,247,0.3); position:sticky; top:0; z-index:100; margin:-16px -16px 24px; border-radius:0 0 10px 10px; }
-        header a.back { color:#cbd5e1; text-decoration:none; font-weight:600; font-size:0.9rem; display:flex; align-items:center; gap:6px; }
-        header a.back:hover { color:#a855f7; }
-        header .brand { font-weight:800; font-size:1rem; background:linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; display:flex; align-items:center; gap:6px; }
-
-        .lang-select { background: rgba(255,255,255,0.1); border: 1px solid rgba(168,85,247,0.4); color: #e0e7ff; padding: 6px 10px; border-radius: 6px; font-family: inherit; font-size: 0.8rem; font-weight: 600; cursor: pointer; outline: none; }
-        .lang-select option { background: #1e1b4b; color: #e0e7ff; }
-
-        .container { max-width:800px; margin:0 auto; background:rgba(30,27,75,0.9); border-radius:16px; padding:24px; box-shadow:0 10px 40px rgba(0,0,0,0.3); border:1px solid rgba(168,85,247,0.3); flex: 1; width: 100%; }
-        
-        .header-title { text-align:center; margin-bottom:24px; }
-        .header-title h1 { font-size:1.8rem; color:#22c55e; margin-bottom:6px; font-weight:800; }
-        .header-title p { color:#a5b4fc; font-size:0.9rem; }
-
-        .upload-zone { position:relative; border:2px dashed rgba(34,197,94,0.6); border-radius:12px; padding:30px 20px; margin-bottom:20px; background:rgba(34,197,94,0.05); cursor:pointer; transition:all .2s ease; overflow:hidden; text-align: center; }
-        .upload-zone:hover, .upload-zone.active { background:rgba(34,197,94,0.15); border-color:#22c55e; transform:translateY(-2px); }
-        .upload-zone input { position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; margin:0; z-index: 10; }
-        .upload-icon { font-size:2.5rem; color:#22c55e; margin-bottom:12px; }
-        .upload-zone p { color:#cbd5e1; margin:6px 0; font-size: 0.9rem; }
-        .highlight { color:#e0e7ff; font-weight:700; }
-
-        .file-list { margin-top:16px; max-height:280px; overflow-y:auto; }
-        .file-item { display:flex; align-items:center; gap:10px; padding:10px 12px; background:rgba(99,102,241,0.1); border-radius:8px; margin-bottom:6px; font-size:0.8rem; }
-        .file-item img { width:40px; height:40px; object-fit:cover; border-radius:6px; flex-shrink:0; }
-        .file-item .info { flex:1; min-width:0; }
-        .file-item .info .fname { color:#e0e7ff; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-        .file-item .info .fsize { color:#a5b4fc; font-size:0.7rem; }
-        .file-item button { background:transparent; border:none; color:#fca5a5; cursor:pointer; font-size:1rem; padding:4px; }
-        
-        .total-size { text-align:center; margin-top:10px; font-size:0.78rem; color:#a5b4fc; }
-        .total-size strong { color:#e0e7ff; }
-
-        button.primary-btn { width:100%; padding:14px; background:linear-gradient(135deg,#22c55e,#10b981); border:none; border-radius:8px; color:#fff; font-weight:700; font-size:0.95rem; cursor:pointer; font-family:inherit; transition:all 0.3s; margin-top:16px; }
-        button.primary-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 6px 16px rgba(34,197,94,0.3); }
-        button.primary-btn:disabled { opacity:0.6; cursor:not-allowed; }
-
-        .status { display:none; margin-top:16px; padding:12px; border-radius:8px; text-align:center; font-weight:600; font-size:0.85rem; }
-        .status.loading { background:rgba(251,191,36,0.15); color:#fde68a; display:block; }
-        .status.success { background:rgba(34,197,94,0.2); color:#86efac; display:block; }
-        .status.error { background:rgba(239,68,68,0.2); color:#fca5a5; display:block; }
-
-        .progress-bar { display:none; width:100%; height:8px; background:rgba(15,15,30,0.8); border-radius:20px; margin-top:16px; overflow:hidden; }
-        .progress-bar .fill { height:100%; width:0%; background:linear-gradient(90deg,#22c55e,#10b981); transition:width 0.3s; }
-        .progress-text { display:none; text-align:center; font-size:0.8rem; color:#a5b4fc; margin-top:8px; font-weight:600; }
-
-        .features-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; margin-top:20px; }
-        .feature-item { background:rgba(34,197,94,0.08); border-left:3px solid #22c55e; padding:10px 12px; border-radius:8px; font-size:0.75rem; color:#a5b4fc; }
-        .feature-item strong { color:#e0e7ff; display:block; margin-bottom:3px; font-size:0.8rem; }
-
-        .info-box { background:rgba(99,102,241,0.1); border-left:3px solid #22c55e; padding:12px; border-radius:8px; margin-top:16px; font-size:0.75rem; color:#a5b4fc; line-height:1.6; }
-        .info-box strong { color:#e0e7ff; }
-
-        /* ✅ How to Use */
-        .how-to-use { margin-top: 30px; padding-top: 24px; border-top: 1px dashed rgba(168,85,247,0.3); }
-        .how-to-use h2 { text-align: center; font-size: 1.2rem; color: #e0e7ff; margin-bottom: 20px; font-weight: 700; }
-        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-        .step-box { background: rgba(15,15,30,0.5); border-radius: 10px; padding: 20px 14px; text-align: center; border: 1px solid rgba(168,85,247,0.2); transition: all 0.3s; }
-        .step-box:hover { transform: translateY(-3px); border-color: #22c55e; background: rgba(30,27,75,0.8); }
-        .step-icon { width: 40px; height: 40px; background: rgba(34,197,94,0.15); color: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin: 0 auto 10px; }
-        .step-box h3 { font-size: 0.85rem; color: #e0e7ff; margin-bottom: 6px; font-weight: 600; }
-        .step-box p { font-size: 0.7rem; color: #a5b4fc; line-height: 1.4; }
-
-        @media(max-width:600px) { .container { padding:16px; } .header-title h1 { font-size:1.4rem; } .features-grid { grid-template-columns:1fr; } .steps-grid { grid-template-columns:1fr; } }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',system-ui,-apple-system,'Segoe UI','Nirmala UI',Arial,sans-serif; }
+        [hidden] { display:none !important; }
+        body { min-height:100vh; background:linear-gradient(135deg,#0f0f1e 0%,#16213e 50%,#1b4d3e 100%); padding:30px 16px 60px; color:#e0e7ff; overflow-x:clip; }
+        header { background:rgba(15,15,30,.95); padding:16px 24px; display:flex; align-items:center; gap:20px; border-bottom:2px solid rgba(34,197,94,.3); position:sticky; top:0; z-index:100; margin:-30px -16px 30px; }
+        header a { color:#cbd5e1; text-decoration:none; font-weight:600; padding:8px 12px; border-radius:6px; transition:.3s; }
+        header a:hover { color:#4ade80; background:rgba(34,197,94,.1); }
+        .brand { font-weight:800; font-size:1.3rem; color:#86efac; flex:1; }
+        main { max-width:900px; margin:0 auto; }
+        h1 { font-size:2rem; text-align:center; margin-bottom:8px; font-weight:800; }
+        .subtitle { text-align:center; color:#a5b4fc; margin-bottom:24px; font-size:.95rem; }
+        .card { background:rgba(24,30,60,.92); border-radius:20px; padding:30px; border:1px solid rgba(34,197,94,.28); box-shadow:0 20px 60px rgba(0,0,0,.4); }
+        .upload-zone { border:3px dashed rgba(34,197,94,.55); border-radius:16px; padding:44px 22px; text-align:center; cursor:pointer; transition:.3s; background:rgba(34,197,94,.04); }
+        .upload-zone:hover,.upload-zone.active { border-color:#22c55e; background:rgba(34,197,94,.12); transform:translateY(-2px); }
+        .upload-zone .big { font-size:3rem; margin-bottom:10px; } .upload-zone p { color:#cbd5e1; margin:5px 0; font-size:.92rem; }
+        .hl { color:#e0e7ff; font-weight:700; }
+        .badges { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+        .badge { background:rgba(34,197,94,.15); color:#86efac; padding:5px 12px; border-radius:20px; font-size:.72rem; font-weight:600; }
+        input[type=file] { display:none; }
+        .files { margin-top:18px; display:grid; gap:10px; }
+        .file { display:flex; align-items:center; gap:12px; padding:10px 12px; background:rgba(99,102,241,.12); border-radius:12px; }
+        .thumb { width:74px; height:56px; border-radius:8px; background:#fff; display:grid; place-items:center; overflow:hidden; flex:none; }
+        .thumb img { max-width:100%; max-height:100%; transition:transform .25s; }
+        .file .info { flex:1; min-width:0; } .file .nm { font-size:.86rem; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .file .sz { font-size:.74rem; color:#a5b4fc; }
+        .ibtn { background:rgba(255,255,255,.08); border:1px solid rgba(34,197,94,.35); color:#e0e7ff; width:34px; height:34px; border-radius:8px; cursor:pointer; font-size:1rem; flex:none; }
+        .ibtn:hover { background:rgba(34,197,94,.25); }
+        .opts { margin-top:16px; padding:16px; background:rgba(34,197,94,.06); border:1px solid rgba(34,197,94,.25); border-radius:14px; }
+        .opts h3 { font-size:.88rem; margin-bottom:10px; }
+        .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+        .opts label.lbl { font-size:.76rem; color:#a5b4fc; display:block; margin-bottom:5px; }
+        select.field { width:100%; padding:11px 12px; background:rgba(15,15,30,.85); border:2px solid rgba(34,197,94,.3); border-radius:10px; color:#e0e7ff; font-size:.9rem; }
+        select.field option { background:#1e1b4b; }
+        .check { display:flex; align-items:flex-start; gap:10px; font-size:.82rem; color:#cbd5e1; margin:10px 0 0; cursor:pointer; line-height:1.45; }
+        .check input { accent-color:#22c55e; width:17px; height:17px; margin-top:2px; flex:none; }
+        .btn { width:100%; padding:16px; border:none; border-radius:12px; color:#fff; font-weight:700; font-size:1.05rem; cursor:pointer; transition:.3s; margin-top:16px; }
+        .btn.main { background:linear-gradient(135deg,#16a34a,#22c55e); } .btn.main:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 30px rgba(34,197,94,.4); }
+        .btn:disabled { opacity:.55; cursor:not-allowed; }
+        .btn.ghost { background:rgba(255,255,255,.07); border:1px solid rgba(34,197,94,.4); font-size:.92rem; padding:13px; margin-top:10px; }
+        .progress { display:none; margin-top:14px; } .progress .bar { height:10px; background:rgba(15,15,30,.8); border-radius:20px; overflow:hidden; }
+        .progress .fill { height:100%; width:0; background:linear-gradient(90deg,#16a34a,#a3e635); transition:width .3s; }
+        .progress .fill.busy { width:100% !important; background:linear-gradient(90deg,#16a34a,#a3e635,#16a34a); background-size:200% 100%; animation:slide 1.2s linear infinite; }
+        @keyframes slide { to { background-position:-200% 0; } }
+        .progress p { text-align:center; font-size:.8rem; color:#a5b4fc; margin-top:8px; }
+        .status { display:none; margin-top:14px; padding:14px 16px; border-radius:12px; text-align:center; font-weight:600; font-size:.88rem; line-height:1.5; white-space:pre-line; }
+        .status.loading { background:rgba(99,102,241,.2); color:#a5b4fc; display:block; } .status.error { background:rgba(239,68,68,.2); color:#fca5a5; display:block; } .status.success { background:rgba(34,197,94,.2); color:#86efac; display:block; } .status.info { background:rgba(251,191,36,.15); color:#fde68a; display:block; }
+        .result { margin-top:22px; }
+        .tabs { display:flex; gap:8px; overflow-x:auto; margin-bottom:12px; }
+        .tab { flex:none; padding:8px 14px; border-radius:999px; border:1px solid rgba(34,197,94,.4); background:rgba(15,15,30,.6); color:#cbd5e1; cursor:pointer; font-size:.82rem; font-weight:600; }
+        .tab.on { background:#22c55e; color:#052e16; border-color:transparent; }
+        .tags { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+        .tag { background:rgba(255,255,255,.08); border:1px solid rgba(34,197,94,.25); border-radius:999px; padding:5px 12px; font-size:.74rem; }
+        .tag.good { border-color:rgba(34,197,94,.55); color:#86efac; } .tag.warn { border-color:rgba(251,191,36,.6); color:#fde68a; }
+        .warnbox { background:rgba(251,191,36,.12); color:#fde68a; border-left:4px solid #fbbf24; padding:10px 14px; border-radius:8px; font-size:.8rem; margin-bottom:10px; line-height:1.5; }
+        .tablewrap { overflow:auto; max-height:460px; border-radius:10px; border:1px solid rgba(34,197,94,.3); background:#fff; }
+        table.pv { border-collapse:collapse; font-size:.8rem; color:#111; min-width:100%; }
+        table.pv td { border:1px solid #c9cfdb; padding:6px 9px; vertical-align:top; max-width:340px; }
+        table.pv tr.h td { background:#dcfce7; font-weight:700; }
+        table.pv td.num { text-align:right; font-variant-numeric:tabular-nums; }
+        table.pv td.rn { background:#f1f5f9; color:#64748b; text-align:center; font-size:.7rem; min-width:34px; position:sticky; left:0; }
+        .note { color:#a5b4fc; font-size:.76rem; margin-top:8px; }
+        .actions { display:grid; gap:10px; margin-top:14px; }
+        .dl { text-align:center; text-decoration:none; display:block; }
+        .info-box { background:rgba(34,197,94,.08); border-left:4px solid #22c55e; padding:16px; border-radius:10px; margin-top:22px; font-size:.84rem; color:#bbf7d0; line-height:1.7; }
+        .info-box strong { color:#fff; } .info-box ul { margin:6px 0 0 18px; }
+        @media(max-width:640px) { .card { padding:20px; } h1 { font-size:1.6rem; } .grid2 { grid-template-columns:1fr; } }
     </style>
 </head>
 <body>
-
-<header>
-    <a href="index.html" class="back"><i class="fas fa-arrow-left"></i> <span data-i18n="back">Back</span></a>
-    <div class="brand"><i class="fas fa-microchip"></i> Bharat24Tools</div>
-    <select class="lang-select" id="languageSelect" onchange="changeLanguage(this.value)">
-        <option value="en">EN</option>
-        <option value="hi">HI</option>
-    </select>
-</header>
-
-<div class="container">
-    <div class="header-title">
-        <h1 data-i18n="title">📊 Image to Excel (AI)</h1>
-        <p data-i18n="subtitle">1-3 images से AI OCR के साथ proper Excel file बनाओ — rows और columns के साथ</p>
-    </div>
-
-    <div class="upload-zone" id="uploadZone">
-        <div class="upload-icon"><i class="fas fa-file-excel"></i></div>
-        <p><span class="highlight" data-i18n="uploadTitle">Click करो या Drag करो</span></p>
-        <p data-i18n="uploadText">Invoice, bank statement, table — 1-3 images (max 15MB each)</p>
-    </div>
-    <input type="file" id="fileInput" accept="image/*" multiple>
-
-    <div id="fileList" class="file-list"></div>
-    <div id="totalSize" class="total-size"></div>
-
-    <button class="primary-btn" id="convertBtn" style="display:none;">
-        <i class="fas fa-magic"></i> <span data-i18n="convertBtn">Extract → Excel</span>
-    </button>
-    
-    <div class="progress-bar" id="progressBar"><div class="fill" id="progressFill"></div></div>
-    <div class="progress-text" id="progressText">0%</div>
-    <div class="status" id="status"></div>
-
-    <div class="features-grid">
-        <div class="feature-item">
-            <strong data-i18n="f1t">🤖 AI OCR</strong>
-            <span data-i18n="f1d">Hindi + English perfect</span>
+<header><a href="index.html">← Back</a><div class="brand">⚡ Bharat24Tools</div></header>
+<main>
+    <h1>📊 Image to Excel</h1>
+    <p class="subtitle">Table, invoice ya statement ki photo ko rows aur columns ke saath Excel me badlo</p>
+    <div class="card">
+        <div class="upload-zone" id="zone">
+            <div class="big">🖼️</div>
+            <p><span class="hl">Click karo, Drag karo ya Ctrl+V se paste karo</span></p>
+            <p>Table ki photo / screenshot — 1 se 5 images (max 15MB each)</p>
+            <div class="badges"><span class="badge">📐 Asli rows × columns</span><span class="badge">🔗 Merged cells</span><span class="badge">👁 Download se pehle preview</span><span class="badge">🧹 Auto-delete</span></div>
         </div>
-        <div class="feature-item">
-            <strong data-i18n="f2t">📊 Exact Table</strong>
-            <span data-i18n="f2d">Rows × Columns accurate</span>
-        </div>
-        <div class="feature-item">
-            <strong data-i18n="f3t">📁 Multi-File</strong>
-            <span data-i18n="f3d">1-3 images ek saath</span>
-        </div>
-        <div class="feature-item">
-            <strong data-i18n="f4t">🧹 Auto-Cleanup</strong>
-            <span data-i18n="f4d">Files 30 sec baad delete</span>
-        </div>
-    </div>
+        <input type="file" id="fileInput" accept="image/*,.jpg,.jpeg,.png,.webp,.bmp,.tif,.tiff" multiple>
 
-    <div class="info-box">
-        <strong data-i18n="infoTitle">💡 Tip:</strong> <span data-i18n="infoText">1 file = direct Excel download. 2-3 files = ZIP download. Har file ke liye alag sheet milegi.</span>
-    </div>
-
-    <!-- ✅ How to Use -->
-    <div class="how-to-use">
-        <h2 data-i18n="howToTitle">How to Use</h2>
-        <div class="steps-grid">
-            <div class="step-box">
-                <div class="step-icon"><i class="fas fa-upload"></i></div>
-                <h3 data-i18n="step1Title">1. Upload Images</h3>
-                <p data-i18n="step1Desc">Select up to 3 images containing tables or invoices.</p>
+        <div id="work" hidden>
+            <div class="files" id="files"></div>
+            <div class="opts">
+                <h3>⚙️ Settings</h3>
+                <div class="grid2">
+                    <div><label class="lbl" for="lang">Bhasha (language)</label>
+                        <select class="field" id="lang"><option value="auto">Auto (Hindi + English)</option><option value="eng">Sirf English</option><option value="hin+eng">Hindi + English</option></select></div>
+                    <div><label class="lbl" for="mode">Table kaisi hai?</label>
+                        <select class="field" id="mode"><option value="auto">Auto (lines ho to lines, warna text se)</option><option value="text">Lines ignore karo (sirf text ki position se)</option></select></div>
+                </div>
+                <label class="check"><input type="checkbox" id="numbers" checked><span>Numbers ko asli numbers banao (sum / sort chale). Phone number aur lambi ID text hi rehti hai.</span></label>
             </div>
-            <div class="step-box">
-                <div class="step-icon"><i class="fas fa-robot"></i></div>
-                <h3 data-i18n="step2Title">2. AI Processes</h3>
-                <p data-i18n="step2Desc">Gemini AI extracts the text and formats it into rows and columns.</p>
-            </div>
-            <div class="step-box">
-                <div class="step-icon"><i class="fas fa-download"></i></div>
-                <h3 data-i18n="step3Title">3. Download</h3>
-                <p data-i18n="step3Desc">Download the Excel file or ZIP (if multiple images).</p>
+            <button class="btn main" id="goBtn" type="button">📊 Extract to Excel</button>
+            <div class="progress" id="progress"><div class="bar"><div class="fill" id="fill"></div></div><p id="ptext"></p></div>
+        </div>
+        <div class="status" id="status"></div>
+
+        <div class="result" id="result" hidden>
+            <div class="tabs" id="tabs"></div>
+            <div id="tags" class="tags"></div>
+            <div id="warns"></div>
+            <div class="tablewrap" id="tableWrap"></div>
+            <div class="note" id="tnote"></div>
+            <div class="actions">
+                <a class="btn main dl" id="dlBtn">⬇ Download Excel (.xlsx)</a>
+                <button class="btn ghost" id="copyBtn" type="button">📋 Table copy karo (Excel / Google Sheets me paste)</button>
+                <button class="btn ghost" id="againBtn" type="button">🔁 Dusri image / settings badalkar dobara</button>
             </div>
         </div>
-    </div>
-</div>
 
+        <div class="info-box">
+            <strong>💡 Behtar result ke liye:</strong>
+            <ul>
+                <li>Photo seedhi (straight) lo, poori table frame me aaye aur light barabar ho.</li>
+                <li>Screenshot sabse accha result deta hai. Chhoti photo ko tool khud bada karta hai.</li>
+                <li>Table me lines hon to har cell ki jagah exact milti hai; bina lines wali table text ki position se banti hai.</li>
+                <li>Tedhi ya ulti photo tool khud seedhi karta hai. Phir bhi ghalat dikhe to ↺ ↻ se ghuma do.</li>
+                <li>Preview me ek baar numbers check kar lo — OCR dhundhli photo me kabhi galti kar sakta hai.</li>
+            </ul>
+        </div>
+        <div class="info-box" style="border-left-color:#4ade80"><strong>🧹 Auto-Cleanup:</strong> Image server par sirf kuch second rehti hai aur phir delete ho jati hai.</div>
+    </div>
+</main>
 <script>
-// ✅ FIXED API URL (Ensure no trailing slash)
+(function () {
+'use strict';
 const API_URL = 'https://bharat24tools-api.onrender.com';
-const MAX_SIZE = 15 * 1024 * 1024;
-const MAX_FILES = 3;
-const INITIAL_TIMEOUT_MS = 300000; // 5 minutes
-const RETRY_TIMEOUT_MS = 600000; // 10 minutes for retry
-const MAX_DIM = 2000; // Increased for better OCR
+const MAX_FILES = 5, MAX_SIZE = 15 * 1024 * 1024, TIMEOUT = 290000;
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const fmt = b => b < 1048576 ? (b / 1024).toFixed(1) + ' KB' : (b / 1048576).toFixed(2) + ' MB';
+const items = [];                 // {file, url, rot}
+let dlUrl = null, sheets = [], cur = 0;
+const urls = new Set(); const track = u => (urls.add(u), u);
+window.addEventListener('beforeunload', () => urls.forEach(u => URL.revokeObjectURL(u)));
+function status(msg, type) { const s = $('status'); if (!msg) { s.className = 'status'; s.textContent = ''; return; } s.textContent = msg; s.className = 'status ' + type; }
 
-let selectedFiles = [];
-let previewUrls = [];
-let progressTimer = null;
-let isProcessing = false;
+// ---- adding images (click, drop, paste) ----
+const zone = $('zone'), input = $('fileInput');
+zone.addEventListener('click', () => input.click());
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('active'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('active'));
+zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('active'); add(e.dataTransfer.files); });
+input.addEventListener('change', e => { add(e.target.files); input.value = ''; });
+document.addEventListener('paste', e => { const fl = [...(e.clipboardData && e.clipboardData.files || [])].filter(f => f.type.startsWith('image/')); if (fl.length) add(fl); });
+fetch(API_URL + '/health', { mode: 'cors' }).catch(() => {});          // wake the free server
 
-const uploadZone = document.getElementById('uploadZone');
-const fileInput = document.getElementById('fileInput');
-const fileList = document.getElementById('fileList');
-const totalSize = document.getElementById('totalSize');
-const convertBtn = document.getElementById('convertBtn');
-const status = document.getElementById('status');
-const progressBar = document.getElementById('progressBar');
-const progressFill = document.getElementById('progressFill');
-const progressText = document.getElementById('progressText');
-
-const translations = {
-    en: {
-        back: "Back", title: "📊 Image to Excel (AI)", subtitle: "Extract tables from 1-3 images using AI OCR — with proper rows & columns",
-        uploadTitle: "Click or Drag", uploadText: "Invoice, bank statement, table — 1-3 images (max 15MB each)",
-        convertBtn: "Extract → Excel", f1t: "🤖 AI OCR", f1d: "Hindi + English perfect",
-        f2t: "📊 Exact Table", f2d: "Rows × Columns accurate", f3t: "📁 Multi-File", f3d: "1-3 images at once",
-        f4t: "🧹 Auto-Cleanup", f4d: "Files deleted after 30s", infoTitle: "💡 Tip:", infoText: "1 file = direct Excel download. 2-3 files = ZIP download. Each file gets a separate sheet.",
-        howToTitle: "How to Use", step1Title: "1. Upload Images", step1Desc: "Select up to 3 images containing tables or invoices.",
-        step2Title: "2. AI Processes", step2Desc: "Gemini AI extracts the text and formats it into rows and columns.",
-        step3Title: "3. Download", step3Desc: "Download the Excel file or ZIP (if multiple images).",
-        loading: "AI OCR processing...", success: "Downloaded successfully!", errValid: "Please select valid images (JPG, PNG, WebP)", errMax: "Max 3 files allowed", errSize: "File exceeds 15MB limit", ready: "image(s) ready", preparing: "images preparing...",
-        wakingUp: "Waking up AI server (takes 30-60s)...", retrying: "Server took too long. Retrying with longer timeout...", timeoutError: "Server is taking too long. Please try again later."
-    },
-    hi: {
-        back: "वापस", title: "📊 इमेज से एक्सेल (AI)", subtitle: "1-3 इमेज से AI OCR के साथ सही rows और columns में एक्सेल फाइल बनाएं",
-        uploadTitle: "क्लिक करें या ड्रैग करें", uploadText: "इनवॉइस, बैंक स्टेटमेंट, टेबल — 1-3 इमेज (अधिकतम 15MB)",
-        convertBtn: "एक्सेल में बदलें", f1t: "🤖 AI OCR", f1d: "हिंदी + अंग्रेजी परफेक्ट",
-        f2t: "📊 सटीक टेबल", f2d: "सही rows और columns", f3t: "📁 मल्टी-फाइल", f3d: "1-3 इमेज एक साथ",
-        f4t: "🧹 ऑटो-क्लीनअप", f4d: "30 सेकंड बाद फाइलें डिलीट", infoTitle: "💡 टिप:", infoText: "1 फाइल = सीधे एक्सेल डाउनलोड। 2-3 फाइलें = ZIP डाउनलोड।",
-        howToTitle: "इसका उपयोग कैसे करें", step1Title: "1. इमेज अपलोड करें", step1Desc: "टेबल या इनवॉइस वाली 3 इमेज तक चुनें।",
-        step2Title: "2. AI प्रोसेस करेगा", step2Desc: "Gemini AI टेक्स्ट निकालकर उसे rows और columns में फॉर्मेट करेगा।",
-        step3Title: "3. डाउनलोड करें", step3Desc: "एक्सेल फाइल या ZIP डाउनलोड करें।",
-        loading: "AI OCR प्रोसेस हो रहा है...", success: "सफलतापूर्वक डाउनलोड हो गया!", errValid: "कृपया वैध इमेज चुनें", errMax: "अधिकतम 3 फाइलें", errSize: "फाइल 15MB से बड़ी है", ready: "इमेज तैयार हैं", preparing: "इमेज तैयार हो रही हैं...",
-        wakingUp: "AI सर्वर जगाया जा रहा है (30-60 सेकंड लग सकते हैं)...", retrying: "सर्वर ने बहुत समय लिया। लंबे टाइमआउट के साथ पुनः प्रयास...", timeoutError: "सर्वर बहुत समय ले रहा है। कृपया बाद में पुनः प्रयास करें।"
+function add(list) {
+    list = [...list]; let skipped = [];
+    for (const f of list) {
+        if (items.length >= MAX_FILES) { skipped.push('Max ' + MAX_FILES + ' images'); break; }
+        if (/\.(heic|heif)$/i.test(f.name) || /hei[cf]/i.test(f.type)) { skipped.push(f.name + ': HEIC photo hai — pehle HEIC to JPG tool se JPG bana lo'); continue; }
+        if (!(f.type.startsWith('image/') || /\.(jpe?g|png|webp|bmp|tiff?)$/i.test(f.name))) { skipped.push(f.name + ': image nahi hai'); continue; }
+        if (f.size > MAX_SIZE) { skipped.push(f.name + ': 15MB se badi'); continue; }
+        if (!f.size) continue;
+        items.push({ file: f, url: track(URL.createObjectURL(f)), rot: 0 });
     }
-};
-
-let currentLang = 'en';
-function changeLanguage(lang) {
-    currentLang = lang;
-    const t = translations[lang];
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (t[key]) el.textContent = t[key];
-    });
+    if (skipped.length) status('⚠️ ' + skipped.join('\n'), 'info'); else status('');
+    render();
 }
-function t(key) { return (translations[currentLang] || translations.en)[key] || key; }
-
-function revokeAllPreviews() {
-    previewUrls.forEach(u => { try { URL.revokeObjectURL(u); } catch(e){} });
-    previewUrls = [];
+function render() {
+    $('work').hidden = items.length === 0; zone.hidden = false;
+    $('files').innerHTML = items.map((it, i) => '<div class="file"><div class="thumb"><img src="' + it.url + '" alt="" style="transform:rotate(' + it.rot + 'deg)"></div><div class="info"><div class="nm">' + (i + 1) + '. ' + esc(it.file.name) + '</div><div class="sz">' + fmt(it.file.size) + '</div></div>' +
+        '<button class="ibtn" data-r="-90:' + i + '" title="Left ghumao" type="button">↺</button><button class="ibtn" data-r="90:' + i + '" title="Right ghumao" type="button">↻</button><button class="ibtn" data-x="' + i + '" title="Hatao" type="button">✕</button></div>').join('');
 }
-function clearProgressTimer() {
-    if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
-}
-function fullCleanup() {
-    revokeAllPreviews();
-    clearProgressTimer();
-    selectedFiles = [];
-    isProcessing = false;
-}
-window.addEventListener('beforeunload', fullCleanup);
-window.addEventListener('pagehide', fullCleanup);
-
-uploadZone.addEventListener('click', () => fileInput.click());
-uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('active'); });
-uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('active'));
-uploadZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    uploadZone.classList.remove('active');
-    if (e.dataTransfer.files.length > 0) addFiles(e.dataTransfer.files);
-});
-fileInput.addEventListener('change', (e) => {
-    if (e.target.files.length > 0) addFiles(e.target.files);
+$('files').addEventListener('click', e => {
+    const r = e.target.closest('[data-r]'), x = e.target.closest('[data-x]');
+    if (r) { const [d, i] = r.dataset.r.split(':').map(Number); items[i].rot = (items[i].rot + d + 360) % 360; render(); }
+    if (x) { const i = +x.dataset.x; URL.revokeObjectURL(items[i].url); urls.delete(items[i].url); items.splice(i, 1); render(); }
 });
 
-function formatSize(bytes) {
-    if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+// ---- rotate in the browser only if the user asked for it (original pixels otherwise) ----
+async function prepared(it) {
+    if (!it.rot) return it.file;
+    const bmp = await createImageBitmap(it.file);
+    const sw = it.rot === 90 || it.rot === 270, c = document.createElement('canvas');
+    c.width = sw ? bmp.height : bmp.width; c.height = sw ? bmp.width : bmp.height;
+    const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
+    g.translate(c.width / 2, c.height / 2); g.rotate(it.rot * Math.PI / 180); g.drawImage(bmp, -bmp.width / 2, -bmp.height / 2);
+    const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.95));
+    return new File([blob], it.file.name.replace(/\.[^.]+$/, '') + '.jpg', { type: 'image/jpeg' });
 }
 
-// ✅ IMPROVED: Advanced Image Preprocessing for better OCR accuracy
-function preprocessImage(file) {
-    return new Promise((resolve) => {
-        const img = new Image();
-        const url = URL.createObjectURL(file);
-        img.onload = () => {
-            URL.revokeObjectURL(url);
-            
-            // 1. Resize for optimal OCR (max dimension 2000px)
-            let width = img.width;
-            let height = img.height;
-            const maxDim = 2000;
-            if (width > maxDim || height > maxDim) {
-                const scale = maxDim / Math.max(width, height);
-                width = Math.round(width * scale);
-                height = Math.round(height * scale);
-            }
-
-            const canvas = document.createElement('canvas');
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            
-            // 2. Draw image
-            ctx.drawImage(img, 0, 0, width, height);
-            
-            // 3. Apply Image Processing (Grayscale, Contrast, Binarization)
-            const imageData = ctx.getImageData(0, 0, width, height);
-            const data = imageData.data;
-            
-            // Grayscale + Contrast Enhancement
-            const contrast = 1.5; // Increase contrast by 50%
-            const intercept = 128 * (1 - contrast);
-            
-            for (let i = 0; i < data.length; i += 4) {
-                // Grayscale formula
-                let gray = data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114;
-                // Apply contrast
-                gray = gray * contrast + intercept;
-                // Clamp
-                gray = Math.max(0, Math.min(255, gray));
-                
-                // Simple Binarization (Thresholding) - helps separate text from background
-                const threshold = 160; // Adjust if needed (0-255)
-                const val = gray > threshold ? 255 : 0;
-                
-                // Set back to RGB (all same for grayscale/binary)
-                data[i] = val;
-                data[i+1] = val;
-                data[i+2] = val;
-            }
-            
-            ctx.putImageData(imageData, 0, 0);
-            
-            canvas.toBlob((blob) => {
-                try { canvas.width = 0; canvas.height = 0; } catch(e){}
-                if (!blob) { resolve(file); return; }
-                const newFile = new File([blob], file.name, { type: 'image/jpeg' });
-                resolve(newFile);
-            }, 'image/jpeg', 0.92); // Higher quality for OCR
-        };
-        img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
-        img.src = url;
+// ---- send to server ----
+function post(fd, onUp) {
+    return new Promise((resolve, reject) => {
+        const x = new XMLHttpRequest(); x.open('POST', API_URL + '/image-to-excel'); x.timeout = TIMEOUT;
+        x.upload.onprogress = e => { if (e.lengthComputable) onUp(e.loaded / e.total, false); }; x.upload.onload = () => onUp(1, true);
+        x.onload = () => resolve({ status: x.status, text: x.responseText }); x.onerror = () => reject(new TypeError('network')); x.ontimeout = () => reject(new Error('timeout'));
+        x.send(fd);
     });
 }
-
-async function addFiles(files) {
-    revokeAllPreviews();
-    clearProgressTimer();
-    selectedFiles = [];
-    const incoming = Array.from(files);
-    const valid = incoming.filter(f => f.type.startsWith('image/'));
-
-    if (valid.length === 0) { showStatus('❌ ' + t('errValid'), 'error'); return; }
-    if (valid.length > MAX_FILES) { showStatus('❌ ' + t('errMax'), 'error'); return; }
-    const tooBig = valid.filter(f => f.size > MAX_SIZE);
-    if (tooBig.length > 0) { showStatus('❌ ' + t('errSize'), 'error'); return; }
-
-    showStatus('⚙️ ' + t('preparing'), 'loading');
-
-    const processed = [];
-    for (const f of valid) {
-        try { processed.push(await preprocessImage(f)); } 
-        catch (e) { processed.push(f); }
-    }
-
-    selectedFiles = processed;
-    previewUrls = processed.map(f => URL.createObjectURL(f));
-    renderFileList();
-    showStatus(`✅ ${processed.length} ` + t('ready'), 'success');
-}
-
-function renderFileList() {
-    fileList.innerHTML = '';
-    if (selectedFiles.length === 0) {
-        convertBtn.style.display = 'none';
-        totalSize.innerHTML = '';
-        return;
-    }
-    selectedFiles.forEach((f, i) => {
-        const item = document.createElement('div');
-        item.className = 'file-item';
-        item.innerHTML = `
-            <img src="${previewUrls[i]}" alt="preview">
-            <div class="info">
-                <div class="fname">${i+1}. ${f.name}</div>
-                <div class="fsize">${formatSize(f.size)}</div>
-            </div>
-            <button data-i="${i}" title="Remove">✕</button>
-        `;
-        fileList.appendChild(item);
-    });
-    fileList.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const idx = parseInt(e.target.dataset.i);
-            selectedFiles.splice(idx, 1);
-            try { URL.revokeObjectURL(previewUrls[idx]); } catch(err){}
-            previewUrls.splice(idx, 1);
-            fileInput.value = '';
-            renderFileList();
-        });
-    });
-    const totalBytes = selectedFiles.reduce((s, f) => s + f.size, 0);
-    totalSize.innerHTML = `<strong>${selectedFiles.length}</strong> image(s) — Total: <strong>${formatSize(totalBytes)}</strong>`;
-    convertBtn.style.display = 'block';
-}
-
-// ✅ FIXED: Timeout & Retry Logic
-convertBtn.addEventListener('click', async () => {
-    if (selectedFiles.length === 0 || isProcessing) return;
-    isProcessing = true;
-    convertBtn.disabled = true;
-    
-    let attempt = 0;
-    const maxAttempts = 2;
-    let success = false;
-
-    while (attempt < maxAttempts && !success) {
-        attempt++;
-        const timeoutMs = attempt === 1 ? INITIAL_TIMEOUT_MS : RETRY_TIMEOUT_MS;
-        
+function prog(show, pct, text, busy) { $('progress').style.display = show ? 'block' : 'none'; const f = $('fill'); f.classList.toggle('busy', !!busy); if (!busy) f.style.width = (pct || 0) + '%'; $('ptext').textContent = text || ''; }
+async function send(fd) {
+    let last = null;
+    for (let a = 1; a <= 3; a++) {
         try {
-            // Show UI
-            progressBar.style.display = 'block';
-            progressText.style.display = 'block';
-            progressFill.style.width = '10%';
-            progressText.textContent = '10%';
-            
-            if (attempt === 1) {
-                showStatus('⏳ ' + t('wakingUp'), 'loading');
-            } else {
-                showStatus('🔄 ' + t('retrying'), 'loading');
-            }
-
-            // Simulate progress until response arrives
-            let pct = 10;
-            progressTimer = setInterval(() => {
-                pct = Math.min(pct + 2, 90);
-                progressFill.style.width = pct + '%';
-                progressText.textContent = pct + '%';
-            }, 3000);
-
-            // Prepare Data
-            const formData = new FormData();
-            selectedFiles.forEach(f => formData.append('files', f));
-
-            // Create AbortController with Dynamic Timeout
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-
-            // ✅ FIXED: Fetch with proper error handling
-            const res = await fetch(API_URL + '/image-to-excel', { 
-                method: 'POST', 
-                body: formData, 
-                signal: controller.signal 
-            });
-
-            clearTimeout(timeoutId);
-            clearProgressTimer();
-
-            if (!res.ok) {
-                const errorText = await res.text();
-                throw new Error(errorText || `Server Error: ${res.status}`);
-            }
-
-            // Success! Download File
-            progressFill.style.width = '100%';
-            progressText.textContent = '100%';
-            
-            const blob = await res.blob();
-            const isZip = selectedFiles.length > 1;
-            const firstName = selectedFiles[0].name.replace(/\.[^.]+$/, '');
-            const ext = isZip ? 'zip' : 'xlsx';
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `Bharat24Tools_${firstName}.${ext}`;
-            a.click();
-            setTimeout(() => URL.revokeObjectURL(url), 5000);
-
-            showStatus('🎉 ' + t('success'), 'success');
-            success = true;
-
+            prog(true, 0, '⬆ Upload ho raha hai... 0%');
+            const r = await post(fd, (p, done) => { if (done) { prog(true, 100, '', true); $('ptext').textContent = '🔎 Table ki lines dhundh raha hu aur har cell padh raha hu... (30-90 second lag sakte hain)'; } else prog(true, Math.round(p * 100), '⬆ Upload ho raha hai... ' + Math.round(p * 100) + '%'); });
+            if (r.status >= 200 && r.status < 300) return JSON.parse(r.text);
+            if ([502, 503, 504].includes(r.status) && a < 3) { last = new Error('Server abhi jag raha hai'); status('⏳ Server start ho raha hai... dobara try (' + a + '/3)', 'loading'); await sleep(6000); continue; }
+            throw new Error((r.text || ('Server error ' + r.status)).slice(0, 300));
         } catch (err) {
-            clearProgressTimer();
-            
-            if (err.name === 'AbortError') {
-                // Timeout occurred
-                if (attempt === maxAttempts) {
-                    showStatus('⏱️ ' + t('timeoutError'), 'error');
-                } else {
-                    // Will loop and retry
-                    console.warn(`Attempt ${attempt} timed out. Retrying...`);
-                }
-            } else {
-                // Other errors (network, server error)
-                showStatus('❌ Error: ' + err.message, 'error');
-                break; // Don't retry on non-timeout errors
+            if (err instanceof TypeError || err.message === 'timeout') {
+                last = new Error(err.message === 'timeout' ? 'Server ne bahut der laga di. Kam images / chhoti image try karo.' : 'Server se connect nahi ho paya. 1 minute baad dobara try karo.');
+                if (err.message !== 'timeout' && a < 3) { status('⏳ Server se connect ho raha hai... (' + a + '/3)', 'loading'); await sleep(6000); continue; }
+                throw last;
             }
+            throw err;
         }
     }
-
-    // Reset UI
-    convertBtn.disabled = false;
-    isProcessing = false;
-    setTimeout(() => {
-        progressBar.style.display = 'none';
-        progressText.style.display = 'none';
-        progressFill.style.width = '0%';
-    }, 4000);
+    throw last || new Error('Unknown error');
+}
+$('goBtn').addEventListener('click', async () => {
+    if (!items.length) return;
+    $('goBtn').disabled = true; $('result').hidden = true; status('⏳ Shuru ho raha hai... (agar server so raha tha to 30-60 second lag sakte hain)', 'loading');
+    try {
+        const fd = new FormData();
+        for (const it of items) fd.append('files', await prepared(it));
+        fd.append('format', 'json'); fd.append('lang', $('lang').value); fd.append('mode', $('mode').value); fd.append('numbers', $('numbers').checked ? 'yes' : 'no');
+        const j = await send(fd);
+        sheets = j.sheets; cur = 0; status(j.errors && j.errors.length ? '⚠️ Kuch image nahi padhi ja saki:\n' + j.errors.join('\n') : '', 'info');
+        const bin = atob(j.xlsx_b64), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+        if (dlUrl) URL.revokeObjectURL(dlUrl);
+        dlUrl = track(URL.createObjectURL(new Blob([u], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })));
+        const a = $('dlBtn'); a.href = dlUrl; a.download = (sheets.length === 1 ? sheets[0].file.replace(/\.[^.]+$/, '') : 'images-to-excel') + '.xlsx';
+        showResult(); prog(false);
+    } catch (err) { console.error(err); status('❌ ' + err.message, 'error'); prog(false); }
+    $('goBtn').disabled = false;
 });
 
-function showStatus(msg, type) {
-    status.textContent = msg;
-    status.className = 'status ' + type;
-    if (msg) status.style.display = 'block';
-    else status.style.display = 'none';
+// ---- preview table ----
+function showResult() {
+    $('result').hidden = false; $('tabs').hidden = sheets.length < 2;
+    $('tabs').innerHTML = sheets.map((s, i) => '<button class="tab' + (i === cur ? ' on' : '') + '" data-t="' + i + '" type="button">' + esc(s.name) + '</button>').join('');
+    const s = sheets[cur];
+    const tags = [];
+    tags.push(s.mode === 'grid' ? ['✅ Table ki lines mili (' + s.tables + ' table)', 'good'] : ['📄 Lines nahi mili — text ki position se columns bane', '']);
+    tags.push(['📐 ' + s.total_rows + ' rows × ' + s.total_cols + ' columns', '']); tags.push(['🎯 Padhne ka bharosa ' + s.conf + '%', s.conf >= 75 ? 'good' : (s.conf < 55 ? 'warn' : '')]);
+    if (s.turned) tags.push(['🔄 Image ' + s.turned + '° ghumayi gayi', '']); if (Math.abs(s.angle) >= 0.3) tags.push(['📏 ' + s.angle + '° tedhapan seedha kiya', '']);
+    $('tags').innerHTML = tags.map(t => '<span class="tag ' + t[1] + '">' + esc(t[0]) + '</span>').join('');
+    $('warns').innerHTML = (s.warnings || []).map(w => '<div class="warnbox">⚠️ ' + esc(w) + '</div>').join('');
+    // build html table with merged cells
+    const rows = s.rows, cover = new Set(), span = {};
+    (s.merges || []).forEach(m => { span[m[0] + ',' + m[1]] = m; for (let r = m[0]; r <= m[2]; r++) for (let c = m[1]; c <= m[3]; c++) if (r !== m[0] || c !== m[1]) cover.add(r + ',' + c); });
+    const nc = Math.max(1, ...rows.map(r => r.length), ...(s.merges || []).map(m => m[3] + 1));
+    let h = '<table class="pv">';
+    rows.forEach((row, r) => {
+        h += '<tr' + (r < s.header_rows ? ' class="h"' : '') + '><td class="rn">' + (r + 1) + '</td>';
+        for (let c = 0; c < nc; c++) {
+            const k = r + ',' + c; if (cover.has(k)) continue;
+            const m = span[k], v = row[c] == null ? '' : row[c];
+            h += '<td' + (m ? ' rowspan="' + (m[2] - m[0] + 1) + '" colspan="' + (m[3] - m[1] + 1) + '"' + (m[3] > m[1] ? ' style="text-align:center"' : '') : '') + (/^[-(]?[\d,]+(\.\d+)?%?\)?$/.test(v) ? ' class="num"' : '') + '>' + esc(v) + '</td>';
+        }
+        h += '</tr>';
+    });
+    $('tableWrap').innerHTML = h + '</table>';
+    $('tnote').textContent = s.total_rows > rows.length ? 'Preview me pehli ' + rows.length + ' rows hain. Poori ' + s.total_rows + ' rows Excel file me milengi.' : 'Ye poori table ka preview hai. Sab sahi lage to Excel download karo.';
+    $('copyBtn').hidden = s.total_rows > rows.length;
+    $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
-
-window.addEventListener('load', () => changeLanguage('en'));
+$('tabs').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (b) { cur = +b.dataset.t; showResult(); } });
+$('copyBtn').addEventListener('click', async () => {
+    const tsv = sheets[cur].rows.map(r => r.map(v => String(v == null ? '' : v).replace(/[\t\r\n]+/g, ' ')).join('\t')).join('\n');
+    try { await navigator.clipboard.writeText(tsv); }
+    catch (e) { const t = document.createElement('textarea'); t.value = tsv; t.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch (x) {} t.remove(); }
+    status('✅ Table copy ho gayi — ab Excel ya Google Sheets me paste karo (Ctrl+V).', 'success'); setTimeout(() => status(''), 3000);
+});
+$('againBtn').addEventListener('click', () => { $('result').hidden = true; status(''); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+window.__ix = { items };
+})();
 </script>
 </body>
 </html>
