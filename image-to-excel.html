@@ -107,7 +107,7 @@
         <div class="upload-zone" id="zone">
             <div class="big">🖼️</div>
             <p><span class="hl">Click karo, Drag karo ya Ctrl+V se paste karo</span></p>
-            <p>Table ki photo / screenshot — 1 se 5 images (max 15MB each)</p>
+            <p>Table ki photo / screenshot — 1 se 10 images (max 15MB each). Saari images ek Excel me alag sheets me aayengi</p>
             <div class="badges"><span class="badge">📐 Asli rows × columns</span><span class="badge">🔗 Merged cells</span><span class="badge">👁 Download se pehle preview</span><span class="badge">🧹 Auto-delete</span></div>
         </div>
         <input type="file" id="fileInput" accept="image/*,.jpg,.jpeg,.png,.webp,.bmp,.tif,.tiff" multiple>
@@ -145,6 +145,7 @@
         <div class="info-box">
             <strong>💡 Behtar result ke liye:</strong>
             <ul>
+                <li>Kai images (jaise ek document ke pages) ek saath daal sakte ho: har image ek alag sheet banegi.</li>
                 <li>Photo seedhi (straight) lo, poori table frame me aaye aur light barabar ho.</li>
                 <li>Screenshot sabse accha result deta hai. Chhoti photo ko tool khud bada karta hai.</li>
                 <li>Table me lines hon to har cell ki jagah exact milti hai; bina lines wali table text ki position se banti hai.</li>
@@ -159,7 +160,7 @@
 (function () {
 'use strict';
 const API_URL = 'https://bharat24tools-api.onrender.com';
-const MAX_FILES = 5, MAX_SIZE = 15 * 1024 * 1024, TIMEOUT = 290000;
+const MAX_FILES = 10, MAX_SIZE = 15 * 1024 * 1024, TIMEOUT = 170000;
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -226,18 +227,21 @@ function post(fd, onUp) {
     });
 }
 function prog(show, pct, text, busy) { $('progress').style.display = show ? 'block' : 'none'; const f = $('fill'); f.classList.toggle('busy', !!busy); if (!busy) f.style.width = (pct || 0) + '%'; $('ptext').textContent = text || ''; }
-async function send(fd) {
+async function send(fd, tag, base, span) {
     let last = null;
     for (let a = 1; a <= 3; a++) {
         try {
-            prog(true, 0, '⬆ Upload ho raha hai... 0%');
-            const r = await post(fd, (p, done) => { if (done) { prog(true, 100, '', true); $('ptext').textContent = '🔎 Table ki lines dhundh raha hu aur har cell padh raha hu... (30-90 second lag sakte hain)'; } else prog(true, Math.round(p * 100), '⬆ Upload ho raha hai... ' + Math.round(p * 100) + '%'); });
+            prog(true, base * 100, tag + '⬆ Upload ho raha hai... 0%');
+            const r = await post(fd, (p, done) => {
+                if (done) { prog(true, 100, '', true); $('ptext').textContent = tag + '🔎 Table ki lines dhundh raha hu aur har cell padh raha hu... (30-90 second lag sakte hain)'; }
+                else prog(true, (base + span * p * 0.3) * 100, tag + '⬆ Upload ho raha hai... ' + Math.round(p * 100) + '%');
+            });
             if (r.status >= 200 && r.status < 300) return JSON.parse(r.text);
             if ([502, 503, 504].includes(r.status) && a < 3) { last = new Error('Server abhi jag raha hai'); status('⏳ Server start ho raha hai... dobara try (' + a + '/3)', 'loading'); await sleep(6000); continue; }
             throw new Error((r.text || ('Server error ' + r.status)).slice(0, 300));
         } catch (err) {
             if (err instanceof TypeError || err.message === 'timeout') {
-                last = new Error(err.message === 'timeout' ? 'Server ne bahut der laga di. Kam images / chhoti image try karo.' : 'Server se connect nahi ho paya. 1 minute baad dobara try karo.');
+                last = new Error(err.message === 'timeout' ? 'Server ne bahut der laga di. Chhoti image try karo.' : 'Server se connect nahi ho paya. 1 minute baad dobara try karo.');
                 if (err.message !== 'timeout' && a < 3) { status('⏳ Server se connect ho raha hai... (' + a + '/3)', 'loading'); await sleep(6000); continue; }
                 throw last;
             }
@@ -246,19 +250,46 @@ async function send(fd) {
     }
     throw last || new Error('Unknown error');
 }
+const b64blob = b64 => { const bin = atob(b64), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return new Blob([u], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }); };
+function newJob() { const a = new Uint8Array(12); crypto.getRandomValues(a); return [...a].map(x => x.toString(16).padStart(2, '0')).join(''); }
+
 $('goBtn').addEventListener('click', async () => {
     if (!items.length) return;
     $('goBtn').disabled = true; $('result').hidden = true; status('⏳ Shuru ho raha hai... (agar server so raha tha to 30-60 second lag sakte hain)', 'loading');
+    const job = newJob(), N = items.length, ok = [], errors = [];
+    sheets = []; cur = 0;
     try {
-        const fd = new FormData();
-        for (const it of items) fd.append('files', await prepared(it));
-        fd.append('format', 'json'); fd.append('lang', $('lang').value); fd.append('mode', $('mode').value); fd.append('numbers', $('numbers').checked ? 'yes' : 'no');
-        const j = await send(fd);
-        sheets = j.sheets; cur = 0; status(j.errors && j.errors.length ? '⚠️ Kuch image nahi padhi ja saki:\n' + j.errors.join('\n') : '', 'info');
-        const bin = atob(j.xlsx_b64), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
-        if (dlUrl) URL.revokeObjectURL(dlUrl);
-        dlUrl = track(URL.createObjectURL(new Blob([u], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })));
-        const a = $('dlBtn'); a.href = dlUrl; a.download = (sheets.length === 1 ? sheets[0].file.replace(/\.[^.]+$/, '') : 'images-to-excel') + '.xlsx';
+        for (let i = 0; i < N; i++) {                       // one image per request: short, safe requests
+            const tag = N > 1 ? 'Image ' + (i + 1) + '/' + N + ' — ' : '';
+            try {
+                const fd = new FormData();
+                fd.append('files', await prepared(items[i]));
+                fd.append('format', 'json'); fd.append('job', job); fd.append('part', String(i));
+                fd.append('lang', $('lang').value); fd.append('mode', $('mode').value); fd.append('numbers', $('numbers').checked ? 'yes' : 'no');
+                const j = await send(fd, tag, i / N, 1 / N);
+                (j.sheets || []).forEach(s => { s.xlsx = j.xlsx_b64; s.part = i; sheets.push(s); }); ok.push(i);
+                (j.errors || []).forEach(e => errors.push(e));
+            } catch (err) { errors.push(items[i].file.name + ': ' + err.message); }
+            status(N > 1 ? '⏳ ' + (i + 1) + '/' + N + ' image ho gayi' : '', 'loading');
+        }
+        if (!sheets.length) throw new Error(errors.join('\n') || 'Koi image padhi nahi ja saki.');
+        // one Excel file with one sheet per image
+        let blob = null;
+        if (ok.length === 1) blob = b64blob(sheets[0].xlsx);
+        else {
+            try {
+                const fm = new FormData(); fm.append('job', job); fm.append('parts', ok.join(','));
+                const r = await fetch(API_URL + '/image-to-excel/merge', { method: 'POST', body: fm });
+                if (!r.ok) throw new Error(await r.text());
+                blob = await r.blob();
+            } catch (e) { errors.push('Saari sheets ek file me nahi jud saki (' + String(e.message).slice(0, 80) + '). Har sheet alag download ho sakti hai.'); }
+        }
+        status(errors.length ? '⚠️ Kuch problem aayi:\n' + errors.join('\n') : '', 'info');
+        if (dlUrl) { URL.revokeObjectURL(dlUrl); urls.delete(dlUrl); }
+        const a = $('dlBtn');
+        if (blob) { dlUrl = track(URL.createObjectURL(blob)); a.href = dlUrl; a.download = (sheets.length === 1 ? sheets[0].file.replace(/\.[^.]+$/, '') : 'images-to-excel') + '.xlsx'; $('dlBtn').textContent = sheets.length > 1 ? '⬇ Download Excel (.xlsx) — ' + sheets.length + ' sheets' : '⬇ Download Excel (.xlsx)'; }
+        else { dlUrl = null; }
+        window.__blob = !!blob;
         showResult(); prog(false);
     } catch (err) { console.error(err); status('❌ ' + err.message, 'error'); prog(false); }
     $('goBtn').disabled = false;
@@ -292,6 +323,7 @@ function showResult() {
     $('tableWrap').innerHTML = h + '</table>';
     $('tnote').textContent = s.total_rows > rows.length ? 'Preview me pehli ' + rows.length + ' rows hain. Poori ' + s.total_rows + ' rows Excel file me milengi.' : 'Ye poori table ka preview hai. Sab sahi lage to Excel download karo.';
     $('copyBtn').hidden = s.total_rows > rows.length;
+    if (!window.__blob) { const d = b64blob(s.xlsx); if (s._url) URL.revokeObjectURL(s._url); s._url = track(URL.createObjectURL(d)); $('dlBtn').href = s._url; $('dlBtn').download = s.file.replace(/\.[^.]+$/, '') + '.xlsx'; }
     $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 $('tabs').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (b) { cur = +b.dataset.t; showResult(); } });
